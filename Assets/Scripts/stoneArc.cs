@@ -8,9 +8,9 @@ public class stoneArc : MonoBehaviour
 {
     // External References
     [SerializeField]
-    private GameObject m_CameraReference;
+    private GameObject m_rCameraReference;
     [SerializeField]
-    private CinemachineFreeLook m_FreeLookReference;
+    private CinemachineFreeLook m_rFreeLookReference;
 
     public LineRenderer lineRend;
     public GameObject stone;
@@ -31,8 +31,10 @@ public class stoneArc : MonoBehaviour
     void Start()
     {
         //lineRend.GetComponent<LineRenderer>();
-        m_CameraReference = GameObject.Find("Main Camera");
-        m_FreeLookReference = GameObject.Find("Freelook Camera").GetComponent<CinemachineFreeLook>();
+        //m_rCameraReference = GameObject.Find("Main Camera");
+        m_rFreeLookReference = GameObject.Find("Freelook Camera").GetComponent<CinemachineFreeLook>();
+        m_rCameraReference = m_rFreeLookReference.transform.GetChild(0).gameObject;
+
 
     }
 
@@ -94,10 +96,10 @@ public class stoneArc : MonoBehaviour
     // Determine the arc's form based on where the player is looking
     private void UpdateArcParameters() {
         // Get a reference to where the camera is looking to set the arc rotation
-        float fCameraYRotation = m_CameraReference.transform.rotation.eulerAngles.y;
+        float fCameraYRotation = m_rCameraReference.transform.rotation.eulerAngles.y;
         m_fRotation = fCameraYRotation * Mathf.Deg2Rad;
 
-        float fFreeLookY = m_FreeLookReference.m_YAxis.Value;
+        float fFreeLookY = m_rFreeLookReference.m_YAxis.Value;
         m_fAngle = Mathf.Lerp(m_fMinAngle, m_fMaxAngle, 1.0f - fFreeLookY);
     }
 
