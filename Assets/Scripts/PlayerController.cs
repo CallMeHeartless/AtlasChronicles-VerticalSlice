@@ -9,9 +9,9 @@ public class PlayerController : MonoBehaviour {
     // External references
     [Header("External References")]
     [SerializeField]
-    private Camera m_CameraReference;
+    private Camera m_rCameraReference;
     [SerializeField]
-    private GameObject m_ProjectileArc;
+    private GameObject m_rProjectileArc;
     
     // Component references
     private CharacterController m_CharacterController;
@@ -86,8 +86,8 @@ public class PlayerController : MonoBehaviour {
         m_CharacterController = GetComponent<CharacterController>();
         m_Animator = GetComponentInChildren<Animator>();
         m_PAnimationController = GetComponentInChildren<PlayerAnimationController>();
-        if (!m_CameraReference) {
-            m_CameraReference = GameObject.Find("Main Camera").GetComponent<Camera>();
+        if (!m_rCameraReference) {
+            m_rCameraReference = GameObject.Find("Main Camera").GetComponent<Camera>();
         }
 
         // Initialise variables
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour {
     // Calculate movement
     private void CalculatePlayerMovement() {
         // Take player input
-        m_MovementDirection = (m_CameraReference.transform.right * Input.GetAxis("Horizontal") + m_CameraReference.transform.forward * Input.GetAxis("Vertical")).normalized;
+        m_MovementDirection = (m_rCameraReference.transform.right * Input.GetAxis("Horizontal") + m_rCameraReference.transform.forward * Input.GetAxis("Vertical")).normalized;
         m_MovementDirection.y = 0.0f;
         if (!m_CharacterController.isGrounded) {
             return;
@@ -394,7 +394,7 @@ public class PlayerController : MonoBehaviour {
         Rigidbody heldObjectRb = m_HeldObject.GetComponent<Rigidbody>();
         heldObjectRb.isKinematic = false;
         // Get velocity
-        LineRenderer lineRenderer = m_ProjectileArc.GetComponent<LineRenderer>();
+        LineRenderer lineRenderer = m_rProjectileArc.GetComponent<LineRenderer>();
         Vector3 vecVelocity = lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0);
         heldObjectRb.velocity = vecVelocity.normalized * m_fThrowSpeed;// Mathf.Sqrt(m_fThrowSpeed * m_fThrowSpeed + m_fThrowSpeed * m_fThrowSpeed);//m_fThrowSpeed;
 
@@ -402,25 +402,25 @@ public class PlayerController : MonoBehaviour {
         //heldObjectRb.AddForce(vecVelocity.normalized * m_fThrowSpeed, ForceMode.Acceleration);
         m_HeldObject = null;
         m_bIsAiming = false;
-        m_ProjectileArc.SetActive(false); // Consider removing depending on how input will be handled
+        m_rProjectileArc.SetActive(false); // Consider removing depending on how input will be handled
         // Animation
         m_Animator.SetTrigger("Throw");
     }
 
     // Show the projectile arc while the player is holding down the aim button || CHANGE CAMERA 
     private void AimHeldObject() {
-        if (!m_ProjectileArc) {
+        if (!m_rProjectileArc) {
             return;
         }
 
         if (Input.GetAxis(m_strAimButton) <0.0f || Input.GetKey(KeyCode.C)) {
             ToggleAiming(true);
-            Vector3 vecCameraRotation = m_CameraReference.transform.rotation.eulerAngles;
+            Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
             transform.rotation = Quaternion.Euler(0.0f, vecCameraRotation.y, 0.0f);
-            m_ProjectileArc.GetComponent<stoneArc>().SetRotation(vecCameraRotation.y);
+            m_rProjectileArc.GetComponent<stoneArc>().SetRotation(vecCameraRotation.y);
         }
-        else if(m_ProjectileArc.activeSelf){
+        else if(m_rProjectileArc.activeSelf){
             ToggleAiming(false);
         }
     }
@@ -433,11 +433,11 @@ public class PlayerController : MonoBehaviour {
         m_bIsAiming = _bState;
         if (m_bIsAiming) {
             m_Animator.SetTrigger("Aim");
-            m_ProjectileArc.SetActive(true);
+            m_rProjectileArc.SetActive(true);
         } else {
             m_Animator.ResetTrigger("Aim");
             m_Animator.SetTrigger("Cancel");
-            m_ProjectileArc.SetActive(false);
+            m_rProjectileArc.SetActive(false);
         }
     }
 
