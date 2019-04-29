@@ -4,7 +4,7 @@ using UnityEngine;
 using Cinemachine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class stoneArc : MonoBehaviour
+public class ProjectileArc : MonoBehaviour
 {
     // External References
     [SerializeField]
@@ -12,8 +12,7 @@ public class stoneArc : MonoBehaviour
     [SerializeField]
     private CinemachineFreeLook m_rFreeLookReference;
 
-    public LineRenderer lineRend;
-    public GameObject stone;
+    public LineRenderer m_rLineRenderer;
     [SerializeField]
     private float m_fMinAngle = 10.0f;
     [SerializeField]
@@ -22,74 +21,57 @@ public class stoneArc : MonoBehaviour
     private float m_fAngle = 45.0f;
     [SerializeField]
     private float m_fForwardVelocity = 10.0f;
-    public int size;
-    public float increaser;
-    public int maxVel;
+    public int m_iSize;
+    public int m_iMaxVelocity;
     private float m_fRotation = 0.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //lineRend.GetComponent<LineRenderer>();
-        //m_rCameraReference = GameObject.Find("Main Camera");
+    void Start(){
+        // Find references in scene
         m_rFreeLookReference = GameObject.Find("Freelook Camera").GetComponent<CinemachineFreeLook>();
+        if (!m_rFreeLookReference) {
+            Debug.LogError("ERROR: Free look camera can not be found. Null reference exception");
+        }
         m_rCameraReference = m_rFreeLookReference.transform.GetChild(0).gameObject;
-
-
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+    void Update(){
+        // Update the arc
         UpdateArcParameters();
-        if ((size != 0)&&(Application.isPlaying))
-        {
+        if ((m_iSize != 0)&&(Application.isPlaying)){
             SolveAndProjectArc();
         }
-        //if (Input.GetKeyDown(KeyCode.E)) {
-        //    GameObject newStone = GameObject.Instantiate(stone, transform.position, transform.rotation);
-        //    float anglechange = Mathf.Tan(Mathf.Deg2Rad * m_fAngle);
-        //    newStone.GetComponent<Rigidbody>().AddForce(new Vector3(-(m_fForwardVelocity * anglechange) + m_fForwardVelocity * increaser, m_fForwardVelocity * anglechange * increaser, 0), ForceMode.Acceleration);
-        //}
+
     }
 
     // Solve the line renderer's coordinates
     void SolveAndProjectArc()
     {
-        Vector3[] newLoctation = new Vector3[size];
-        for (int i = 0; i < size; i++)
+        Vector3[] newLoctation = new Vector3[m_iSize];
+        for (int i = 0; i < m_iSize; i++)
         {
-            newLoctation[i] = GetArcPoint((float)i/ (float)size, maxVel);
+            newLoctation[i] = GetArcPoint((float)i/ (float)m_iSize, m_iMaxVelocity);
         }
-       
 
-        lineRend.positionCount = newLoctation.Length;
-        lineRend.SetPositions(newLoctation);
+        m_rLineRenderer.positionCount = newLoctation.Length;
+        m_rLineRenderer.SetPositions(newLoctation);
     }
 
     // Calculates the next point in the spline
-    Vector3 GetArcPoint(float i, float max)
-    {
+    Vector3 GetArcPoint(float i, float max){
         Vector3 currentPoint;
         float rad = Mathf.Deg2Rad * m_fAngle;
         currentPoint.x = i * max;
         currentPoint.y = currentPoint.x * Mathf.Tan(rad) - ((9.81f * currentPoint.x * currentPoint.x) / (2 * m_fForwardVelocity * m_fForwardVelocity * Mathf.Cos(rad) * Mathf.Cos(rad)));
 
-        //rotate
-        if (m_fRotation != 0)
-        {
-            //currentPoint.z = i * max * (m_fRotation / 90);
-            //currentPoint.x = i * max * (90 / m_fRotation);
+        // Project according to the rotation
+        if (m_fRotation != 0){
             currentPoint.z = i * max * Mathf.Cos(m_fRotation);
             currentPoint.x = i * max * Mathf.Sin(m_fRotation);
         }
-        else
-        {
+        else{
             currentPoint.z = 0;
         }
         
-
         return currentPoint + transform.position;
     }
 
@@ -103,12 +85,19 @@ public class stoneArc : MonoBehaviour
         m_fAngle = Mathf.Lerp(m_fMinAngle, m_fMaxAngle, 1.0f - fFreeLookY);
     }
 
-    // Gets the rotation
+    // Gets the rotation in degrees
     public float GetArcRotation() {
         return m_fRotation * Mathf.Rad2Deg;
     }
 
+    // Manually sets the rotation (takes degrees)
     public void SetRotation(float _fRotation) {
         m_fRotation = _fRotation * Mathf.Deg2Rad;
     }
 }
+
+//if (Input.GetKeyDown(KeyCode.E)) {
+//    GameObject newStone = GameObject.Instantiate(stone, transform.position, transform.rotation);
+//    float anglechange = Mathf.Tan(Mathf.Deg2Rad * m_fAngle);
+//    newStone.GetComponent<Rigidbody>().AddForce(new Vector3(-(m_fForwardVelocity * anglechange) + m_fForwardVelocity * increaser, m_fForwardVelocity * anglechange * increaser, 0), ForceMode.Acceleration);
+//}

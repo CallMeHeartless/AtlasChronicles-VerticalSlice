@@ -418,7 +418,7 @@ public class PlayerController : MonoBehaviour {
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
             transform.rotation = Quaternion.Euler(0.0f, vecCameraRotation.y, 0.0f);
-            m_rProjectileArc.GetComponent<stoneArc>().SetRotation(vecCameraRotation.y);
+            m_rProjectileArc.GetComponent<ProjectileArc>().SetRotation(vecCameraRotation.y);
         }
         else if(m_rProjectileArc.activeSelf){
             ToggleAiming(false);
