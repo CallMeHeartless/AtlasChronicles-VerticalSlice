@@ -2,31 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class killbox : MonoBehaviour
+public class KillBox : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    private RespawnController m_rRespawnController;
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hit");
+        // Check object is player
         if (other.CompareTag("Player"))
         {
-            Debug.Log("yes");
-            other.GetComponent<respawn>().playerRespawns();
-        }
-        else
-        {
-            Debug.Log("no");
+            // Respawn the player
+            if (m_rRespawnController) {
+                m_rRespawnController.RespawnPlayer();
+            }
+            else {
+                Debug.LogError("ERROR: Killbox does not have respawn controller");
+            }
         }
     }
 }
