@@ -7,8 +7,8 @@ using TMPro;
 public class DisplayStat : MonoBehaviour
 {
     bool showStats = false;
-    public GameObject maps;
-    public GameObject note;
+    public GameObject collectableText;
+    public GameObject mapCountText;
     public GameObject[] Hearts;
     public int HP;
     // Start is called before the first frame update
@@ -27,10 +27,10 @@ public class DisplayStat : MonoBehaviour
 
         //show all stats
         showStats = true;
-        maps.SetActive(true);
-        note.SetActive(true);
-        maps.GetComponent<Text>().text = GameStats.MapsBoard[GameStats.LevelLoctation].ToString();
-        note.GetComponent<Text>().text = GameStats.NoteBoard[GameStats.LevelLoctation].ToString();
+        collectableText.SetActive(true);
+        mapCountText.SetActive(true);
+        collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.NoteBoard[GameStats.LevelLoctation].ToString() + "/100";
+        mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.MapsBoard[GameStats.LevelLoctation].ToString() + "/3";
     }
   
     void NewHealth(int HP)
@@ -55,16 +55,16 @@ public class DisplayStat : MonoBehaviour
         if (!showStats)
         {
             showStats = true;
-            maps.SetActive(true);
-            note.SetActive(true);
-            maps.GetComponent<Text>().text = GameStats.MapsBoard[GameStats.LevelLoctation].ToString();
-            note.GetComponent<Text>().text = GameStats.NoteBoard[GameStats.LevelLoctation].ToString();
+            collectableText.SetActive(true);
+            mapCountText.SetActive(true);
+            collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.NoteBoard[GameStats.LevelLoctation].ToString();
+            mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.MapsBoard[GameStats.LevelLoctation].ToString();
         }
         else
         {
             showStats = false;
-            maps.SetActive(false);
-            note.SetActive(false);
+            collectableText.SetActive(false);
+            mapCountText.SetActive(false);
         }
 
     }
