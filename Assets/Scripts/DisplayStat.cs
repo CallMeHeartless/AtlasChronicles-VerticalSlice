@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DisplayStat : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class DisplayStat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        newHealth(HP);
+        NewHealth(HP);
     }
 
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class DisplayStat : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            showStat();
+            ShowStat();
         }
 
         //show all stats
@@ -32,7 +33,7 @@ public class DisplayStat : MonoBehaviour
         note.GetComponent<Text>().text = GameStats.NoteBoard[GameStats.LevelLoctation].ToString();
     }
   
-    void newHealth(int HP)
+    void NewHealth(int HP)
     {
         
         for (int i = 0; i < Hearts.Length; i++)
@@ -49,7 +50,7 @@ public class DisplayStat : MonoBehaviour
 
     }
 
-    void showStat()
+    void ShowStat()
     {
         if (!showStats)
         {
