@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class pickUp : MonoBehaviour
+public class Pickup : MonoBehaviour
 {
     private bool m_bIsCollected = false;
-    public GameObject m_particles;
+    public GameObject m_rParticles;
 
     public void Start()
     {
-        if(m_particles != null)
+        if(m_rParticles != null)
         {
-            StopGOParticles(m_particles);
+            m_rParticles.SetActive(false);
         }
     }
 
@@ -21,37 +21,19 @@ public class pickUp : MonoBehaviour
             // Flag as collected
             m_bIsCollected = true;
 
-            if (gameObject.CompareTag("PrimaryPickUp")){    //Collectables
+            if (gameObject.CompareTag("PrimaryPickUp")){    // Maps
                 GameStats.MapsBoard[GameStats.LevelLoctation]++;
-                PlayGOParticles(m_particles);
             }
-            if (gameObject.CompareTag("SecondayPickUp")){   //Maps
+            if (gameObject.CompareTag("SecondayPickUp")){   // Level specific collectables
                 GameStats.NoteBoard[GameStats.LevelLoctation]++;
             }
-            //gameObject.SetActive(false);
+
+            // Turn on VFX
+            if (m_rParticles) {
+                m_rParticles.SetActive(true);
+            }
             GetComponentInChildren<Animator>().SetTrigger("Collect");
         }
     }
 
-    public void DestroyPickup() {
-        Destroy(gameObject);
-    }
-
-    private void PlayGOParticles(GameObject _particles)
-    {
-        //Plays all particle system components within a gameobject
-        foreach(ParticleSystem g in _particles.GetComponentsInChildren<ParticleSystem>())
-        {
-            g.Play();
-        }
-    }
-
-    private void StopGOParticles(GameObject _particles)
-    {
-        //Stops playing all particle system components within a gameobject
-        foreach (ParticleSystem g in _particles.GetComponentsInChildren<ParticleSystem>())
-        {
-            g.Stop();
-        }
-    }
 }
