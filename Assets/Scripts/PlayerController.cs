@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour {
         m_Animator = GetComponentInChildren<Animator>();
         m_PAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
-            m_rCameraReference = GameObject.Find("Main Camera").GetComponent<Camera>();
+            m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
 
         // Initialise variables
@@ -251,14 +251,14 @@ public class PlayerController : MonoBehaviour {
         if (m_bIsFloating) {
             // Level out the player's upward velocity to begin gliding
             m_fVerticalVelocity = 0.0f;
-            m_Animator.SetTrigger("Glide");
+            m_Animator.SetBool("Glide", true);
             if (m_GlideTrails[0]) {
                 foreach(GameObject trail in m_GlideTrails) {
                     trail.SetActive(true);
                 }
             }
         } else {
-            //m_Animator.ResetTrigger("Glide");
+            m_Animator.SetBool("Glide", false);
             m_Animator.SetTrigger("Jump");
             if (m_GlideTrails[0]) {
                 foreach (GameObject trail in m_GlideTrails) {
