@@ -150,6 +150,8 @@ public class PlayerController : MonoBehaviour {
             m_rAnimator.SetTrigger("Idle");
         } else {
             m_rAnimator.ResetTrigger("Idle");
+            Debug.Log("Im not supposed to be grounded??");
+
             m_rAnimator.SetTrigger("Run");
         }
     }
@@ -178,7 +180,7 @@ public class PlayerController : MonoBehaviour {
                     m_bCanDoubleJump = false;
                 }
                 // Animation
-                m_rAnimator.SetTrigger("Jump");
+                //m_rAnimator.SetTrigger("Jump");
             }
 
         }
@@ -202,6 +204,7 @@ public class PlayerController : MonoBehaviour {
             m_fGravityMulitplier = m_fFloatGravityReduction;
         }
         if (m_rCharacterController.isGrounded) {
+            m_rAnimator.SetBool("Grounded", true);
             return;
         }
 
@@ -210,7 +213,9 @@ public class PlayerController : MonoBehaviour {
         if (m_rCharacterController.isGrounded) {
             m_fGravityMulitplier = 1.0f;
         } else {
-            if(!m_bIsFloating) {
+            m_rAnimator.SetBool("Grounded", false);
+
+            if (!m_bIsFloating) {
                 m_fGravityMulitplier *= 1.2f;
                 m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 20.0f);
             }
@@ -261,7 +266,7 @@ public class PlayerController : MonoBehaviour {
             }
         } else {
             m_rAnimator.SetBool("Glide", false);
-            m_rAnimator.SetTrigger("Jump");
+            //m_rAnimator.SetTrigger("Jump");
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(false);
