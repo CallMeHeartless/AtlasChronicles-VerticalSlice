@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KillBox : MonoBehaviour
-{
+public class KillBox : MonoBehaviour {
     [SerializeField]
     private RespawnController m_rRespawnController;
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other) {
         // Check object is player
-        if (other.CompareTag("Player"))
-        {
+        if (other.CompareTag("Player")) {
             // Respawn the player
             if (m_rRespawnController) {
                 m_rRespawnController.RespawnPlayer();
