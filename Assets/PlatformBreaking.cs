@@ -55,7 +55,7 @@ public class PlatformBreaking : MonoBehaviour
             {
                 m_fTimer -= Time.deltaTime;
             }
-           GetComponent<Rigidbody>().velocity = Vector3.down * m_fSpeed;
+           transform.Translate( Vector3.down * m_fSpeed);
         }
     }
 
