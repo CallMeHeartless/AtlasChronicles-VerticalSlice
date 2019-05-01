@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour {
     private float m_fCoyoteTime = 0.5f;
     private float m_fCoyoteTimer = 0.0f;
     private Vector3 m_MovementDirection;
+    private Vector3 m_ExternalForce = Vector3.zero;
     private bool m_bCanDoubleJump = true;
     private float m_fVerticalVelocity = 0.0f;
     private float m_fExternal = 0.0f;
@@ -110,7 +111,7 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
-
+        m_ExternalForce = Vector3.zero;
     }
 
     // Handles all of the functions that determine the vector to move the player, then move them
@@ -121,9 +122,11 @@ public class PlayerController : MonoBehaviour {
         ProcessFloat();
         Jump();
         m_MovementDirection.y += m_fVerticalVelocity * Time.deltaTime;
-        m_MovementDirection.y += m_fExternal * Time.deltaTime;
+        //m_MovementDirection.y += m_fExternal * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_MovementDirection.y);
-
+        // Add external forces
+        m_MovementDirection += m_ExternalForce * Time.deltaTime;
+        
         // Move the player
         m_rCharacterController.Move(m_MovementDirection * m_fMovementSpeed * Time.deltaTime);
 
@@ -508,5 +511,12 @@ public class PlayerController : MonoBehaviour {
     private IEnumerator DisableTeleportParticles() {
         yield return new WaitForSeconds(2.0f);
         m_rTeleportParticles.SetActive(false);
+    }
+
+    // Adds an external force to the player this frame
+    public void AddExternalForce(Vector3 _vecExternalForce) {
+        m_ExternalForce += _vecExternalForce;
+        //m_rCharacterController.Move(Vector3.up * Time.deltaTime);
+        //m_fVerticalVelocity += _vecExternalForce.y;
     }
 }
