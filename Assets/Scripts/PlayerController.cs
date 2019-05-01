@@ -110,7 +110,9 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
-
+        
+        //Check
+        //Debug.Log("Player is grounded " + m_rCharacterController.isGrounded);
     }
 
     // Handles all of the functions that determine the vector to move the player, then move them
