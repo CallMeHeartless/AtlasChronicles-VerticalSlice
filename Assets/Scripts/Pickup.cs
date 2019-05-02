@@ -9,7 +9,7 @@ public class Pickup : MonoBehaviour
 
     public void Start()
     {
-        if(m_rParticles != null)
+        if (m_rParticles != null)
         {
             m_rParticles.SetActive(false);
         }
@@ -17,19 +17,23 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !m_bIsCollected){
+        if (other.CompareTag("Player") && !m_bIsCollected)
+        {
             // Flag as collected
             m_bIsCollected = true;
 
-            if (gameObject.CompareTag("PrimaryPickUp")){    // Maps
+            if (gameObject.CompareTag("PrimaryPickUp"))
+            {    // Maps
                 GameStats.MapsBoard[GameStats.LevelLoctation]++;
             }
-            if (gameObject.CompareTag("SecondayPickUp")){   // Level specific collectables
+            if (gameObject.CompareTag("SecondayPickUp"))
+            {   // Level specific collectables
                 GameStats.NoteBoard[GameStats.LevelLoctation]++;
             }
 
             // Turn on VFX
-            if (m_rParticles) {
+            if (m_rParticles)
+            {
                 m_rParticles.SetActive(true);
             }
             GetComponentInChildren<Animator>().SetTrigger("Collect");

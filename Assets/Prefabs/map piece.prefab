@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1620328785967061000}
   - component: {fileID: 1620328785967061003}
   - component: {fileID: 1620328785967061002}
-  - component: {fileID: 1620328785967061005}
+  - component: {fileID: 5477849020155417244}
   m_Layer: 0
   m_Name: map piece
   m_TagString: PrimaryPickUp
@@ -102,7 +102,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1620328785967061005
+--- !u!114 &5477849020155417244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1620328785967061004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b13b8a08f8be3a42a1d46765256a631, type: 3}
+  m_Script: {fileID: 11500000, guid: 885d6cc5b717d514685c4bbb6e0a6f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_rParticles: {fileID: 1503079577238498022}
@@ -153,6 +153,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1620328785967061014}
     m_Modifications:
+    - target: {fileID: 100000, guid: 18b2cede125664c468ee3e1b5e6ed6af, type: 3}
+      propertyPath: m_Name
+      value: Mesh_MapPickUp
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 18b2cede125664c468ee3e1b5e6ed6af, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.007297101
@@ -208,10 +212,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 18b2cede125664c468ee3e1b5e6ed6af, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 18b2cede125664c468ee3e1b5e6ed6af, type: 3}
-      propertyPath: m_Name
-      value: Mesh_MapPickUp
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 18b2cede125664c468ee3e1b5e6ed6af, type: 3}
       propertyPath: m_Materials.Array.data[0]
