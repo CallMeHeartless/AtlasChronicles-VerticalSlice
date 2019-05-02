@@ -7,7 +7,8 @@ public class Respawning : MonoBehaviour
     public enum eResetType
     {
         breaking,
-        breakingMoving
+        breakingMoving,
+        unstable
     }
 
    
@@ -62,6 +63,15 @@ public class Respawning : MonoBehaviour
                 gameObject.GetComponent<MeshRenderer>().enabled = true;
                 gameObject.GetComponent<MovingPlatform>().enabled = true;
                 gameObject.GetComponent<MovingPlatform>().m_intCurrentPoint = 0; 
+
+                gameObject.GetComponent<Respawning>().enabled = false;
+                break;
+
+            case eResetType.unstable:
+                gameObject.transform.position = gameObject.transform.parent.position;
+                gameObject.GetComponent<MeshRenderer>().enabled = true;
+                gameObject.GetComponent<UnstablePlatform>().enabled = true;
+                gameObject.GetComponent<UnstablePlatform>().Starting();
 
                 gameObject.GetComponent<Respawning>().enabled = false;
                 break;
