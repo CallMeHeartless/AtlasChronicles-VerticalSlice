@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlatformBreaking : MonoBehaviour
 {
     public bool m_bCollatsing = false;
-    public int m_intIntisalStanability;
+    public int m_intIntisalStanability =1;
     public int m_intStanability = 99;// howmany times the playey can land on it
-    public float m_fSpeed = 1;
+    public float m_fSpeed = 0.1f;
     public float m_fTimer;
     public float m_fMaxTimer = 2;
 

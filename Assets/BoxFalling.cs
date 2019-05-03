@@ -28,7 +28,7 @@ public class BoxFalling : MonoBehaviour
         if (m_fHp <= 0)
         {
             //spawn other stuff
-
+            GetComponent<destoryed>().enabled = true;
             //Destroy(gameObject);
 
         }
