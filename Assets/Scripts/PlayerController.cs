@@ -322,14 +322,21 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // Teleports the player directly to a location (Should become called from PlayerAnimationController)
     private void TeleportToLocation(Vector3 _vecTargetLocation) {
+        Vector3 vecPlayerPosition = transform.position;
         // Play VFX
         TeleportParticles();
         // Update position
         transform.position = _vecTargetLocation;
 
         // If marker was placed on thrown object, remove it
-        m_rTeleportMarker.transform.SetParent(null);
+        if (m_rTeleportMarker.transform.parent) {
+            m_rTeleportMarker.transform.parent.position = vecPlayerPosition;
+            m_rTeleportMarker.transform.SetParent(null);
+        }
+
+        // Disable teleport marker
         m_rTeleportMarker.SetActive(false);
         m_bTeleportMarkerDown = false;
     }
