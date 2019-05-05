@@ -64,6 +64,11 @@ public class PlayerController : MonoBehaviour {
     [Header("Ability Variables")]
     [Tooltip("The game object that will be used as the teleport marker")][SerializeField]
     private GameObject m_rTeleportMarkerPrefab;
+    [SerializeField][Tooltip("The distance beyond which the player cannot activate their teleport abilities")]
+    private float m_fTeleportTetherDistance = 50.0f;
+    [SerializeField]
+    [Tooltip("The distance at which teleport markers are removed")]
+    private float m_fTeleportBreakDistance = 55.0f;
     [SerializeField]
     private Vector3 m_vecTeleportMarkerOffset;
     private Vector3 m_vecTeleportLocation;
@@ -337,8 +342,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Disable teleport marker
-        m_rTeleportMarker.SetActive(false);
-        m_bTeleportMarkerDown = false;
+        ToggleTeleportMarker(false);
     }
 
     // Place the teleport marker on the ground
@@ -351,8 +355,7 @@ public class PlayerController : MonoBehaviour {
         m_rTeleportMarker.transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
         // Enable teleport marker
         if (!m_rTeleportMarker.activeSelf) {
-            m_rTeleportMarker.SetActive(true); // Replace this with teleport scroll animations, etc
-            m_bTeleportMarkerDown = true;
+            ToggleTeleportMarker(true);
         }
     }
 
@@ -363,8 +366,7 @@ public class PlayerController : MonoBehaviour {
         }
         m_rTeleportMarker.transform.position = m_rHeldObject.transform.position;
         m_rTeleportMarker.transform.SetParent(m_rHeldObject.transform);
-        m_rTeleportMarker.SetActive(true);
-        m_bTeleportMarkerDown = true;
+        ToggleTeleportMarker(true);
     }
 
     private void TeleportToTeleportMarker() {
@@ -374,7 +376,7 @@ public class PlayerController : MonoBehaviour {
 
         TeleportToLocation(m_rTeleportMarker.transform.position);
         // Disable teleport marker
-        m_rTeleportMarker.SetActive(false);
+        ToggleTeleportMarker(false);
     }
     
     // Trade places with the switch target, then clear the target state
@@ -525,5 +527,15 @@ public class PlayerController : MonoBehaviour {
         m_ExternalForce += _vecExternalForce;
         //m_rCharacterController.Move(Vector3.up * Time.deltaTime);
         //m_fVerticalVelocity += _vecExternalForce.y;
+    }
+
+    private void ToggleTeleportMarker(bool _bState) {
+        m_rTeleportMarker.SetActive(_bState);
+        m_bTeleportMarkerDown = _bState;
+    }
+
+    // Checks if the player has passed through warning and breaking thresholds for teleport markers / switch tags
+    private void HandleTeleportTethers() {
+
     }
 }
