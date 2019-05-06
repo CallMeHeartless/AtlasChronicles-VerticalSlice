@@ -7,4 +7,12 @@ public class PlayerAudioController : AudioController
     public override void Start() {
         base.Start();
     }
+
+    public void TeleportThresholdWarning() {
+        PlaySingleSound("ThresholdWarningTest");
+    }
+
+    public void TeleportThresholdBreak() {
+        PlaySingleSound("TeleportBreakTest");
+    }
 }
