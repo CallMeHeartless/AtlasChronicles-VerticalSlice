@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     private Camera m_rCameraReference;
     [SerializeField]
     private GameObject m_rProjectileArc;
+    private PlayerAudioController m_rPlayerAudioController;
     
     // Component references
     private CharacterController m_rCharacterController;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour {
     private float m_fCoyoteTime = 0.5f;
     private float m_fCoyoteTimer = 0.0f;
     private Vector3 m_MovementDirection;
+    private Vector3 m_ExternalForce = Vector3.zero;
     private bool m_bCanDoubleJump = true;
     private float m_fVerticalVelocity = 0.0f;
     private float m_fExternal = 0.0f;
@@ -63,10 +65,17 @@ public class PlayerController : MonoBehaviour {
     [Header("Ability Variables")]
     [Tooltip("The game object that will be used as the teleport marker")][SerializeField]
     private GameObject m_rTeleportMarkerPrefab;
+    [SerializeField][Tooltip("The distance beyond which the player cannot activate their teleport abilities")]
+    private float m_fTeleportTetherDistance = 50.0f;
+    [SerializeField]
+    [Tooltip("The distance at which teleport markers are removed")]
+    private float m_fTeleportBreakDistance = 55.0f;
     [SerializeField]
     private Vector3 m_vecTeleportMarkerOffset;
     private Vector3 m_vecTeleportLocation;
     private bool m_bTeleportMarkerDown = false;
+    private bool m_bTeleportThresholdWarning = false;
+    private bool m_bSwitchThresholdWarning = false;
     private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
     private GameObject m_rSwitchTarget;
     private GameObject m_rHeldObject;
@@ -78,7 +87,18 @@ public class PlayerController : MonoBehaviour {
     private float m_fThrowSpeed = 10.0f;
     [SerializeField]
     private GameObject m_rTeleportParticles;
-#endregion
+
+    [Header("Slide Detection Variables")]
+    private RaycastHit rayHit;
+    private Vector3 hitNormal; //orientation of the slope.
+    private Vector3 m_vSlideDir;
+    private float rayDistance;
+    private bool m_bSteepSlopeCollided = false;
+    private bool m_bStandingOnSlope; // is on a slope or not
+    [SerializeField] private float m_fSlideSpeed = 1.0f; // ajusting the friction of the slope
+    [SerializeField] private bool m_bIsSliding = false;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start(){
@@ -89,6 +109,7 @@ public class PlayerController : MonoBehaviour {
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
+        m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -110,7 +131,7 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
-
+        m_ExternalForce = Vector3.zero;
     }
 
     // Handles all of the functions that determine the vector to move the player, then move them
@@ -121,9 +142,11 @@ public class PlayerController : MonoBehaviour {
         ProcessFloat();
         Jump();
         m_MovementDirection.y += m_fVerticalVelocity * Time.deltaTime;
-        m_MovementDirection.y += m_fExternal * Time.deltaTime;
+        //m_MovementDirection.y += m_fExternal * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_MovementDirection.y);
-
+        // Add external forces
+        m_MovementDirection += m_ExternalForce * Time.deltaTime;
+        
         // Move the player
         m_rCharacterController.Move(m_MovementDirection * m_fMovementSpeed * Time.deltaTime);
 
@@ -170,7 +193,7 @@ public class PlayerController : MonoBehaviour {
         // Handle jump input
         if (m_rCharacterController.isGrounded || m_bCanDoubleJump || m_fCoyoteTimer < m_fCoyoteTime) {
             // Jump code
-            if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating) { // Change this here
+            if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 m_fVerticalVelocity = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 // Control use of double jump
@@ -178,7 +201,7 @@ public class PlayerController : MonoBehaviour {
                     m_bCanDoubleJump = false;
                 }
                 // Animation
-                m_rAnimator.SetTrigger("Jump");
+                //m_rAnimator.SetTrigger("Jump");
             }
 
         }
@@ -195,13 +218,72 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Detect if player is able to slide down a steep slope
+    void SlideMethod()
+    {
+        m_vSlideDir = Vector3.zero; //Reset slide direction
+        if (m_bSteepSlopeCollided)   //If the player is colliding with a steep slope
+        {
+            //Check if player if standing on a slope
+            if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f))
+            {
+                //If player is on slope bigger than slope limit, set sliding as true
+                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit)
+                {
+                    m_bIsSliding = true;
+                }
+                //If player is stuck on a steep slope while not on the ground, set sliding as true
+                else if (transform.position.y - rayHit.point.y >= 1.0f)
+                {
+                    m_bIsSliding = true;
+                }
+                //If not on steep slope, don't slide
+                else
+                {
+                    m_bIsSliding = false;
+                }
+            }
+        }
+        else
+        {
+            //Don't slide if not colliding slope
+            m_bIsSliding = false;
+        }
+    }
+
     // Updates the player's vertical velocity to consider gravity
     private void ApplyGravity() {
         // Check if floating
         if (m_bIsFloating) {
             m_fGravityMulitplier = m_fFloatGravityReduction;
         }
-        if (m_rCharacterController.isGrounded) {
+
+        //Check if the player is sliding or not
+        SlideMethod();
+
+        //If player is not facing a slippery object, let player exit slide
+        if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f) && m_bIsSliding)
+        {
+            //Check if player is trying to move while on a slope and not facing slippery object
+            bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
+            if (playerIsMoving)
+            {
+                m_bIsSliding = false;
+            }
+        }
+
+        //If player is able to slide, apply sliding forces
+        if (!m_bStandingOnSlope && m_rCharacterController.isGrounded && m_bIsSliding)
+        {
+            m_MovementDirection = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
+            Vector3.OrthoNormalize(ref hitNormal, ref m_MovementDirection);
+            m_MovementDirection *= m_fSlideSpeed;
+        }
+
+        //If the player is grounded, set the animator as grounded and exit function
+        if (m_rCharacterController.isGrounded)
+        {
+            m_rAnimator.SetBool("Grounded", true);
             return;
         }
 
@@ -210,7 +292,9 @@ public class PlayerController : MonoBehaviour {
         if (m_rCharacterController.isGrounded) {
             m_fGravityMulitplier = 1.0f;
         } else {
-            if(!m_bIsFloating) {
+            m_rAnimator.SetBool("Grounded", false);
+
+            if (!m_bIsFloating) {
                 m_fGravityMulitplier *= 1.2f;
                 m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 20.0f);
             }
@@ -261,7 +345,7 @@ public class PlayerController : MonoBehaviour {
             }
         } else {
             m_rAnimator.SetBool("Glide", false);
-            m_rAnimator.SetTrigger("Jump");
+            //m_rAnimator.SetTrigger("Jump");
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(false);
@@ -281,6 +365,9 @@ public class PlayerController : MonoBehaviour {
 
     // Handles all of the functions that control player abilities
     private void HandlePlayerAbilities() {
+        // Check the teleport tether thresholds
+        HandleTeleportTethers();
+
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
             // Throw a tag if there is no  held object
@@ -319,16 +406,22 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // Teleports the player directly to a location (Should become called from PlayerAnimationController)
     private void TeleportToLocation(Vector3 _vecTargetLocation) {
+        Vector3 vecPlayerPosition = transform.position;
         // Play VFX
         TeleportParticles();
         // Update position
         transform.position = _vecTargetLocation;
 
         // If marker was placed on thrown object, remove it
-        m_rTeleportMarker.transform.SetParent(null);
-        m_rTeleportMarker.SetActive(false);
-        m_bTeleportMarkerDown = false;
+        if (m_rTeleportMarker.transform.parent) {
+            m_rTeleportMarker.transform.parent.position = vecPlayerPosition;
+            m_rTeleportMarker.transform.SetParent(null);
+        }
+
+        // Disable teleport marker
+        ToggleTeleportMarker(false);
     }
 
     // Place the teleport marker on the ground
@@ -341,8 +434,7 @@ public class PlayerController : MonoBehaviour {
         m_rTeleportMarker.transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
         // Enable teleport marker
         if (!m_rTeleportMarker.activeSelf) {
-            m_rTeleportMarker.SetActive(true); // Replace this with teleport scroll animations, etc
-            m_bTeleportMarkerDown = true;
+            ToggleTeleportMarker(true);
         }
     }
 
@@ -353,23 +445,22 @@ public class PlayerController : MonoBehaviour {
         }
         m_rTeleportMarker.transform.position = m_rHeldObject.transform.position;
         m_rTeleportMarker.transform.SetParent(m_rHeldObject.transform);
-        m_rTeleportMarker.SetActive(true);
-        m_bTeleportMarkerDown = true;
+        ToggleTeleportMarker(true);
     }
 
     private void TeleportToTeleportMarker() {
-        if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject) {
+        if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject || m_bTeleportThresholdWarning) {
             return; // Error animation / noise
         }
 
         TeleportToLocation(m_rTeleportMarker.transform.position);
         // Disable teleport marker
-        m_rTeleportMarker.SetActive(false);
+        ToggleTeleportMarker(false);
     }
     
     // Trade places with the switch target, then clear the target state
     private void SwitchWithTarget() {
-        if (!m_rSwitchTarget) {
+        if (!m_rSwitchTarget || m_bSwitchThresholdWarning) {
             return;
         }
         TeleportParticles();
@@ -508,5 +599,84 @@ public class PlayerController : MonoBehaviour {
     private IEnumerator DisableTeleportParticles() {
         yield return new WaitForSeconds(2.0f);
         m_rTeleportParticles.SetActive(false);
+    }
+
+    // Adds an external force to the player this frame
+    public void AddExternalForce(Vector3 _vecExternalForce) {
+        m_ExternalForce += _vecExternalForce;
+        //m_rCharacterController.Move(Vector3.up * Time.deltaTime);
+        //m_fVerticalVelocity += _vecExternalForce.y;
+    }
+
+    private void ToggleTeleportMarker(bool _bState) {
+        m_rTeleportMarker.SetActive(_bState);
+        m_bTeleportMarkerDown = _bState;
+    }
+
+    // Checks if the player has passed through warning and breaking thresholds for teleport markers / switch tags
+    private void HandleTeleportTethers() {
+        // Check teleport maker
+        if (m_bTeleportMarkerDown) {
+            float fMarkerDistance = (transform.position - m_rTeleportMarker.transform.position).magnitude;
+            // Compare to threshold distances
+            if (fMarkerDistance >= m_fTeleportBreakDistance) {
+                ToggleTeleportMarker(false);
+                m_rTeleportMarker.transform.SetParent(null);
+                m_bTeleportThresholdWarning = false;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdBreak();
+            }
+            else if (fMarkerDistance >= m_fTeleportTetherDistance && !m_bTeleportThresholdWarning) {
+                m_bTeleportThresholdWarning = true;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdWarning();
+            }
+            if(fMarkerDistance < m_fTeleportTetherDistance) {
+                m_bTeleportThresholdWarning = false;
+            }
+        }
+
+
+        // Check switch tag
+        if (m_rSwitchTarget) {
+            float fSwitchTagDistance = (transform.position - m_rSwitchTarget.transform.position).magnitude;
+            // Compare to threshold distances
+            if (fSwitchTagDistance >= m_fTeleportBreakDistance) {
+                //ToggleTeleportMarker(false);
+                m_bSwitchThresholdWarning = false;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdBreak();
+                m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().DetachFromObject();
+            }
+            else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
+                m_bSwitchThresholdWarning = true;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdWarning();
+            }
+            if(fSwitchTagDistance < m_fTeleportTetherDistance) {
+                m_bSwitchThresholdWarning = false;
+            }
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        hitNormal = hit.normal;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_bSteepSlopeCollided = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_bSteepSlopeCollided = false;
+        }
     }
 }
