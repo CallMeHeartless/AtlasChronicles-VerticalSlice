@@ -5,19 +5,36 @@ using UnityEngine;
 public class fallingitem : MonoBehaviour
 {
     public int m_intDamage;
+    private bool m_bFirstHit = true;
+    public bool m_bDestoryOnGround;
     // Start is called before the first frame update
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().DamagePlayer(m_intDamage);
-            GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP - m_intDamage;
-            GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP);
+            if (m_bFirstHit == true)
+            {
+                collision.gameObject.GetComponent<PlayerController>().DamagePlayer(m_intDamage);
+                GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP - m_intDamage;
+                GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP);
+                m_bFirstHit = false;
+            }
 
         }
         else
         {
-            Destroy(gameObject);
+            if (m_bDestoryOnGround)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                if (collision.gameObject.CompareTag("DestoryArea"))
+                {
+                    Destroy(gameObject);
+                }
+            }
+            
         }
     }
 }

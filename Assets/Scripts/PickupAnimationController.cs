@@ -13,6 +13,6 @@ public class PickupAnimationController : MonoBehaviour
     }
 
     public void DestroyPickup() {
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);
     }
 }
