@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     private Camera m_rCameraReference;
     [SerializeField]
     private GameObject m_rProjectileArc;
+    private PlayerAudioController m_rPlayerAudioController;
     
     // Component references
     private CharacterController m_rCharacterController;
@@ -73,6 +74,8 @@ public class PlayerController : MonoBehaviour {
     private Vector3 m_vecTeleportMarkerOffset;
     private Vector3 m_vecTeleportLocation;
     private bool m_bTeleportMarkerDown = false;
+    private bool m_bTeleportThresholdWarning = false;
+    private bool m_bSwitchThresholdWarning = false;
     private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
     private GameObject m_rSwitchTarget;
     private GameObject m_rHeldObject;
@@ -95,6 +98,7 @@ public class PlayerController : MonoBehaviour {
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
+        m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -289,6 +293,9 @@ public class PlayerController : MonoBehaviour {
 
     // Handles all of the functions that control player abilities
     private void HandlePlayerAbilities() {
+        // Check the teleport tether thresholds
+        HandleTeleportTethers();
+
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
             // Throw a tag if there is no  held object
@@ -370,7 +377,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void TeleportToTeleportMarker() {
-        if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject) {
+        if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject || m_bTeleportThresholdWarning) {
             return; // Error animation / noise
         }
 
@@ -381,7 +388,7 @@ public class PlayerController : MonoBehaviour {
     
     // Trade places with the switch target, then clear the target state
     private void SwitchWithTarget() {
-        if (!m_rSwitchTarget) {
+        if (!m_rSwitchTarget || m_bSwitchThresholdWarning) {
             return;
         }
         TeleportParticles();
@@ -536,6 +543,47 @@ public class PlayerController : MonoBehaviour {
 
     // Checks if the player has passed through warning and breaking thresholds for teleport markers / switch tags
     private void HandleTeleportTethers() {
+        // Check teleport maker
+        if (m_bTeleportMarkerDown) {
+            float fMarkerDistance = (transform.position - m_rTeleportMarker.transform.position).magnitude;
+            // Compare to threshold distances
+            if (fMarkerDistance >= m_fTeleportBreakDistance) {
+                ToggleTeleportMarker(false);
+                m_rTeleportMarker.transform.SetParent(null);
+                m_bTeleportThresholdWarning = false;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdBreak();
+            }
+            else if (fMarkerDistance >= m_fTeleportTetherDistance && !m_bTeleportThresholdWarning) {
+                m_bTeleportThresholdWarning = true;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdWarning();
+            }
+            if(fMarkerDistance < m_fTeleportTetherDistance) {
+                m_bTeleportThresholdWarning = false;
+            }
+        }
 
+
+        // Check switch tag
+        if (m_rSwitchTarget) {
+            float fSwitchTagDistance = (transform.position - m_rSwitchTarget.transform.position).magnitude;
+            // Compare to threshold distances
+            if (fSwitchTagDistance >= m_fTeleportBreakDistance) {
+                //ToggleTeleportMarker(false);
+                m_bSwitchThresholdWarning = false;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdBreak();
+                m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().DetachFromObject();
+            }
+            else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
+                m_bSwitchThresholdWarning = true;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdWarning();
+            }
+            if(fSwitchTagDistance < m_fTeleportTetherDistance) {
+                m_bSwitchThresholdWarning = false;
+            }
+        }
     }
 }
