@@ -87,7 +87,18 @@ public class PlayerController : MonoBehaviour {
     private float m_fThrowSpeed = 10.0f;
     [SerializeField]
     private GameObject m_rTeleportParticles;
-#endregion
+
+    [Header("Slide Detection Variables")]
+    private RaycastHit rayHit;
+    private Vector3 hitNormal; //orientation of the slope.
+    private Vector3 m_vSlideDir;
+    private float rayDistance;
+    private bool m_bSteepSlopeCollided = false;
+    private bool m_bStandingOnSlope; // is on a slope or not
+    [SerializeField] private float m_fSlideSpeed = 1.0f; // ajusting the friction of the slope
+    [SerializeField] private bool m_bIsSliding = false;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start(){
@@ -182,7 +193,7 @@ public class PlayerController : MonoBehaviour {
         // Handle jump input
         if (m_rCharacterController.isGrounded || m_bCanDoubleJump || m_fCoyoteTimer < m_fCoyoteTime) {
             // Jump code
-            if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating) { // Change this here
+            if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 m_fVerticalVelocity = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 // Control use of double jump
@@ -190,7 +201,7 @@ public class PlayerController : MonoBehaviour {
                     m_bCanDoubleJump = false;
                 }
                 // Animation
-                m_rAnimator.SetTrigger("Jump");
+                //m_rAnimator.SetTrigger("Jump");
             }
 
         }
@@ -207,13 +218,72 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Detect if player is able to slide down a steep slope
+    void SlideMethod()
+    {
+        m_vSlideDir = Vector3.zero; //Reset slide direction
+        if (m_bSteepSlopeCollided)   //If the player is colliding with a steep slope
+        {
+            //Check if player if standing on a slope
+            if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f))
+            {
+                //If player is on slope bigger than slope limit, set sliding as true
+                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit)
+                {
+                    m_bIsSliding = true;
+                }
+                //If player is stuck on a steep slope while not on the ground, set sliding as true
+                else if (transform.position.y - rayHit.point.y >= 1.0f)
+                {
+                    m_bIsSliding = true;
+                }
+                //If not on steep slope, don't slide
+                else
+                {
+                    m_bIsSliding = false;
+                }
+            }
+        }
+        else
+        {
+            //Don't slide if not colliding slope
+            m_bIsSliding = false;
+        }
+    }
+
     // Updates the player's vertical velocity to consider gravity
     private void ApplyGravity() {
         // Check if floating
         if (m_bIsFloating) {
             m_fGravityMulitplier = m_fFloatGravityReduction;
         }
-        if (m_rCharacterController.isGrounded) {
+
+        //Check if the player is sliding or not
+        SlideMethod();
+
+        //If player is not facing a slippery object, let player exit slide
+        if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f) && m_bIsSliding)
+        {
+            //Check if player is trying to move while on a slope and not facing slippery object
+            bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
+            if (playerIsMoving)
+            {
+                m_bIsSliding = false;
+            }
+        }
+
+        //If player is able to slide, apply sliding forces
+        if (!m_bStandingOnSlope && m_rCharacterController.isGrounded && m_bIsSliding)
+        {
+            m_MovementDirection = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
+            Vector3.OrthoNormalize(ref hitNormal, ref m_MovementDirection);
+            m_MovementDirection *= m_fSlideSpeed;
+        }
+
+        //If the player is grounded, set the animator as grounded and exit function
+        if (m_rCharacterController.isGrounded)
+        {
+            m_rAnimator.SetBool("Grounded", true);
             return;
         }
 
@@ -222,7 +292,9 @@ public class PlayerController : MonoBehaviour {
         if (m_rCharacterController.isGrounded) {
             m_fGravityMulitplier = 1.0f;
         } else {
-            if(!m_bIsFloating) {
+            m_rAnimator.SetBool("Grounded", false);
+
+            if (!m_bIsFloating) {
                 m_fGravityMulitplier *= 1.2f;
                 m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 20.0f);
             }
@@ -273,7 +345,7 @@ public class PlayerController : MonoBehaviour {
             }
         } else {
             m_rAnimator.SetBool("Glide", false);
-            m_rAnimator.SetTrigger("Jump");
+            //m_rAnimator.SetTrigger("Jump");
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(false);
@@ -584,6 +656,27 @@ public class PlayerController : MonoBehaviour {
             if(fSwitchTagDistance < m_fTeleportTetherDistance) {
                 m_bSwitchThresholdWarning = false;
             }
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        hitNormal = hit.normal;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_bSteepSlopeCollided = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_bSteepSlopeCollided = false;
         }
     }
 }

@@ -6,7 +6,7 @@ public class RespawnController : MonoBehaviour
 {
     [SerializeField]
     private Transform m_rRespawnPoint;
-    public GameObject m_rPlayer;
+    private GameObject m_rPlayer;
 
     // Start is called before the first frame update
     void Start()
