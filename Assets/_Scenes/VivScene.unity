@@ -15977,6 +15977,11 @@ PrefabInstance:
       propertyPath: m_CameraReference
       value: 
       objectReference: {fileID: 2365793551573972639}
+    - target: {fileID: 6850383250669970815, guid: b2c0a0674d4b26a4089c0a55d55add5a,
+        type: 3}
+      propertyPath: m_rCameraReference
+      value: 
+      objectReference: {fileID: 2365793551573972639}
     - target: {fileID: 4727328372385201593, guid: b2c0a0674d4b26a4089c0a55d55add5a,
         type: 3}
       propertyPath: m_IsActive
@@ -16876,6 +16881,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -4.620233e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403613506105527863, guid: b2c0a0674d4b26a4089c0a55d55add5a,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 876887792, guid: b2c0a0674d4b26a4089c0a55d55add5a, type: 3}
       propertyPath: StartPoint
@@ -25259,9 +25269,9 @@ MeshCollider:
   m_GameObject: {fileID: 1381703670}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300002, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
 --- !u!1 &1387216970 stripped
@@ -25733,12 +25743,12 @@ PrefabInstance:
     - target: {fileID: 4385144533418833812, guid: 28b06a366629462469a4d26d674f7d89,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.1177502
+      value: -0.11775018
       objectReference: {fileID: 0}
     - target: {fileID: 4385144533418833812, guid: 28b06a366629462469a4d26d674f7d89,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.26492277
+      value: -0.2649228
       objectReference: {fileID: 0}
     - target: {fileID: 4385144533576949297, guid: 28b06a366629462469a4d26d674f7d89,
         type: 3}
@@ -31609,6 +31619,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_TreeMain
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
+      propertyPath: m_TagString
+      value: SlipperyObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
+      propertyPath: m_TagString
+      value: SlipperyObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
+      propertyPath: m_TagString
+      value: SlipperyObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
+      propertyPath: m_TagString
+      value: SlipperyObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
+      propertyPath: m_TagString
+      value: SlipperyObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
+      propertyPath: m_TagString
+      value: SlipperyObject
+      objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 9490a267d97f26a4a8395ffb97d55258, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.583
@@ -32511,6 +32545,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ba40719e9ef6f294d9812c4798ebf33d, type: 3}
       propertyPath: m_Name
       value: sm_Shrine
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ba40719e9ef6f294d9812c4798ebf33d, type: 3}
+      propertyPath: m_TagString
+      value: SlipperyObject
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ba40719e9ef6f294d9812c4798ebf33d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -35901,7 +35939,7 @@ GameObject:
   - component: {fileID: 7698198807059978}
   m_Layer: 0
   m_Name: sm_Tree
-  m_TagString: Untagged
+  m_TagString: SlipperyObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
