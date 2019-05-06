@@ -9,7 +9,8 @@ public class JumpPadController : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
 
         if (other.CompareTag("Player")) {
-            other.GetComponent<PlayerController>().SetPlayerVerticalVelocity(m_fJumpForce);
+            //other.GetComponent<PlayerController>().SetPlayerVerticalVelocity(m_fJumpForce);
+            other.GetComponent<PlayerController>().AddExternalForce(Vector3.up * m_fJumpForce);
         }
     }
 

@@ -10,7 +10,7 @@ public class SwitchTagController : MonoBehaviour
     private Transform m_AttachedObject = null;
     [SerializeField]
     private Vector3 m_vecOffset;
-    private PlayerController m_PlayerReference;
+    private PlayerController m_rPlayerReference;
 
   
 
@@ -34,7 +34,7 @@ public class SwitchTagController : MonoBehaviour
             transform.position = m_AttachedObject.position + m_vecOffset;
             transform.SetParent(m_AttachedObject);
             m_bIsMoving = false;
-            m_PlayerReference.SetSwitchTarget(m_AttachedObject.gameObject);
+            m_rPlayerReference.SetSwitchTarget(m_AttachedObject.gameObject);
             m_AttachedObject.GetComponent<Switchable>().Tag();
         } else if(!other.CompareTag("Player")){
             // Destroy animation? DO NOT DESTROY OBJECT
@@ -62,6 +62,6 @@ public class SwitchTagController : MonoBehaviour
 
     // Manually sets the player controller reference
     public void SetPlayerReference(PlayerController _playerReference) {
-        m_PlayerReference = _playerReference;
+        m_rPlayerReference = _playerReference;
     }
 }
