@@ -173,8 +173,6 @@ public class PlayerController : MonoBehaviour {
             m_rAnimator.SetTrigger("Idle");
         } else {
             m_rAnimator.ResetTrigger("Idle");
-            Debug.Log("Im not supposed to be grounded??");
-
             m_rAnimator.SetTrigger("Run");
         }
     }
