@@ -4295,6 +4295,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 37212475}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &330577517 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 25ca2d8210553394488962b7c53cfc3e,
+    type: 3}
+  m_PrefabInstance: {fileID: 723036380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &330577521
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330577517}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300002, guid: 25ca2d8210553394488962b7c53cfc3e, type: 3}
 --- !u!1001 &331887271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9568,6 +9588,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9428870535b220141b751b24feedd85a, type: 2}
+    - target: {fileID: 2300000, guid: 25ca2d8210553394488962b7c53cfc3e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2300002, guid: 25ca2d8210553394488962b7c53cfc3e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -16485,7 +16509,7 @@ PrefabInstance:
     - target: {fileID: 6850383250669970815, guid: b2c0a0674d4b26a4089c0a55d55add5a,
         type: 3}
       propertyPath: m_fJumpPower
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6850383250669970815, guid: b2c0a0674d4b26a4089c0a55d55add5a,
         type: 3}
@@ -26308,12 +26332,12 @@ PrefabInstance:
     - target: {fileID: 4385144533418833812, guid: 28b06a366629462469a4d26d674f7d89,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.1177502
+      value: -0.11775018
       objectReference: {fileID: 0}
     - target: {fileID: 4385144533418833812, guid: 28b06a366629462469a4d26d674f7d89,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.26492277
+      value: -0.2649228
       objectReference: {fileID: 0}
     - target: {fileID: 4385144533418833812, guid: 28b06a366629462469a4d26d674f7d89,
         type: 3}
@@ -27786,7 +27810,17 @@ PrefabInstance:
     - target: {fileID: 1483526635750736743, guid: f5314c87c63402f4b8d78dc5e56ae7f0,
         type: 3}
       propertyPath: m_fJumpForce
-      value: 2000
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483526635750736737, guid: f5314c87c63402f4b8d78dc5e56ae7f0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483526635750736736, guid: f5314c87c63402f4b8d78dc5e56ae7f0,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5314c87c63402f4b8d78dc5e56ae7f0, type: 3}

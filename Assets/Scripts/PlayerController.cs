@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
     [Header("Movement Variables")]
     [SerializeField]
     private float m_fMovementSpeed;
-    private float m_fTurnSpeed = 10.0f;
+    private float m_fTurnSpeed = 15.0f;
     [SerializeField]
     private float m_fJumpPower;
     [Tooltip("Time where the player may still jump after falling")] [SerializeField]
@@ -292,7 +292,7 @@ public class PlayerController : MonoBehaviour {
 
             if (!m_bIsFloating) {// && m_Velocity.y < 0.0f
                 m_fGravityMulitplier *= 1.2f;
-                m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 10.0f);
+                m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 2.0f);
             }
         }
         //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
