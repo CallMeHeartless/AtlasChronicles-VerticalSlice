@@ -76,13 +76,13 @@ public class PlatformBreaking : MonoBehaviour
             }
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
 
-        }
-    }
+    //    }
+    //}
 
     public void Copsate()
     {

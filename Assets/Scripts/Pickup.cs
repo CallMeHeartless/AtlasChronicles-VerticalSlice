@@ -37,6 +37,8 @@ public class Pickup : MonoBehaviour
                 m_rParticles.SetActive(true);
             }
             GetComponentInChildren<Animator>().SetTrigger("Collect");
+
+            
         }
     }
 
