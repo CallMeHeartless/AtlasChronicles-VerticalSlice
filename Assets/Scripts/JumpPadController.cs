@@ -6,11 +6,13 @@ public class JumpPadController : MonoBehaviour {
     [SerializeField]
     private float m_fJumpForce = 10.0f;
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerStay(Collider other) {
 
         if (other.CompareTag("Player")) {
-            //other.GetComponent<PlayerController>().SetPlayerVerticalVelocity(m_fJumpForce);
+            other.GetComponent<PlayerController>().ClearExternalForces();
+            other.GetComponent<PlayerController>().ResetGravityMultiplier();
             other.GetComponent<PlayerController>().AddExternalForce(Vector3.up * m_fJumpForce);
+            print("jump");
         }
     }
 
