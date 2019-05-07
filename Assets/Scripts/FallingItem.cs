@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fallingitem : MonoBehaviour
+public class FallingItem : MonoBehaviour
 {
     public int m_intDamage;
     private bool m_bFirstHit = true;

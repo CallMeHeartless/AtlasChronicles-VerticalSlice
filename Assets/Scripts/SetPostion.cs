@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class SetPostion : MonoBehaviour
 {
-    public GameObject setLoctation;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    public GameObject m_gSetLoctation;
+    
     // Update is called once per frame
     void Update()
     {
-        transform.position = setLoctation.transform.position;
+        transform.position = m_gSetLoctation.transform.position;
     }
 }

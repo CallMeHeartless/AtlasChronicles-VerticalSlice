@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class destoryed : MonoBehaviour
+public class Destoryed : MonoBehaviour
 {
     public GameObject m_gSecondaryItemIs;
     public GameObject m_gHeartItemIs;
