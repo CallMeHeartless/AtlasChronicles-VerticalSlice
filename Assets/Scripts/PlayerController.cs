@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour {
     private Camera m_rCameraReference;
     [SerializeField]
     private GameObject m_rProjectileArc;
-    
+    private PlayerAudioController m_rPlayerAudioController;
+
     // Component references
     private CharacterController m_rCharacterController;
     private Animator m_rAnimator;
@@ -32,22 +33,25 @@ public class PlayerController : MonoBehaviour {
     [Header("Movement Variables")]
     [SerializeField]
     private float m_fMovementSpeed;
-    private float m_fTurnSpeed = 10.0f;
+    private float m_fTurnSpeed = 15.0f;
     [SerializeField]
     private float m_fJumpPower;
-    [Tooltip("Time where the player may still jump after falling")][SerializeField]
+    [Tooltip("Time where the player may still jump after falling")] [SerializeField]
     private float m_fCoyoteTime = 0.5f;
     private float m_fCoyoteTimer = 0.0f;
     private Vector3 m_MovementDirection;
     private Vector3 m_ExternalForce = Vector3.zero;
+    private Vector3 m_MovementInput = Vector3.zero;
     private bool m_bCanDoubleJump = true;
+    [SerializeField]
+    private Vector3 m_Velocity = Vector3.zero;
     private float m_fVerticalVelocity = 0.0f;
     private float m_fExternal = 0.0f;
     private float m_fGravityMulitplier = 1.0f;
-    [Tooltip("The time that the player can float for")][SerializeField]
+    [Tooltip("The time that the player can float for")] [SerializeField]
     private float m_fFloatTime = 2.0f;
     private float m_fFloatTimer = 0.0f;
-    [Tooltip("The fraction of that gravity affects the player while they are floating")][SerializeField]
+    [Tooltip("The fraction of that gravity affects the player while they are floating")] [SerializeField]
     private float m_fFloatGravityReduction = 0.8f;
     private bool m_bIsFloating = false;
     private bool m_bIsWading = false;
@@ -62,12 +66,19 @@ public class PlayerController : MonoBehaviour {
 
     // Ability variables
     [Header("Ability Variables")]
-    [Tooltip("The game object that will be used as the teleport marker")][SerializeField]
+    [Tooltip("The game object that will be used as the teleport marker")] [SerializeField]
     private GameObject m_rTeleportMarkerPrefab;
+    [SerializeField] [Tooltip("The distance beyond which the player cannot activate their teleport abilities")]
+    private float m_fTeleportTetherDistance = 50.0f;
+    [SerializeField]
+    [Tooltip("The distance at which teleport markers are removed")]
+    private float m_fTeleportBreakDistance = 55.0f;
     [SerializeField]
     private Vector3 m_vecTeleportMarkerOffset;
     private Vector3 m_vecTeleportLocation;
     private bool m_bTeleportMarkerDown = false;
+    private bool m_bTeleportThresholdWarning = false;
+    private bool m_bSwitchThresholdWarning = false;
     private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
     private GameObject m_rSwitchTarget;
     private GameObject m_rHeldObject;
@@ -79,10 +90,21 @@ public class PlayerController : MonoBehaviour {
     private float m_fThrowSpeed = 10.0f;
     [SerializeField]
     private GameObject m_rTeleportParticles;
-#endregion
+
+    [Header("Slide Detection Variables")]
+    private RaycastHit rayHit;
+    private Vector3 hitNormal; //orientation of the slope.
+    private Vector3 m_vSlideDir;
+    private float rayDistance;
+    private bool m_bSteepSlopeCollided = false;
+    private bool m_bStandingOnSlope; // is on a slope or not
+    [SerializeField] private float m_fSlideSpeed = 1.0f; // ajusting the friction of the slope
+    [SerializeField] private bool m_bIsSliding = false;
+
+    #endregion
 
     // Start is called before the first frame update
-    void Start(){
+    void Start() {
         // Create component references
         m_rCharacterController = GetComponent<CharacterController>();
         m_rAnimator = GetComponentInChildren<Animator>();
@@ -90,6 +112,7 @@ public class PlayerController : MonoBehaviour {
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
+        m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -102,7 +125,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update(){
+    void Update() {
         if (!GameState.DoesPlayerHaveControl()) {
             return;
         }
@@ -111,6 +134,10 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
+        //m_ExternalForce = Vector3.zero;
+    }
+
+    private void LateUpdate() {
         m_ExternalForce = Vector3.zero;
     }
 
@@ -121,33 +148,27 @@ public class PlayerController : MonoBehaviour {
         ApplyGravity();
         ProcessFloat();
         Jump();
-        m_MovementDirection.y += m_fVerticalVelocity * Time.deltaTime;
-        //m_MovementDirection.y += m_fExternal * Time.deltaTime;
-        m_rAnimator.SetFloat("JumpSpeed", m_MovementDirection.y);
-        // Add external forces
-        m_MovementDirection += m_ExternalForce * Time.deltaTime;
-        
-        // Move the player
-        m_rCharacterController.Move(m_MovementDirection * m_fMovementSpeed * Time.deltaTime);
+        m_Velocity += m_ExternalForce * Time.deltaTime;
 
-        // Reset external vertical force
-        if (m_fExternal > 0.0f) {
-            m_fExternal -= 100.0f * Time.deltaTime;
-        } else {
-            m_fExternal = 0.0f;
-        }
-        //m_fExternal = 0.0f;
+        // Limit vertical velocity
+        m_Velocity.y = Mathf.Clamp(m_Velocity.y, -100.0f, 100.0f);
+        m_MovementDirection = (m_MovementInput + m_Velocity) * Time.deltaTime;
+        m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
+
+        // Move the player
+        m_rCharacterController.Move(m_MovementDirection);
+
     }
 
     // Calculate movement
     private void CalculatePlayerMovement() {
         // Take player input
-        m_MovementDirection = (m_rCameraReference.transform.right * Input.GetAxis("Horizontal") + m_rCameraReference.transform.forward * Input.GetAxis("Vertical")).normalized;
-        m_MovementDirection.y = 0.0f;
-        if (!m_rCharacterController.isGrounded) {
-            return;
-        }
-        if(m_MovementDirection.sqrMagnitude == 0) {
+        m_MovementInput = m_fMovementSpeed * (m_rCameraReference.transform.right * Input.GetAxis("Horizontal") + m_rCameraReference.transform.forward * Input.GetAxis("Vertical")).normalized;
+        m_MovementInput.y = 0.0f;
+        //if (!m_rCharacterController.isGrounded) {
+        //    return;
+        //}
+        if (m_MovementInput.sqrMagnitude == 0) {
             // Idle
             m_rAnimator.ResetTrigger("Run");
             m_rAnimator.SetTrigger("Idle");
@@ -160,10 +181,10 @@ public class PlayerController : MonoBehaviour {
     // Rotates the player to look in the direction they are moving
     private void CalculatePlayerRotation() {
         // Prevent turning when stationary
-        if(m_MovementDirection.sqrMagnitude == 0) {
+        Vector3 vecLookDirection = (m_rCameraReference.transform.right * Input.GetAxis("Horizontal") + m_rCameraReference.transform.forward * Input.GetAxis("Vertical")).normalized;
+        if (vecLookDirection.sqrMagnitude == 0) {
             return;
         }
-        Vector3 vecLookDirection = m_MovementDirection;
         vecLookDirection.y = 0.0f; // Remove y component
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(vecLookDirection), Time.deltaTime * m_fTurnSpeed);
     }
@@ -173,15 +194,16 @@ public class PlayerController : MonoBehaviour {
         // Handle jump input
         if (m_rCharacterController.isGrounded || m_bCanDoubleJump || m_fCoyoteTimer < m_fCoyoteTime) {
             // Jump code
-            if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating) { // Change this here
-                m_fVerticalVelocity = m_fJumpPower;
+            if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
+                //m_fVerticalVelocity = m_fJumpPower;
+                m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 // Control use of double jump
                 if (!m_rCharacterController.isGrounded) {
                     m_bCanDoubleJump = false;
                 }
                 // Animation
-                m_rAnimator.SetTrigger("Jump");
+                //m_rAnimator.SetTrigger("Jump");
             }
 
         }
@@ -198,34 +220,89 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Detect if player is able to slide down a steep slope
+    void SlideMethod() {
+        m_vSlideDir = Vector3.zero; //Reset slide direction
+        if (m_bSteepSlopeCollided)   //If the player is colliding with a steep slope
+        {
+            //Check if player if standing on a slope
+            if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f)) {
+                //If player is on slope bigger than slope limit, set sliding as true
+                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit) {
+                    m_bIsSliding = true;
+                }
+                //If player is stuck on a steep slope while not on the ground, set sliding as true
+                else if (transform.position.y - rayHit.point.y >= 1.0f) {
+                    m_bIsSliding = true;
+                }
+                //If not on steep slope, don't slide
+                else {
+                    m_bIsSliding = false;
+                }
+            }
+        }
+        else {
+            //Don't slide if not colliding slope
+            m_bIsSliding = false;
+        }
+        
+        //If player is not facing a slippery object, let player exit slide
+        if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f) && m_bIsSliding) {
+            //Check if player is trying to move while on a slope and not facing slippery object
+            bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
+            if (playerIsMoving) {
+                m_bIsSliding = false;
+            }
+        }
+
+        //If player is able to slide, apply sliding forces
+        if (!m_bStandingOnSlope && m_rCharacterController.isGrounded && m_bIsSliding) {
+            m_MovementDirection = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
+            Vector3.OrthoNormalize(ref hitNormal, ref m_MovementDirection);
+            m_MovementDirection *= m_fSlideSpeed;
+        }
+
+    }
+
     // Updates the player's vertical velocity to consider gravity
     private void ApplyGravity() {
         // Check if floating
         if (m_bIsFloating) {
             m_fGravityMulitplier = m_fFloatGravityReduction;
         }
-        if (m_rCharacterController.isGrounded) {
-            return;
-        }
+
+        //Check if the player is sliding or not
+        SlideMethod();
+        //If the player is grounded, set the animator as grounded and exit function
+        //if (m_rCharacterController.isGrounded) {
+        //    m_rAnimator.SetBool("Grounded", true);
+        //    return;
+        //}
 
         // Accelerate the player
-        m_fVerticalVelocity += Physics.gravity.y * m_fGravityMulitplier *  Time.deltaTime;
+        //m_fVerticalVelocity += Physics.gravity.y * m_fGravityMulitplier *  Time.deltaTime;
+        m_ExternalForce += Physics.gravity * m_fGravityMulitplier;
+
         if (m_rCharacterController.isGrounded) {
+            m_rAnimator.SetBool("Grounded", true);
             m_fGravityMulitplier = 1.0f;
+            m_Velocity.y = 0.0f;
         } else {
-            if(!m_bIsFloating) {
+            m_rAnimator.SetBool("Grounded", false);
+
+            if (!m_bIsFloating) {// && m_Velocity.y < 0.0f
                 m_fGravityMulitplier *= 1.2f;
-                m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 20.0f);
+                m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 2.0f);
             }
         }
-        m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
+        //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
     }
 
     // Handles the player floating slowly downwards
     private void ProcessFloat() {
         if (!m_rCharacterController.isGrounded && !m_bCanDoubleJump) {
             // The player can start floating after a double jump
-            if(Input.GetButtonDown(m_strJumpButton) && m_fFloatTimer == 0.0f) { // Change comparison to < m_fFloatTimer for multiple floats per jump
+            if (Input.GetButtonDown(m_strJumpButton) && m_fFloatTimer == 0.0f) { // Change comparison to < m_fFloatTimer for multiple floats per jump
                 ToggleFloatState(true);
             }
             else if (Input.GetButtonUp(m_strJumpButton)) {
@@ -235,7 +312,7 @@ public class PlayerController : MonoBehaviour {
         // Increment float timer while the player is floating
         if (m_bIsFloating) {
             m_fFloatTimer += Time.deltaTime;
-            if(m_fFloatTimer > m_fFloatTime) {
+            if (m_fFloatTimer > m_fFloatTime) {
                 ToggleFloatState(false);
             }
         }
@@ -248,23 +325,24 @@ public class PlayerController : MonoBehaviour {
 
     // Toggles the internal variables when the player starts/stops floating
     private void ToggleFloatState(bool _bState) {
-        if(m_bIsFloating == _bState) {
+        if (m_bIsFloating == _bState) {
             return;
         }
         m_bIsFloating = _bState;
 
         if (m_bIsFloating) {
             // Level out the player's upward velocity to begin gliding
-            m_fVerticalVelocity = 0.0f;
+            //m_fVerticalVelocity = 0.0f;
+            m_Velocity.y = 0.0f;
             m_rAnimator.SetBool("Glide", true);
             if (m_rGlideTrails[0]) {
-                foreach(GameObject trail in m_rGlideTrails) {
+                foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(true);
                 }
             }
         } else {
             m_rAnimator.SetBool("Glide", false);
-            m_rAnimator.SetTrigger("Jump");
+            //m_rAnimator.SetTrigger("Jump");
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(false);
@@ -276,7 +354,7 @@ public class PlayerController : MonoBehaviour {
     // Deals damage to the player, and checks for death
     public void DamagePlayer(int _iDamage) {
         m_iCurrentHealth -= _iDamage;
-        if(m_iCurrentHealth <= 0) {
+        if (m_iCurrentHealth <= 0) {
             // Death
             print("Player is dead");
         }
@@ -284,6 +362,9 @@ public class PlayerController : MonoBehaviour {
 
     // Handles all of the functions that control player abilities
     private void HandlePlayerAbilities() {
+        // Check the teleport tether thresholds
+        HandleTeleportTethers();
+
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
             // Throw a tag if there is no  held object
@@ -306,7 +387,7 @@ public class PlayerController : MonoBehaviour {
         else if (Input.GetButtonDown(m_strSwitchButton)) {
             if (m_rSwitchTarget) {
                 SwitchWithTarget();
-            } else if(!m_rHeldObject){
+            } else if (!m_rHeldObject) {
                 m_rAnimator.SetTrigger("Tag");
             }
         }
@@ -337,8 +418,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Disable teleport marker
-        m_rTeleportMarker.SetActive(false);
-        m_bTeleportMarkerDown = false;
+        ToggleTeleportMarker(false);
     }
 
     // Place the teleport marker on the ground
@@ -351,8 +431,7 @@ public class PlayerController : MonoBehaviour {
         m_rTeleportMarker.transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
         // Enable teleport marker
         if (!m_rTeleportMarker.activeSelf) {
-            m_rTeleportMarker.SetActive(true); // Replace this with teleport scroll animations, etc
-            m_bTeleportMarkerDown = true;
+            ToggleTeleportMarker(true);
         }
     }
 
@@ -363,23 +442,22 @@ public class PlayerController : MonoBehaviour {
         }
         m_rTeleportMarker.transform.position = m_rHeldObject.transform.position;
         m_rTeleportMarker.transform.SetParent(m_rHeldObject.transform);
-        m_rTeleportMarker.SetActive(true);
-        m_bTeleportMarkerDown = true;
+        ToggleTeleportMarker(true);
     }
 
     private void TeleportToTeleportMarker() {
-        if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject) {
+        if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject || m_bTeleportThresholdWarning) {
             return; // Error animation / noise
         }
 
         TeleportToLocation(m_rTeleportMarker.transform.position);
         // Disable teleport marker
-        m_rTeleportMarker.SetActive(false);
+        ToggleTeleportMarker(false);
     }
-    
+
     // Trade places with the switch target, then clear the target state
     private void SwitchWithTarget() {
-        if (!m_rSwitchTarget) {
+        if (!m_rSwitchTarget || m_bSwitchThresholdWarning) {
             return;
         }
         TeleportParticles();
@@ -425,21 +503,21 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        if (Input.GetAxis(m_strAimButton) <0.0f || Input.GetKey(KeyCode.C)) {
+        if (Input.GetAxis(m_strAimButton) < 0.0f || Input.GetKey(KeyCode.C)) {
             ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
             transform.rotation = Quaternion.Euler(0.0f, vecCameraRotation.y, 0.0f);
             m_rProjectileArc.GetComponent<ProjectileArc>().SetRotation(vecCameraRotation.y);
         }
-        else if(m_rProjectileArc.activeSelf){
+        else if (m_rProjectileArc.activeSelf) {
             ToggleAiming(false);
         }
     }
 
     // Changes parameters for when the player is / is not aiming
     private void ToggleAiming(bool _bState) {
-        if(m_bIsAiming == _bState) {
+        if (m_bIsAiming == _bState) {
             return;
         }
         m_bIsAiming = _bState;
@@ -455,7 +533,7 @@ public class PlayerController : MonoBehaviour {
 
     // Pickup the nearest item or drop the held item
     private void GrabObject() {
-            // Pick up the item
+        // Pick up the item
         if (!m_rHeldObject) {
             GameObject nearestItem = GetClosestHoldableItem();
             m_rAnimator.SetTrigger("Pickup");
@@ -493,12 +571,12 @@ public class PlayerController : MonoBehaviour {
         float fDistanceToNearest = 1000.0f;
 
         // Iterate through and check distances
-        foreach(Collider item in nearbyObjects) {
+        foreach (Collider item in nearbyObjects) {
             if (!item.CompareTag("HoldableItem") || item.transform.position.y > transform.position.y) {
                 continue;
             } else {
                 float fItemDistance = (item.transform.position - transform.position).sqrMagnitude;
-                if(fItemDistance < fDistanceToNearest) {
+                if (fItemDistance < fDistanceToNearest) {
                     fDistanceToNearest = fItemDistance;
                     nearest = item.gameObject;
                 }
@@ -523,7 +601,90 @@ public class PlayerController : MonoBehaviour {
     // Adds an external force to the player this frame
     public void AddExternalForce(Vector3 _vecExternalForce) {
         m_ExternalForce += _vecExternalForce;
-        //m_rCharacterController.Move(Vector3.up * Time.deltaTime);
-        //m_fVerticalVelocity += _vecExternalForce.y;
+        //m_rCharacterController.Move(Vector3.up );
+    }
+
+    private void ToggleTeleportMarker(bool _bState) {
+        m_rTeleportMarker.SetActive(_bState);
+        m_bTeleportMarkerDown = _bState;
+    }
+
+    // Checks if the player has passed through warning and breaking thresholds for teleport markers / switch tags
+    private void HandleTeleportTethers() {
+        // Check teleport maker
+        if (m_bTeleportMarkerDown) {
+            float fMarkerDistance = (transform.position - m_rTeleportMarker.transform.position).magnitude;
+            // Compare to threshold distances
+            if (fMarkerDistance >= m_fTeleportBreakDistance) {
+                ToggleTeleportMarker(false);
+                m_rTeleportMarker.transform.SetParent(null);
+                m_bTeleportThresholdWarning = false;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdBreak();
+            }
+            else if (fMarkerDistance >= m_fTeleportTetherDistance && !m_bTeleportThresholdWarning) {
+                m_bTeleportThresholdWarning = true;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdWarning();
+            }
+            if (fMarkerDistance < m_fTeleportTetherDistance) {
+                m_bTeleportThresholdWarning = false;
+            }
+        }
+
+
+        // Check switch tag
+        if (m_rSwitchTarget) {
+            float fSwitchTagDistance = (transform.position - m_rSwitchTarget.transform.position).magnitude;
+            // Compare to threshold distances
+            if (fSwitchTagDistance >= m_fTeleportBreakDistance) {
+                //ToggleTeleportMarker(false);
+                m_bSwitchThresholdWarning = false;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdBreak();
+                m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().DetachFromObject();
+            }
+            else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
+                m_bSwitchThresholdWarning = true;
+                // Play sound / VFX
+                m_rPlayerAudioController.TeleportThresholdWarning();
+            }
+            if (fSwitchTagDistance < m_fTeleportTetherDistance) {
+                m_bSwitchThresholdWarning = false;
+            }
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
+        hitNormal = hit.normal;
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if (other.CompareTag("SlipperyObject")) {
+            m_bSteepSlopeCollided = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("SlipperyObject")) {
+            m_bSteepSlopeCollided = false;
+        }
+    }
+
+    public void ResetGravityMultiplier() {
+        m_fGravityMulitplier = 1.0f;
+    }
+
+    // Removes all external forces
+    public void ClearExternalForces() {
+        m_ExternalForce = Vector3.zero;
+    }
+
+    // Resets the float timer - used to provide infinite floating
+    public void ResetFloatTimer() {
+        m_fFloatTimer = 0.0f;
+    }
+    public bool IsFloating() {
+        return m_bIsFloating;
     }
 }
