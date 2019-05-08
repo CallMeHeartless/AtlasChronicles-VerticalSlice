@@ -2,43 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorPlat : MonoBehaviour
+public class Switchs : MonoBehaviour
 {
-    public Material[] m_matMaterialColor = new Material[5]; 
+   //two type needs to be added
     public GameObject m_gEffectingObject;
-    public enum m_Colors
+    public enum m_eSwitch
     {
-        blue,green,pink,red,yellow
+        Guild, groundPound, hit, BigHit
     }
     public enum m_Blockage
     {
-        door,lift,Switch
+        door, lift, Switch
     }
     public int PassNumber;
-    public m_Colors m_colCurrentColor;
-    public m_Colors m_colSetColor;
+    public m_eSwitch m_swSwitchType;
     public m_Blockage m_MatType;
+    public bool SwitchIsOn = false;
     // Start is called before the first frame update
-    void Start()
-    {
-        GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
-    }
-
+  
     private void Update()
     {
+        //for testing 
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 3)
             {
-                changeColor();
+                SwitchPressed();
             }
-           
+
         }
     }
     // Update is called once per frame
-    void CorrectColor()
+    void SwitchPressed()
     {
-        if (m_colSetColor == m_colCurrentColor)
+        if (SwitchIsOn == false)
         {
             switch (m_MatType)
             {
@@ -78,18 +75,29 @@ public class ColorPlat : MonoBehaviour
         }
     }
 
-    void changeColor()
+   
+    private void OnCollisionEnter(Collision collision)
     {
-        if (m_Colors.yellow== m_colCurrentColor)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            m_colCurrentColor = 0;
-        }
-        else
-        {
+            switch (m_swSwitchType)
+            {
+                case m_eSwitch.Guild:
 
-            m_colCurrentColor += 1;
+                    break;
+                case m_eSwitch.groundPound:
+
+                    break;
+                case m_eSwitch.hit:
+
+                    break;
+                case m_eSwitch.BigHit:
+
+                    break;
+                default:
+                    break;
+            }
+            SwitchPressed();
         }
-        GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
-        CorrectColor();
     }
 }
