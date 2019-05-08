@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour {
     private bool m_bStandingOnSlope; // is on a slope or not
     [SerializeField] private float m_fSlideSpeed = 1.0f; // ajusting the friction of the slope
     [SerializeField] private bool m_bIsSliding = false;
-
+    private bool testWind;
     #endregion
 
     // Start is called before the first frame update
@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour {
         HandlePlayerMovement();
         HandlePlayerAbilities();
         //m_ExternalForce = Vector3.zero;
+        print("wind: " + testWind);
     }
 
     private void LateUpdate() {
@@ -283,16 +284,34 @@ public class PlayerController : MonoBehaviour {
         //m_fVerticalVelocity += Physics.gravity.y * m_fGravityMulitplier *  Time.deltaTime;
         m_ExternalForce += Physics.gravity * m_fGravityMulitplier;
 
+        if (m_MovementInput.sqrMagnitude != 0)
+        {
+            m_Velocity.x = 0.0f;
+            m_Velocity.z = 0.0f;
+
+        }
+
         if (m_rCharacterController.isGrounded) {
             m_rAnimator.SetBool("Grounded", true);
             m_fGravityMulitplier = 1.0f;
-            m_Velocity.y = 0.0f;
-        } else {
+            //m_Velocity.y = 0.0f;
+            //m_Velocity.x = 0.0f;
+            //m_Velocity.z = 0.0f;
+            //m_Velocity = Vector3.zero;
+        }
+        else {
             m_rAnimator.SetBool("Grounded", false);
-
+            if (testWind)
+            {
+                m_MovementInput = Vector3.zero;
+            }
             if (!m_bIsFloating) {// && m_Velocity.y < 0.0f
                 m_fGravityMulitplier *= 1.2f;
                 m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 2.0f);
+
+                
+                m_Velocity.x = 0.0f;
+                m_Velocity.z = 0.0f;
             }
         }
         //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
@@ -600,7 +619,20 @@ public class PlayerController : MonoBehaviour {
 
     // Adds an external force to the player this frame
     public void AddExternalForce(Vector3 _vecExternalForce) {
-        m_ExternalForce += _vecExternalForce;
+
+        if(_vecExternalForce == Vector3.zero)
+        {
+            testWind = false;
+
+        }
+        else
+        {
+            testWind = true;
+
+            m_ExternalForce.x += _vecExternalForce.x;
+            m_Velocity.y = _vecExternalForce.y;
+            m_ExternalForce.z += _vecExternalForce.z;
+        }
         //m_rCharacterController.Move(Vector3.up );
     }
 
@@ -669,6 +701,11 @@ public class PlayerController : MonoBehaviour {
         if (other.CompareTag("SlipperyObject")) {
             m_bSteepSlopeCollided = false;
         }
+        else if(other.CompareTag("wind"))
+        {
+            AddExternalForce(Vector3.zero);
+        }
+
     }
 
     public void ResetGravityMultiplier() {
