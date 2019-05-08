@@ -679,4 +679,12 @@ public class PlayerController : MonoBehaviour {
     public void ClearExternalForces() {
         m_ExternalForce = Vector3.zero;
     }
+
+    // Resets the float timer - used to provide infinite floating
+    public void ResetFloatTimer() {
+        m_fFloatTimer = 0.0f;
+    }
+    public bool IsFloating() {
+        return m_bIsFloating;
+    }
 }
