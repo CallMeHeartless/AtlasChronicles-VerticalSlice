@@ -105,7 +105,6 @@ public class PlayerController : MonoBehaviour {
     private bool m_bExtForceOccuring;
     private float m_bXSmoothSpeed;
     private float m_bZSmoothSpeed;
-
     #endregion
 
     // Start is called before the first frame update
@@ -145,10 +144,11 @@ public class PlayerController : MonoBehaviour {
         if(m_ExternalForce.y <= 0.0f) {
             m_ExternalForce = Vector3.zero;
         }
-        
+        print(m_bExtForceOccuring);
         if(!m_bExtForceOccuring) {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
+
         }
     }
 
@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour {
 
         // Limit vertical velocity
         m_Velocity.y = Mathf.Clamp(m_Velocity.y, -100.0f, 100.0f);
+
         m_MovementDirection = (m_MovementInput + m_Velocity) * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
@@ -281,7 +282,7 @@ public class PlayerController : MonoBehaviour {
         if (m_bIsFloating) {
             m_fTurnSpeed = 1.0f;
             m_fGravityMulitplier = m_fFloatGravityReduction / 5.0f;
-            m_fMovementSpeed = 5.0f;
+            m_fMovementSpeed = 8.0f;
         }
 
         //Check if the player is sliding or not
@@ -620,11 +621,15 @@ public class PlayerController : MonoBehaviour {
 
         if(_vecExternalForce == Vector3.zero)
         {
+            
             m_bExtForceOccuring = false;
         }
         else
         {
             m_bExtForceOccuring = true;
+            if (m_Velocity.x != 0) _vecExternalForce.x /= 2;
+            if (m_Velocity.z != 0) _vecExternalForce.z /= 2;
+
             m_ExternalForce.x += _vecExternalForce.x;
             m_Velocity.y = _vecExternalForce.y;
             m_ExternalForce.z += _vecExternalForce.z;
@@ -635,7 +640,7 @@ public class PlayerController : MonoBehaviour {
     float SmoothFloatToZero(float _floatToReset, float _currSpeed)
     {
         //Resets float value to 0 slowly over time whether it is negative or positive
-        return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, 0.2f, 10.0f);
+        return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, 0.3f);
     }
 
     private void ToggleTeleportMarker(bool _bState) {

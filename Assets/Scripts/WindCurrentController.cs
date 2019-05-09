@@ -16,4 +16,12 @@ public class WindCurrentController : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().AddExternalForce(Vector3.zero);
+        }
+    }
 }
