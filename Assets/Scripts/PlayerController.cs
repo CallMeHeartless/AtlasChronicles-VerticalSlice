@@ -28,11 +28,14 @@ public class PlayerController : MonoBehaviour {
     private string m_strAimHeldObjectButton = "XBoxR2";
     private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
+    private string m_strSprintButton = "XBoxR2";
 
     // Movement variables
     [Header("Movement Variables")]
     [SerializeField]
     private float m_fMovementSpeed;
+    [SerializeField]
+    private float m_fSprintMultiplier = 1.75f;
     private float m_fTurnSpeed = 15.0f;
     [SerializeField]
     private float m_fJumpPower;
@@ -95,16 +98,18 @@ public class PlayerController : MonoBehaviour {
     private RaycastHit rayHit;
     private Vector3 hitNormal; //orientation of the slope.
     private Vector3 m_vSlideDir;
-    private float rayDistance;
+    private float rayDistance = 0.0f;
     private bool m_bSteepSlopeCollided = false;
-    private bool m_bStandingOnSlope; // is on a slope or not
+    private bool m_bStandingOnSlope = false; // is on a slope or not
     private float m_fSlideSpeed = 200.0f;
     [SerializeField] private bool m_bIsSliding = false;
 
     //Extforce variables
     private bool m_bExtForceOccuring;
-    private float m_bXSmoothSpeed;
-    private float m_bZSmoothSpeed;
+    private float m_bXSmoothSpeed = 0.0f;
+    private float m_bZSmoothSpeed = 0.0f;
+    private float m_fHorizontalSmoothSpeed = 0.3f;
+
     #endregion
 
     // Start is called before the first frame update
@@ -138,7 +143,6 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
-        print("Sliding: " + m_bIsSliding);
     }
 
     private void LateUpdate() {
@@ -148,7 +152,6 @@ public class PlayerController : MonoBehaviour {
         if(!m_bExtForceOccuring) {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
-
         }
     }
 
@@ -163,16 +166,17 @@ public class PlayerController : MonoBehaviour {
 
         // Limit vertical velocity
         m_Velocity.y = Mathf.Clamp(m_Velocity.y, -100.0f, 100.0f);
-
         
-        
-
         m_MovementDirection = (m_MovementInput + m_Velocity) * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        m_rCharacterController.Move(m_MovementDirection);
-
+        if((Input.GetAxis(m_strSprintButton) > 0.0f || Input.GetKey(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
+            m_rCharacterController.Move(m_MovementDirection * m_fSprintMultiplier);
+        }
+        else {
+            m_rCharacterController.Move(m_MovementDirection);
+        }
     }
 
     // Calculate movement
@@ -220,7 +224,6 @@ public class PlayerController : MonoBehaviour {
                 // Animation
                 //m_rAnimator.SetTrigger("Jump");
             }
-
         }
 
         // Handle related variables
@@ -238,8 +241,7 @@ public class PlayerController : MonoBehaviour {
     //Detect if player is able to slide down a steep slope
     void SlideMethod() {
         m_vSlideDir = Vector3.zero; //Reset slide direction
-        if (m_bSteepSlopeCollided)   //If the player is colliding with a steep slope
-        {
+        if (m_bSteepSlopeCollided) {  //If the player is colliding with a steep slope
             //Check if player if standing on a slope
             if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f)) {
                 //If player is on slope bigger than slope limit, set sliding as true
@@ -262,32 +264,25 @@ public class PlayerController : MonoBehaviour {
         }
 
         //If player is not facing a slippery object, let player exit slide
-        if (m_bIsSliding)
-        {
-            Debug.DrawRay(transform.position, transform.forward, Color.green);
-            if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f))
-            {
+        if (m_bIsSliding) {
+            if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f)) {
                 //Check if player is trying to move while on a slope and not facing slippery object
                 bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
-                if (playerIsMoving)
-                {
+                if (playerIsMoving) {
                     m_bIsSliding = false;
                 }
             }
-            else
-            {
+            else {
                 m_MovementInput = Vector3.zero;
             }
         }
 
         //If player is able to slide, apply sliding forces
         if (!m_bStandingOnSlope && m_rCharacterController.isGrounded && m_bIsSliding) {
-            print("im here");
             m_ExternalForce = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
             Vector3.OrthoNormalize(ref hitNormal, ref m_ExternalForce);
             m_ExternalForce *= m_fSlideSpeed;
         }
-
     }
 
     // Updates the player's vertical velocity to consider gravity
@@ -301,14 +296,8 @@ public class PlayerController : MonoBehaviour {
 
         //Check if the player is sliding or not
         SlideMethod();
-        //If the player is grounded, set the animator as grounded and exit function
-        //if (m_rCharacterController.isGrounded) {
-        //    m_rAnimator.SetBool("Grounded", true);
-        //    return;
-        //}
 
         // Accelerate the player
-        //m_fVerticalVelocity += Physics.gravity.y * m_fGravityMulitplier *  Time.deltaTime;
         m_ExternalForce += Physics.gravity * m_fGravityMulitplier;
         
 
@@ -632,29 +621,25 @@ public class PlayerController : MonoBehaviour {
 
     // Adds an external force to the player this frame
     public void AddExternalForce(Vector3 _vecExternalForce) {
-
-        if(_vecExternalForce == Vector3.zero)
-        {
-            
+        if(_vecExternalForce == Vector3.zero) {
             m_bExtForceOccuring = false;
         }
-        else
-        {
+        else {
             m_bExtForceOccuring = true;
+            //Make force less than half if theres an existing force in that direction
             if (m_Velocity.x != 0) _vecExternalForce.x /= 2;
             if (m_Velocity.z != 0) _vecExternalForce.z /= 2;
 
-            m_ExternalForce.x += _vecExternalForce.x;
-            m_Velocity.y = _vecExternalForce.y;
-            m_ExternalForce.z += _vecExternalForce.z;
+            m_ExternalForce.x += _vecExternalForce.x;   //Change through ext forces
+            m_Velocity.y = _vecExternalForce.y;         //Directly change the y velocity value
+            m_ExternalForce.z += _vecExternalForce.z;   //Change through ext forces
         }
-        //m_rCharacterController.Move(Vector3.up );
     }
 
-    float SmoothFloatToZero(float _floatToReset, float _currSpeed)
-    {
+    float SmoothFloatToZero(float _floatToReset, float _currSpeed) {
         //Resets float value to 0 slowly over time whether it is negative or positive
-        return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, 0.3f);
+        //m_fHorizontalSmoothSpeed decides the amount of time the smoothing takes to reset values to 0
+        return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, m_fHorizontalSmoothSpeed);
     }
 
     private void ToggleTeleportMarker(bool _bState) {
