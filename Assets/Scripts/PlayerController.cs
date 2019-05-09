@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour {
     private float rayDistance;
     private bool m_bSteepSlopeCollided = false;
     private bool m_bStandingOnSlope; // is on a slope or not
-    [SerializeField] private float m_fSlideSpeed = 1.0f; // ajusting the friction of the slope
+    private float m_fSlideSpeed = 200.0f;
     [SerializeField] private bool m_bIsSliding = false;
 
     //Extforce variables
@@ -138,13 +138,13 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
+        print("Sliding: " + m_bIsSliding);
     }
 
     private void LateUpdate() {
         if(m_ExternalForce.y <= 0.0f) {
             m_ExternalForce = Vector3.zero;
         }
-        print(m_bExtForceOccuring);
         if(!m_bExtForceOccuring) {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
@@ -163,6 +163,9 @@ public class PlayerController : MonoBehaviour {
 
         // Limit vertical velocity
         m_Velocity.y = Mathf.Clamp(m_Velocity.y, -100.0f, 100.0f);
+
+        
+        
 
         m_MovementDirection = (m_MovementInput + m_Velocity) * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
@@ -257,21 +260,32 @@ public class PlayerController : MonoBehaviour {
             //Don't slide if not colliding slope
             m_bIsSliding = false;
         }
-        
+
         //If player is not facing a slippery object, let player exit slide
-        if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f) && m_bIsSliding) {
-            //Check if player is trying to move while on a slope and not facing slippery object
-            bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
-            if (playerIsMoving) {
-                m_bIsSliding = false;
+        if (m_bIsSliding)
+        {
+            Debug.DrawRay(transform.position, transform.forward, Color.green);
+            if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f))
+            {
+                //Check if player is trying to move while on a slope and not facing slippery object
+                bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
+                if (playerIsMoving)
+                {
+                    m_bIsSliding = false;
+                }
+            }
+            else
+            {
+                m_MovementInput = Vector3.zero;
             }
         }
 
         //If player is able to slide, apply sliding forces
         if (!m_bStandingOnSlope && m_rCharacterController.isGrounded && m_bIsSliding) {
-            m_MovementDirection = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
-            Vector3.OrthoNormalize(ref hitNormal, ref m_MovementDirection);
-            m_MovementDirection *= m_fSlideSpeed;
+            print("im here");
+            m_ExternalForce = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
+            Vector3.OrthoNormalize(ref hitNormal, ref m_ExternalForce);
+            m_ExternalForce *= m_fSlideSpeed;
         }
 
     }
