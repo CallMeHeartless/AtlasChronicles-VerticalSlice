@@ -28,11 +28,14 @@ public class PlayerController : MonoBehaviour {
     private string m_strAimHeldObjectButton = "XBoxR2";
     private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
+    private string m_strSprintButton = "XBoxR2";
 
     // Movement variables
     [Header("Movement Variables")]
     [SerializeField]
     private float m_fMovementSpeed;
+    [SerializeField]
+    private float m_fSprintMultiplier = 1.75f;
     private float m_fTurnSpeed = 15.0f;
     [SerializeField]
     private float m_fJumpPower;
@@ -144,7 +147,7 @@ public class PlayerController : MonoBehaviour {
         if(m_ExternalForce.y <= 0.0f) {
             m_ExternalForce = Vector3.zero;
         }
-        print(m_bExtForceOccuring);
+
         if(!m_bExtForceOccuring) {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
@@ -168,8 +171,12 @@ public class PlayerController : MonoBehaviour {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        m_rCharacterController.Move(m_MovementDirection);
-
+        if((Input.GetAxis(m_strSprintButton) > 0.0f || Input.GetKey(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
+            m_rCharacterController.Move(m_MovementDirection * m_fSprintMultiplier);
+        }
+        else {
+            m_rCharacterController.Move(m_MovementDirection);
+        }
     }
 
     // Calculate movement
