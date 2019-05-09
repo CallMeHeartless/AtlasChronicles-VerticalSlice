@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour {
     private float m_fMovementSpeed;
     [SerializeField]
     private float m_fSprintMultiplier = 1.75f;
+    private float m_fCurrentMovementSpeed;
     private float m_fTurnSpeed = 15.0f;
     [SerializeField]
     private float m_fJumpPower;
@@ -126,6 +127,7 @@ public class PlayerController : MonoBehaviour {
         // Initialise variables
         m_MovementDirection = Vector3.zero;
         m_iCurrentHealth = m_iMaxHealth;
+        m_fCurrentMovementSpeed = m_fMovementSpeed;
 
         if (m_rTeleportMarkerPrefab) {
             m_rTeleportMarker = Instantiate(m_rTeleportMarkerPrefab);
@@ -171,22 +173,18 @@ public class PlayerController : MonoBehaviour {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        if((Input.GetAxis(m_strSprintButton) > 0.0f || Input.GetKey(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
-            m_rCharacterController.Move(m_MovementDirection * m_fSprintMultiplier);
-        }
-        else {
-            m_rCharacterController.Move(m_MovementDirection);
-        }
+        m_rCharacterController.Move(m_MovementDirection);
     }
 
     // Calculate movement
     private void CalculatePlayerMovement() {
+        // Check for sprinting
+        HandleSprint();
+
         // Take player input
-        m_MovementInput = m_fMovementSpeed * (m_rCameraReference.transform.right * Input.GetAxis("Horizontal") + m_rCameraReference.transform.forward * Input.GetAxis("Vertical")).normalized;
+        m_MovementInput = m_fCurrentMovementSpeed * (m_rCameraReference.transform.right * Input.GetAxis("Horizontal") + m_rCameraReference.transform.forward * Input.GetAxis("Vertical")).normalized;
         m_MovementInput.y = 0.0f;
-        //if (!m_rCharacterController.isGrounded) {
-        //    return;
-        //}
+
         if (m_MovementInput.sqrMagnitude == 0) {
             // Idle
             m_rAnimator.ResetTrigger("Run");
@@ -221,8 +219,8 @@ public class PlayerController : MonoBehaviour {
                 if (!m_rCharacterController.isGrounded) {
                     m_bCanDoubleJump = false;
                 }
-                // Animation
-                //m_rAnimator.SetTrigger("Jump");
+                // Stop sprinting
+                ToggleSprint(false);
             }
         }
 
@@ -232,6 +230,9 @@ public class PlayerController : MonoBehaviour {
             m_fCoyoteTimer = 0.0f;
             if (m_bIsFloating) {
                 m_bIsFloating = false;
+            }
+            if (Input.GetButton(m_strSprintButton)) {
+                ToggleSprint(true);
             }
         } else {
             m_fCoyoteTimer += Time.deltaTime;
@@ -724,5 +725,23 @@ public class PlayerController : MonoBehaviour {
     }
     public bool IsFloating() {
         return m_bIsFloating;
+    }
+
+    // Toggles whether the player should be sprinting
+    private void ToggleSprint(bool _bSprinting) {
+        if (_bSprinting) {
+            m_fCurrentMovementSpeed = m_fMovementSpeed * m_fSprintMultiplier;
+        }
+        else {
+            m_fCurrentMovementSpeed = m_fMovementSpeed;
+        }
+    }
+
+    private void HandleSprint() {
+        if((Input.GetButtonDown(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
+            ToggleSprint(true);
+        }else if (Input.GetButtonUp(m_strSprintButton) || Input.GetKeyUp(KeyCode.LeftShift)){
+            ToggleSprint(false);
+        }
     }
 }
