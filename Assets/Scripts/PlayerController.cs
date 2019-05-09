@@ -145,10 +145,11 @@ public class PlayerController : MonoBehaviour {
         if(m_ExternalForce.y <= 0.0f) {
             m_ExternalForce = Vector3.zero;
         }
-        
+        print(m_bExtForceOccuring);
         if(!m_bExtForceOccuring) {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
+
         }
     }
 
@@ -163,6 +164,7 @@ public class PlayerController : MonoBehaviour {
 
         // Limit vertical velocity
         m_Velocity.y = Mathf.Clamp(m_Velocity.y, -100.0f, 100.0f);
+
         m_MovementDirection = (m_MovementInput + m_Velocity) * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
@@ -620,6 +622,7 @@ public class PlayerController : MonoBehaviour {
 
         if(_vecExternalForce == Vector3.zero)
         {
+            
             m_bExtForceOccuring = false;
         }
         else
@@ -635,7 +638,7 @@ public class PlayerController : MonoBehaviour {
     float SmoothFloatToZero(float _floatToReset, float _currSpeed)
     {
         //Resets float value to 0 slowly over time whether it is negative or positive
-        return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, 0.2f, 10.0f);
+        return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, 0.005f, 10.0f);
     }
 
     private void ToggleTeleportMarker(bool _bState) {
