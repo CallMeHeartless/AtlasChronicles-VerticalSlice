@@ -16,6 +16,7 @@ public class JumpPadController : MonoBehaviour {
         }
     }
 
+
     //private void OnCollisionEnter(Collision collision) {
     //    if (collision.gameObject.CompareTag("Player")) {
     //        collision.gameObject.GetComponent<PlayerController>().SetPlayerVerticalVelocity(m_fJumpForce);
