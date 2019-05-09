@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour {
     private float m_fCoyoteTime = 0.5f;
     private float m_fCoyoteTimer = 0.0f;
     private Vector3 m_MovementDirection;
-    private Vector3 m_ExternalForce = Vector3.zero;
+    [SerializeField] private Vector3 m_ExternalForce = Vector3.zero;
     private Vector3 m_MovementInput = Vector3.zero;
     private bool m_bCanDoubleJump = true;
     [SerializeField]
@@ -100,7 +100,12 @@ public class PlayerController : MonoBehaviour {
     private bool m_bStandingOnSlope; // is on a slope or not
     [SerializeField] private float m_fSlideSpeed = 1.0f; // ajusting the friction of the slope
     [SerializeField] private bool m_bIsSliding = false;
-    private bool testWind;
+
+    //Extforce variables
+    private bool m_bExtForceOccuring;
+    private float m_bXSmoothSpeed;
+    private float m_bZSmoothSpeed;
+
     #endregion
 
     // Start is called before the first frame update
@@ -134,12 +139,17 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
-        //m_ExternalForce = Vector3.zero;
-        print("wind: " + testWind);
     }
 
     private void LateUpdate() {
-        m_ExternalForce = Vector3.zero;
+        if(m_ExternalForce.y <= 0.0f) {
+            m_ExternalForce = Vector3.zero;
+        }
+        
+        if(!m_bExtForceOccuring) {
+            m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
+            m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
+        }
     }
 
     // Handles all of the functions that determine the vector to move the player, then move them
@@ -269,7 +279,9 @@ public class PlayerController : MonoBehaviour {
     private void ApplyGravity() {
         // Check if floating
         if (m_bIsFloating) {
-            m_fGravityMulitplier = m_fFloatGravityReduction;
+            m_fTurnSpeed = 1.0f;
+            m_fGravityMulitplier = m_fFloatGravityReduction / 5.0f;
+            m_fMovementSpeed = 5.0f;
         }
 
         //Check if the player is sliding or not
@@ -283,35 +295,21 @@ public class PlayerController : MonoBehaviour {
         // Accelerate the player
         //m_fVerticalVelocity += Physics.gravity.y * m_fGravityMulitplier *  Time.deltaTime;
         m_ExternalForce += Physics.gravity * m_fGravityMulitplier;
-
-        if (m_MovementInput.sqrMagnitude != 0)
-        {
-            m_Velocity.x = 0.0f;
-            m_Velocity.z = 0.0f;
-
-        }
+        
 
         if (m_rCharacterController.isGrounded) {
             m_rAnimator.SetBool("Grounded", true);
             m_fGravityMulitplier = 1.0f;
-            //m_Velocity.y = 0.0f;
-            //m_Velocity.x = 0.0f;
-            //m_Velocity.z = 0.0f;
-            //m_Velocity = Vector3.zero;
+            m_Velocity = Vector3.zero;
+            m_fTurnSpeed = 15.0f;
+            m_fMovementSpeed = 10.0f;
         }
         else {
             m_rAnimator.SetBool("Grounded", false);
-            if (testWind)
-            {
-                m_MovementInput = Vector3.zero;
-            }
             if (!m_bIsFloating) {// && m_Velocity.y < 0.0f
                 m_fGravityMulitplier *= 1.2f;
                 m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 2.0f);
-
-                
-                m_Velocity.x = 0.0f;
-                m_Velocity.z = 0.0f;
+                m_fMovementSpeed = 10.0f;
             }
         }
         //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
@@ -622,18 +620,22 @@ public class PlayerController : MonoBehaviour {
 
         if(_vecExternalForce == Vector3.zero)
         {
-            testWind = false;
-
+            m_bExtForceOccuring = false;
         }
         else
         {
-            testWind = true;
-
+            m_bExtForceOccuring = true;
             m_ExternalForce.x += _vecExternalForce.x;
             m_Velocity.y = _vecExternalForce.y;
             m_ExternalForce.z += _vecExternalForce.z;
         }
         //m_rCharacterController.Move(Vector3.up );
+    }
+
+    float SmoothFloatToZero(float _floatToReset, float _currSpeed)
+    {
+        //Resets float value to 0 slowly over time whether it is negative or positive
+        return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, 0.2f, 10.0f);
     }
 
     private void ToggleTeleportMarker(bool _bState) {
