@@ -703,11 +703,6 @@ public class PlayerController : MonoBehaviour {
         if (other.CompareTag("SlipperyObject")) {
             m_bSteepSlopeCollided = false;
         }
-        else if(other.CompareTag("wind"))
-        {
-            AddExternalForce(Vector3.zero);
-        }
-
     }
 
     public void ResetGravityMultiplier() {
