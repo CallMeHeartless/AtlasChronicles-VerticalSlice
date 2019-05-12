@@ -9,7 +9,8 @@ public class RotateObject : MonoBehaviour
     public float[] m_fStoppingPoints;
     public float m_fRange;
     public int m_intCurrentPoint = 0;
-    public Vector3 m_vec3RotationalPoint;
+    private Vector3 m_vec3RotationalPoint = new Vector3(0, 0, 0);
+    
     bool m_bPause = false;
     private float m_fCurrentTimer;
     public float m_fMaxTimer;
