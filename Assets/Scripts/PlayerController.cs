@@ -292,7 +292,7 @@ public class PlayerController : MonoBehaviour {
         if (m_bIsFloating) {
             m_fTurnSpeed = 1.0f;
             m_fGravityMulitplier = m_fFloatGravityReduction / 5.0f;
-            m_fMovementSpeed = 8.0f;
+            m_fCurrentMovementSpeed = m_fMovementSpeed - 2.0f;
         }
 
         //Check if the player is sliding or not
@@ -307,14 +307,14 @@ public class PlayerController : MonoBehaviour {
             m_fGravityMulitplier = 1.0f;
             m_Velocity = Vector3.zero;
             m_fTurnSpeed = 15.0f;
-            m_fMovementSpeed = 10.0f;
+            m_fCurrentMovementSpeed = m_fMovementSpeed;
         }
         else {
             m_rAnimator.SetBool("Grounded", false);
             if (!m_bIsFloating) {// && m_Velocity.y < 0.0f
                 m_fGravityMulitplier *= 1.2f;
                 m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 2.0f);
-                m_fMovementSpeed = 10.0f;
+                m_fCurrentMovementSpeed = m_fMovementSpeed;
             }
         }
         //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
