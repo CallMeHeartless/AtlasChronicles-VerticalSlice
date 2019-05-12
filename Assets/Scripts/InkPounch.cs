@@ -33,7 +33,7 @@ public class InkPounch : MonoBehaviour
             timer -= Time.deltaTime;
         }
     }
-    bool UseInk(float Amount)
+    public bool UseInk(float Amount)
     {
         if (Amount <= slide.value)
         {
@@ -45,7 +45,7 @@ public class InkPounch : MonoBehaviour
             return (false);
         }
     }
-    void AddedingInk(float Amount)
+    public void AddedingInk(float Amount)
     {
         slide.value += Amount;
         if (slide.value >=1)
