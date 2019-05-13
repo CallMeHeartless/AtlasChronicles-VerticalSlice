@@ -14,10 +14,10 @@ public class dummy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.GetComponent<respawn>() == null)
+        if (gameObject.GetComponent<RespawnController>() == null)
         {
-            gameObject.AddComponent<respawn>();
-            GetComponent<respawn>().reset= StartPoint;
+            gameObject.AddComponent<RespawnController>();
+            //GetComponent<RespawnController>().m_rRespawnPoint= StartPoint;
         }
        
     }

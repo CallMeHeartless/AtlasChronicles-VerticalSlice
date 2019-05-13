@@ -14,7 +14,8 @@ public class DisplayStat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        NewHealth(HP);
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().h;
+        NewHealth(4);
     }
 
     // Update is called once per frame
@@ -33,7 +34,7 @@ public class DisplayStat : MonoBehaviour
         mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.MapsBoard[GameStats.LevelLoctation].ToString() + "/3";
     }
   
-    void NewHealth(int HP)
+    public void NewHealth(int HP)
     {
         
         for (int i = 0; i < Hearts.Length; i++)
