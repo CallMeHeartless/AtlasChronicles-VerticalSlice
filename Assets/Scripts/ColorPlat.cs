@@ -28,7 +28,7 @@ public class ColorPlat : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (true)
+            if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 3)
             {
                 changeColor();
             }
