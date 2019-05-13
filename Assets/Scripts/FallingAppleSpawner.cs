@@ -6,7 +6,7 @@ public class FallingAppleSpawner : MonoBehaviour
 {
     private float m_fCurrentTimer;
     public GameObject m_gDroppingItem;
-    public float m_fTimerMax;
+    public float m_fTimerMax = 1;
    
     // Update is called once per frame
     void Update()
