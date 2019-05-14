@@ -6,6 +6,7 @@ public class newPostion : MonoBehaviour
 {
     float y;
     Vector3 newPos;
+    public GameObject Zone;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class newPostion : MonoBehaviour
 
     public void SetNewPosition()
     {
-        newPos = new Vector3(Random.Range(-15, 15), y, Random.Range(-15, 15));
+        newPos = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10))+ Zone.transform.position;
         Debug.Log(newPos);
         if (Vector3.Distance(gameObject.transform.position, newPos) < 1)
             {

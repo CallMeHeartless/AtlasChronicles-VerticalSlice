@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class Npc : MonoBehaviour
 {
-    public Text uiText;
-    public string[] texts;
-    public bool talking =false;
-    private int currentLine;
+    public Text m_textUiText;
+    public string[] m_saTexts;
+    public bool m_bTalking =false;
+    private int m_iCurrentLine;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,25 +20,25 @@ public class Npc : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.H))
         {
-            uiText.enabled = true;
-            talking = true;
-            uiText.text = texts[0];
-            currentLine = 1;
+            m_textUiText.enabled = true;
+            m_bTalking = true;
+            m_textUiText.text = m_saTexts[0];
+            m_iCurrentLine = 1;
         }
-        if (talking == true)
+        if (m_bTalking == true)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                if (currentLine == texts.Length)
+                if (m_iCurrentLine == m_saTexts.Length)
                 {
-                    uiText.enabled = false;
-                    talking = false;
+                    m_textUiText.enabled = false;
+                    m_bTalking = false;
                 }
                 else
                 {
-                   
-                    uiText.text = texts[currentLine];
-                    currentLine++;
+
+                    m_textUiText.text = m_saTexts[m_iCurrentLine];
+                    m_iCurrentLine++;
                 }
       
             }
