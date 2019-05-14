@@ -23,6 +23,7 @@ public class AudioPlayer : MonoBehaviour
             return;
 
         AudioClip clip = m_Audioclips[Random.Range(0, m_Audioclips.Length)];
+
         if (clip == null)
             return;
 
