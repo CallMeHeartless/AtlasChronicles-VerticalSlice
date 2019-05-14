@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour {
     private PlayerAnimationController m_rPAnimationController;
 
     #region INTERNAL_VARIABLES
+    private static PlayerController m_rInstance = null;
+    public static PlayerController instance { get { return m_rInstance; } }
+
     // Control References
     private string m_strJumpButton = "Jump";
     private string m_strSwitchButton = "YButton";
@@ -132,6 +135,10 @@ public class PlayerController : MonoBehaviour {
         if (m_rTeleportMarkerPrefab) {
             m_rTeleportMarker = Instantiate(m_rTeleportMarkerPrefab);
             m_rTeleportMarker.SetActive(false);
+        }
+
+        if (!m_rInstance) {
+            m_rInstance = this;
         }
     }
 
