@@ -5,10 +5,11 @@ using UnityEngine;
 public class RotateObject : MonoBehaviour
 {
     public float m_fSpeed;
+    [Header("Stopping at points")]
     public bool m_bStops;
     public float[] m_fStoppingPoints;
     public float m_fRange;
-    public int m_intCurrentPoint = 0;
+    public int m_iCurrentPoint = 0;
     private Vector3 m_vec3RotationalPoint = new Vector3(0, 0, 0);
     
     bool m_bPause = false;
@@ -26,18 +27,18 @@ public class RotateObject : MonoBehaviour
         if (m_bStops == true)
         {
             Debug.Log(Mathf.Rad2Deg *transform.rotation.x*4.5);
-            if ((m_fStoppingPoints[m_intCurrentPoint] <=(Mathf.Rad2Deg * transform.rotation.x*4.5)+ m_fRange) && (m_fStoppingPoints[m_intCurrentPoint] >= (Mathf.Rad2Deg *4.5f* transform.rotation.x) - m_fRange))
+            if ((m_fStoppingPoints[m_iCurrentPoint] <=(Mathf.Rad2Deg * transform.rotation.x*4.5)+ m_fRange) && (m_fStoppingPoints[m_iCurrentPoint] >= (Mathf.Rad2Deg *4.5f* transform.rotation.x) - m_fRange))
             {
-                transform.rotation = Quaternion.Euler(new Vector3(m_fStoppingPoints[m_intCurrentPoint], m_vec3RotationalPoint.y, m_vec3RotationalPoint.z));
+                transform.rotation = Quaternion.Euler(new Vector3(m_fStoppingPoints[m_iCurrentPoint], m_vec3RotationalPoint.y, m_vec3RotationalPoint.z));
                 m_bPause = true;
                 m_fCurrentTimer = m_fMaxTimer;
-                if (m_intCurrentPoint == m_fStoppingPoints.Length-1)
+                if (m_iCurrentPoint == m_fStoppingPoints.Length-1)
                 {
-                    m_intCurrentPoint = 0;
+                    m_iCurrentPoint = 0;
                 }
                 else
                 {
-                    m_intCurrentPoint++;
+                    m_iCurrentPoint++;
                 }
             }
 

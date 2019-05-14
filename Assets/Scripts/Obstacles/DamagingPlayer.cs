@@ -5,7 +5,8 @@ using UnityEngine;
 public class DamagingPlayer : MonoBehaviour
 {
     public int m_intDamage;
-    public bool DestoryafterFinishing = true;
+    [Header("DestoryingSelf")]
+    public bool m_bDestoryafterFinishing = true;
     public float m_fTimerToDes;
     public float m_fMaxTimerToDes = 2;
     public float m_fTimerTo;
@@ -31,7 +32,7 @@ public class DamagingPlayer : MonoBehaviour
     {
         if (m_fTimerTo <= 0)
         {
-            if (DestoryafterFinishing)
+            if (m_bDestoryafterFinishing)
             {
                 GetComponent<Rigidbody>().useGravity = true;
                 if (m_fTimerToDes <= 0)
