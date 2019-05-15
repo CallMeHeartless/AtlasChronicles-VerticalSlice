@@ -10,8 +10,7 @@ public class AudioController : MonoBehaviour
     public virtual void Start(){
         m_Sounds = GetComponents<AudioSource>();    
     }
-
-
+    
     // Plays a single sound
     public void PlaySingleSound(string sound) {
         AudioSource audio = GetSource(sound);
@@ -32,7 +31,6 @@ public class AudioController : MonoBehaviour
         if (audio) {
             if (audio.isPlaying) {
                 audio.Stop();
-                //Debug.Log("Stopping: " + sound);
             }
         }
         else {
