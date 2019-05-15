@@ -8,7 +8,7 @@ public class Pendulum : MonoBehaviour
     public Vector3 m_vec3StartingVeloicty;
     public float m_fForward;
     public float m_fBack;
-   
+    public float m_fSpeed =10;
     public JointMotor m_JointCaneHingeMotor;
    // public bool X, Y, Z = false;
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class Pendulum : MonoBehaviour
             {
             Debug.Log("here1");
             m_JointCaneHingeMotor.targetVelocity = -m_vec3StartingVeloicty.y;
-                m_JointCaneHingeMotor.force = 10;
+                m_JointCaneHingeMotor.force = m_fSpeed;
                 GetComponent<HingeJoint>().motor = m_JointCaneHingeMotor;
             }
             if (((transform.rotation.x < 0) && (transform.rotation.x > m_fBack))||((transform.rotation.z < 0) && (transform.rotation.z > m_fBack)) && (m_ridBody.angularVelocity.y < 0) && (m_ridBody.angularVelocity.y > -m_vec3StartingVeloicty.y))
@@ -46,7 +46,7 @@ public class Pendulum : MonoBehaviour
             {
             Debug.Log("here2");
             m_JointCaneHingeMotor.targetVelocity = m_vec3StartingVeloicty.y;
-                m_JointCaneHingeMotor.force = 10;
+                m_JointCaneHingeMotor.force = m_fSpeed;
                 GetComponent<HingeJoint>().motor = m_JointCaneHingeMotor;
             }
            
