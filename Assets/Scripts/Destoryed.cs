@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Destoryed : MonoBehaviour
 {
+    [Header("Secondary Items")]
     public GameObject m_gSecondaryItemIs;
-    public GameObject m_gHeartItemIs;
+   
     public int m_intSecondaryItem = 2;
     public float m_intForceOut;
     public int m_intForceUp = 1;
+
+    [Header("Hearts")]
+    public GameObject m_gHeartItemIs;
     public int m_intHearts = 1;
     public int m_intChancePercent = 50;
     // Start is called before the first frame update
