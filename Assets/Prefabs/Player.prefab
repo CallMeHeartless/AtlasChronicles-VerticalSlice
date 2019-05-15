@@ -446,7 +446,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 1.4
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 30
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
@@ -465,14 +465,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rCameraReference: {fileID: 0}
   m_rProjectileArc: {fileID: 4727328372385201593}
-  m_fMovementSpeed: 10
+  m_fMovementSpeed: 7
   m_fSprintMultiplier: 1.75
-  m_fJumpPower: 10
+  m_fJumpPower: 7
   m_fCoyoteTime: 0.5
   m_ExternalForce: {x: 0, y: 0, z: 0}
-  m_Velocity: {x: 0, y: 0, z: 0}
-  m_fFloatTime: 5
-  m_fFloatGravityReduction: 0.8
+  m_Velocity: {x: 0, y: -0.7576716, z: 0}
+  m_fFloatTime: 20
+  m_fFloatGravityReduction: 1.4
   m_rGlideTrails:
   - {fileID: 6881080278170196558}
   - {fileID: 2707563578773299791}
@@ -498,7 +498,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.6
-  m_Height: 1.5
+  m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2460307529181592889
@@ -1409,6 +1409,18 @@ PrefabInstance:
     - target: {fileID: 400016, guid: c77837c7ec6ad7e4e8eb23160cffd19d, type: 3}
       propertyPath: m_LocalScale.z
       value: 1.0000031
+      objectReference: {fileID: 0}
+    - target: {fileID: 400088, guid: c77837c7ec6ad7e4e8eb23160cffd19d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 78.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 400088, guid: c77837c7ec6ad7e4e8eb23160cffd19d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400088, guid: c77837c7ec6ad7e4e8eb23160cffd19d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 195.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c77837c7ec6ad7e4e8eb23160cffd19d, type: 3}
