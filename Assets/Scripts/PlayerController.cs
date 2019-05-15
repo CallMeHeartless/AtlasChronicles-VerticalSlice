@@ -111,11 +111,13 @@ public class PlayerController : MonoBehaviour {
     private float m_bZSmoothSpeed = 0.0f;
     private float m_fHorizontalSmoothSpeed = 0.3f;
 
+    private AudioPlayer m_rAudioPlayer;
     #endregion
 
     // Start is called before the first frame update
     void Start() {
         // Create component references
+        m_rAudioPlayer = GetComponentInChildren<AudioPlayer>();
         m_rCharacterController = GetComponent<CharacterController>();
         m_rAnimator = GetComponentInChildren<Animator>();
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
@@ -213,6 +215,13 @@ public class PlayerController : MonoBehaviour {
             // Jump code
             if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 //m_fVerticalVelocity = m_fJumpPower;
+                Debug.Log("???: " + m_rAudioPlayer);
+
+                if (m_rAudioPlayer)
+                {
+                    Debug.Log("???");
+                    m_rAudioPlayer.PlayAudio();
+                }
                 m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 // Control use of double jump
