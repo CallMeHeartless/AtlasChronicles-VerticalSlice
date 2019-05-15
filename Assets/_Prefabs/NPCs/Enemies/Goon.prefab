@@ -159,6 +159,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16babc8e9a13d684f9780097a2f8e24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rVision: {fileID: 0}
-  m_rEyes: {fileID: 0}
-  m_fMovementSpeed: 0
+  m_rVision:
+    m_fVisionRadius: 10
+    m_fVisionAngle: 180
+    m_fMaxHeight: 1
+    m_BlockingMask:
+      serializedVersion: 2
+      m_Bits: 0
+  m_rEyes: {fileID: 4440753137589128904}
+  m_fMovementSpeed: 4
+  m_fTurningSpeed: 0
+  m_fMaxAcceleration: 0
+  m_fPursuitRadius: 15
