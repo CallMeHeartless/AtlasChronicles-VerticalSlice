@@ -111,20 +111,22 @@ public class PlayerController : MonoBehaviour {
     private float m_bZSmoothSpeed = 0.0f;
     private float m_fHorizontalSmoothSpeed = 0.3f;
 
-    private AudioPlayer m_rAudioPlayer;
+    [Header("Audio")]
+    [SerializeField] private AudioPlayer m_rJumpAudio;
+    //[SerializeField] private AudioPlayer m_rJumpAudio;
+
     #endregion
 
     // Start is called before the first frame update
     void Start() {
         // Create component references
-        m_rAudioPlayer = GetComponentInChildren<AudioPlayer>();
         m_rCharacterController = GetComponent<CharacterController>();
         m_rAnimator = GetComponentInChildren<Animator>();
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
-        m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
+        //m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -215,12 +217,11 @@ public class PlayerController : MonoBehaviour {
             // Jump code
             if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 //m_fVerticalVelocity = m_fJumpPower;
-                Debug.Log("???: " + m_rAudioPlayer);
+                Debug.Log("???: " + m_rJumpAudio);
 
-                if (m_rAudioPlayer)
+                if (m_rJumpAudio)
                 {
-                    Debug.Log("???");
-                    m_rAudioPlayer.PlayAudio();
+                    m_rJumpAudio.PlayAudio();
                 }
                 m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
@@ -668,12 +669,12 @@ public class PlayerController : MonoBehaviour {
                 m_rTeleportMarker.transform.SetParent(null);
                 m_bTeleportThresholdWarning = false;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdBreak();
+                //m_rPlayerAudioController.TeleportThresholdBreak();
             }
             else if (fMarkerDistance >= m_fTeleportTetherDistance && !m_bTeleportThresholdWarning) {
                 m_bTeleportThresholdWarning = true;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdWarning();
+                //m_rPlayerAudioController.TeleportThresholdWarning();
             }
             if (fMarkerDistance < m_fTeleportTetherDistance) {
                 m_bTeleportThresholdWarning = false;
@@ -689,13 +690,13 @@ public class PlayerController : MonoBehaviour {
                 //ToggleTeleportMarker(false);
                 m_bSwitchThresholdWarning = false;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdBreak();
+                //m_rPlayerAudioController.TeleportThresholdBreak();
                 m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().DetachFromObject();
             }
             else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
                 m_bSwitchThresholdWarning = true;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdWarning();
+                //m_rPlayerAudioController.TeleportThresholdWarning();
             }
             if (fSwitchTagDistance < m_fTeleportTetherDistance) {
                 m_bSwitchThresholdWarning = false;
