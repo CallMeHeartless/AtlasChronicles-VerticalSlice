@@ -55,6 +55,10 @@ public class PlayerController : MonoBehaviour {
     private float m_fVerticalVelocity = 0.0f;
     private float m_fExternal = 0.0f;
     private float m_fGravityMulitplier = 1.0f;
+    [SerializeField] private float m_fMaxGravityMultiplier = 2.0f;
+    [SerializeField][Tooltip("The rate by which gravity is multiplied every frame, up to the maximum")]
+    private float m_fGravityMultiplierRate = 1.2f;
+
     [Tooltip("The time that the player can float for")] [SerializeField]
     private float m_fFloatTime = 2.0f;
     private float m_fFloatTimer = 0.0f;
@@ -114,6 +118,11 @@ public class PlayerController : MonoBehaviour {
     private float m_bZSmoothSpeed = 0.0f;
     private float m_fHorizontalSmoothSpeed = 0.3f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioPlayer m_rJumpAudio;
+    //[SerializeField] private AudioPlayer m_rJumpAudio;
+    private Material m_CurrentWalkingSurface;    // Reference used to make decisions about audio.
+
     #endregion
 
     // Start is called before the first frame update
@@ -125,7 +134,7 @@ public class PlayerController : MonoBehaviour {
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
-        m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
+        //m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -220,6 +229,11 @@ public class PlayerController : MonoBehaviour {
             // Jump code
             if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 //m_fVerticalVelocity = m_fJumpPower;
+                if (m_rJumpAudio) {
+                    print(m_rJumpAudio);
+
+                    m_rJumpAudio.PlayAudio();
+                }
                 m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 // Control use of double jump
@@ -319,8 +333,8 @@ public class PlayerController : MonoBehaviour {
         else {
             m_rAnimator.SetBool("Grounded", false);
             if (!m_bIsFloating) {// && m_Velocity.y < 0.0f
-                m_fGravityMulitplier *= 1.2f;
-                m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, 2.0f);
+                m_fGravityMulitplier *= m_fGravityMultiplierRate;
+                m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, m_fMaxGravityMultiplier);
                 m_fCurrentMovementSpeed = m_fMovementSpeed;
             }
         }
@@ -666,12 +680,12 @@ public class PlayerController : MonoBehaviour {
                 m_rTeleportMarker.transform.SetParent(null);
                 m_bTeleportThresholdWarning = false;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdBreak();
+                //m_rPlayerAudioController.TeleportThresholdBreak();
             }
             else if (fMarkerDistance >= m_fTeleportTetherDistance && !m_bTeleportThresholdWarning) {
                 m_bTeleportThresholdWarning = true;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdWarning();
+                //m_rPlayerAudioController.TeleportThresholdWarning();
             }
             if (fMarkerDistance < m_fTeleportTetherDistance) {
                 m_bTeleportThresholdWarning = false;
@@ -687,13 +701,13 @@ public class PlayerController : MonoBehaviour {
                 //ToggleTeleportMarker(false);
                 m_bSwitchThresholdWarning = false;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdBreak();
+                //m_rPlayerAudioController.TeleportThresholdBreak();
                 m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().DetachFromObject();
             }
             else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
                 m_bSwitchThresholdWarning = true;
                 // Play sound / VFX
-                m_rPlayerAudioController.TeleportThresholdWarning();
+                //m_rPlayerAudioController.TeleportThresholdWarning();
             }
             if (fSwitchTagDistance < m_fTeleportTetherDistance) {
                 m_bSwitchThresholdWarning = false;
@@ -751,4 +765,59 @@ public class PlayerController : MonoBehaviour {
             ToggleSprint(false);
         }
     }
+
+    //void OnAnimatorMove()
+    //{
+    //    Vector3 movement;
+
+    //    // If Ellen is on the ground...
+    //    if (m_rCharacterController.isGrounded)
+    //    {
+    //        // ... raycast into the ground...
+    //        RaycastHit hit;
+    //        float tempGroundDist = 1.0f;
+    //        Ray ray = new Ray(transform.position + Vector3.up * tempGroundDist * 0.5f, -Vector3.up);
+    //        if (Physics.Raycast(ray, out hit, tempGroundDist, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+    //        {
+    //            // ... and get the movement of the root motion rotated to lie along the plane of the ground.
+    //            movement = Vector3.ProjectOnPlane(m_Animator.deltaPosition, hit.normal);
+
+    //            // Also store the current walking surface so the correct audio is played.
+    //            Renderer groundRenderer = hit.collider.GetComponentInChildren<Renderer>();
+    //            m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
+    //        }
+    //        else
+    //        {
+    //            // If no ground is hit just get the movement as the root motion.
+    //            // Theoretically this should rarely happen as when grounded the ray should always hit.
+    //            movement = m_Animator.deltaPosition;
+    //            m_CurrentWalkingSurface = null;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // If not grounded the movement is just in the forward direction.
+    //        movement = m_ForwardSpeed * transform.forward * Time.deltaTime;
+    //    }
+
+    //    // Rotate the transform of the character controller by the animation's root rotation.
+    //    m_CharCtrl.transform.rotation *= m_Animator.deltaRotation;
+
+    //    // Add to the movement with the calculated vertical speed.
+    //    movement += m_VerticalSpeed * Vector3.up * Time.deltaTime;
+
+    //    // Move the character controller.
+    //    m_CharCtrl.Move(movement);
+
+    //    // After the movement store whether or not the character controller is grounded.
+    //    m_IsGrounded = m_CharCtrl.isGrounded;
+
+    //    // If Ellen is not on the ground then send the vertical speed to the animator.
+    //    // This is so the vertical speed is kept when landing so the correct landing animation is played.
+    //    if (!m_IsGrounded)
+    //        m_Animator.SetFloat(m_HashAirborneVerticalSpeed, m_VerticalSpeed);
+
+    //    // Send whether or not Ellen is on the ground to the animator.
+    //    m_Animator.SetBool(m_HashGrounded, m_IsGrounded);
+    //}
 }

@@ -15,8 +15,12 @@ public class FallingItem : MonoBehaviour
             if (m_bFirstHit == true)
             {
                 collision.gameObject.GetComponent<PlayerController>().DamagePlayer(m_intDamage);
-                GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP - m_intDamage;
-                GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP);
+                if(GameObject.FindGameObjectWithTag("UI"))
+                {
+                    GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP - m_intDamage;
+                    GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP);
+                }
+                
                 m_bFirstHit = false;
             }
 

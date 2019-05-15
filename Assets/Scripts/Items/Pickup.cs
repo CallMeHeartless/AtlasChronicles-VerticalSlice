@@ -24,10 +24,12 @@ public class Pickup : MonoBehaviour
 
             if (gameObject.CompareTag("PrimaryPickUp"))
             {    // Maps
+                GetComponent<AudioSource>().Play();
                 GameStats.MapsBoard[GameStats.LevelLoctation]++;
             }
             if (gameObject.CompareTag("SecondayPickUp"))
             {   // Level specific collectables
+                GetComponent<AudioSource>().Play();
                 GameStats.NoteBoard[GameStats.LevelLoctation]++;
             }
 
@@ -37,8 +39,6 @@ public class Pickup : MonoBehaviour
                 m_rParticles.SetActive(true);
             }
             GetComponentInChildren<Animator>().SetTrigger("Collect");
-
-            
         }
     }
 

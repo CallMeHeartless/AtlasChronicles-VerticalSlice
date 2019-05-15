@@ -5,6 +5,12 @@ using UnityEngine;
 public class JumpPadController : MonoBehaviour {
     [SerializeField]
     private float m_fJumpForce = 10.0f;
+    private AudioPlayer m_rAudioPlayer;
+
+    private void Start()
+    {
+        m_rAudioPlayer = GetComponentInChildren<AudioPlayer>();
+    }
 
     private void OnTriggerStay(Collider other) {
 
@@ -12,7 +18,7 @@ public class JumpPadController : MonoBehaviour {
             other.GetComponent<PlayerController>().ClearExternalForces();
             other.GetComponent<PlayerController>().ResetGravityMultiplier();
             other.GetComponent<PlayerController>().AddExternalForce(Vector3.up * m_fJumpForce);
-            print("jump");
+            m_rAudioPlayer.PlayAudio();
         }
     }
 
