@@ -16,15 +16,26 @@ public class EnemyController : MonoBehaviour
     private PlayerController m_rPlayer = null;
 
     // Internal variables
+    [Header("Navmesh properties")]
     [SerializeField]
     private float m_fMovementSpeed;
+    [SerializeField]
+    private float m_fTurningSpeed;
+    [SerializeField]
+    private float m_fMaxAcceleration;
     private Vector3 m_HomeLocation;
+    private Vector3 m_CurrentTarget;
     [SerializeField]
     private float m_fPursuitRadius = 15.0f;
 
     // Start is called before the first frame update
     void Start(){
         m_rNavAgent = GetComponent<NavMeshAgent>();
+        // Define agent properties
+        m_rNavAgent.speed = m_fMovementSpeed;
+        Debug.Log("NMA Orientation: " + m_rNavAgent.updateRotation);
+        Debug.Log("NMA Turning speed: " + m_rNavAgent.angularSpeed);
+        Debug.Log("NMA Acceleration: " + m_rNavAgent.acceleration);
     }
 
     // Update is called once per frame
@@ -37,7 +48,9 @@ public class EnemyController : MonoBehaviour
         // Look for the player
         m_rPlayer = m_rVision.DetectPlayer(m_rEyes);
         if (m_rPlayer) {
-
+            // Move to player
+            m_CurrentTarget = m_rPlayer.transform.position;
+            m_rNavAgent.SetDestination(m_CurrentTarget);
         }
     }
 
