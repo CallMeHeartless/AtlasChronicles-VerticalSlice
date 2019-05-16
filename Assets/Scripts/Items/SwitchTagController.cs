@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SwitchTagController : MonoBehaviour
 {
@@ -54,11 +55,18 @@ public class SwitchTagController : MonoBehaviour
     }
 
     // Places the attached object at the input position, then detaches itself
-    public void Switch(Vector3 _vecSwitchPosition) {
-        // Handle objects with navmesh
+    public IEnumerator Switch(Vector3 _vecSwitchPosition) {
+        yield return new WaitForEndOfFrame();
+        // VFX
 
-        // Visual effects
-        m_AttachedObject.position = _vecSwitchPosition;
+        // Handle objects with navmesh
+        NavMeshAgent agent = m_AttachedObject.GetComponent<NavMeshAgent>();
+        if (agent) {
+            agent.Warp(_vecSwitchPosition);
+        }
+        else {
+            m_AttachedObject.position = _vecSwitchPosition;
+        }
         DetachFromObject();
     }
 

@@ -127,6 +127,10 @@ public class PlayerController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        // Lock mouse
+        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+
         // Create component references
         m_rCharacterController = GetComponent<CharacterController>();
         m_rAnimator = GetComponentInChildren<Animator>();
@@ -508,7 +512,7 @@ public class PlayerController : MonoBehaviour {
         // Switch positions
         Vector3 vecPlayerPosition = transform.position;
         transform.position = m_rSwitchTarget.transform.position;
-        m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().Switch(vecPlayerPosition);
+        StartCoroutine(m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().Switch(vecPlayerPosition));
 
         // Remove reference
         m_rSwitchTarget = null;
@@ -702,7 +706,7 @@ public class PlayerController : MonoBehaviour {
                 m_bSwitchThresholdWarning = false;
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdBreak();
-                m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().DetachFromObject();
+                m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
             }
             else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
                 m_bSwitchThresholdWarning = true;
