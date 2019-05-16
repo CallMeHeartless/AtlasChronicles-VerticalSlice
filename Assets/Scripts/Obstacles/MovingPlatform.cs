@@ -13,6 +13,11 @@ public class MovingPlatform : MonoBehaviour
     public float m_fPauseDuration;
     public float m_fCurrentPause;
 
+    [Header("shinking")]
+    public bool Shink = false;
+    public float ShinkSize = 1;
+    private BoxCollider box;
+
     [Header("destorying")]
     public bool m_bDestoryAtPoint;
     public int m_intBreakableAtPoint;
@@ -21,6 +26,10 @@ public class MovingPlatform : MonoBehaviour
     void Start()
     {
         //Debug.Log(m_rPoints.Length);
+        if (Shink)
+        {
+            box = GetComponent<BoxCollider>();
+        }
     }
 
     // Update is called once per frame
@@ -30,6 +39,19 @@ public class MovingPlatform : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(gameObject.transform.position, m_rPoints[m_intCurrentPoint].transform.position, m_fSpeed);
 
+            if (Shink)
+            {
+                if (m_intCurrentPoint == 0)
+                {
+                    box.size += new Vector3( 0.1f * ShinkSize * 2,0, 0);
+                    box.center += new Vector3(0.1f * ShinkSize,0, 0);
+                }
+                else
+                {
+                    box.size += new Vector3(-0.1f * ShinkSize * 2, 0, 0);
+                    box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
+                }
+            }
             
             
             if (Vector3.Distance(transform.position, m_rPoints[m_intCurrentPoint].transform.position) < 1)
