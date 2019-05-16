@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_GrassTerrain
-  m_Shader: {fileID: 4800000, guid: 1dcd1ecdc561f1244933a9f2c536701f, type: 3}
-  m_ShaderKeywords: _OPENGLON_ON _USESMOOTHNESS_ON
-  m_LightmapFlags: 0
+  m_Name: M_SkyTempleTerrain
+  m_Shader: {fileID: 4800000, guid: e7bb24440ce76414998b2f18d727a648, type: 3}
+  m_ShaderKeywords: _OPENGLON_ON _TEX03_USEMETALLIC_ON _TEX03_USENORMAL_ON _USESMOOTHNESS_ON
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -75,6 +75,42 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Tex01_Diffuse:
+        m_Texture: {fileID: 2800000, guid: 2e2992173cd3b3e40a9b4389684c4ad5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex01_Norm:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex01_RMOH:
+        m_Texture: {fileID: 2800000, guid: d76de142c000f4c40a04e966c0827587, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex02_Diffuse:
+        m_Texture: {fileID: 2800000, guid: 1d32adf0ef47c77498a14064789750fe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex02_Norm:
+        m_Texture: {fileID: 2800000, guid: 3a3e526ad34e7584bb6c653e1bd5eefc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex02_RMOH:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex03_Diffuse:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex03_Norm:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Tex03_RMOH:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TextureSample0:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -124,6 +160,30 @@ Material:
     - _Tess: 1
     - _TessPhongStrength: 1
     - _TessValue: 32
+    - _Tex01_DiffuseHue: 0
+    - _Tex01_DiffuseLightness: 1
+    - _Tex01_DiffuseSaturation: 1
+    - _Tex01_FlatSmoothness: 0
+    - _Tex01_Tile: 2.84
+    - _Tex01_UseFlatSmoothness: 0
+    - _Tex01_UseMetallic: 0
+    - _Tex01_UseNormal: 0
+    - _Tex02_DiffuseHue: 0
+    - _Tex02_DiffuseLightness: 1
+    - _Tex02_DiffuseSaturation: 1
+    - _Tex02_FlatSmoothness: 0
+    - _Tex02_Tile: 7.95
+    - _Tex02_UseFlatSmoothness: 0
+    - _Tex02_UseMetallic: 0
+    - _Tex02_UseNormal: 0
+    - _Tex03_DiffuseHue: 0
+    - _Tex03_DiffuseLightness: 1
+    - _Tex03_DiffuseSaturation: 1
+    - _Tex03_FlatSmoothness: 0
+    - _Tex03_Tile: 0
+    - _Tex03_UseFlatSmoothness: 0
+    - _Tex03_UseMetallic: 1
+    - _Tex03_UseNormal: 1
     - _TextureTiling: 1
     - _UVSec: 0
     - _UseDetailNormal: 0
@@ -140,5 +200,8 @@ Material:
     - _EmissiveTint: {r: 1, g: 1, b: 1, a: 0}
     - _FlatEmissiveColor: {r: 3.18, g: 0, b: 0, a: 0}
     - _Metallic: {r: 0, g: 0, b: 0, a: 0}
+    - _Tex01_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Tex02_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Tex03_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _TextureOffset: {r: 0, g: 0, b: 0, a: 0}
     - _TextureScale: {r: 1, g: 1, b: 1, a: 1}
