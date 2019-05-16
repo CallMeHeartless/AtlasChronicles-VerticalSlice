@@ -57,4 +57,8 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlaceTeleportMarker() {
 
     }
+
+    public void PlayStep() {
+        m_PlayerController.HandleFootsteps();
+    }
 }

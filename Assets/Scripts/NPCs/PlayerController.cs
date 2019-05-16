@@ -120,9 +120,9 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Audio")]
     [SerializeField] private AudioPlayer m_rJumpAudio;
-    //[SerializeField] private AudioPlayer m_rJumpAudio;
-    private Material m_CurrentWalkingSurface;    // Reference used to make decisions about audio.
-
+    [SerializeField] private AudioPlayer m_rWalkAudio;
+    private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
+    private bool m_bIsSprinting = false;
     #endregion
 
     // Start is called before the first frame update
@@ -208,6 +208,10 @@ public class PlayerController : MonoBehaviour {
         } else {
             m_rAnimator.ResetTrigger("Idle");
             m_rAnimator.SetTrigger("Run");
+            HandleWalkingSurface();
+            ///m_rWalkAudio
+            //HandleFootsteps();
+            //if(m_fCurrentMovementSpeed is on sprint mode)
         }
     }
 
@@ -230,8 +234,6 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 //m_fVerticalVelocity = m_fJumpPower;
                 if (m_rJumpAudio) {
-                    print(m_rJumpAudio);
-
                     m_rJumpAudio.PlayAudio();
                 }
                 m_Velocity.y = m_fJumpPower;
@@ -641,6 +643,48 @@ public class PlayerController : MonoBehaviour {
         m_rTeleportParticles.SetActive(false);
     }
 
+    public void HandleFootsteps() {
+        //m_fCurrentMovementSpeed
+        if(m_CurrentWalkingSurface)
+            print("merp: " + m_CurrentWalkingSurface.name);
+        else
+            print("merp: null");
+
+        //TODO: FIX SOUNDDDD 
+
+        if (m_MovementInput.sqrMagnitude != 0 && m_bIsSprinting)
+        {
+            m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface, 0);
+        }
+        else if(m_MovementInput.sqrMagnitude != 0 && !m_bIsSprinting)
+        {
+            print("KSJDHFKLDHSF");
+
+            m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface, 0);
+        }
+        //print("merp: " + m_fCurrentMovementSpeed);
+    }
+
+    public void HandleWalkingSurface()
+    {
+        if (m_rCharacterController.isGrounded)
+        {
+            RaycastHit hit;
+            float tempGroundDist = 1.0f;
+            Ray ray = new Ray(transform.position + Vector3.up * tempGroundDist * 0.5f, -Vector3.up);
+            if (Physics.Raycast(ray, out hit, tempGroundDist, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+            {
+
+                Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
+                m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
+            }
+            else
+            {
+                m_CurrentWalkingSurface = null;
+            }
+        }
+    }
+
     // Adds an external force to the player this frame
     public void AddExternalForce(Vector3 _vecExternalForce) {
         if(_vecExternalForce == Vector3.zero) {
@@ -752,9 +796,11 @@ public class PlayerController : MonoBehaviour {
     private void ToggleSprint(bool _bSprinting) {
         if (_bSprinting) {
             m_fCurrentMovementSpeed = m_fMovementSpeed * m_fSprintMultiplier;
+            m_bIsSprinting = true;
         }
         else {
             m_fCurrentMovementSpeed = m_fMovementSpeed;
+            m_bIsSprinting = false;
         }
     }
 
@@ -765,59 +811,5 @@ public class PlayerController : MonoBehaviour {
             ToggleSprint(false);
         }
     }
-
-    //void OnAnimatorMove()
-    //{
-    //    Vector3 movement;
-
-    //    // If Ellen is on the ground...
-    //    if (m_rCharacterController.isGrounded)
-    //    {
-    //        // ... raycast into the ground...
-    //        RaycastHit hit;
-    //        float tempGroundDist = 1.0f;
-    //        Ray ray = new Ray(transform.position + Vector3.up * tempGroundDist * 0.5f, -Vector3.up);
-    //        if (Physics.Raycast(ray, out hit, tempGroundDist, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-    //        {
-    //            // ... and get the movement of the root motion rotated to lie along the plane of the ground.
-    //            movement = Vector3.ProjectOnPlane(m_Animator.deltaPosition, hit.normal);
-
-    //            // Also store the current walking surface so the correct audio is played.
-    //            Renderer groundRenderer = hit.collider.GetComponentInChildren<Renderer>();
-    //            m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
-    //        }
-    //        else
-    //        {
-    //            // If no ground is hit just get the movement as the root motion.
-    //            // Theoretically this should rarely happen as when grounded the ray should always hit.
-    //            movement = m_Animator.deltaPosition;
-    //            m_CurrentWalkingSurface = null;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        // If not grounded the movement is just in the forward direction.
-    //        movement = m_ForwardSpeed * transform.forward * Time.deltaTime;
-    //    }
-
-    //    // Rotate the transform of the character controller by the animation's root rotation.
-    //    m_CharCtrl.transform.rotation *= m_Animator.deltaRotation;
-
-    //    // Add to the movement with the calculated vertical speed.
-    //    movement += m_VerticalSpeed * Vector3.up * Time.deltaTime;
-
-    //    // Move the character controller.
-    //    m_CharCtrl.Move(movement);
-
-    //    // After the movement store whether or not the character controller is grounded.
-    //    m_IsGrounded = m_CharCtrl.isGrounded;
-
-    //    // If Ellen is not on the ground then send the vertical speed to the animator.
-    //    // This is so the vertical speed is kept when landing so the correct landing animation is played.
-    //    if (!m_IsGrounded)
-    //        m_Animator.SetFloat(m_HashAirborneVerticalSpeed, m_VerticalSpeed);
-
-    //    // Send whether or not Ellen is on the ground to the animator.
-    //    m_Animator.SetBool(m_HashGrounded, m_IsGrounded);
-    //}
+    
 }

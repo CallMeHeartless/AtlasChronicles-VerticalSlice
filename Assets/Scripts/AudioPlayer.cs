@@ -83,7 +83,6 @@ public class AudioPlayer : MonoBehaviour
         //If the clip does not exist, cancel function
         if (clip == null)
             return;
-        print(selectedBank.clips.ToString() + selectedBank.clips.Length);
 
         //Apply user-specified settings to the selected sound clip
         m_Audiosource.spatialBlend = m_bSpatialValue;
