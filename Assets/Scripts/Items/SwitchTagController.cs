@@ -55,6 +55,8 @@ public class SwitchTagController : MonoBehaviour
 
     // Places the attached object at the input position, then detaches itself
     public void Switch(Vector3 _vecSwitchPosition) {
+        // Handle objects with navmesh
+
         // Visual effects
         m_AttachedObject.position = _vecSwitchPosition;
         DetachFromObject();
