@@ -161,6 +161,8 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
+        HandleWalkingSurface();
+
     }
 
     private void LateUpdate() {
@@ -208,7 +210,6 @@ public class PlayerController : MonoBehaviour {
         } else {
             m_rAnimator.ResetTrigger("Idle");
             m_rAnimator.SetTrigger("Run");
-            HandleWalkingSurface();
             ///m_rWalkAudio
             //HandleFootsteps();
             //if(m_fCurrentMovementSpeed is on sprint mode)
@@ -645,21 +646,14 @@ public class PlayerController : MonoBehaviour {
 
     public void HandleFootsteps() {
         //m_fCurrentMovementSpeed
-        if(m_CurrentWalkingSurface)
-            print("merp: " + m_CurrentWalkingSurface.name);
-        else
-            print("merp: null");
+        //if(m_CurrentWalkingSurface)
+        //    print("merp: " + m_CurrentWalkingSurface.name);
+        //else
+        //    print("merp: null");
 
         //TODO: FIX SOUNDDDD 
 
-        if (m_MovementInput.sqrMagnitude != 0 && m_bIsSprinting)
-        {
-            m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface, 0);
-        }
-        else if(m_MovementInput.sqrMagnitude != 0 && !m_bIsSprinting)
-        {
-            print("KSJDHFKLDHSF");
-
+        if (m_MovementInput.sqrMagnitude != 0) { 
             m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface, 0);
         }
         //print("merp: " + m_fCurrentMovementSpeed);
@@ -670,12 +664,11 @@ public class PlayerController : MonoBehaviour {
         if (m_rCharacterController.isGrounded)
         {
             RaycastHit hit;
-            float tempGroundDist = 1.0f;
-            Ray ray = new Ray(transform.position + Vector3.up * tempGroundDist * 0.5f, -Vector3.up);
-            if (Physics.Raycast(ray, out hit, tempGroundDist, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+            Debug.DrawRay(transform.position, Vector3.down * 2.0f);
+            if (Physics.Raycast(transform.position, Vector3.down * 2.0f, out hit))
             {
-
                 Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
+                print("i am hitting some ground " + groundRenderer.name);
                 m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
             }
             else
