@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     // External References
     private NavMeshAgent m_rNavAgent;
     private Animator m_rAnimator;
+    private Animator m_rStateMachine;
     //[SerializeField]
     public AIVision m_rVision;
     [SerializeField][Tooltip("An empty game object positioned where the AI's eyes are, with forward direction aligned with its parent")]
@@ -27,15 +28,32 @@ public class EnemyController : MonoBehaviour
     private Vector3 m_CurrentTarget;
     [SerializeField]
     private float m_fPursuitRadius = 15.0f;
+    [SerializeField]
+    private AIWanderProperties m_WanderProperties;
+    public AIWanderProperties m_rWanderProperties { get { return m_WanderProperties; } }
 
     // Start is called before the first frame update
     void Start(){
         m_rNavAgent = GetComponent<NavMeshAgent>();
         // Define agent properties
         m_rNavAgent.speed = m_fMovementSpeed;
-        Debug.Log("NMA Orientation: " + m_rNavAgent.updateRotation);
-        Debug.Log("NMA Turning speed: " + m_rNavAgent.angularSpeed);
-        Debug.Log("NMA Acceleration: " + m_rNavAgent.acceleration);
+
+        // Initialise wander properties
+        m_WanderProperties.m_HomePosition = transform.position;
+
+        // Initialise State machine
+        m_rStateMachine = GetComponent<Animator>();
+        AIState[] behaviours = m_rStateMachine.GetBehaviours<AIState>();
+        if(behaviours[0] == null) {
+            Debug.LogError("NO BEHAVIOUR FOUND");
+        }
+        foreach(AIState behaviour in behaviours) {
+            behaviour.m_rAI = this;
+        }
+
+        // Initialise animator
+        //m_rAnimator = GetComponentsInChildren<Animator>()[1];
+
     }
 
     // Update is called once per frame
@@ -54,6 +72,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void SetDestination(Vector3 _vecTarget) {
+        m_CurrentTarget = _vecTarget;
+        m_rNavAgent.SetDestination(m_CurrentTarget);
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {

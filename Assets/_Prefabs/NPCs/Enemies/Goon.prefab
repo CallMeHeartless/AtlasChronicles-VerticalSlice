@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 3414321406756095791}
   - component: {fileID: 629899732147760917}
   - component: {fileID: 3261623987127839684}
+  - component: {fileID: 7804704985898512706}
   m_Layer: 0
   m_Name: Goon
   m_TagString: Untagged
@@ -171,3 +172,27 @@ MonoBehaviour:
   m_fTurningSpeed: 0
   m_fMaxAcceleration: 0
   m_fPursuitRadius: 15
+  m_WanderProperties:
+    m_HomePosition: {x: 0, y: 0, z: 0}
+    m_fMinWanderRadius: 1
+    m_fMaxWanderRadius: 1
+    m_fWanderInterval: 3
+--- !u!95 &7804704985898512706
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911810980302994007}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c668be6886bcd04ebaf46fa369ea493, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
