@@ -61,4 +61,8 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlayStep() {
         m_PlayerController.HandleFootsteps();
     }
+    public void PlayGlideStart(bool _start)
+    {
+        m_PlayerController.PlayGliderSound(_start);
+    }
 }

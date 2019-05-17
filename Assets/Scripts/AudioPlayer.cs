@@ -46,20 +46,25 @@ public class AudioPlayer : MonoBehaviour
         }
     }
 
-    public void PlayAudio(Material _overrideMaterial, int _bankID)
+    public void PlayAudio(Material _overrideMaterial)
     {
         //Plays a material specified audio based on which ID the user has selected
-        PickAudioSettings(_overrideMaterial, _bankID);
+        PickRandomSound(_overrideMaterial);
     }
 
+    public void PlayAudio(int _clipNum)
+    {
+        //Plays a material specified audio based on which ID the user has selected
+        PickRandomSound(_clipNum);
+    }
 
     // Start is called before the first frame update
     public void PlayAudio()
     {
-        PickAudioSettings(null, 0);
+        PickRandomSound(null);
     }
 
-    public void PickAudioSettings(Material _overrideMaterial, int _bankID)
+    public void PickRandomSound(Material _overrideMaterial)
     {
         var selectedBank = defaultAudio;
 
@@ -67,9 +72,7 @@ public class AudioPlayer : MonoBehaviour
         if (_overrideMaterial != null) {
             //Get bank that contains the material specified
             if (m_Lookup.TryGetValue(_overrideMaterial, out SoundBank[] banks)) {
-                if (_bankID < banks.Length) {
-                    selectedBank = banks[_bankID];
-                }
+                selectedBank = banks[0];
             }
         }
 
@@ -89,6 +92,22 @@ public class AudioPlayer : MonoBehaviour
         m_Audiosource.pitch = m_bRandomizePitch ? Random.Range(m_fPitchStart, m_fPitchStart + m_fPitchRandomRange) : 1.0f;
         m_Audiosource.clip = clip;
         m_Audiosource.PlayDelayed(m_fAudioDelay); //Plays audio
+    }
 
+    public void PickRandomSound(int _clipNum)
+    {
+        var selectedBank = defaultAudio;
+
+        AudioClip clip = selectedBank.clips[_clipNum];
+
+        //If the clip does not exist, cancel function
+        if (clip == null)
+            return;
+
+        //Apply user-specified settings to the selected sound clip
+        m_Audiosource.spatialBlend = m_bSpatialValue;
+        m_Audiosource.pitch = m_bRandomizePitch ? Random.Range(m_fPitchStart, m_fPitchStart + m_fPitchRandomRange) : 1.0f;
+        m_Audiosource.clip = clip;
+        m_Audiosource.PlayDelayed(m_fAudioDelay); //Plays audio
     }
 }

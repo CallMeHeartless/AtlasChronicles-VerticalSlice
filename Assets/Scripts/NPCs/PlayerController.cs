@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviour {
     [Header("Audio")]
     [SerializeField] private AudioPlayer m_rJumpAudio;
     [SerializeField] private AudioPlayer m_rWalkAudio;
+    [SerializeField] private AudioPlayer m_rGliderAudio;
+
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
     #endregion
@@ -161,8 +163,6 @@ public class PlayerController : MonoBehaviour {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
-        HandleWalkingSurface();
-
     }
 
     private void LateUpdate() {
@@ -379,8 +379,11 @@ public class PlayerController : MonoBehaviour {
         if (m_bIsFloating) {
             // Level out the player's upward velocity to begin gliding
             //m_fVerticalVelocity = 0.0f;
+
             m_Velocity.y = 0.0f;
             m_rAnimator.SetBool("Glide", true);
+            m_rGliderAudio.PlayAudio(0);
+
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(true);
@@ -389,6 +392,8 @@ public class PlayerController : MonoBehaviour {
         } else {
             m_rAnimator.SetBool("Glide", false);
             //m_rAnimator.SetTrigger("Jump");
+            m_rGliderAudio.PlayAudio(1);
+
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(false);
@@ -645,37 +650,26 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void HandleFootsteps() {
-        //m_fCurrentMovementSpeed
-        //if(m_CurrentWalkingSurface)
-        //    print("merp: " + m_CurrentWalkingSurface.name);
-        //else
-        //    print("merp: null");
-
-        //TODO: FIX SOUNDDDD 
-
-        if (m_MovementInput.sqrMagnitude != 0) { 
-            m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface, 0);
-        }
-        //print("merp: " + m_fCurrentMovementSpeed);
-    }
-
-    public void HandleWalkingSurface()
-    {
-        if (m_rCharacterController.isGrounded)
-        {
-            RaycastHit hit;
-            Debug.DrawRay(transform.position, Vector3.down * 2.0f);
-            if (Physics.Raycast(transform.position, Vector3.down * 2.0f, out hit))
-            {
+        if (m_rCharacterController.isGrounded) {
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) {
                 Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
                 print("i am hitting some ground " + groundRenderer.name);
                 m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
             }
-            else
-            {
+            else {
                 m_CurrentWalkingSurface = null;
             }
         }
+        if (m_MovementInput.sqrMagnitude != 0) {
+            m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface);
+        }
+    }
+
+    public void PlayGliderSound(bool _start) {
+        if (_start)
+            m_rGliderAudio.PlayAudio(0);
+        else
+            m_rGliderAudio.PlayAudio(1);
     }
 
     // Adds an external force to the player this frame
@@ -788,10 +782,12 @@ public class PlayerController : MonoBehaviour {
     // Toggles whether the player should be sprinting
     private void ToggleSprint(bool _bSprinting) {
         if (_bSprinting) {
+            m_rAnimator.speed = 2.0f;
             m_fCurrentMovementSpeed = m_fMovementSpeed * m_fSprintMultiplier;
             m_bIsSprinting = true;
         }
         else {
+            m_rAnimator.speed = 1.0f;
             m_fCurrentMovementSpeed = m_fMovementSpeed;
             m_bIsSprinting = false;
         }
