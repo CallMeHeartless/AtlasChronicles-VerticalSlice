@@ -10,9 +10,11 @@ public class Switchable : MonoBehaviour
     private Material m_AlternateMaterial;
     [SerializeField]
     private Material m_Material;
+    private Transform m_OriginalTransform;
 
     private void Start() {
         //m_Material = GetComponent<MeshRenderer>().material;
+        m_OriginalTransform = transform;
     }
 
     public void Tag() {
@@ -25,6 +27,18 @@ public class Switchable : MonoBehaviour
         if (m_bChangeMaterialOnTag) {
             GetComponentInChildren<MeshRenderer>().material = m_Material;
         }
+    }
+
+    public void ReturnToStartPosition() {
+        transform.position = m_OriginalTransform.position;
+        transform.rotation = m_OriginalTransform.rotation;
+
+        // Check for rigidbody
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        if (rigidbody) {
+            rigidbody.velocity = Vector3.zero;
+        }
+        
     }
 
 }
