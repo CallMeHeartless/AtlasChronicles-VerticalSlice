@@ -67,8 +67,13 @@ public class EnemyController : MonoBehaviour
         m_rPlayer = m_rVision.DetectPlayer(m_rEyes);
         if (m_rPlayer) {
             // Move to player
+            m_rStateMachine.SetBool("bCanSeePlayer", true);
             m_CurrentTarget = m_rPlayer.transform.position;
             m_rNavAgent.SetDestination(m_CurrentTarget);
+        }
+        else {
+            m_rStateMachine.SetBool("bCanSeePlayer", false);
+            // Transition to look, then return home
         }
     }
 

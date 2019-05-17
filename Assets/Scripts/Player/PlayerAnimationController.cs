@@ -50,8 +50,11 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
 
-    public GameObject GetSwitchMarker() {
-        return m_SwitchMarker;
+    public GameObject GetSwitchMarker {
+        get {
+            return m_SwitchMarker;
+        }
+
     }
 
     public void PlaceTeleportMarker() {
