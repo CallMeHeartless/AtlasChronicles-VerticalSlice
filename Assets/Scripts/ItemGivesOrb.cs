@@ -18,4 +18,5 @@ public class ItemGivesOrb : MonoBehaviour
             
         }
     }
+    //destory
 }
