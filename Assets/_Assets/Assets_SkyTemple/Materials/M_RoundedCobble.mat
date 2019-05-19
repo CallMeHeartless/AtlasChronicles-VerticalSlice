@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 1dcd1ecdc561f1244933a9f2c536701f, type: 3}
   m_ShaderKeywords: _OPENGLON_ON _USENORMAL_ON
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -63,6 +63,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -72,7 +76,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Diffuse:
-        m_Texture: {fileID: 2800000, guid: 55ae20807bdf882498aa10a800eb6950, type: 3}
+        m_Texture: {fileID: 2800000, guid: 188a05f21ca3c4a47ab9a3f471e377fb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -88,7 +92,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Material:
-        m_Texture: {fileID: 2800000, guid: a6b33b7e578718d429c1698e9adbd8d8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Metallic:
@@ -116,7 +120,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: bd576ab56aff66c40a19035791825b8c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5f39954e19f5a48428a9a294690352a5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalDetail:
@@ -143,6 +147,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: a6b33b7e578718d429c1698e9adbd8d8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RMOH:
+        m_Texture: {fileID: 2800000, guid: 4c0990bd1094df44ea750e2cac21505c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Specular:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -160,12 +168,20 @@ Material:
     - _DetailNormalIntensity: 0
     - _DetailNormalMapScale: 1
     - _DetailNormalTiling: 1
+    - _DiffuseHue: 0
+    - _DiffuseLightness: 2.18
+    - _DiffuseSaturation: 0.72
     - _Displacement: 0.071
     - _DstBlend: 0
     - _EdgeLength: 15
+    - _EmissiveHue: 0
     - _EmissiveIntensity: 0
+    - _EmissiveLightness: 1
+    - _EmissiveSaturation: 1
     - _EmmissiveOn: 0
     - _FlatEmissive: 0
+    - _FlatMetallic: 0
+    - _FlatSmoothness: 0
     - _Float0: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -181,7 +197,10 @@ Material:
     - _MossExtraTweak: 0
     - _MossRoughnessTweak: 0
     - _NormalIntensity: 1
+    - _OcclusionContrast: 1
+    - _OcclusionHigh: 1
     - _OcclusionIntensity: 0
+    - _OcclusionLow: 0
     - _OcclusionStrength: 1
     - _OpenGLON: 1
     - _Parallax: 0.02
@@ -202,6 +221,10 @@ Material:
     - _TileNoise: 0
     - _UVSec: 0
     - _UseDetailNormal: 0
+    - _UseEmissive: 0
+    - _UseFlatEmissive: 0
+    - _UseFlatMetallic: 0
+    - _UseFlatSmoothness: 0
     - _UseMetallic: 0
     - _UseNormal: 1
     - _UseSmoothness: 0
@@ -213,6 +236,7 @@ Material:
     - _DiffuseTint: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveTint: {r: 0, g: 0, b: 0, a: 0}
+    - _FlatEmissive: {r: 0, g: 0, b: 0, a: 0}
     - _FlatEmissiveColor: {r: 0, g: 0, b: 0, a: 0}
     - _MossTint: {r: 0, g: 0, b: 0, a: 0}
     - _TextureOffset: {r: 0, g: 0, b: 0, a: 0}
