@@ -193,7 +193,13 @@ public class PlayerController : MonoBehaviour {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        m_rCharacterController.Move(m_MovementDirection);
+        if (m_MovementDirection != Vector3.zero)
+        {
+            m_rCharacterController.Move(m_MovementDirection);
+           //this works
+            // transform.position += new Vector3(0,0,0.1f);
+
+        }
     }
 
     // Calculate movement
@@ -243,6 +249,11 @@ public class PlayerController : MonoBehaviour {
                 // Control use of double jump
                 if (!m_rCharacterController.isGrounded) {
                     m_bCanDoubleJump = false;
+                }
+                if (transform.parent != null)
+                {
+                    transform.parent = null;
+
                 }
                 // Stop sprinting
                 ToggleSprint(false);

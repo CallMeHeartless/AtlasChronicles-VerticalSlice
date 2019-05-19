@@ -45,6 +45,7 @@ public class BoxDestorySetUp : MonoBehaviour
                 if (collision.gameObject.CompareTag("Spike"))
                 {
                     gameObject.GetComponent<Destoryed>().enabled = true;
+             
                 }
                 break;
             case BoxType.Water:
