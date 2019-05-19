@@ -702,13 +702,15 @@ public class PlayerController : MonoBehaviour {
             float fSwitchTagDistance = (transform.position - m_rSwitchTarget.transform.position).magnitude;
             // Compare to threshold distances
             if (fSwitchTagDistance >= m_fTeleportBreakDistance) {
-                //ToggleTeleportMarker(false);
+                Debug.Log("Switch tag beyond break distance");
                 m_bSwitchThresholdWarning = false;
+                m_rSwitchTarget = null;
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdBreak();
                 m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
             }
             else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
+                Debug.Log("Switch tag beyond use distance");
                 m_bSwitchThresholdWarning = true;
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdWarning();
