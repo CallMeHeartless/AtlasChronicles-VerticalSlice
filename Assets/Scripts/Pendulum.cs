@@ -32,7 +32,7 @@ public class Pendulum : MonoBehaviour
             }
             if (((transform.rotation.x > m_fForward)||((transform.rotation.z > m_fForward))) && (m_ridBody.angularVelocity.y < m_vec3StartingVeloicty.y))
             {
-            Debug.Log("here1");
+            //Debug.Log("here1");
             m_JointCaneHingeMotor.targetVelocity = -m_vec3StartingVeloicty.y;
                 m_JointCaneHingeMotor.force = m_fSpeed;
                 GetComponent<HingeJoint>().motor = m_JointCaneHingeMotor;
@@ -44,7 +44,7 @@ public class Pendulum : MonoBehaviour
             }
             if (((transform.rotation.x < m_fBack)||(transform.rotation.z < m_fBack)) && (m_ridBody.angularVelocity.y > -m_vec3StartingVeloicty.y))
             {
-            Debug.Log("here2");
+            //Debug.Log("here2");
             m_JointCaneHingeMotor.targetVelocity = m_vec3StartingVeloicty.y;
                 m_JointCaneHingeMotor.force = m_fSpeed;
                 GetComponent<HingeJoint>().motor = m_JointCaneHingeMotor;

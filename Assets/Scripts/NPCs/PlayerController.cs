@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
     private Animator m_rAnimator;
     private PlayerAnimationController m_rPAnimationController;
 
+    public Vector3 movement;
+
     #region INTERNAL_VARIABLES
     private static PlayerController m_rInstance = null;
     public static PlayerController instance { get { return m_rInstance; } }
@@ -193,7 +195,13 @@ public class PlayerController : MonoBehaviour {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        m_rCharacterController.Move(m_MovementDirection);
+        if (m_MovementDirection!= Vector3.zero)
+        {
+            m_rCharacterController.Move(m_MovementDirection);
+            transform.position += movement;
+            movement = new Vector3(0, 0, 0);
+        }
+        
     }
 
     // Calculate movement
@@ -234,7 +242,7 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 //m_fVerticalVelocity = m_fJumpPower;
                 if (m_rJumpAudio) {
-                    print(m_rJumpAudio);
+                    //print(m_rJumpAudio);
 
                     m_rJumpAudio.PlayAudio();
                 }
