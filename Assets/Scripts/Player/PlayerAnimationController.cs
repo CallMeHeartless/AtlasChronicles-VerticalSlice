@@ -65,4 +65,20 @@ public class PlayerAnimationController : MonoBehaviour
     {
         m_PlayerController.PlayGliderSound(_start);
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_PlayerController.SetIsOnSlipperyObject(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_PlayerController.SetIsOnSlipperyObject(true);
+        }
+    }
 }

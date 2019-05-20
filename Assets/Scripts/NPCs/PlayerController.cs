@@ -651,9 +651,11 @@ public class PlayerController : MonoBehaviour {
 
     public void HandleFootsteps() {
         if (m_rCharacterController.isGrounded) {
+            Debug.DrawRay(transform.position, Vector3.down);
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) {
                 Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
-                print("i am hitting some ground " + groundRenderer.name);
+                if (groundRenderer != null)
+                    print("dskfjhsdfk: " + groundRenderer.sharedMaterial.name);
                 m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
             }
             else {
@@ -750,16 +752,9 @@ public class PlayerController : MonoBehaviour {
         hitNormal = hit.normal;
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.CompareTag("SlipperyObject")) {
-            m_bSteepSlopeCollided = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("SlipperyObject")) {
-            m_bSteepSlopeCollided = false;
-        }
+    public void SetIsOnSlipperyObject(bool _slippery)
+    {
+        m_bSteepSlopeCollided = _slippery;
     }
 
     public void ResetGravityMultiplier() {
