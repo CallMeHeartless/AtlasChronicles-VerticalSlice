@@ -64,8 +64,8 @@ public class AIVision
         Vector3 vecRotatedForward = Quaternion.Euler(0, -m_fVisionAngle * 0.5f, 0.0f) * _transform.forward;
         UnityEditor.Handles.DrawSolidArc(_transform.position, Vector3.up, vecRotatedForward, m_fVisionAngle, m_fVisionRadius);
 
-        Gizmos.color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
-        Gizmos.DrawWireSphere(_transform.position, 0.2f);
+        //Gizmos.color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+        //Gizmos.DrawWireSphere(_transform.position, 0.2f);
     }
 
 #endif

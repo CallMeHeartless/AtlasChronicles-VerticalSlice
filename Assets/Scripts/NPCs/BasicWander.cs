@@ -12,7 +12,6 @@ public class BasicWander : AIState
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         // Reset wander interval timer
         m_fWanderIntervalTimer = 0.0f;
-        Debug.Log(m_rAI.name);
         m_rWanderProperties = m_rAI.m_rWanderProperties;
     }
 
@@ -33,7 +32,7 @@ public class BasicWander : AIState
     private void FindNewPosition() {
         float fRandomAngle = Random.Range(0.0f, 360.0f);
         float fRandomRadius = Random.Range(m_rWanderProperties.m_fMinWanderRadius, m_rWanderProperties.m_fMaxWanderRadius);
-        Vector3 target = Quaternion.AngleAxis(fRandomAngle, Vector3.up) * Vector3.right;
+        Vector3 target = Quaternion.AngleAxis(fRandomAngle, Vector3.up) * Vector3.right * fRandomRadius;
         target += m_rWanderProperties.m_HomePosition;
         m_rAI.SetDestination(target);
     }
