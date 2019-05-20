@@ -10,26 +10,44 @@ AudioMixerController:
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
+  - {fileID: 245340168479156266}
   - {fileID: 24500006}
-  m_StartSnapshot: {fileID: 24500006}
+  m_StartSnapshot: {fileID: 245340168479156266}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: e0c5d2fb831b048489671eb55af886ab
+    name: BGMVol
+  - guid: 190e47e93dee2a44386eb04ccde1aff0
+    name: SFXVol
   m_AudioMixerGroupViews:
   - guids:
+    - e1ab7759b6fd5804d864798b3adfb12d
+    - c27277f2e472f0d40b5e835562538884
+    - 7f83ba0569859984c8a416036340d9a2
+    - 5879b1b95eea13843b207f73792cc89f
     - 59a77cceda9e9054d800937d7dd3ae69
     - 71d6007c738731c4bb846c9f5d274ca2
     - fd1a78a79741a8b419c8dc389e3d68c1
-    - 0eda03af39697654ab916b9b13db760c
-    - 7f83ba0569859984c8a416036340d9a2
-    - d5b4a8fc042ddf042baced072e6b58be
     - 9209a0f9e40618a4bbfa39bac5ced136
-    - c27277f2e472f0d40b5e835562538884
-    - 5879b1b95eea13843b207f73792cc89f
+    - 0eda03af39697654ab916b9b13db760c
+    - d5b4a8fc042ddf042baced072e6b58be
     name: View
-  m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500006}
+  - guids:
+    - e1ab7759b6fd5804d864798b3adfb12d
+    - c27277f2e472f0d40b5e835562538884
+    - 7f83ba0569859984c8a416036340d9a2
+    - 5879b1b95eea13843b207f73792cc89f
+    - 59a77cceda9e9054d800937d7dd3ae69
+    - 71d6007c738731c4bb846c9f5d274ca2
+    - fd1a78a79741a8b419c8dc389e3d68c1
+    - 9209a0f9e40618a4bbfa39bac5ced136
+    - 0eda03af39697654ab916b9b13db760c
+    - d5b4a8fc042ddf042baced072e6b58be
+    name: CurrentView
+  m_CurrentViewIndex: 1
+  m_TargetSnapshot: {fileID: 245340168479156266}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -375,3 +393,19 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!245 &245340168479156266
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MasterSnap
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 227d5fb11c10e4c4b83b73f417f326ed
+  m_FloatValues:
+    93afc0d3504ed2946b4db9e856e4af52: 12.034826
+    d58a1607a6dc2c44ba6511d1fd0a1517: 1.4306194
+    d41d2c3b25818514eaf6673e41cf4d31: -3.5090396
+    e0c5d2fb831b048489671eb55af886ab: -7.8940816
+    f35187ec74542c74ab2605cd5d4ebee8: 1.0717354
+  m_TransitionOverrides: {}
