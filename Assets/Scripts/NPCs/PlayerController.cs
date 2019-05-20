@@ -28,12 +28,13 @@ public class PlayerController : MonoBehaviour {
     // Control References
     private string m_strJumpButton = "Jump";
     private string m_strSwitchButton = "YButton";
-    private string m_strTeleportMarkerPlaceButton = "XboxXButton";
-    private string m_strTeleportButton = "BButton";
+    private string m_strTeleportMarkerPlaceButton = "L1";
+    private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
     private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
-    private string m_strSprintButton = "XBoxR2";
+    private string m_strSprintButton = "BButton";
+    private string m_strAttackButton = "XBoxXButton";
 
     // Movement variables
     [Header("Movement Variables")]
@@ -432,7 +433,6 @@ public class PlayerController : MonoBehaviour {
             } else {
                 TagHeldObject();
             }
-
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton)) {
@@ -446,20 +446,22 @@ public class PlayerController : MonoBehaviour {
                 m_rAnimator.SetTrigger("Tag");
             }
         }
+
         // Toggle the projectile arc
-        AimHeldObject();
+        // AimHeldObject();
         // Pickup or throw an item
-        if (Input.GetButtonDown(m_strPickupItemButton)) {
-            if (m_bIsAiming) {
-                ThrowHeldObject();
-            } else {
-                GrabObject();
-            }
-        }
+        //if (Input.GetButtonDown(m_strPickupItemButton)) {
+        //    if (m_bIsAiming) {
+        //        ThrowHeldObject();
+        //    } else {
+        //        GrabObject();
+        //    }
+        //}
     }
 
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
-    private void TeleportToLocation(Vector3 _vecTargetLocation) {
+    private IEnumerator TeleportToLocation(Vector3 _vecTargetLocation) {
+        yield return new WaitForEndOfFrame();
         Vector3 vecPlayerPosition = transform.position;
         // Play VFX
         TeleportParticles();
@@ -505,9 +507,7 @@ public class PlayerController : MonoBehaviour {
             return; // Error animation / noise
         }
 
-        TeleportToLocation(m_rTeleportMarker.transform.position);
-        // Disable teleport marker
-        ToggleTeleportMarker(false);
+        StartCoroutine(TeleportToLocation(m_rTeleportMarker.transform.position));
     }
 
     // Trade places with the switch target, then clear the target state

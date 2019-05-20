@@ -8,6 +8,8 @@ public class BasicEvade : AIState
     private GameObject m_rPlayer;
     private AIWanderProperties m_rWanderProperties;
     private NavMeshAgent m_rAgent;
+    private Vector3 m_PreviousPlayerPosition = Vector3.zero;
+    private Vector3 m_PlayerVelocity = Vector3.zero;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         // Obtain reference to the player
@@ -22,7 +24,6 @@ public class BasicEvade : AIState
             m_rAgent = m_rAI.GetComponent<NavMeshAgent>();
         }
     }
-
   
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         // Return home if holding a map fragment, then evade the player once there
@@ -45,20 +46,23 @@ public class BasicEvade : AIState
 
     // Moves away from the player, whilst remaining within its home base
     private void EvadePlayer() {
-        // Basic flee
-        Vector3 playerToAI = (m_rAI.transform.position - m_rPlayer.transform.position).normalized;
-        m_rAgent.SetDestination(m_rWanderProperties.m_HomePosition + m_rWanderProperties.m_fMaxWanderRadius * playerToAI);
+        // Basic Evade
+        UpdatePlayerVelocity();
+        Vector3 expectedPosition = m_rPlayer.transform.position + m_PlayerVelocity;
+        // Obtain directional vector for AI
+        Vector3 playerToAI = (m_rAI.transform.position - expectedPosition).normalized;
+        // Obtain target
+        Vector3 aiTarget = m_rAI.transform.position + playerToAI;
+        // Restrain to home position
+        Vector3 homeToTarget = aiTarget -  m_rWanderProperties.m_HomePosition;
+        if(homeToTarget.sqrMagnitude > m_rWanderProperties.m_fMaxWanderRadius * m_rWanderProperties.m_fMaxWanderRadius) {
+            aiTarget = homeToTarget.normalized * m_rWanderProperties.m_fMaxWanderRadius + m_rWanderProperties.m_HomePosition;
+        }
+        m_rAgent.SetDestination(aiTarget);
     }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
+    private void UpdatePlayerVelocity() {
+        m_PlayerVelocity = (m_rPlayer.transform.position - m_PreviousPlayerPosition);
+        m_PreviousPlayerPosition = m_rPlayer.transform.position;
+    }
 }
