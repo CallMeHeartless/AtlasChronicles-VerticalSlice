@@ -32,6 +32,12 @@ public class EnemyController : MonoBehaviour
     private AIWanderProperties m_WanderProperties;
     public AIWanderProperties m_rWanderProperties { get { return m_WanderProperties; } }
 
+    [Header("Combat Properties")]
+    [SerializeField]
+    private float m_fAttackCooldown;
+    private float m_fAttackTimer = 0.0f;
+    private bool m_bHasMapFragment = false;
+
     // Start is called before the first frame update
     void Start(){
         m_rNavAgent = GetComponent<NavMeshAgent>();
@@ -68,8 +74,6 @@ public class EnemyController : MonoBehaviour
         if (m_rPlayer) {
             // Move to player
             m_rStateMachine.SetBool("bCanSeePlayer", true);
-            m_CurrentTarget = m_rPlayer.transform.position;
-            m_rNavAgent.SetDestination(m_CurrentTarget);
         }
         else {
             m_rStateMachine.SetBool("bCanSeePlayer", false);
@@ -82,9 +86,33 @@ public class EnemyController : MonoBehaviour
         m_rNavAgent.SetDestination(m_CurrentTarget);
     }
 
+    // Returns the enemy to its home position
+    public void WarpHome() {
+        m_rNavAgent.Warp(m_HomeLocation);
+    }
+
+    // Controls whether the agent holds a map fragment
+    public void ToggleMapFragment(bool _bState) {
+        m_rStateMachine.SetBool("bIsEvading", _bState);
+    }
+
+
+    // Pause or resume all agents in scene
+    public static void SetEnemyNavState(bool _bActive) {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject enemy in enemies) {
+            NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
+            if (agent) {
+                agent.isStopped = _bActive;
+            }
+        }
+    }
+
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
         m_rVision.EditorGizmo(m_rEyes.transform);
+        m_WanderProperties.EditorGizmo(transform.position);
     }
 
 #endif

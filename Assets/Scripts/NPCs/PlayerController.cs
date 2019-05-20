@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
     private Animator m_rAnimator;
     private PlayerAnimationController m_rPAnimationController;
 
+    public Vector3 movement;
+
     #region INTERNAL_VARIABLES
     private static PlayerController m_rInstance = null;
     public static PlayerController instance { get { return m_rInstance; } }
@@ -26,12 +28,13 @@ public class PlayerController : MonoBehaviour {
     // Control References
     private string m_strJumpButton = "Jump";
     private string m_strSwitchButton = "YButton";
-    private string m_strTeleportMarkerPlaceButton = "XboxXButton";
-    private string m_strTeleportButton = "BButton";
+    private string m_strTeleportMarkerPlaceButton = "L1";
+    private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
     private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
-    private string m_strSprintButton = "XBoxR2";
+    private string m_strSprintButton = "BButton";
+    private string m_strAttackButton = "XBoxXButton";
 
     // Movement variables
     [Header("Movement Variables")]
@@ -120,9 +123,11 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Audio")]
     [SerializeField] private AudioPlayer m_rJumpAudio;
-    //[SerializeField] private AudioPlayer m_rJumpAudio;
-    private Material m_CurrentWalkingSurface;    // Reference used to make decisions about audio.
+    [SerializeField] private AudioPlayer m_rWalkAudio;
+    [SerializeField] private AudioPlayer m_rGliderAudio;
 
+    private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
+    private bool m_bIsSprinting = false;
     #endregion
 
     // Start is called before the first frame update
@@ -193,7 +198,13 @@ public class PlayerController : MonoBehaviour {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        m_rCharacterController.Move(m_MovementDirection);
+        if (m_MovementDirection!= Vector3.zero)
+        {
+            m_rCharacterController.Move(m_MovementDirection);
+            transform.position += movement;
+            movement = new Vector3(0, 0, 0);
+        }
+        
     }
 
     // Calculate movement
@@ -234,8 +245,6 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 //m_fVerticalVelocity = m_fJumpPower;
                 if (m_rJumpAudio) {
-                    print(m_rJumpAudio);
-
                     m_rJumpAudio.PlayAudio();
                 }
                 m_Velocity.y = m_fJumpPower;
@@ -380,8 +389,11 @@ public class PlayerController : MonoBehaviour {
         if (m_bIsFloating) {
             // Level out the player's upward velocity to begin gliding
             //m_fVerticalVelocity = 0.0f;
+
             m_Velocity.y = 0.0f;
             m_rAnimator.SetBool("Glide", true);
+            m_rGliderAudio.PlayAudio(0);
+
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(true);
@@ -390,6 +402,8 @@ public class PlayerController : MonoBehaviour {
         } else {
             m_rAnimator.SetBool("Glide", false);
             //m_rAnimator.SetTrigger("Jump");
+            m_rGliderAudio.PlayAudio(1);
+
             if (m_rGlideTrails[0]) {
                 foreach (GameObject trail in m_rGlideTrails) {
                     trail.SetActive(false);
@@ -424,7 +438,6 @@ public class PlayerController : MonoBehaviour {
             } else {
                 TagHeldObject();
             }
-
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton)) {
@@ -438,20 +451,22 @@ public class PlayerController : MonoBehaviour {
                 m_rAnimator.SetTrigger("Tag");
             }
         }
+
         // Toggle the projectile arc
-        AimHeldObject();
+        // AimHeldObject();
         // Pickup or throw an item
-        if (Input.GetButtonDown(m_strPickupItemButton)) {
-            if (m_bIsAiming) {
-                ThrowHeldObject();
-            } else {
-                GrabObject();
-            }
-        }
+        //if (Input.GetButtonDown(m_strPickupItemButton)) {
+        //    if (m_bIsAiming) {
+        //        ThrowHeldObject();
+        //    } else {
+        //        GrabObject();
+        //    }
+        //}
     }
 
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
-    private void TeleportToLocation(Vector3 _vecTargetLocation) {
+    private IEnumerator TeleportToLocation(Vector3 _vecTargetLocation) {
+        yield return new WaitForEndOfFrame();
         Vector3 vecPlayerPosition = transform.position;
         // Play VFX
         TeleportParticles();
@@ -497,9 +512,7 @@ public class PlayerController : MonoBehaviour {
             return; // Error animation / noise
         }
 
-        TeleportToLocation(m_rTeleportMarker.transform.position);
-        // Disable teleport marker
-        ToggleTeleportMarker(false);
+        StartCoroutine(TeleportToLocation(m_rTeleportMarker.transform.position));
     }
 
     // Trade places with the switch target, then clear the target state
@@ -645,6 +658,29 @@ public class PlayerController : MonoBehaviour {
         m_rTeleportParticles.SetActive(false);
     }
 
+    public void HandleFootsteps() {
+        if (m_rCharacterController.isGrounded) {
+            Debug.DrawRay(transform.position, Vector3.down);
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) {
+                Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
+                m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
+            }
+            else {
+                m_CurrentWalkingSurface = null;
+            }
+        }
+        if (m_MovementInput.sqrMagnitude != 0 && m_CurrentWalkingSurface != null) {
+            m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface);
+        }
+    }
+
+    public void PlayGliderSound(bool _start) {
+        if (_start)
+            m_rGliderAudio.PlayAudio(0);
+        else
+            m_rGliderAudio.PlayAudio(1);
+    }
+
     // Adds an external force to the player this frame
     public void AddExternalForce(Vector3 _vecExternalForce) {
         if(_vecExternalForce == Vector3.zero) {
@@ -725,16 +761,9 @@ public class PlayerController : MonoBehaviour {
         hitNormal = hit.normal;
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.CompareTag("SlipperyObject")) {
-            m_bSteepSlopeCollided = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("SlipperyObject")) {
-            m_bSteepSlopeCollided = false;
-        }
+    public void SetIsOnSlipperyObject(bool _slippery)
+    {
+        m_bSteepSlopeCollided = _slippery;
     }
 
     public void ResetGravityMultiplier() {
@@ -757,10 +786,14 @@ public class PlayerController : MonoBehaviour {
     // Toggles whether the player should be sprinting
     private void ToggleSprint(bool _bSprinting) {
         if (_bSprinting) {
+            m_rAnimator.speed = 2.0f;
             m_fCurrentMovementSpeed = m_fMovementSpeed * m_fSprintMultiplier;
+            m_bIsSprinting = true;
         }
         else {
+            m_rAnimator.speed = 1.0f;
             m_fCurrentMovementSpeed = m_fMovementSpeed;
+            m_bIsSprinting = false;
         }
     }
 
@@ -771,59 +804,5 @@ public class PlayerController : MonoBehaviour {
             ToggleSprint(false);
         }
     }
-
-    //void OnAnimatorMove()
-    //{
-    //    Vector3 movement;
-
-    //    // If Ellen is on the ground...
-    //    if (m_rCharacterController.isGrounded)
-    //    {
-    //        // ... raycast into the ground...
-    //        RaycastHit hit;
-    //        float tempGroundDist = 1.0f;
-    //        Ray ray = new Ray(transform.position + Vector3.up * tempGroundDist * 0.5f, -Vector3.up);
-    //        if (Physics.Raycast(ray, out hit, tempGroundDist, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-    //        {
-    //            // ... and get the movement of the root motion rotated to lie along the plane of the ground.
-    //            movement = Vector3.ProjectOnPlane(m_Animator.deltaPosition, hit.normal);
-
-    //            // Also store the current walking surface so the correct audio is played.
-    //            Renderer groundRenderer = hit.collider.GetComponentInChildren<Renderer>();
-    //            m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
-    //        }
-    //        else
-    //        {
-    //            // If no ground is hit just get the movement as the root motion.
-    //            // Theoretically this should rarely happen as when grounded the ray should always hit.
-    //            movement = m_Animator.deltaPosition;
-    //            m_CurrentWalkingSurface = null;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        // If not grounded the movement is just in the forward direction.
-    //        movement = m_ForwardSpeed * transform.forward * Time.deltaTime;
-    //    }
-
-    //    // Rotate the transform of the character controller by the animation's root rotation.
-    //    m_CharCtrl.transform.rotation *= m_Animator.deltaRotation;
-
-    //    // Add to the movement with the calculated vertical speed.
-    //    movement += m_VerticalSpeed * Vector3.up * Time.deltaTime;
-
-    //    // Move the character controller.
-    //    m_CharCtrl.Move(movement);
-
-    //    // After the movement store whether or not the character controller is grounded.
-    //    m_IsGrounded = m_CharCtrl.isGrounded;
-
-    //    // If Ellen is not on the ground then send the vertical speed to the animator.
-    //    // This is so the vertical speed is kept when landing so the correct landing animation is played.
-    //    if (!m_IsGrounded)
-    //        m_Animator.SetFloat(m_HashAirborneVerticalSpeed, m_VerticalSpeed);
-
-    //    // Send whether or not Ellen is on the ground to the animator.
-    //    m_Animator.SetBool(m_HashGrounded, m_IsGrounded);
-    //}
+    
 }

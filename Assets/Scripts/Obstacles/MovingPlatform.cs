@@ -84,7 +84,7 @@ public class MovingPlatform : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, m_rPoints[m_intCurrentPoint].transform.position) < 1)
             {
-                Debug.Log(timeITakes);
+                //Debug.Log(timeITakes);
                 timeITakes = 0;
                 if (m_rPoints.Length - 1 == m_intCurrentPoint)
                 {

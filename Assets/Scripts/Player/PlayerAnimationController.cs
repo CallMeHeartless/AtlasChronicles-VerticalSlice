@@ -60,4 +60,29 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlaceTeleportMarker() {
 
     }
+
+    public void PlayStep() {
+        m_PlayerController.HandleFootsteps();
+    }
+
+    public void PlayGlideStart(bool _start)
+    {
+        m_PlayerController.PlayGliderSound(_start);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_PlayerController.SetIsOnSlipperyObject(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            m_PlayerController.SetIsOnSlipperyObject(true);
+        }
+    }
 }
