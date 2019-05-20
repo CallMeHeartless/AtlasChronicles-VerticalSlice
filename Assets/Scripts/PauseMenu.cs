@@ -13,20 +13,29 @@ public class PauseMenu : MonoBehaviour
     {
         m_pausePanel.SetActive(false);
         m_settingsPanel.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //if (Input.GetButtonDown("Pause"))
-        if (Input.GetKeyDown(KeyCode.Escape) && !m_pausePanel.activeSelf)
-        {
+        if (Input.GetKeyDown(KeyCode.Escape) && !m_pausePanel.activeSelf) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             m_pausePanel.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && m_pausePanel.activeSelf)
-        {
+        else if (Input.GetKeyDown(KeyCode.Escape) && m_pausePanel.activeSelf) {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
             m_pausePanel.SetActive(false);
             m_settingsPanel.SetActive(false);
+        }
+
+        if(!m_pausePanel.activeSelf) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
     }

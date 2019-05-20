@@ -6,7 +6,7 @@ public class AudioBGM : MonoBehaviour
 {
     public float soundTrackVolume = 1;
     public float initialVolume = 1;
-    public float volumeRampSpeed = 10;
+    public float volumeRampSpeed = 1;
     public bool playOnStart = true;
     public AudioSource[] audioSources;
 
@@ -99,9 +99,7 @@ public class AudioBGM : MonoBehaviour
         {
             if(activeAudio.volume != 1)
             {
-                print("Inc: " + activeAudio.name);
-
-                activeAudio.volume = Mathf.SmoothDamp(activeAudio.volume, 1, ref volumeVelocity, volumeRampSpeed, 10);
+                activeAudio.volume = Mathf.SmoothDamp(activeAudio.volume, 1, ref volumeVelocity, volumeRampSpeed, 20);
             }
         }
 
@@ -114,7 +112,6 @@ public class AudioBGM : MonoBehaviour
                     m_fadeAudio.RemoveAt(track);
                     break;
                 }
-                print("Fading: " + m_fadeAudio[track].name);
                 m_fadeAudio[track].volume = Mathf.SmoothDamp(m_fadeAudio[track].volume, 0, ref fadeVelocity, volumeRampSpeed, 10);
 
                 if (Mathf.Approximately(m_fadeAudio[track].volume, 0))

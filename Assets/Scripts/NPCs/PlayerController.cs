@@ -223,9 +223,6 @@ public class PlayerController : MonoBehaviour {
         } else {
             m_rAnimator.ResetTrigger("Idle");
             m_rAnimator.SetTrigger("Run");
-            ///m_rWalkAudio
-            //HandleFootsteps();
-            //if(m_fCurrentMovementSpeed is on sprint mode)
         }
     }
 
@@ -666,15 +663,13 @@ public class PlayerController : MonoBehaviour {
             Debug.DrawRay(transform.position, Vector3.down);
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) {
                 Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
-                if (groundRenderer != null)
-                    print("dskfjhsdfk: " + groundRenderer.sharedMaterial.name);
                 m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
             }
             else {
                 m_CurrentWalkingSurface = null;
             }
         }
-        if (m_MovementInput.sqrMagnitude != 0) {
+        if (m_MovementInput.sqrMagnitude != 0 && m_CurrentWalkingSurface != null) {
             m_rWalkAudio.PlayAudio(m_CurrentWalkingSurface);
         }
     }
