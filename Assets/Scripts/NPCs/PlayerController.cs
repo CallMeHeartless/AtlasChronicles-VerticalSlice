@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour {
             if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
                 //m_fVerticalVelocity = m_fJumpPower;
                 if (m_rJumpAudio) {
-                    print(m_rJumpAudio);
+                    //print(m_rJumpAudio);
 
                     m_rJumpAudio.PlayAudio();
                 }
