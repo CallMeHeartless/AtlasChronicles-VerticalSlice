@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 629899732147760917}
   - component: {fileID: 3261623987127839684}
   - component: {fileID: 7804704985898512706}
+  - component: {fileID: 1679043091239925680}
   m_Layer: 0
   m_Name: Goon
   m_TagString: Untagged
@@ -135,7 +136,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3911810980302994007}
   m_Enabled: 1
-  m_AgentTypeID: -1372625422
+  m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
@@ -163,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rVision:
     m_fVisionRadius: 10
-    m_fVisionAngle: 180
+    m_fVisionAngle: 230
     m_fMaxHeight: 1
     m_BlockingMask:
       serializedVersion: 2
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_WanderProperties:
     m_HomePosition: {x: 0, y: 0, z: 0}
     m_fMinWanderRadius: 1
-    m_fMaxWanderRadius: 1
+    m_fMaxWanderRadius: 10
     m_fWanderInterval: 3
 --- !u!95 &7804704985898512706
 Animator:
@@ -197,6 +198,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1679043091239925680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911810980302994007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93eb620f36c467144bd0e370e0393b7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bChangeMaterialOnTag: 0
+  m_AlternateMaterial: {fileID: 0}
+  m_Material: {fileID: 0}
 --- !u!1001 &564019598898253882
 PrefabInstance:
   m_ObjectHideFlags: 0

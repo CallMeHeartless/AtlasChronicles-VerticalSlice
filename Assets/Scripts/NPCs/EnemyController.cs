@@ -68,8 +68,8 @@ public class EnemyController : MonoBehaviour
         if (m_rPlayer) {
             // Move to player
             m_rStateMachine.SetBool("bCanSeePlayer", true);
-            m_CurrentTarget = m_rPlayer.transform.position;
-            m_rNavAgent.SetDestination(m_CurrentTarget);
+            //m_CurrentTarget = m_rPlayer.transform.position;
+            //m_rNavAgent.SetDestination(m_CurrentTarget);
         }
         else {
             m_rStateMachine.SetBool("bCanSeePlayer", false);
@@ -85,6 +85,7 @@ public class EnemyController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
         m_rVision.EditorGizmo(m_rEyes.transform);
+        m_WanderProperties.EditorGizmo(transform.position);
     }
 
 #endif
