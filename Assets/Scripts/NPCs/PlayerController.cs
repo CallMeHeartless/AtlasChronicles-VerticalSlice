@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
     private Animator m_rAnimator;
     private PlayerAnimationController m_rPAnimationController;
 
+    public Vector3 movement;
+
     #region INTERNAL_VARIABLES
     private static PlayerController m_rInstance = null;
     public static PlayerController instance { get { return m_rInstance; } }
@@ -26,12 +28,13 @@ public class PlayerController : MonoBehaviour {
     // Control References
     private string m_strJumpButton = "Jump";
     private string m_strSwitchButton = "YButton";
-    private string m_strTeleportMarkerPlaceButton = "XboxXButton";
-    private string m_strTeleportButton = "BButton";
+    private string m_strTeleportMarkerPlaceButton = "L1";
+    private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
     private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
-    private string m_strSprintButton = "XBoxR2";
+    private string m_strSprintButton = "BButton";
+    private string m_strAttackButton = "XBoxXButton";
 
     // Movement variables
     [Header("Movement Variables")]
@@ -129,6 +132,10 @@ public class PlayerController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        // Lock mouse
+        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+
         // Create component references
         m_rCharacterController = GetComponent<CharacterController>();
         m_rAnimator = GetComponentInChildren<Animator>();
@@ -191,7 +198,13 @@ public class PlayerController : MonoBehaviour {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        m_rCharacterController.Move(m_MovementDirection);
+        if (m_MovementDirection!= Vector3.zero)
+        {
+            m_rCharacterController.Move(m_MovementDirection);
+            transform.position += movement;
+            movement = new Vector3(0, 0, 0);
+        }
+        
     }
 
     // Calculate movement
@@ -428,7 +441,6 @@ public class PlayerController : MonoBehaviour {
             } else {
                 TagHeldObject();
             }
-
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton)) {
@@ -442,20 +454,22 @@ public class PlayerController : MonoBehaviour {
                 m_rAnimator.SetTrigger("Tag");
             }
         }
+
         // Toggle the projectile arc
-        AimHeldObject();
+        // AimHeldObject();
         // Pickup or throw an item
-        if (Input.GetButtonDown(m_strPickupItemButton)) {
-            if (m_bIsAiming) {
-                ThrowHeldObject();
-            } else {
-                GrabObject();
-            }
-        }
+        //if (Input.GetButtonDown(m_strPickupItemButton)) {
+        //    if (m_bIsAiming) {
+        //        ThrowHeldObject();
+        //    } else {
+        //        GrabObject();
+        //    }
+        //}
     }
 
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
-    private void TeleportToLocation(Vector3 _vecTargetLocation) {
+    private IEnumerator TeleportToLocation(Vector3 _vecTargetLocation) {
+        yield return new WaitForEndOfFrame();
         Vector3 vecPlayerPosition = transform.position;
         // Play VFX
         TeleportParticles();
@@ -501,9 +515,7 @@ public class PlayerController : MonoBehaviour {
             return; // Error animation / noise
         }
 
-        TeleportToLocation(m_rTeleportMarker.transform.position);
-        // Disable teleport marker
-        ToggleTeleportMarker(false);
+        StartCoroutine(TeleportToLocation(m_rTeleportMarker.transform.position));
     }
 
     // Trade places with the switch target, then clear the target state
@@ -516,7 +528,7 @@ public class PlayerController : MonoBehaviour {
         // Switch positions
         Vector3 vecPlayerPosition = transform.position;
         transform.position = m_rSwitchTarget.transform.position;
-        m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().Switch(vecPlayerPosition);
+        StartCoroutine(m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().Switch(vecPlayerPosition));
 
         // Remove reference
         m_rSwitchTarget = null;
@@ -731,13 +743,15 @@ public class PlayerController : MonoBehaviour {
             float fSwitchTagDistance = (transform.position - m_rSwitchTarget.transform.position).magnitude;
             // Compare to threshold distances
             if (fSwitchTagDistance >= m_fTeleportBreakDistance) {
-                //ToggleTeleportMarker(false);
+                Debug.Log("Switch tag beyond break distance");
                 m_bSwitchThresholdWarning = false;
+                m_rSwitchTarget = null;
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdBreak();
-                m_rPAnimationController.GetSwitchMarker().GetComponent<SwitchTagController>().DetachFromObject();
+                m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
             }
             else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
+                Debug.Log("Switch tag beyond use distance");
                 m_bSwitchThresholdWarning = true;
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdWarning();
