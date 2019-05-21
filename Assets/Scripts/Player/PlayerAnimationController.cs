@@ -92,4 +92,8 @@ public class PlayerAnimationController : MonoBehaviour
     public void EndAttack() {
         m_rMeleeAttack.m_bIsActive = false;
     }
+
+    public void ToggleInvulnerabilityEffects(bool _bOn) {
+
+    }
 }
