@@ -90,8 +90,11 @@ public class MovingPlatform : MonoBehaviour
                 {
                     m_fCurrentPause = m_fPauseDuration;
                     m_intCurrentPoint = 0;
-                    box.size = new Vector3(1, 1, 1);
-                    box.center = new Vector3(0, 0, 0);
+                    if (box) {
+                        box.size = new Vector3(1, 1, 1);
+                        box.center = new Vector3(0, 0, 0);
+                    }
+
                 }
                 else
                 {

@@ -27,7 +27,7 @@ public class MeleeAttack : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag(m_strTargetTag) && m_bIsActive) {
             // Damage shit
-            DamageController target = GetComponent<DamageController>();
+            DamageController target = other.GetComponent<DamageController>();
             if (target) {
                 DamageMessage message = new DamageMessage();
                 message.damage = m_iDamage;
