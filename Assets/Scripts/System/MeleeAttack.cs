@@ -11,6 +11,10 @@ public class MeleeAttack : MonoBehaviour
     [SerializeField]
     private LayerMask m_HitLayer;
     private Collider m_HitBox;
+    [SerializeField]
+    private string m_strTargetTag;
+    [HideInInspector]
+    public bool m_bIsActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +22,21 @@ public class MeleeAttack : MonoBehaviour
         m_HitBox = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag(m_strTargetTag) && m_bIsActive) {
+            // Damage shit
+            DamageController target = GetComponent<DamageController>();
+            if (target) {
+                DamageMessage message = new DamageMessage();
+                message.damage = m_iDamage;
+                message.source = gameObject;
+
+                target.ApplyDamage(message);
+                m_bIsActive = false; // Prevent multiple collisions
+            }
+        }
     }
+
+
 }
