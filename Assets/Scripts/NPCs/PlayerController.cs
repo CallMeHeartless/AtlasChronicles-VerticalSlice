@@ -478,13 +478,12 @@ public class PlayerController : MonoBehaviour {
         transform.position = _vecTargetLocation;
 
         // If marker was placed on thrown object, remove it
-        if (m_rTeleportMarker.transform.parent) {
-            m_rTeleportMarker.transform.parent.position = vecPlayerPosition;
-            m_rTeleportMarker.transform.SetParent(null);
-        }
+        //if (m_rTeleportMarker.transform.parent) {
+        //    m_rTeleportMarker.transform.parent.position = vecPlayerPosition;
+        //    m_rTeleportMarker.transform.SetParent(null);
+        //}
 
-        // Disable teleport marker
-        ToggleTeleportMarker(false);
+        
     }
 
     // Place the teleport marker on the ground
@@ -517,6 +516,8 @@ public class PlayerController : MonoBehaviour {
         }
 
         StartCoroutine(TeleportToLocation(m_rTeleportMarker.transform.position));
+        // Disable teleport marker
+        ToggleTeleportMarker(false);
     }
 
     // Trade places with the switch target, then clear the target state
@@ -528,7 +529,8 @@ public class PlayerController : MonoBehaviour {
 
         // Switch positions
         Vector3 vecPlayerPosition = transform.position;
-        transform.position = m_rSwitchTarget.transform.position;
+        //transform.position = m_rSwitchTarget.transform.position;
+        StartCoroutine(TeleportToLocation(m_rSwitchTarget.transform.position));
         StartCoroutine(m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().Switch(vecPlayerPosition));
 
         // Remove reference
