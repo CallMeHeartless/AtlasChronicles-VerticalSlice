@@ -35,26 +35,26 @@ public class Boxes : MonoBehaviour
             case BoxType.Slam:
                 if (other.CompareTag("Player"))
                 {
-                    if (other.GetComponent<PlayerController>().m_bGroundPound)
-                    {
+                   // if (other.GetComponent<PlayerController>().m_bGroundPound)
+                   // {
                         GetComponent<Destoryed>().enabled = true;
                         GetComponent<Boxes>().enabled = false;
-                    }
+                   // }
                    
                 }
                 break;
             case BoxType.InkSlam:
                 if (other.CompareTag("Player"))//check ink
                 {
-                    if (other.GetComponent<PlayerController>().m_bGroundPound)
-                    {
+                    //if (other.GetComponent<PlayerController>().m_bGroundPound)
+                    //{
                         if (true)
                         {
                             GetComponent<Destoryed>().enabled = true;
                             GetComponent<Boxes>().enabled = false;
                         }
                        
-                    }
+                    //}
                 }
                 break;
            
