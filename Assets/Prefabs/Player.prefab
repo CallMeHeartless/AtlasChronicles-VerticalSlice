@@ -507,6 +507,7 @@ MonoBehaviour:
   m_SwitchMarkerPrefab: {fileID: 8879317358597215165, guid: dd0a42f977d9d924cbeda7515be5b326,
     type: 3}
   m_HandCollider: {fileID: 3956282232873355930}
+  m_rMeleeAttack: {fileID: 6682341045331985196}
 --- !u!1 &6184450272892950931
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,6 +783,19 @@ Transform:
   m_Father: {fileID: 6850383250669970808}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3030405111257278571
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134463597808065876}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1424563, y: 0.14029224, z: 1.6954572}
+  m_Center: {x: -0.00000012952232, y: -0.00000026049642, z: 0.69209594}
 --- !u!114 &6682341045331985196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,19 +815,6 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_strTargetTag: Enemy
   m_bIsActive: 0
---- !u!65 &3030405111257278571
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9134463597808065876}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1424563, y: 0.14029224, z: 1.6954572}
-  m_Center: {x: -0.00000012952232, y: -0.00000026049642, z: 0.69209594}
 --- !u!1001 &3837134280512111340
 PrefabInstance:
   m_ObjectHideFlags: 0
