@@ -19,9 +19,9 @@ public class PlayerChilder : MonoBehaviour
         NewLoctation = currentLoctation;
         currentLoctation = transform.position;
         TranlastedMovement = currentLoctation - NewLoctation;
-        TranlastedMovement.x= Mathf.Round(TranlastedMovement.x*1000) / 2000;
-        TranlastedMovement.y = Mathf.Round(TranlastedMovement.y * 1000) / 2000;
-        TranlastedMovement.z = Mathf.Round(TranlastedMovement.z * 1000)/2000;
+        //TranlastedMovement.x= TranlastedMovement.x;
+        //TranlastedMovement.y = TranlastedMovement.y  ;
+        //TranlastedMovement.z = TranlastedMovement.z ;
     }
     //private void OnTriggerEnter(Collider other)
     //{
@@ -29,7 +29,11 @@ public class PlayerChilder : MonoBehaviour
     //}
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("contuie");
-        other.GetComponent<PlayerController>().movement += TranlastedMovement;
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("contuie");
+            other.GetComponent<PlayerController>().movement += TranlastedMovement;
+        }
+        
     }
 }
