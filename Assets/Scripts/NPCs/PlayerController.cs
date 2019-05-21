@@ -451,6 +451,10 @@ public class PlayerController : MonoBehaviour {
                 m_rAnimator.SetTrigger("Tag");
             }
         }
+        // Attack
+        else if (Input.GetButtonDown(m_strAttackButton)) {
+            m_rAnimator.SetTrigger("Attack");
+        }
 
         // Toggle the projectile arc
         // AimHeldObject();

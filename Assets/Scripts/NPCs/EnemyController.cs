@@ -108,6 +108,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void Kill() {
+        Destroy(gameObject);
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
