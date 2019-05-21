@@ -46,9 +46,10 @@ GameObject:
   - component: {fileID: 3261623987127839684}
   - component: {fileID: 7804704985898512706}
   - component: {fileID: 1679043091239925680}
+  - component: {fileID: 7905677579001137324}
   m_Layer: 0
   m_Name: Goon
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,10 +176,11 @@ MonoBehaviour:
   m_fMaxAcceleration: 0
   m_fPursuitRadius: 15
   m_WanderProperties:
-    m_HomePosition: {x: 0, y: 0, z: 0}
+    m_HomePosition: {x: -69.81, y: 4.71, z: -46.47}
     m_fMinWanderRadius: 1
     m_fMaxWanderRadius: 10
     m_fWanderInterval: 3
+  m_fAttackCooldown: 0
 --- !u!95 &7804704985898512706
 Animator:
   serializedVersion: 3
@@ -213,6 +215,57 @@ MonoBehaviour:
   m_bChangeMaterialOnTag: 0
   m_AlternateMaterial: {fileID: 0}
   m_Material: {fileID: 0}
+--- !u!114 &7905677579001137324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911810980302994007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iMaxHealth: 1
+  m_fInvulnerabilityTime: 0
+  m_fHitAngle: 360
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3261623987127839684}
+        m_MethodName: Kill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnHitWhileInvulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecomeVulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1001 &564019598898253882
 PrefabInstance:
   m_ObjectHideFlags: 0
