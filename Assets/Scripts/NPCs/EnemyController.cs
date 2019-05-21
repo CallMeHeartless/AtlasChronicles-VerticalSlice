@@ -76,6 +76,7 @@ public class EnemyController : MonoBehaviour
             m_rStateMachine.SetBool("bCanSeePlayer", true);
             // If beyond home range, give up on chasing
             if (IsBeyondHomeRange()) {
+                Debug.Log("Beyond range");
                 m_rStateMachine.SetBool("bCanSeePlayer", false);
             }
         }
@@ -83,10 +84,15 @@ public class EnemyController : MonoBehaviour
             m_rStateMachine.SetBool("bCanSeePlayer", false);
             // Transition to look, then return home
         }
+
+        // Check if away from navmesh
+        if (!m_rNavAgent.isOnNavMesh) {
+            Kill();
+        }
     }
 
     private bool IsBeyondHomeRange() {
-        return (transform.position - m_HomeLocation).sqrMagnitude > m_fPursuitRadius * m_fPursuitRadius;
+        return (m_rWanderProperties.m_HomePosition - transform.position).sqrMagnitude > m_fPursuitRadius * m_fPursuitRadius;
     }
 
     public void SetDestination(Vector3 _vecTarget) {
