@@ -452,7 +452,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
         // Attack
-        else if (Input.GetButtonDown(m_strAttackButton)) {
+        else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating) {
             m_rAnimator.SetTrigger("Attack");
         }
 

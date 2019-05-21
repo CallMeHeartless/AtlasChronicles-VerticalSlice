@@ -74,11 +74,19 @@ public class EnemyController : MonoBehaviour
         if (m_rPlayer) {
             // Move to player
             m_rStateMachine.SetBool("bCanSeePlayer", true);
+            // If beyond home range, give up on chasing
+            if (IsBeyondHomeRange()) {
+                m_rStateMachine.SetBool("bCanSeePlayer", false);
+            }
         }
         else {
             m_rStateMachine.SetBool("bCanSeePlayer", false);
             // Transition to look, then return home
         }
+    }
+
+    private bool IsBeyondHomeRange() {
+        return (transform.position - m_HomeLocation).sqrMagnitude > m_fPursuitRadius * m_fPursuitRadius;
     }
 
     public void SetDestination(Vector3 _vecTarget) {
