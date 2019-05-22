@@ -75,8 +75,8 @@ public class PlayerController : MonoBehaviour {
     // Combat variables
     [Header("Combat Variables")]
     [SerializeField]
-    private int m_iMaxHealth = 4;
-    private int m_iCurrentHealth;
+    private float m_fAttackCooldown = 1.0f;
+    private bool m_bCanAttack = true;
 
     // Ability variables
     [Header("Ability Variables")]
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour {
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
-        m_iCurrentHealth = m_iMaxHealth;
+
         m_fCurrentMovementSpeed = m_fMovementSpeed;
 
         if (m_rTeleportMarkerPrefab) {
@@ -428,15 +428,6 @@ public class PlayerController : MonoBehaviour {
                     trail.SetActive(false);
                 }
             }
-        }
-    }
-
-    // Deals damage to the player, and checks for death
-    public void DamagePlayer(int _iDamage) {
-        m_iCurrentHealth -= _iDamage;
-        if (m_iCurrentHealth <= 0) {
-            // Death
-            print("Player is dead");
         }
     }
 
@@ -849,5 +840,12 @@ public class PlayerController : MonoBehaviour {
         {
             SetIsOnSlipperyObject(false);
         }
+    }
+
+    // Forces a cooldown for the player attack
+    public IEnumerator AttackCooldown() {
+        m_bCanAttack = false;
+        yield return new WaitForSeconds(m_fAttackCooldown);
+        m_bCanAttack = true;
     }
 }

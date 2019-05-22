@@ -22,7 +22,7 @@ public class DamageController : MonoBehaviour
 
 
     [Header("Damage Events")]
-    public UnityEvent OnDeath, OnReceiveDamage, OnHitWhileInvulnerable, OnBecomeVulnerable, OnResetDamage;
+    public UnityEvent OnDeath, OnReceiveDamage,OnReceiveHealing, OnHitWhileInvulnerable, OnBecomeVulnerable, OnResetDamage;
     System.Action m_Schedule;
 
     //[Tooltip("These gameObjects are notified when this object takes damage")]
@@ -100,6 +100,18 @@ public class DamageController : MonoBehaviour
 
         /// If message system is implemented, damage/death messages should be sent here
 
+    }
+
+    public void ApplyHealing(int _iHealth) {
+        if(m_iCurrentHealth <= 0) { // Do not allow dead objects to be healed
+            return;
+        }
+
+        m_iCurrentHealth += _iHealth;
+        if(m_iCurrentHealth > m_iMaxHealth) {
+            m_iCurrentHealth = m_iMaxHealth;
+        }
+        OnReceiveHealing.Invoke();
     }
 
 
