@@ -76,7 +76,7 @@ public class EnemyController : MonoBehaviour
             m_rStateMachine.SetBool("bCanSeePlayer", true);
             // If beyond home range, give up on chasing
             if (IsBeyondHomeRange()) {
-                Debug.Log("Beyond range");
+                //Debug.Log("Beyond range");
                 m_rStateMachine.SetBool("bCanSeePlayer", false);
             }
         }
@@ -124,6 +124,16 @@ public class EnemyController : MonoBehaviour
 
     public void Kill() {
         Destroy(gameObject);
+    }
+
+    public void ForceNoticePlayer() {
+        m_rPlayer = GameObject.Find("Player").GetComponent<PlayerController>();
+        m_rStateMachine.SetBool("bCanSeePlayer", true);
+        // Rotate around
+        Vector3 toPlayer = (m_rPlayer.transform.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(toPlayer, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.5f);
+
     }
 
 
