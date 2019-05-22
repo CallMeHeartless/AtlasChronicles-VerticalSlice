@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private GameObject m_rProjectileArc;
     private PlayerAudioController m_rPlayerAudioController;
+    private DisplayStat m_rUI;
 
     // Component references
     private CharacterController m_rCharacterController;
@@ -155,6 +156,9 @@ public class PlayerController : MonoBehaviour {
             m_rTeleportMarker = Instantiate(m_rTeleportMarkerPrefab);
             m_rTeleportMarker.SetActive(false);
         }
+
+        // Find UI
+        m_rUI = GameObject.Find("GameUI").GetComponent<DisplayStat>();
 
         if (!m_rInstance) {
             m_rInstance = this;
@@ -462,7 +466,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
         // Attack
-        else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating) {
+        else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating && m_bCanAttack) {
             m_rAnimator.SetTrigger("Attack");
         }
 
@@ -847,5 +851,10 @@ public class PlayerController : MonoBehaviour {
         m_bCanAttack = false;
         yield return new WaitForSeconds(m_fAttackCooldown);
         m_bCanAttack = true;
+    }
+
+    public void UpdateHealth() {
+        int iHealth = GetComponent<DamageController>().iCurrentHealth;
+        m_rUI.NewHealth(iHealth);
     }
 }
