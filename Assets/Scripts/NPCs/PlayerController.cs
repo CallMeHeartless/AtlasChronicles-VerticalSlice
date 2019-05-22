@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour {
     private bool m_bStandingOnSlope = false; // is on a slope or not
     private float m_fSlideSpeed = 200.0f;
     [SerializeField] private bool m_bIsSliding = false;
+    [SerializeField] bool m_bIsOnMovingPlatform = false;
 
     //Extforce variables
     private bool m_bExtForceOccuring;
@@ -165,7 +166,7 @@ public class PlayerController : MonoBehaviour {
         if (!GameState.DoesPlayerHaveControl()) {
             return;
         }
-
+        
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
@@ -198,8 +199,7 @@ public class PlayerController : MonoBehaviour {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        if (m_MovementDirection!= Vector3.zero)
-        {
+        if (m_MovementDirection!= Vector3.zero) {
             m_rCharacterController.Move(m_MovementDirection);
             transform.position += movement;
             movement = new Vector3(0, 0, 0);
@@ -280,17 +280,27 @@ public class PlayerController : MonoBehaviour {
             //Check if player if standing on a slope
             if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f)) {
                 //If player is on slope bigger than slope limit, set sliding as true
-                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit) {
+                if(Vector3.Angle(rayHit.normal, Vector3.up) == 0)
+                {
+                    m_bIsSliding = false;
+                    return;
+                }
+
+                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit && Vector3.Angle(rayHit.normal, Vector3.up) < 180.0f) {
                     m_bIsSliding = true;
                 }
                 //If player is stuck on a steep slope while not on the ground, set sliding as true
-                else if (transform.position.y - rayHit.point.y >= 1.0f) {
+                else if (transform.position.y - rayHit.point.y >= 0.5f) {
                     m_bIsSliding = true;
                 }
                 //If not on steep slope, don't slide
                 else {
                     m_bIsSliding = false;
                 }
+            }
+            else
+            {
+                m_bIsSliding = false;
             }
         }
         else {
@@ -330,11 +340,16 @@ public class PlayerController : MonoBehaviour {
         }
 
         //Check if the player is sliding or not
-        SlideMethod();
+        if(!m_bIsOnMovingPlatform)
+            SlideMethod();
 
         // Accelerate the player
-        m_ExternalForce += Physics.gravity * m_fGravityMulitplier;
-        
+        if (!m_bIsOnMovingPlatform) {
+            m_ExternalForce += Physics.gravity * m_fGravityMulitplier;
+        }
+        else {
+            m_ExternalForce.y = 0.0f;
+        }
 
         if (m_rCharacterController.isGrounded) {
             m_rAnimator.SetBool("Grounded", true);
@@ -344,11 +359,15 @@ public class PlayerController : MonoBehaviour {
             m_fCurrentMovementSpeed = m_fMovementSpeed;
         }
         else {
-            m_rAnimator.SetBool("Grounded", false);
-            if (!m_bIsFloating) {// && m_Velocity.y < 0.0f
-                m_fGravityMulitplier *= m_fGravityMultiplierRate;
-                m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, m_fMaxGravityMultiplier);
-                m_fCurrentMovementSpeed = m_fMovementSpeed;
+            if (!m_bIsOnMovingPlatform)
+            {
+                m_rAnimator.SetBool("Grounded", false);
+                if (!m_bIsFloating)
+                {// && m_Velocity.y < 0.0f
+                    m_fGravityMulitplier *= m_fGravityMultiplierRate;
+                    m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, m_fMaxGravityMultiplier);
+                    m_fCurrentMovementSpeed = m_fMovementSpeed;
+                }
             }
         }
         //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
@@ -804,5 +823,25 @@ public class PlayerController : MonoBehaviour {
             ToggleSprint(false);
         }
     }
-    
+
+    public void SetOnMovingPlatform(bool _onPlatform) {
+        m_bIsOnMovingPlatform = _onPlatform;
+        //transform.localScale = Vector3.one;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            SetIsOnSlipperyObject(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SlipperyObject"))
+        {
+            SetIsOnSlipperyObject(false);
+        }
+    }
 }
