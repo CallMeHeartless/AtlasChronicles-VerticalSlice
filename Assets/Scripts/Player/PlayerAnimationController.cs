@@ -14,9 +14,6 @@ public class PlayerAnimationController : MonoBehaviour
     private GameObject m_HandCollider;
     private PlayerController m_PlayerController;
 
-    [SerializeField]
-    private MeleeAttack m_rMeleeAttack;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +34,10 @@ public class PlayerAnimationController : MonoBehaviour
         // Update transform
         m_SwitchMarker.transform.position = m_HandCollider.transform.position;
         m_SwitchMarker.transform.rotation = transform.root.rotation;
+
+        // DEBUG
+        //print("Rotation: " + m_SwitchMarker.transform.rotation.eulerAngles + " Forward: " + m_SwitchMarker.transform.forward);
+        //print("Forward: " + m_SwitchMarker.transform.forward);
 
         // Make active
         m_SwitchMarker.SetActive(true);
@@ -67,33 +68,5 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlayGlideStart(bool _start)
     {
         m_PlayerController.PlayGliderSound(_start);
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("SlipperyObject"))
-        {
-            m_PlayerController.SetIsOnSlipperyObject(true);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("SlipperyObject"))
-        {
-            m_PlayerController.SetIsOnSlipperyObject(true);
-        }
-    }
-
-    public void StartAttack() {
-        m_rMeleeAttack.m_bIsActive = true;
-    }
-
-    public void EndAttack() {
-        m_rMeleeAttack.m_bIsActive = false;
-    }
-
-    public void ToggleInvulnerabilityEffects(bool _bOn) {
-
     }
 }
