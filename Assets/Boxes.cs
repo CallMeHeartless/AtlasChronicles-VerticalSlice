@@ -59,7 +59,7 @@ public class Boxes : MonoBehaviour
                 break;
            
             case BoxType.Mark:
-                if (other.CompareTag(""))
+                if (other.CompareTag(""))//SwitchTag Prefab
                 {
                     GetComponent<Destoryed>().enabled = true;
                     GetComponent<Boxes>().enabled = false;
@@ -76,14 +76,14 @@ public class Boxes : MonoBehaviour
                 }
                 break;
             case BoxType.Enemy:
-                if (other.CompareTag(""))
+                if (other.CompareTag(""))//end enemy
                 {
                     GetComponent<Destoryed>().enabled = true;
                     GetComponent<Boxes>().enabled = false;
                 }
                 break;
             case BoxType.Water:
-                if (other.CompareTag(""))
+                if (other.CompareTag("Water"))
                 {
                     GetComponent<Destoryed>().enabled = true;
                     GetComponent<Boxes>().enabled = false;

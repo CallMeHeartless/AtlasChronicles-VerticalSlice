@@ -15,6 +15,10 @@ public class Destoryed : MonoBehaviour
     public GameObject m_gHeartItemIs;
     public int m_intHearts = 1;
     public int m_intChancePercent = 50;
+
+    [Header("Secondary Items")]
+    public GameObject RespawnChest;
+    public GameObject Self;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,13 +40,16 @@ public class Destoryed : MonoBehaviour
 
         //if (m_intChancePercent != 0)
         //{
-           
+
         //    if (Random.Range(0, 100) < m_intChancePercent)
         //    {
         //        GameObject gOrb = GameObject.Instantiate(m_gHeartItemIs, gameObject.transform.position, Quaternion.identity);
         //        gOrb.GetComponent<Rigidbody>().AddForce(0, fouce.y, 0);
         //    }
         //}
+        GameObject NewChest = Instantiate(RespawnChest, transform.position, transform.rotation);
+        NewChest.GetComponent<RespawnBox>().ItemCount = m_intSecondaryItem;
+        NewChest.GetComponent<RespawnBox>().Chest = Self;
         Destroy(gameObject);
     }
 
