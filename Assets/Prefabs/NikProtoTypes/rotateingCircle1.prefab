@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3482385874190244300}
   - component: {fileID: 3482385874190244301}
   - component: {fileID: 3482385874190244302}
+  - component: {fileID: 1733531356}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3482385874190244303}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0.95, y: -2.06, z: 0}
-  m_LocalScale: {x: 0.53425044, y: 1.8450462, z: 2.8793}
+  m_LocalScale: {x: 0.53425044, y: 1.8450462, z: 1.767573}
   m_Children: []
   m_Father: {fileID: 3482385875488607502}
   m_RootOrder: 2
@@ -105,6 +106,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gSetLoctation: {fileID: 3482385875655006420}
+--- !u!65 &1733531356
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3482385874190244303}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.06257113, y: 1.0000004, z: 1}
+  m_Center: {x: 0.53128505, y: -0.0000000024698859, z: 0.0000001295836}
 --- !u!1 &3482385874344554110
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +132,7 @@ GameObject:
   - component: {fileID: 3482385874344554099}
   - component: {fileID: 3482385874344554108}
   - component: {fileID: 3482385874344554109}
+  - component: {fileID: 161800824}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -134,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 3482385874344554110}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0.9499993, y: 1.72, z: 0}
-  m_LocalScale: {x: 0.53425044, y: 1.8450462, z: 2.8793}
+  m_LocalScale: {x: 0.53425044, y: 1.8450462, z: 1.7675735}
   m_Children: []
   m_Father: {fileID: 3482385875488607502}
   m_RootOrder: 0
@@ -210,6 +225,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gSetLoctation: {fileID: 3482385874597877634}
+--- !u!65 &161800824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3482385874344554110}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.06257113, y: 1.0000004, z: 1}
+  m_Center: {x: 0.53128505, y: -0.0000000024698859, z: 0.0000001295836}
 --- !u!1 &3482385874597877634
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +293,7 @@ Transform:
   m_GameObject: {fileID: 3482385875488607503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.1107564, y: 5.0808773, z: -12.64}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.9383001, y: 1.9383, z: 1.9383001}
   m_Children:
   - {fileID: 3482385874344554097}
   - {fileID: 3482385876135589568}
@@ -315,10 +343,10 @@ GameObject:
   - component: {fileID: 3482385876135589573}
   - component: {fileID: 3482385876135589574}
   - component: {fileID: 3482385876135589575}
-  - component: {fileID: 3018686871165457470}
+  - component: {fileID: 6430070723450333421}
   m_Layer: 0
   m_Name: Cylinder (1)
-  m_TagString: Untagged
+  m_TagString: SlipperyObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -331,8 +359,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3482385876135589569}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 0.25, z: 5}
+  m_LocalPosition: {x: 0.37, y: 0, z: -0.08}
+  m_LocalScale: {x: 5, y: 0.516675, z: 5}
   m_Children:
   - {fileID: 3482385874597877633}
   - {fileID: 3482385875655006443}
@@ -402,8 +430,8 @@ MonoBehaviour:
   m_fRange: 0
   m_iCurrentPoint: 0
   m_fMaxTimer: 0
---- !u!65 &3018686871165457470
-BoxCollider:
+--- !u!64 &6430070723450333421
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -412,6 +440,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0000004, y: 2.0000005, z: 1.0000002}
-  m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
