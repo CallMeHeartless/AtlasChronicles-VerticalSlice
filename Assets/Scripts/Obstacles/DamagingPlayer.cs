@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamagingPlayer : MonoBehaviour
 {
-    public int m_intDamage;
+    public int m_iDamage;
     [Header("DestoryingSelf")]
     public bool m_bDestoryafterFinishing = true;
     public float m_fTimerToDes;
@@ -63,8 +63,12 @@ public class DamagingPlayer : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                other.GetComponent<PlayerController>().DamagePlayer(m_intDamage);
-                GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP - m_intDamage;
+                //other.GetComponent<PlayerController>().DamagePlayer(m_intDamage);
+                DamageMessage message = new DamageMessage();
+                message.damage = m_iDamage;
+                message.source = gameObject;
+                other.GetComponent<DamageController>().ApplyDamage(message);
+                GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP - m_iDamage;
                 GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP);
                 m_fTimerTo = 0;
 

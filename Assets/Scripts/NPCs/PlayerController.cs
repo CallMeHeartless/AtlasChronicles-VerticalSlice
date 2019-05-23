@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private GameObject m_rProjectileArc;
     private PlayerAudioController m_rPlayerAudioController;
+    private DisplayStat m_rUI;
 
     // Component references
     private CharacterController m_rCharacterController;
@@ -75,9 +76,9 @@ public class PlayerController : MonoBehaviour {
     // Combat variables
     [Header("Combat Variables")]
     [SerializeField]
-    private int m_iMaxHealth = 4;
-    private int m_iCurrentHealth;
-    public bool m_bGroundPound = false;
+    private float m_fAttackCooldown = 1.0f;
+    private bool m_bCanAttack = true;
+
     // Ability variables
     [Header("Ability Variables")]
     [Tooltip("The game object that will be used as the teleport marker")] [SerializeField]
@@ -132,7 +133,7 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         // Lock mouse
         Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
@@ -148,13 +149,23 @@ public class PlayerController : MonoBehaviour {
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
-        m_iCurrentHealth = m_iMaxHealth;
+
         m_fCurrentMovementSpeed = m_fMovementSpeed;
 
         if (m_rTeleportMarkerPrefab) {
             m_rTeleportMarker = Instantiate(m_rTeleportMarkerPrefab);
             m_rTeleportMarker.SetActive(false);
         }
+
+        // Find UI
+        GameObject ui = GameObject.Find("GameUI");
+        if (ui) {
+            m_rUI = GameObject.Find("GameUI").GetComponent<DisplayStat>();
+        }
+        else {
+            Debug.Log("UI not found");
+        }
+
 
         if (!m_rInstance) {
             m_rInstance = this;
@@ -431,15 +442,6 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    // Deals damage to the player, and checks for death
-    public void DamagePlayer(int _iDamage) {
-        m_iCurrentHealth -= _iDamage;
-        if (m_iCurrentHealth <= 0) {
-            // Death
-            print("Player is dead");
-        }
-    }
-
     // Handles all of the functions that control player abilities
     private void HandlePlayerAbilities() {
         // Check the teleport tether thresholds
@@ -471,12 +473,8 @@ public class PlayerController : MonoBehaviour {
             }
         }
         // Attack
-        else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating) {
+        else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating && m_bCanAttack) {
             m_rAnimator.SetTrigger("Attack");
-        }
-        else if (Input.GetButtonDown(m_strAttackButton) && m_bIsFloating)
-        {
-
         }
 
         // Toggle the projectile arc
@@ -853,5 +851,17 @@ public class PlayerController : MonoBehaviour {
         {
             SetIsOnSlipperyObject(false);
         }
+    }
+
+    // Forces a cooldown for the player attack
+    public IEnumerator AttackCooldown() {
+        m_bCanAttack = false;
+        yield return new WaitForSeconds(m_fAttackCooldown);
+        m_bCanAttack = true;
+    }
+
+    public void UpdateHealth() {
+        int iHealth = GetComponent<DamageController>().iCurrentHealth;
+        m_rUI.NewHealth(iHealth);
     }
 }

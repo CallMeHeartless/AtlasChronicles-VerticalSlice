@@ -79,4 +79,8 @@ public class PlayerAnimationController : MonoBehaviour
     public void EndAttack() {
         m_rAttack.m_bIsActive = false;
     }
+
+    public void AttackCooldown() {
+        StartCoroutine(m_PlayerController.AttackCooldown());
+    }
 }
