@@ -58,7 +58,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e9996cbb864c26e4eb01d678e4677835, type: 3}
   overrideAudio:
   - materials:
-    - {fileID: 2100000, guid: 8caf380466069b946ab6ded6990ac013, type: 2}
+    - {fileID: 0}
     banks:
     - name: Water
       clips:
@@ -507,6 +507,7 @@ MonoBehaviour:
   m_SwitchMarkerPrefab: {fileID: 8879317358597215165, guid: dd0a42f977d9d924cbeda7515be5b326,
     type: 3}
   m_HandCollider: {fileID: 3956282232873355930}
+  m_rAttack: {fileID: 6682341045331985196}
 --- !u!1 &6184450272892950931
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +674,7 @@ MonoBehaviour:
   m_rGlideTrails:
   - {fileID: 6881080278170196558}
   - {fileID: 2707563578773299791}
-  m_iMaxHealth: 4
+  m_fAttackCooldown: 1
   m_rTeleportMarkerPrefab: {fileID: 4014711655795980374, guid: c41636a9b31e7fe41a035772d181afa5,
     type: 3}
   m_fTeleportTetherDistance: 50
@@ -736,7 +737,34 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnReceiveDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6850383250669970815}
+        m_MethodName: UpdateHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveHealing:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6850383250669970815}
+        m_MethodName: UpdateHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnHitWhileInvulnerable:
@@ -751,7 +779,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnResetDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6850383250669970815}
+        m_MethodName: UpdateHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!136 &588023628

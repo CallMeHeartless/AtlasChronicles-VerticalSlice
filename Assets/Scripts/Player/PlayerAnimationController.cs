@@ -13,6 +13,8 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField]
     private GameObject m_HandCollider;
     private PlayerController m_PlayerController;
+    [SerializeField]
+    private MeleeAttack m_rAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -68,5 +70,17 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlayGlideStart(bool _start)
     {
         m_PlayerController.PlayGliderSound(_start);
+    }
+
+    public void StartAttack() {
+        m_rAttack.m_bIsActive = true;
+    }
+
+    public void EndAttack() {
+        m_rAttack.m_bIsActive = false;
+    }
+
+    public void AttackCooldown() {
+        StartCoroutine(m_PlayerController.AttackCooldown());
     }
 }
