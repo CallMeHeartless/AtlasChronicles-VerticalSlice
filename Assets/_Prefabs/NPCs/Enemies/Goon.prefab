@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16babc8e9a13d684f9780097a2f8e24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_rAnimator: {fileID: 7660888029820596719}
   m_rVision:
     m_fVisionRadius: 10
     m_fVisionAngle: 230
@@ -234,15 +235,15 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3261623987127839684}
-        m_MethodName: Kill
-        m_Mode: 1
+      - m_Target: {fileID: 7660888029820596719}
+        m_MethodName: SetTrigger
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Attack
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -445,10 +446,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3547859015327387233}
     m_Modifications:
-    - target: {fileID: 100144, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
-      propertyPath: m_Name
-      value: cm_Goon_Attack-DeathAnim
-      objectReference: {fileID: 0}
     - target: {fileID: 400144, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -493,11 +490,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100144, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
+      propertyPath: m_Name
+      value: cm_Goon_Attack-DeathAnim
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0af3318190357ad4a9c1188b0bcb8c2e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
 --- !u!4 &7660888029827522463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400144, guid: 48238e65d6cd86342ab7d499203a9908,
+    type: 3}
+  m_PrefabInstance: {fileID: 7660888029827908751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7660888029820596719 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 48238e65d6cd86342ab7d499203a9908,
     type: 3}
   m_PrefabInstance: {fileID: 7660888029827908751}
   m_PrefabAsset: {fileID: 0}
