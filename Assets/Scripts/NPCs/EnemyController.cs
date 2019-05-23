@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
 {
     // External References
     private NavMeshAgent m_rNavAgent;
+    [SerializeField]
     private Animator m_rAnimator;
     private Animator m_rStateMachine;
     //[SerializeField]
