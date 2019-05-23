@@ -11,8 +11,7 @@ public class Heart : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            m_iHeal = -m_iHeal;
-            other.GetComponent<PlayerController>().DamagePlayer(m_iHeal);
+            other.GetComponent<DamageController>().ApplyHealing(m_iHeal);
             GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP - m_iHeal;
             GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().HP);
 
