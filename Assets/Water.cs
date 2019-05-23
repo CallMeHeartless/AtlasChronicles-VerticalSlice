@@ -55,7 +55,10 @@ public class Water : MonoBehaviour
         m_fPauseDuration = m_fCurrentPause;
         if (Box.center.y <=-1.7)
         {
-            Debug.Log("Death");
+            DamageMessage message = new DamageMessage();
+            message.damage = 4;
+            message.source = gameObject;
+            other.GetComponent<DamageController>().ApplyDamage(message);
         }
        // }
 
