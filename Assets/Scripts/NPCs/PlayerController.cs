@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private int m_iMaxHealth = 4;
     private int m_iCurrentHealth;
-
+    public bool m_bGroundPound = false;
     // Ability variables
     [Header("Ability Variables")]
     [Tooltip("The game object that will be used as the teleport marker")] [SerializeField]
@@ -473,6 +473,10 @@ public class PlayerController : MonoBehaviour {
         // Attack
         else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating) {
             m_rAnimator.SetTrigger("Attack");
+        }
+        else if (Input.GetButtonDown(m_strAttackButton) && m_bIsFloating)
+        {
+
         }
 
         // Toggle the projectile arc

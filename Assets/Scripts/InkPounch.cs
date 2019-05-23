@@ -6,6 +6,7 @@ public class InkPounch : MonoBehaviour
 {
     float timer;
     Slider slide;
+    public float m_fInkSlamAmount, m_fInkMapAttackAmount;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,11 +34,19 @@ public class InkPounch : MonoBehaviour
             timer -= Time.deltaTime;
         }
     }
-    public bool UseInk(float Amount)
+    public bool UseInk(float m_fAmount, string m_sType)
     {
-        if (Amount <= slide.value)
+        if (m_fAmount <= slide.value)
         {
-            slide.value -= Amount;
+            slide.value -= m_fAmount;
+            if (m_sType =="Slam")
+            {
+                //Ink Slam effects
+            }
+            else if(m_sType == "Attack")
+            {
+                // Ink MapAttack Effect
+            }
             return (true);
         }
         else
@@ -45,9 +54,9 @@ public class InkPounch : MonoBehaviour
             return (false);
         }
     }
-    public void AddedingInk(float Amount)
+    public void AddedingInk(float m_fAmount)
     {
-        slide.value += Amount;
+        slide.value += m_fAmount;
         if (slide.value >=1)
         {
             slide.value = 1;
