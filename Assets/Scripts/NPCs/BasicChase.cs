@@ -22,7 +22,7 @@ public class BasicChase : AIState
         if (PlayerInAttackRange()) {
             m_rAgent.isStopped = true;
             // Attack
-            //animator.SetTrigger("Attack");
+            m_rAI.Attack();
         }
         else {
             m_rAgent.isStopped = false;

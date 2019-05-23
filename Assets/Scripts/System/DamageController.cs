@@ -17,7 +17,7 @@ public class DamageController : MonoBehaviour
     private float m_fInvulnerabilityCounter = 0.0f;
     [SerializeField]
     [Range(0.0f, 360.0f)]
-    private float m_fHitAngle;
+    private float m_fHitAngle = 360.0f;
     private Collider m_HitBox;
 
 
