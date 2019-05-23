@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RespawnBox : MonoBehaviour
 {
-    public int ItemCount;
-    public GameObject Chest;
+   // public int ItemCount;
+   // public GameObject Chest;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +20,13 @@ public class RespawnBox : MonoBehaviour
     public void Respawn()
     {
 
-        GameObject NewChest = Instantiate(Chest, transform.position, transform.rotation);
-        NewChest.GetComponent<Destoryed>().m_intSecondaryItem = ItemCount;
-        Destroy(gameObject);
+        //GameObject NewChest = Instantiate(Chest, transform.position, transform.rotation);
+        //  NewChest.GetComponent<Destoryed>().m_intSecondaryItem = ItemCount;
+        gameObject.tag = "Untagged";
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        gameObject.GetComponent<Boxes>().enabled = true;
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+        gameObject.GetComponent<RespawnBox>().enabled = false;
+
     }
 }
