@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class RotateObject : MonoBehaviour
 {
-    public float m_fSpeed;
-    [Header("Stopping at points")]
-    public bool m_bStops;
-    public float[] m_fStoppingPoints;
-    public float m_fRange;
-    public int m_iCurrentPoint = 0;
+
+    [Header("RotatingPoints")]
+    [SerializeField] bool m_rotateClockwise = false;
+    [SerializeField] float m_fSpeed = 0.3f;
+    [SerializeField] Transform[] m_rotatingPoints;
+    [SerializeField] Transform[] m_pivotPoints;
+
+    //Commented out for now
+    //[Header("Stopping at points")]
+    private bool m_bStops = false;
+    private float[] m_fStoppingPoints;
+    private float m_fRange;
+    private int m_iCurrentPoint = 0;
     private Vector3 m_vec3RotationalPoint = new Vector3(0, 0, 0);
-    
-    bool m_bPause = false;
+    private bool m_bPause = false;
     private float m_fCurrentTimer;
-    public float m_fMaxTimer;
+    private float m_fMaxTimer;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -62,7 +67,20 @@ public class RotateObject : MonoBehaviour
         }
         else
         {
-            transform.Rotate(Vector3.up, m_fSpeed);
+            transform.Rotate((m_rotateClockwise ? Vector3.up : -Vector3.up), m_fSpeed);
+            SetPivotPositions();
+        }
+
+    }
+
+    void SetPivotPositions()
+    {
+        if (m_pivotPoints.Length == m_pivotPoints.Length)
+        {
+            for (int i = 0; i < m_pivotPoints.Length; ++i)
+            {
+                m_pivotPoints[i].position = m_rotatingPoints[i].position;
+            }
         }
 
     }
