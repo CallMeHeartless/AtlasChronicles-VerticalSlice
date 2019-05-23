@@ -55,6 +55,7 @@ public class EnemyController : MonoBehaviour
         }
         foreach(AIState behaviour in behaviours) {
             behaviour.m_rAI = this;
+            behaviour.m_rAgent = m_rNavAgent;
         }
 
         // Initialise animator
@@ -76,7 +77,6 @@ public class EnemyController : MonoBehaviour
             m_rStateMachine.SetBool("bCanSeePlayer", true);
             // If beyond home range, give up on chasing
             if (IsBeyondHomeRange()) {
-                //Debug.Log("Beyond range");
                 m_rStateMachine.SetBool("bCanSeePlayer", false);
             }
         }
@@ -127,6 +127,10 @@ public class EnemyController : MonoBehaviour
     }
 
     public void ForceNoticePlayer() {
+        // Return if already evading player
+        if (m_rStateMachine.GetBool("bIsEvading")) {
+            return;
+        }
         m_rPlayer = GameObject.Find("Player").GetComponent<PlayerController>();
         m_rStateMachine.SetBool("bCanSeePlayer", true);
         // Rotate around

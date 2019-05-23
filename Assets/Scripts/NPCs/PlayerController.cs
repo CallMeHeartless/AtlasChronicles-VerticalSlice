@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         // Lock mouse
         Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
@@ -158,7 +158,14 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Find UI
-        m_rUI = GameObject.Find("GameUI").GetComponent<DisplayStat>();
+        GameObject ui = GameObject.Find("GameUI");
+        if (ui) {
+            m_rUI = GameObject.Find("GameUI").GetComponent<DisplayStat>();
+        }
+        else {
+            Debug.Log("UI not found");
+        }
+
 
         if (!m_rInstance) {
             m_rInstance = this;
