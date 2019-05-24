@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     private Animator m_rAnimator;
     private Animator m_rStateMachine;
     //[SerializeField]
+    [Header("Vision")]
     public AIVision m_rVision;
     [SerializeField][Tooltip("An empty game object positioned where the AI's eyes are, with forward direction aligned with its parent")]
     private Transform m_rEyes;
@@ -139,6 +140,12 @@ public class EnemyController : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(toPlayer, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.5f);
 
+    }
+
+    public void Attack() {
+        if (m_rAnimator) {
+            m_rAnimator.SetTrigger("Attack");
+        }
     }
 
 
