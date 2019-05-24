@@ -684,7 +684,7 @@ public class PlayerController : MonoBehaviour {
 
     public void HandleFootsteps() {
         if (m_rCharacterController.isGrounded) {
-            Debug.DrawRay(transform.position, Vector3.down);
+            //Debug.DrawRay(transform.position, Vector3.down);
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) {
                 Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
                 m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
