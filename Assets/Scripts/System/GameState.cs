@@ -7,6 +7,7 @@ public class GameState : MonoBehaviour
     // Boolean controls
     private static bool s_bIsPaused = false;
     private static bool s_bInCinematic = false;
+    private static bool s_bIsPlayerTeleporting = false;
 
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
@@ -18,8 +19,13 @@ public class GameState : MonoBehaviour
         s_bInCinematic = _bState;
     }
 
+    // Toggles the player control flag
+    public static void SetPlayerTeleportingFlag(bool _bState) {
+        s_bIsPlayerTeleporting = _bState;
+    }
+
     public static bool DoesPlayerHaveControl() {
-        return !(s_bIsPaused || s_bInCinematic); // Add here accordingly
+        return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting); // Add here accordingly
     }
 
 }
