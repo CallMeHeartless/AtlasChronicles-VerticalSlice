@@ -11,7 +11,7 @@ public class Water : MonoBehaviour
     private float m_fPauseDuration = 0;
     public float m_fCurrentPause = 2;
     public Vector3 m_vec3ResetWaterLevel;
-   
+    public float MaxdDropLevel = 1.7f;
     
     // Start is called before the first frame update
     void Start()
@@ -53,7 +53,7 @@ public class Water : MonoBehaviour
             Box.center -= new Vector3(0, m_fDroppingLevel, 0);
         m_bQuicksandOn = true;
         m_fPauseDuration = m_fCurrentPause;
-        if (Box.center.y <=-1.7)
+        if (Box.center.y <= MaxdDropLevel)
         {
             DamageMessage message = new DamageMessage();
             message.damage = 4;

@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PlatformBreaking : MonoBehaviour
 {
-    public bool m_bCollatsing = false;
+    public bool m_bCollapsing = false;
     public int m_intIntisalStanability =1;
     public int m_intStanability = 99;// howmany times the playey can land on it
     public float m_fSpeed = 0.1f;
     public float m_fTimer;
     public float m_fMaxTimer = 2;
 
-
+    float speed = 0.05f; //how fast it shakes
+    bool collapse = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -32,7 +33,14 @@ public class PlatformBreaking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(m_bCollatsing){
+        if(collapse)
+        {
+            transform.localPosition = Random.insideUnitCircle * speed;
+
+            //transform.position = new Vector3(Mathf.Sin(Time.time * speed) * amount, transform.position.y, transform.position.z);
+        }
+
+        if (m_bCollapsing){
             if (m_fTimer <= 0)
             {
                 if (gameObject.GetComponent<Respawning>() == null)
@@ -64,10 +72,11 @@ public class PlatformBreaking : MonoBehaviour
         Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("Player"))
         {
+            other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(true);
             m_intStanability--;
             if (m_intStanability == 0)
             {
-                
+                collapse = true;
                 StartCoroutine(destoration());
             }
             else
@@ -84,13 +93,22 @@ public class PlatformBreaking : MonoBehaviour
     //    }
     //}
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            print("woops");
+            other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(false);
+        }
+    }
+
     public void Copsate()
     {
-        m_bCollatsing = true;
+        m_bCollapsing = true;
     }
     public void reform()
     {
-        m_bCollatsing = false;
+        m_bCollapsing = false;
     }
     IEnumerator destoration()
     {
@@ -98,7 +116,9 @@ public class PlatformBreaking : MonoBehaviour
         //cumbling effect
         yield return new WaitForSeconds(2);
         m_fTimer = m_fMaxTimer;
-        m_bCollatsing = true;
+        m_bCollapsing = true;
+        collapse = false;
+
     }
-     
+
 }

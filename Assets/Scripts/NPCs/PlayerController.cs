@@ -105,8 +105,15 @@ public class PlayerController : MonoBehaviour {
     private float m_fThrowSpeed = 10.0f;
     [SerializeField]
     private GameObject m_rTeleportParticles;
+    [SerializeField]
+    private GameObject m_rTeleportScroll;
+    [SerializeField]
+    private GameObject m_rGlideScroll;
+    private bool m_bWasSwitchLastTeleportCommand = false; // An internal flag to determine if the most recent teleport command was to switch or teleport to the marker
 
     [Header("Slide Detection Variables")]
+    [SerializeField] private bool m_bIsSliding = false;
+    [SerializeField] bool m_bIsOnMovingPlatform = false;
     private RaycastHit rayHit;
     private Vector3 hitNormal; //orientation of the slope.
     private Vector3 m_vSlideDir;
@@ -114,8 +121,6 @@ public class PlayerController : MonoBehaviour {
     private bool m_bSteepSlopeCollided = false;
     private bool m_bStandingOnSlope = false; // is on a slope or not
     private float m_fSlideSpeed = 200.0f;
-    [SerializeField] private bool m_bIsSliding = false;
-    [SerializeField] bool m_bIsOnMovingPlatform = false;
 
     //Extforce variables
     private bool m_bExtForceOccuring;
@@ -291,8 +296,7 @@ public class PlayerController : MonoBehaviour {
             //Check if player if standing on a slope
             if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f)) {
                 //If player is on slope bigger than slope limit, set sliding as true
-                if(Vector3.Angle(rayHit.normal, Vector3.up) == 0)
-                {
+                if(Vector3.Angle(rayHit.normal, Vector3.up) == 0) {
                     m_bIsSliding = false;
                     return;
                 }
@@ -309,8 +313,7 @@ public class PlayerController : MonoBehaviour {
                     m_bIsSliding = false;
                 }
             }
-            else
-            {
+            else {
                 m_bIsSliding = false;
             }
         }
@@ -370,8 +373,7 @@ public class PlayerController : MonoBehaviour {
             m_fCurrentMovementSpeed = m_fMovementSpeed;
         }
         else {
-            if (!m_bIsOnMovingPlatform)
-            {
+            if (!m_bIsOnMovingPlatform) {
                 m_rAnimator.SetBool("Grounded", false);
                 if (!m_bIsFloating)
                 {// && m_Velocity.y < 0.0f
@@ -415,6 +417,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
         m_bIsFloating = _bState;
+        ToggleGlideScroll(_bState);
 
         if (m_bIsFloating) {
             // Level out the player's upward velocity to begin gliding
@@ -462,14 +465,18 @@ public class PlayerController : MonoBehaviour {
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton)) {
-            TeleportToTeleportMarker();
+            m_bWasSwitchLastTeleportCommand = false;
+            //TeleportToTeleportMarker();
+            m_rAnimator.SetTrigger("Teleport");
         }
         // Throw switch tag / switch teleport
         else if (Input.GetButtonDown(m_strSwitchButton)) {
             if (m_rSwitchTarget) {
-                SwitchWithTarget();
+                m_bWasSwitchLastTeleportCommand = true;
+                m_rAnimator.SetTrigger("Teleport");
+                //SwitchWithTarget();
             } else if (!m_rHeldObject) {
-                m_rAnimator.SetTrigger("Tag");
+                m_rAnimator.SetTrigger("ThrowTag");
             }
         }
         // Attack
@@ -504,7 +511,7 @@ public class PlayerController : MonoBehaviour {
         //    m_rTeleportMarker.transform.SetParent(null);
         //}
 
-        
+        GameState.SetPlayerTeleportingFlag(false);
     }
 
     // Place the teleport marker on the ground
@@ -535,7 +542,7 @@ public class PlayerController : MonoBehaviour {
         if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject || m_bTeleportThresholdWarning) {
             return; // Error animation / noise
         }
-
+        ToggleTeleportScroll(true);
         StartCoroutine(TeleportToLocation(m_rTeleportMarker.transform.position));
         // Disable teleport marker
         ToggleTeleportMarker(false);
@@ -546,6 +553,7 @@ public class PlayerController : MonoBehaviour {
         if (!m_rSwitchTarget || m_bSwitchThresholdWarning) {
             return;
         }
+        ToggleTeleportScroll(true);
         TeleportParticles();
 
         // Switch positions
@@ -687,7 +695,7 @@ public class PlayerController : MonoBehaviour {
 
     public void HandleFootsteps() {
         if (m_rCharacterController.isGrounded) {
-            Debug.DrawRay(transform.position, Vector3.down);
+            //Debug.DrawRay(transform.position, Vector3.down);
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) {
                 Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
                 m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
@@ -863,5 +871,30 @@ public class PlayerController : MonoBehaviour {
     public void UpdateHealth() {
         int iHealth = GetComponent<DamageController>().iCurrentHealth;
         m_rUI.NewHealth(iHealth);
+    }
+
+    // Turn the glide scroll on / off
+    private void ToggleGlideScroll(bool _bState) {
+        if (m_rGlideScroll) {
+            m_rGlideScroll.SetActive(_bState);
+        }
+    }
+
+    // Turn the teleport scroll on / off
+    public void ToggleTeleportScroll(bool _bState) {
+        if (m_rTeleportScroll) {
+            m_rTeleportScroll.SetActive(_bState);
+        }
+    }
+
+    // External trigger for teleportation transition based on animation state
+    public void TeleportationTransition() {
+        // Determine which teleport command to execute
+        if (m_bWasSwitchLastTeleportCommand) {
+            SwitchWithTarget();
+        }
+        else {
+            TeleportToTeleportMarker();
+        }
     }
 }

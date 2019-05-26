@@ -6,7 +6,7 @@ public class Pickup : MonoBehaviour
 {
     private bool m_bIsCollected = false;
     public GameObject m_rParticles;
-
+    public GameObject m_rHome;
     public void Start()
     {
         if (m_rParticles != null)
@@ -22,6 +22,10 @@ public class Pickup : MonoBehaviour
             // Flag as collected
             m_bIsCollected = true;
 
+            if (m_rHome != null)
+            {
+                m_rHome.GetComponent<Destoryed>().m_intSecondaryItem--;
+            }
             if (gameObject.CompareTag("PrimaryPickUp"))
             {    // Maps
                 GetComponent<AudioSource>().Play();

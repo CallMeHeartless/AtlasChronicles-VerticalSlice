@@ -7,7 +7,7 @@ public class MovingPlatform : MonoBehaviour
     [Header("movement")]
     public GameObject[] m_rPoints;
     public int m_intCurrentPoint = 0;
-    public float m_fSpeed;
+    public float m_fSpeed = 0.05f;
 
     [Header("delaying")]
     public float m_fPauseDuration;
@@ -15,11 +15,10 @@ public class MovingPlatform : MonoBehaviour
 
     [Header("testing Don't Touch")]
     public float m_fPauseBreak = 0;
-    public bool m_fCurrentBreak = false;
+    public bool m_bCurrentBreak = false;
     public float timeITakes = 0;
     public float jounlylength;
     public float destionlength;
-
 
     [Header("shinking")]
     public bool Shink = false;
@@ -45,16 +44,14 @@ public class MovingPlatform : MonoBehaviour
     {
         if (m_fCurrentPause <= 0)
         {
-            transform.position = Vector3.MoveTowards(gameObject.transform.position, m_rPoints[m_intCurrentPoint].transform.position, m_fSpeed);
+            //Move towards current destination point
+            transform.position = Vector3.MoveTowards(transform.position, m_rPoints[m_intCurrentPoint].transform.position, m_fSpeed);
             timeITakes += Time.deltaTime;
 
-
-            if (m_fCurrentBreak == true)
+            if (m_bCurrentBreak == true)
             {
                 if (m_fPauseBreak>= 0)
                 {
-
-
                     if (m_intCurrentPoint == 0)
                     {
                         box.center += new Vector3(0.1f * ShinkSize, 0, 0);
@@ -68,7 +65,7 @@ public class MovingPlatform : MonoBehaviour
                 }
                 else
                 {
-                    m_fCurrentBreak = false;
+                    m_bCurrentBreak = false;
                 }
             }
             else
@@ -76,13 +73,11 @@ public class MovingPlatform : MonoBehaviour
                 if (Shink)
                 {
                     //shinking2();
-                    shinking();
+                    Shrinking();
                 }
             }
-           
 
-
-                if (Vector3.Distance(transform.position, m_rPoints[m_intCurrentPoint].transform.position) < 1)
+            if (Vector3.Distance(transform.position, m_rPoints[m_intCurrentPoint].transform.position) < 1)
             {
                 //Debug.Log(timeITakes);
                 timeITakes = 0;
@@ -104,7 +99,7 @@ public class MovingPlatform : MonoBehaviour
 
                 if (m_fPauseBreak>0)
                 {
-                    m_fCurrentBreak = true;
+                    m_bCurrentBreak = true;
                 }
 
                 if (m_bDestoryAtPoint)
@@ -120,7 +115,7 @@ public class MovingPlatform : MonoBehaviour
                             gameObject.GetComponent<PlatformBreaking>().enabled = true;
                         }
 
-                        StartCoroutine(colapse());
+                        StartCoroutine(Collapse());
                     }
                 }
             }
@@ -129,12 +124,10 @@ public class MovingPlatform : MonoBehaviour
         {
             m_fCurrentPause -= Time.deltaTime;
         }
-        
     }
 
-    IEnumerator colapse()
+    IEnumerator Collapse()
     {
-        
         yield return new WaitForSeconds(.1f);
         gameObject.GetComponent<PlatformBreaking>().Copsate();
         gameObject.GetComponent<MovingPlatform>().enabled = false;
@@ -145,62 +138,60 @@ public class MovingPlatform : MonoBehaviour
     }
 
 
-    void shinking()
+    void Shrinking()
     {
-       
-            if (m_intCurrentPoint == 0)
+        if (m_intCurrentPoint == 0)
+        {
+            if (-ShinkSize > 0)
             {
-                if (-ShinkSize > 0)
+                // Debug.Log("in");
+                if (box.size.x+ ShinkSize >= 0)
                 {
-                   // Debug.Log("in");
-                    if (box.size.x+ ShinkSize >= 0)
-                    {
-                        //set to zero
-                        box.size += new Vector3(0.1f * ShinkSize * 2, 0, 0);
-                        box.center += new Vector3(0.1f * ShinkSize, 0, 0);
-                    }
-                    else
-                    {
-                        box.size = new Vector3(0, 1, 1);
-                        box.center += new Vector3(0.1f * ShinkSize, 0, 0);
-                        m_fPauseBreak += Time.deltaTime;
-                        
-                    }
+                    //set to zero
+                    box.size += new Vector3(0.1f * ShinkSize * 2, 0, 0);
+                    box.center += new Vector3(0.1f * ShinkSize, 0, 0);
                 }
                 else
                 {
-                    box.size += new Vector3(0.1f * ShinkSize * 2, 0, 0);
+                    box.size = new Vector3(0, 1, 1);
                     box.center += new Vector3(0.1f * ShinkSize, 0, 0);
-
+                    m_fPauseBreak += Time.deltaTime;
+                        
                 }
-
             }
             else
             {
-                if (ShinkSize > 0)
+                box.size += new Vector3(0.1f * ShinkSize * 2, 0, 0);
+                box.center += new Vector3(0.1f * ShinkSize, 0, 0);
+
+            }
+
+        }
+        else
+        {
+            if (ShinkSize > 0)
+            {
+                //Debug.Log("in");
+                if (box.size.x+ShinkSize >= 0)
                 {
-                    //Debug.Log("in");
-                    if (box.size.x+ShinkSize >= 0)
-                    {
-                        //set to zero
-                        box.size += new Vector3(-0.1f * ShinkSize * 2, 0, 0);
-                        box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
-                    }
-                    else
-                    {
-                        box.size = new Vector3(0, 1, 1);
-                        box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
-                        m_fPauseBreak += Time.deltaTime;
-                        
-                    }
+                    //set to zero
+                    box.size += new Vector3(-0.1f * ShinkSize * 2, 0, 0);
+                    box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
                 }
                 else
                 {
-                    box.size += new Vector3(-0.1f * ShinkSize * 2, 0, 0);
+                    box.size = new Vector3(0, 1, 1);
                     box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
-
+                    m_fPauseBreak += Time.deltaTime;
+                        
                 }
             }
-        
+            else
+            {
+                box.size += new Vector3(-0.1f * ShinkSize * 2, 0, 0);
+                box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
+
+            }
+        }
     }
 }
