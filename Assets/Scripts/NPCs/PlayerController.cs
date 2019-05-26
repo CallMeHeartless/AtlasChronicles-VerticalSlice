@@ -296,8 +296,7 @@ public class PlayerController : MonoBehaviour {
             //Check if player if standing on a slope
             if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f)) {
                 //If player is on slope bigger than slope limit, set sliding as true
-                if(Vector3.Angle(rayHit.normal, Vector3.up) == 0)
-                {
+                if(Vector3.Angle(rayHit.normal, Vector3.up) == 0) {
                     m_bIsSliding = false;
                     return;
                 }
@@ -314,8 +313,7 @@ public class PlayerController : MonoBehaviour {
                     m_bIsSliding = false;
                 }
             }
-            else
-            {
+            else {
                 m_bIsSliding = false;
             }
         }
@@ -375,8 +373,7 @@ public class PlayerController : MonoBehaviour {
             m_fCurrentMovementSpeed = m_fMovementSpeed;
         }
         else {
-            if (!m_bIsOnMovingPlatform)
-            {
+            if (!m_bIsOnMovingPlatform) {
                 m_rAnimator.SetBool("Grounded", false);
                 if (!m_bIsFloating)
                 {// && m_Velocity.y < 0.0f
@@ -698,7 +695,7 @@ public class PlayerController : MonoBehaviour {
 
     public void HandleFootsteps() {
         if (m_rCharacterController.isGrounded) {
-            Debug.DrawRay(transform.position, Vector3.down);
+            //Debug.DrawRay(transform.position, Vector3.down);
             if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit)) {
                 Renderer groundRenderer = hit.collider.GetComponent<Renderer>();
                 m_CurrentWalkingSurface = groundRenderer ? groundRenderer.sharedMaterial : null;
