@@ -63,11 +63,6 @@ public class PlayerAnimationController : MonoBehaviour
         m_PlayerController.HandleFootsteps();
     }
 
-    public void PlayGlideStart(bool _start)
-    {
-        m_PlayerController.PlayGliderSound(_start);
-    }
-
     public void StartAttack() {
         m_rAttack.m_bIsActive = true;
     }
