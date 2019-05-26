@@ -464,7 +464,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
         // Teleporting to the marker
-        else if (Input.GetButtonDown(m_strTeleportButton)) {
+        else if (Input.GetButtonDown(m_strTeleportButton) && m_bTeleportMarkerDown) {
             m_bWasSwitchLastTeleportCommand = false;
             //TeleportToTeleportMarker();
             m_rAnimator.SetTrigger("Teleport");
