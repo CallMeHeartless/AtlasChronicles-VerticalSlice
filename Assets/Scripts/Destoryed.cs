@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Destoryed : MonoBehaviour
 {
+    public bool BoxRespawns = true;
+
     [Header("Secondary Items")]
     public GameObject m_gSecondaryItemIs;
    
@@ -23,13 +25,17 @@ public class Destoryed : MonoBehaviour
     
     void Update()
     {
+        if (BoxRespawns == true)
+        {
 
-        gameObject.tag = "Broken";
-        gameObject.GetComponent<MeshRenderer>().enabled = false;
-        gameObject.GetComponent<Boxes>().enabled = false;
-        gameObject.GetComponent<BoxCollider>().enabled = false;
-        gameObject.GetComponent<RespawnBox>().enabled = true;
 
+            gameObject.tag = "Broken";
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<Boxes>().enabled = false;
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            gameObject.GetComponent<RespawnBox>().enabled = true;
+
+        }
 
         if (m_intSecondaryItem != 0)
         {
@@ -47,9 +53,10 @@ public class Destoryed : MonoBehaviour
                 gOrb.GetComponent<Rigidbody>().AddForce(fouce.x, fouce.y, fouce.z);
                 fouce = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * fouce;
                 gap = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * gap;
+                gOrb.GetComponent<Pickup>().m_rHome = gameObject;
 
             }
-            m_intSecondaryItem = 0;
+            //m_intSecondaryItem = 0;
         }
         gameObject.GetComponent<Destoryed>().enabled = false;
     }
