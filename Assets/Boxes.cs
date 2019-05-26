@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boxes : MonoBehaviour
 {
+  
     public enum BoxType
     {
         Standend,Slam,InkSlam,Map,InkMap,Teleport,Mark,InkMark,Enemy,Fall,Water,Weapon
