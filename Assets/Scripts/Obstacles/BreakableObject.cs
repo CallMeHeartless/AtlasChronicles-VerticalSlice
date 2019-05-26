@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
 {
+    [SerializeField] GameObject m_rOriginalObject;
     [SerializeField] GameObject m_rBrokenObject;
+
+    private void Start()
+    {
+        if(m_rBrokenObject)
+            m_rBrokenObject.SetActive(false);
+    }
 
     public void SwitchToBroken()
     {
-        if(m_rBrokenObject)
+        if(m_rBrokenObject && m_rBrokenObject)
         {
-            Instantiate(m_rBrokenObject, transform.position, transform.rotation);
-            Destroy(gameObject);
+            m_rBrokenObject.SetActive(true);
+            Destroy(m_rOriginalObject);
+            Invoke("Disappear", 3.0f);
         }
+    }
+
+    void Disappear()
+    {
+        Destroy(gameObject);
     }
 }

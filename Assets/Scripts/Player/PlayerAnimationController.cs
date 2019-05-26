@@ -37,10 +37,6 @@ public class PlayerAnimationController : MonoBehaviour
         m_SwitchMarker.transform.position = m_HandCollider.transform.position;
         m_SwitchMarker.transform.rotation = transform.root.rotation;
 
-        // DEBUG
-        //print("Rotation: " + m_SwitchMarker.transform.rotation.eulerAngles + " Forward: " + m_SwitchMarker.transform.forward);
-        //print("Forward: " + m_SwitchMarker.transform.forward);
-
         // Make active
         m_SwitchMarker.SetActive(true);
         m_SwitchMarker.GetComponent<SwitchTagController>().SetMoving(true);
@@ -77,5 +73,19 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void AttackCooldown() {
         StartCoroutine(m_PlayerController.AttackCooldown());
+    }
+
+    public void DisableTeleportScroll() {
+        m_PlayerController.ToggleTeleportScroll(false);
+    }
+
+    // Disable player control during teleportation
+    public void BeginTeleportation() {
+        GameState.SetPlayerTeleportingFlag(true);
+    }
+
+    // External cue to perform the teleportation transition
+    public void TeleportationTransition() {
+        m_PlayerController.TeleportationTransition();
     }
 }
