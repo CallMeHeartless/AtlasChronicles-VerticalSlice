@@ -900,4 +900,13 @@ public class PlayerController : MonoBehaviour {
             TeleportToTeleportMarker();
         }
     }
+
+    // Force the player to Respawn
+    public void RespawnPlayer() {
+        GetComponent<DamageController>().ResetDamage();
+        GameObject respawnController = GameObject.Find("RespawnController");
+        if (respawnController) {
+            respawnController.GetComponent<RespawnController>().RespawnPlayer();
+        }
+    }
 }
