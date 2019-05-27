@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private Animator m_rAnimator;
     private Animator m_rStateMachine;
+    [SerializeField]
+    private GameObject m_rMapFragmentPrefab;
     //[SerializeField]
     [Header("Vision")]
     public AIVision m_rVision;
@@ -39,6 +41,9 @@ public class EnemyController : MonoBehaviour
     private float m_fAttackCooldown;
     private float m_fAttackTimer = 0.0f;
     private bool m_bHasMapFragment = false;
+    [SerializeField]
+    private float m_fKnockoutTime = 10.0f;
+    private bool m_bIsKnockedOut = false;
 
     // Start is called before the first frame update
     void Start(){
@@ -59,16 +64,12 @@ public class EnemyController : MonoBehaviour
             behaviour.m_rAI = this;
             behaviour.m_rAgent = m_rNavAgent;
         }
-
-        // Initialise animator
-        //m_rAnimator = GetComponentsInChildren<Animator>()[1];
-
     }
 
     // Update is called once per frame
     void Update(){
-        // Do not process the enemy if there is no 
-        if (!GameState.DoesPlayerHaveControl()) {
+        // Do not process the enemy if they should be disabled
+        if (!GameState.DoesPlayerHaveControl() || m_bIsKnockedOut) {
             return;
         }
 
@@ -109,9 +110,17 @@ public class EnemyController : MonoBehaviour
 
     // Controls whether the agent holds a map fragment
     public void ToggleMapFragment(bool _bState) {
-        m_rStateMachine.SetBool("bIsEvading", _bState);
-    }
+        if(m_bHasMapFragment == _bState) {
+            return;
+        }
+        m_bHasMapFragment = _bState;
+        if (!m_bHasMapFragment) {
+            // Spawn the map fragment that was dropped
+            GameObject.Instantiate<GameObject>(m_rMapFragmentPrefab);
+        }
+        m_rStateMachine.SetBool("bIsEvading", m_bHasMapFragment);
 
+    }
 
     // Pause or resume all agents in scene
     public static void SetEnemyNavState(bool _bActive) {
@@ -130,7 +139,7 @@ public class EnemyController : MonoBehaviour
 
     public void ForceNoticePlayer() {
         // Return if already evading player
-        if (m_rStateMachine.GetBool("bIsEvading")) {
+        if (m_rStateMachine.GetBool("bIsEvading") || m_bIsKnockedOut) {
             return;
         }
         m_rPlayer = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -146,6 +155,29 @@ public class EnemyController : MonoBehaviour
         if (m_rAnimator) {
             m_rAnimator.SetTrigger("Attack");
         }
+    }
+
+    public void Knockout() {
+        m_bIsKnockedOut = true;
+        m_rStateMachine.SetBool("bIsKnockedOut", true);
+        m_rNavAgent.isStopped = true;
+        // VFX
+
+        // Drop map (if holding)
+        ToggleMapFragment(false);
+
+        // Start timer
+        StartCoroutine(Revive());
+    }
+
+    private IEnumerator Revive() {
+        yield return new WaitForSeconds(m_fKnockoutTime);
+        // Renable enemy
+        m_rNavAgent.isStopped = false;
+        GetComponent<DamageController>().ResetDamage();
+        m_rAnimator.ResetTrigger("Death");
+        m_bIsKnockedOut = false;
+        m_rStateMachine.SetBool("bIsKnockedOut", false);
     }
 
 

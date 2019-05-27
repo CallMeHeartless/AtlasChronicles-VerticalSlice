@@ -902,4 +902,17 @@ public class PlayerController : MonoBehaviour {
             respawnController.GetComponent<RespawnController>().RespawnPlayer();
         }
     }
+
+    // Check if the player was damaged by a goon, stealing a map fragment from them if they have one
+    private void StealMapFragment(DamageMessage _message) {
+        EnemyController goon = _message.source.GetComponent<EnemyController>();
+        if (goon) {
+            // Check if the player has swag to steal
+            if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
+                // Award a map fragment to the goon
+                --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
+                goon.ToggleMapFragment(true);
+            }
+        }
+    }
 }

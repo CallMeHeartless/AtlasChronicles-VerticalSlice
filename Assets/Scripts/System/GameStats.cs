@@ -2,22 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStats : MonoBehaviour
-{
-    public static int[] MapsBoard = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };//9
-    public static int[] NoteBoard = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };//9
-    public static int LevelLoctation = 1;
+public class GameStats {
+    public static int[] s_iMapsBoard = new int[] { 0, 0, 0, 0};//4
+    public static int[] s_iNoteBoard = new int[] { 0, 0, 0, 0};//4
+    public static int s_iLevelIndex = 0;
      
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // Serialisation functions go here
 
 }
