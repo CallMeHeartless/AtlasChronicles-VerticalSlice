@@ -10,7 +10,7 @@ public class MovingPlatform : MonoBehaviour
     public float m_fSpeed = 0.05f;
 
     [Header("delaying")]
-    public float m_fPauseDuration;
+    public float[] m_fPauseDuration;
     public float m_fCurrentPause;
 
     [Header("testing Don't Touch")]
@@ -83,8 +83,9 @@ public class MovingPlatform : MonoBehaviour
                 timeITakes = 0;
                 if (m_rPoints.Length - 1 == m_intCurrentPoint)
                 {
-                    m_fCurrentPause = m_fPauseDuration;
                     m_intCurrentPoint = 0;
+                    m_fCurrentPause = m_fPauseDuration[m_intCurrentPoint];
+                  
                     if (box) {
                         box.size = new Vector3(1, 1, 1);
                         box.center = new Vector3(0, 0, 0);
@@ -93,8 +94,9 @@ public class MovingPlatform : MonoBehaviour
                 }
                 else
                 {
-                    m_fCurrentPause = m_fPauseDuration;
                     m_intCurrentPoint++;
+                    m_fCurrentPause = m_fPauseDuration[m_intCurrentPoint];
+                    
                 }
 
                 if (m_fPauseBreak>0)
