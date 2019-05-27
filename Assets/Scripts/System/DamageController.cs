@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using MessageSystem;
 
 public class DamageController : MonoBehaviour
 {
@@ -21,12 +22,12 @@ public class DamageController : MonoBehaviour
     private Collider m_HitBox;
 
 
-    [Header("Damage Events")]
+    //[Header("Damage Events")]
     public UnityEvent OnDeath, OnReceiveDamage,OnReceiveHealing, OnHitWhileInvulnerable, OnBecomeVulnerable, OnResetDamage;
     System.Action m_Schedule;
 
-    //[Tooltip("These gameObjects are notified when this object takes damage")]
-    //public List<MonoBehaviour> m_OnDamageMessageReceivers;
+    [Tooltip("These gameObjects are notified when this object takes damage")]
+    public List<MonoBehaviour> m_OnDamageMessageReceivers;
 
     // Accessors
     public bool bIsInvulnerable { get { return m_bIsInvulnerable; } }
@@ -99,6 +100,10 @@ public class DamageController : MonoBehaviour
         }
 
         /// If message system is implemented, damage/death messages should be sent here
+        for(int i = 0; i < m_OnDamageMessageReceivers.Count; ++i) {
+            IMessageReceiver receiver = m_OnDamageMessageReceivers[i] as IMessageReceiver;
+            receiver.OnReceiveMessage(MessageType.eDamageMessage, _message);
+        }
 
     }
 

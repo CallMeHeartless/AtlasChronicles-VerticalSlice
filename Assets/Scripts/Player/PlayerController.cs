@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using MessageSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // External references
     [Header("External References")]
@@ -900,6 +901,34 @@ public class PlayerController : MonoBehaviour {
         GameObject respawnController = GameObject.Find("RespawnController");
         if (respawnController) {
             respawnController.GetComponent<RespawnController>().RespawnPlayer();
+        }
+    }
+
+    // Check if the player was damaged by a goon, stealing a map fragment from them if they have one
+    private void StealMapFragment(EnemyController _Goon) {
+            // Check if the player has swag to steal
+            if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
+                // Award a map fragment to the goon
+                --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
+                _Goon.ToggleMapFragment(true);
+                Debug.Log("That goon stole me map fragment!");
+            }
+    }
+
+    // Message events
+    public void OnReceiveMessage(MessageType _eMessageType, object _message) {
+        switch (_eMessageType) {
+            case MessageType.eDamageMessage: {
+                DamageMessage message = (DamageMessage)_message;
+                EnemyController goon = message.source.GetComponentInParent<EnemyController>();
+                if (goon) {
+                    Debug.Log("I was hit by a goon!");
+                    StealMapFragment(goon);
+                }
+                break;
+            }
+
+            default: break;
         }
     }
 }

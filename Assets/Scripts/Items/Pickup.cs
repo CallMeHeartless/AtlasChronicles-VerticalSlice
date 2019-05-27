@@ -29,12 +29,12 @@ public class Pickup : MonoBehaviour
             if (gameObject.CompareTag("PrimaryPickUp"))
             {    // Maps
                 GetComponent<AudioSource>().Play();
-                GameStats.MapsBoard[GameStats.LevelLoctation]++;
+                GameStats.s_iMapsBoard[GameStats.s_iLevelIndex]++;
             }
             if (gameObject.CompareTag("SecondayPickUp"))
             {   // Level specific collectables
                 GetComponent<AudioSource>().Play();
-                GameStats.NoteBoard[GameStats.LevelLoctation]++;
+                GameStats.s_iNoteBoard[GameStats.s_iLevelIndex]++;
             }
 
             // Turn on VFX
