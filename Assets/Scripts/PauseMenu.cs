@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class PauseMenu : MonoBehaviour
 {
@@ -20,12 +23,14 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         //if (Input.GetButtonDown("Pause"))
-        if (Input.GetKeyDown(KeyCode.Escape) && !m_pausePanel.activeSelf) {
+        if (Input.GetKeyDown(KeyCode.Escape) && !m_pausePanel.activeSelf)
+        {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             m_pausePanel.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && m_pausePanel.activeSelf) {
+        else if (Input.GetKeyDown(KeyCode.Escape) && m_pausePanel.activeSelf)
+        {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -33,7 +38,8 @@ public class PauseMenu : MonoBehaviour
             m_settingsPanel.SetActive(false);
         }
 
-        if(!m_pausePanel.activeSelf) {
+        if (!m_pausePanel.activeSelf)
+        {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -47,6 +53,10 @@ public class PauseMenu : MonoBehaviour
 
     public void ExitGame()
     {
-        Application.Quit();
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+		    Application.Quit();
+#endif
     }
 }
