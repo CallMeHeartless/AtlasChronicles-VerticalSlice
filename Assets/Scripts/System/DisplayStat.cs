@@ -30,8 +30,8 @@ public class DisplayStat : MonoBehaviour
         showStats = true;
         collectableText.SetActive(true);
         mapCountText.SetActive(true);
-        collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.NoteBoard[GameStats.LevelLoctation].ToString() + "/100";
-        mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.MapsBoard[GameStats.LevelLoctation].ToString() + "/3";
+        collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iNoteBoard[GameStats.s_iLevelIndex].ToString() + "/100";
+        mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() + "/3";
     }
   
     public void NewHealth(int HP)
@@ -58,8 +58,8 @@ public class DisplayStat : MonoBehaviour
             showStats = true;
             collectableText.SetActive(true);
             mapCountText.SetActive(true);
-            collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.NoteBoard[GameStats.LevelLoctation].ToString();
-            mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.MapsBoard[GameStats.LevelLoctation].ToString();
+            collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iNoteBoard[GameStats.s_iLevelIndex].ToString();
+            mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString();
         }
         else
         {

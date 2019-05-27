@@ -11,7 +11,7 @@ public class CheckpointController : MonoBehaviour
 
             // Update the most recent checkpoint
             RespawnController parentController = transform.root.GetComponent<RespawnController>();
-            Debug.Log("here");
+            //Debug.Log("here");
             if (parentController) {
                 if (m_bPoint)
                 {
@@ -22,7 +22,7 @@ public class CheckpointController : MonoBehaviour
                     parentController.SetRespawnPoint(transform);
                 }
                 
-                Debug.Log("new");
+                //Debug.Log("new");
             }
             else {
                 Debug.LogError("ERROR: Could not locate parent respawn controller. Is this checkpoint a child of the controller?");

@@ -165,9 +165,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rAnimator: {fileID: 7660888029820596719}
+  m_rMapFragmentPrefab: {fileID: 9155770641131760257, guid: 4293cbe2da160be4ea8b8ee7262c65dc,
+    type: 3}
   m_rVision:
     m_fVisionRadius: 10
-    m_fVisionAngle: 230
+    m_fVisionAngle: 250
     m_fMaxHeight: 1
     m_BlockingMask:
       serializedVersion: 2
@@ -176,13 +178,14 @@ MonoBehaviour:
   m_fMovementSpeed: 4
   m_fTurningSpeed: 0
   m_fMaxAcceleration: 0
-  m_fPursuitRadius: 15
+  m_fPursuitRadius: 20
   m_WanderProperties:
     m_HomePosition: {x: -69.81, y: 4.71, z: -46.47}
     m_fMinWanderRadius: 1
-    m_fMaxWanderRadius: 10
+    m_fMaxWanderRadius: 15
     m_fWanderInterval: 3
   m_fAttackCooldown: 0
+  m_fKnockoutTime: 10
 --- !u!95 &7804704985898512706
 Animator:
   serializedVersion: 3
@@ -265,6 +268,17 @@ MonoBehaviour:
       - m_Target: {fileID: 3261623987127839684}
         m_MethodName: ForceNoticePlayer
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3261623987127839684}
+        m_MethodName: ToggleMapFragment
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -684,10 +698,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3547859015327387233}
     m_Modifications:
-    - target: {fileID: 100144, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
-      propertyPath: m_Name
-      value: cm_Goon_Attack-DeathAnim
-      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0af3318190357ad4a9c1188b0bcb8c2e, type: 2}
     - target: {fileID: 400144, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -732,10 +746,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 0af3318190357ad4a9c1188b0bcb8c2e, type: 2}
+    - target: {fileID: 100144, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
+      propertyPath: m_Name
+      value: cm_Goon_Attack-DeathAnim
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48238e65d6cd86342ab7d499203a9908, type: 3}
 --- !u!1 &7660888029827875775 stripped

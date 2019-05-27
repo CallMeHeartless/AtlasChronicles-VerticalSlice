@@ -6,13 +6,13 @@ public class EnemyAnimationController : MonoBehaviour
 {
     [SerializeField]
     private EnemyController m_rEnemyController;
-
     [SerializeField]
     private MeleeAttack[] m_Weapons;
 
-    // Start is called before the first frame update
+
     void Start()
     {
+        // Gain a reference to the parent enemy controller
         if (!m_rEnemyController) {
             m_rEnemyController = GetComponentInParent<EnemyController>();
         }
@@ -41,5 +41,9 @@ public class EnemyAnimationController : MonoBehaviour
             weapon.gameObject.SetActive(false);
             weapon.m_bIsActive = false;
         }
+    }
+
+    public void Knockout() {
+        m_rEnemyController.Knockout();
     }
 }
