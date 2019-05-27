@@ -6,6 +6,7 @@ public class BreakableObject : MonoBehaviour
 {
     [SerializeField] GameObject m_rOriginalObject;
     [SerializeField] GameObject m_rBrokenObject;
+    [SerializeField] GameObject m_rPrize;
 
     private void Start()
     {
@@ -17,8 +18,14 @@ public class BreakableObject : MonoBehaviour
     {
         if(m_rBrokenObject && m_rBrokenObject)
         {
+            //Activate the broken box
             m_rBrokenObject.SetActive(true);
+            //Destroy the original box
             Destroy(m_rOriginalObject);
+            //Instantiate a prize at the boxes position
+            if(m_rPrize)
+                Instantiate(m_rPrize, transform.position, transform.rotation);
+            //Make broken box disappear after 3 seconds
             Invoke("Disappear", 3.0f);
         }
     }

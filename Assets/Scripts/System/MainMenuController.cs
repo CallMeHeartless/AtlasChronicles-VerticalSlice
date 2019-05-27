@@ -24,7 +24,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void PlayGame() {
-        SceneManager.LoadScene("Level One - Prototype");
+        SceneManager.LoadScene("Tristan_Test");
     }
 
     public void Quit() {
