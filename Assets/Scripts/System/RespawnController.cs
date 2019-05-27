@@ -31,15 +31,15 @@ public class RespawnController : MonoBehaviour
         yield return new WaitForEndOfFrame();
         m_rPlayer.transform.position = m_rRespawnPoint.position;
 
-        if (GameObject.FindGameObjectWithTag("Broken"))
-        {
-            GameObject[] BrokenBoxes = GameObject.FindGameObjectsWithTag("Broken");
-            for (int i = 0; i < BrokenBoxes.Length; i++)
-            {
-                BrokenBoxes[i].GetComponent<RespawnBox>().Respawn();
+        //if (GameObject.FindGameObjectWithTag("Broken"))
+        //{
+        //    GameObject[] BrokenBoxes = GameObject.FindGameObjectsWithTag("Broken");
+        //    for (int i = 0; i < BrokenBoxes.Length; i++)
+        //    {
+        //        BrokenBoxes[i].GetComponent<RespawnBox>().Respawn();
               
-            }
-        }
+        //    }
+        //}
        
     }
 }

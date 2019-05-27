@@ -18,10 +18,14 @@ public class BreakableObject : MonoBehaviour
     {
         if(m_rBrokenObject && m_rBrokenObject)
         {
+            //Activate the broken box
             m_rBrokenObject.SetActive(true);
+            //Destroy the original box
             Destroy(m_rOriginalObject);
+            //Instantiate a prize at the boxes position
             if(m_rPrize)
-                Instantiate(m_rPrize, new Vector3(transform.position.x, 1.5f, transform.position.z), transform.rotation);
+                Instantiate(m_rPrize, transform.position, transform.rotation);
+            //Make broken box disappear after 3 seconds
             Invoke("Disappear", 3.0f);
         }
     }
