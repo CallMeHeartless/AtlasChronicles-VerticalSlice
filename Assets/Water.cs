@@ -55,6 +55,7 @@ public class Water : MonoBehaviour
         m_fPauseDuration = m_fCurrentPause;
         if (Box.center.y <= MaxdDropLevel)
         {
+            Debug.Log("Death");
             DamageMessage message = new DamageMessage();
             message.damage = 4;
             message.source = gameObject;
