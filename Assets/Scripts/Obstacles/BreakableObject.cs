@@ -6,6 +6,7 @@ public class BreakableObject : MonoBehaviour
 {
     [SerializeField] GameObject m_rOriginalObject;
     [SerializeField] GameObject m_rBrokenObject;
+    [SerializeField] GameObject m_rPrize;
 
     private void Start()
     {
@@ -19,6 +20,8 @@ public class BreakableObject : MonoBehaviour
         {
             m_rBrokenObject.SetActive(true);
             Destroy(m_rOriginalObject);
+            if(m_rPrize)
+                Instantiate(m_rPrize, new Vector3(transform.position.x, 1.5f, transform.position.z), transform.rotation);
             Invoke("Disappear", 3.0f);
         }
     }
