@@ -79,6 +79,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField]
     private float m_fAttackCooldown = 1.0f;
     private bool m_bCanAttack = true;
+    private bool m_bSlamAttack = false;
+    [SerializeField]
+    private float m_fSlamAttackSpeed = 20.0f;
 
     // Ability variables
     [Header("Ability Variables")]
@@ -215,6 +218,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
         }
+        // Handle the player doing a slam attack on the ground
+        if(m_rCharacterController.isGrounded && m_bSlamAttack) {
+            m_bSlamAttack = false;
+            // Impact animation?
+        }
     }
 
     // Handles all of the functions that determine the vector to move the player, then move them
@@ -233,7 +241,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        if (m_MovementDirection!= Vector3.zero) {
+        if (m_bSlamAttack) {
+            m_rCharacterController.Move(Vector3.down * m_fSlamAttackSpeed * Time.deltaTime);
+        }
+        else if (m_MovementDirection!= Vector3.zero) {
             m_rCharacterController.Move(m_MovementDirection);
             transform.position += movement;
             movement = new Vector3(0, 0, 0);
@@ -506,6 +517,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Check the teleport tether thresholds
         HandleTeleportTethers();
 
+        // Don't process abilities if slamming
+        if (m_bSlamAttack) return;
+
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
             // Throw a tag if there is no  held object
@@ -536,20 +550,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             }
         }
         // Attack
-        else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating && m_bCanAttack) {
+        else if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
+            // Basic attack when on the ground
             m_rAnimator.SetTrigger("Attack");
+        }else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
+            // Slam attack when in the air
+            //m_rAnimator.SetTrigger("SlamAttack");
         }
 
-        // Toggle the projectile arc
-        // AimHeldObject();
-        // Pickup or throw an item
-        //if (Input.GetButtonDown(m_strPickupItemButton)) {
-        //    if (m_bIsAiming) {
-        //        ThrowHeldObject();
-        //    } else {
-        //        GrabObject();
-        //    }
-        //}
     }
 
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
@@ -972,6 +980,30 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 _Goon.ToggleMapFragment(true);
                 Debug.Log("That goon stole me map fragment!");
             }
+    }
+
+    // Slam attack begin - first stage
+    public void SlamAttackBegin() {
+        m_bSlamAttack = true;
+        ToggleFloatState(false);
+        m_Velocity = Vector3.zero;
+        m_bCanAttack = false;
+    }
+
+    // Slam attack middle - damage stage
+    public void SlamAttackMiddle() {
+
+    }
+
+    // Slam attack end - impact and reset
+    public void SlamAttackReset() {
+        if (!m_bSlamAttack) return;
+
+
+        m_bCanAttack = true;
+        // Clear slam attack flag
+        m_bSlamAttack = false;
+
     }
 
     // Message events
