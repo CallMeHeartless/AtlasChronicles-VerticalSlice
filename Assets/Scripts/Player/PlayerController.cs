@@ -276,92 +276,81 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Performs a simple jump
     private void Jump() {
         // Handle jump input
-        print("Coyote?: " + m_bCoyoteAllowed);
-        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding)
-        {
+        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) {
+            //Reset glide timer
             m_fGlideTimer = 0.0f;
-            if (m_rCharacterController.isGrounded)
-            {
-                m_bInitialJumped = true;
-                m_bCanDoubleJump = true;
-                m_bCanGlide = false;
+
+            //If player is grounded as they press the jump button
+            if (m_rCharacterController.isGrounded) {
+                m_bInitialJumped = true;    // jump is initial
+                m_bCanDoubleJump = true;    // double jump may be used
+                m_bCanGlide = false;        // gliding is reset
+                m_bCoyoteAllowed = false;   // coyote jump is no longer allowed
                 m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 m_fCoyoteTimer = 0.0f;
-                m_bCoyoteAllowed = false;
-                print("1 jump");
             }
-            else
-            {
-                if(!m_bInitialJumped)
-                {
+            else {
+                // If the player has not done an initial jump (jump on ground)
+                if(!m_bInitialJumped) {
                     m_fCoyoteTimer += Time.deltaTime;
-
-                    if (m_fCoyoteTimer < m_fCoyoteTime)
-                    {
+                    // Within the defined number of seconds, player is allowed a coyote jump
+                    if (m_fCoyoteTimer < m_fCoyoteTime) {
                         m_bCoyoteAllowed = true;
                     }
-                    else
-                    {
+                    else {
                         m_bCoyoteAllowed = false;
                     }
                 }
-
-                if (m_bCoyoteAllowed && !m_bCanDoubleJump)
-                {
-                    print("coyote jump");
-                    m_bInitialJumped = true;
+                // Handle Coyote jumping
+                if (m_bCoyoteAllowed && !m_bCanDoubleJump) {
+                    //Allow coyote jump
+                    m_bInitialJumped = true;        // Set coyote jump as the initial jump
+                    m_bCanDoubleJump = true;        // Allow a double jump
+                    m_bCoyoteAllowed = false;       // Coyote jump is no longer allowed
                     m_Velocity.y = m_fJumpPower;
                     m_fGravityMulitplier = 1.0f;
-                    m_bCoyoteAllowed = false;
-                    m_bCanDoubleJump = true;
                 }
-                else if (!m_bCoyoteAllowed && m_bCanDoubleJump)
-                {
+                // Handle double jump
+                else if (!m_bCoyoteAllowed && m_bCanDoubleJump) {
+                    m_bCanDoubleJump = false;       // Double jump is no longer allowed
+                    m_bCanExtraGlide = true;        // Allow an extra glide 
                     m_Velocity.y = m_fJumpPower;
                     m_fGravityMulitplier = 1.0f;
-                    m_bCanDoubleJump = false;
-                    m_bCoyoteAllowed = false;
-                    print("double jump");
-                    m_bCanExtraGlide = true;
                 }
-                else if(m_bCanExtraGlide)
-                {
-                    m_bCanGlide = true;
-
-                    m_bCanExtraGlide = false;
+                // Handle extra glide
+                else if(m_bCanExtraGlide) {
+                    m_bCanGlide = true;             // Start gliding
+                    m_bCanExtraGlide = false;       // Extra glide is no longer allowed
                 }
             }
-
+            //Play jump audio
             if (m_rJumpAudio)
-            {
                 m_rJumpAudio.PlayAudio();
-            }
-            
             // Stop sprinting
             ToggleSprint(false);
         }
 
-        if (Input.GetAxis(m_strJumpButton) != 0)
-        {
-            if (!m_rCharacterController.isGrounded)
-            {
-                if(!m_bCanGlide)
-                {
+        // If player holds down the jump button
+        if (Input.GetAxis(m_strJumpButton) != 0) {
+            // If player is in the air
+            if (!m_rCharacterController.isGrounded) {
+                // If cannot currently glide
+                if (!m_bCanGlide) {
+                    //Handle button held glide through a timer
                     m_fGlideTimer += Time.deltaTime;
-                    if (m_fGlideTimer > m_fGlideTime)
-                    {
-                        m_bCanGlide = true;
+                    if (m_fGlideTimer > m_fGlideTime) {
+                        m_bCanGlide = true;          // Start gliding
+                        m_bCanExtraGlide = false;    // Do not allow an extra glide 
                     }
                 }
             }
         }
-        else
-        {
+        else {
+            //If the player lets go of the jump button, cancel glide
             m_bCanGlide = false;
             ToggleFloatState(false);
         }
-
     }
 
     //Detect if player is able to slide down a steep slope
