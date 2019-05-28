@@ -12,7 +12,7 @@ public class CountDownTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TextUI= GameObject.FindGameObjectWithTag("UI").transform.GetChild(5).gameObject;
+        TextUI= GameObject.FindGameObjectWithTag("UI").transform.GetChild(4).gameObject;
     }
 
     // Update is called once per frame
@@ -37,8 +37,10 @@ public class CountDownTimer : MonoBehaviour
     }
     public void Damage()
     {
+        Debug.Log("hit");
         switch (GetComponent<DamageController>().iCurrentHealth)
         {
+            
             case 1:
                 GetComponent<DamageController>().ApplyHealing(1);
                 m_fPauseDuration = m_fCurrentPause;
