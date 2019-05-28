@@ -131,6 +131,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bCanGlide = false;
     private bool m_bCoyoteAllowed = false;
     private bool m_bInitialJumped = true;
+    private bool m_bCanExtraGlide = false;
+
     public float m_fGlideTime = 0.5f;
     private float m_fGlideTimer = 0.0f;
 
@@ -288,7 +290,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_fCoyoteTimer = 0.0f;
                 m_bCoyoteAllowed = false;
                 print("1 jump");
-
             }
             else
             {
@@ -315,14 +316,20 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                     m_bCoyoteAllowed = false;
                     m_bCanDoubleJump = true;
                 }
-                else if (m_bCanDoubleJump)
+                else if (!m_bCoyoteAllowed && m_bCanDoubleJump)
                 {
                     m_Velocity.y = m_fJumpPower;
                     m_fGravityMulitplier = 1.0f;
                     m_bCanDoubleJump = false;
                     m_bCoyoteAllowed = false;
                     print("double jump");
+                    m_bCanExtraGlide = true;
+                }
+                else if(m_bCanExtraGlide)
+                {
+                    m_bCanGlide = true;
 
+                    m_bCanExtraGlide = false;
                 }
             }
 
@@ -337,7 +344,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         if (Input.GetAxis(m_strJumpButton) != 0)
         {
-            if(!m_rCharacterController.isGrounded)
+            if (!m_rCharacterController.isGrounded)
             {
                 if(!m_bCanGlide)
                 {
