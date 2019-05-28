@@ -6,7 +6,11 @@ Shader "Custom/S_TreeMain"
 {
 	Properties
 	{
-		_Color0("Color 0", Color) = (0.2019335,0.3867925,0.06020827,1)
+		_Diffuse("Diffuse", 2D) = "white" {}
+		_Hue("Hue", Range( -1 , 1)) = 0
+		_Saturation("Saturation", Range( 0 , 2)) = 1
+		_Lightness("Lightness", Range( 0 , 5)) = 1
+		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
 
@@ -20,18 +24,49 @@ Shader "Custom/S_TreeMain"
 		#pragma surface surf Standard keepalpha addshadow fullforwardshadows 
 		struct Input
 		{
-			half filler;
+			float2 uv_texcoord;
 		};
 
+		uniform sampler2D _Diffuse;
+		uniform float4 _Diffuse_ST;
+
 		UNITY_INSTANCING_BUFFER_START(CustomS_TreeMain)
-			UNITY_DEFINE_INSTANCED_PROP(float4, _Color0)
-#define _Color0_arr CustomS_TreeMain
+			UNITY_DEFINE_INSTANCED_PROP(float, _Hue)
+#define _Hue_arr CustomS_TreeMain
+			UNITY_DEFINE_INSTANCED_PROP(float, _Saturation)
+#define _Saturation_arr CustomS_TreeMain
+			UNITY_DEFINE_INSTANCED_PROP(float, _Lightness)
+#define _Lightness_arr CustomS_TreeMain
 		UNITY_INSTANCING_BUFFER_END(CustomS_TreeMain)
+
+
+		float3 HSVToRGB( float3 c )
+		{
+			float4 K = float4( 1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0 );
+			float3 p = abs( frac( c.xxx + K.xyz ) * 6.0 - K.www );
+			return c.z * lerp( K.xxx, saturate( p - K.xxx ), c.y );
+		}
+
+
+		float3 RGBToHSV(float3 c)
+		{
+			float4 K = float4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+			float4 p = lerp( float4( c.bg, K.wz ), float4( c.gb, K.xy ), step( c.b, c.g ) );
+			float4 q = lerp( float4( p.xyw, c.r ), float4( c.r, p.yzx ), step( p.x, c.r ) );
+			float d = q.x - min( q.w, q.y );
+			float e = 1.0e-10;
+			return float3( abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+		}
 
 		void surf( Input i , inout SurfaceOutputStandard o )
 		{
-			float4 _Color0_Instance = UNITY_ACCESS_INSTANCED_PROP(_Color0_arr, _Color0);
-			o.Albedo = _Color0_Instance.rgb;
+			float _Hue_Instance = UNITY_ACCESS_INSTANCED_PROP(_Hue_arr, _Hue);
+			float2 uv_Diffuse = i.uv_texcoord * _Diffuse_ST.xy + _Diffuse_ST.zw;
+			float3 hsvTorgb13_g2 = RGBToHSV( tex2D( _Diffuse, uv_Diffuse ).rgb );
+			float _Saturation_Instance = UNITY_ACCESS_INSTANCED_PROP(_Saturation_arr, _Saturation);
+			float _Lightness_Instance = UNITY_ACCESS_INSTANCED_PROP(_Lightness_arr, _Lightness);
+			float3 hsvTorgb17_g2 = HSVToRGB( float3(( _Hue_Instance + hsvTorgb13_g2.x ),( _Saturation_Instance * hsvTorgb13_g2.y ),( hsvTorgb13_g2.z * _Lightness_Instance )) );
+			o.Albedo = hsvTorgb17_g2;
 			float temp_output_4_0 = 0.0;
 			o.Metallic = temp_output_4_0;
 			o.Smoothness = temp_output_4_0;
@@ -45,12 +80,21 @@ Shader "Custom/S_TreeMain"
 }
 /*ASEBEGIN
 Version=16400
-1927;7;1266;958;742.0709;466.231;1;True;False
+1921;1;1278;970;1455.81;757.8002;1.542473;True;False
+Node;AmplifyShaderEditor.SamplerNode;5;-957.5912,-171.66;Float;True;Property;_Diffuse;Diffuse;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;8;-732.3896,-463.1879;Float;False;InstancedProperty;_Hue;Hue;2;0;Create;True;0;0;False;0;0;0;-1;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;9;-730.8477,-384.5218;Float;False;InstancedProperty;_Saturation;Saturation;3;0;Create;True;0;0;False;0;1;1;0;2;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;10;-737.0175,-298.1432;Float;False;InstancedProperty;_Lightness;Lightness;4;0;Create;True;0;0;False;0;1;1;0;5;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;4;-248,77.5;Float;False;Constant;_Float0;Float 0;0;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;3;-336,-92.5;Float;False;InstancedProperty;_Color0;Color 0;0;0;Create;True;0;0;False;0;0.2019335,0.3867925,0.06020827,1;0.2019335,0.3867925,0.06020827,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;3;-510.2996,-547.5297;Float;False;InstancedProperty;_Color0;Color 0;0;0;Create;True;0;0;False;0;0.2019335,0.3867925,0.06020827,1;0.1527272,0.28,0.05818179,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.FunctionNode;7;-388.4181,-191.7124;Float;False;SF_ColorShift;-1;;2;f3651b3e85772604cb45f632c7f608e7;0;4;26;FLOAT;0;False;27;FLOAT;0;False;28;FLOAT;0;False;23;COLOR;0,0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;Custom/S_TreeMain;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
-WireConnection;0;0;3;0
+WireConnection;7;26;8;0
+WireConnection;7;27;9;0
+WireConnection;7;28;10;0
+WireConnection;7;23;5;0
+WireConnection;0;0;7;0
 WireConnection;0;3;4;0
 WireConnection;0;4;4;0
 ASEEND*/
-//CHKSM=A9AA34DA335CB1717D13E9A0BA7B2C695F5BDDFE
+//CHKSM=F0C9FE94C293569494D21FC3A1FC2AB37A7BE705
