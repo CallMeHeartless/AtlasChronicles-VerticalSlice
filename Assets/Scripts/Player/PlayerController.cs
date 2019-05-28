@@ -82,6 +82,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bSlamAttack = false;
     [SerializeField]
     private float m_fSlamAttackSpeed = 20.0f;
+    [SerializeField]
+    private GameObject m_rSlamAttack;
 
     // Ability variables
     [Header("Ability Variables")]
@@ -224,6 +226,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if(m_rCharacterController.isGrounded && m_bSlamAttack) {
             m_bSlamAttack = false;
             // Impact animation?
+            SlamAttackReset();
         }
     }
 
@@ -974,7 +977,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 // Award a map fragment to the goon
                 --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
                 _Goon.ToggleMapFragment(true);
-                Debug.Log("That goon stole me map fragment!");
             }
     }
 
@@ -988,13 +990,18 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Slam attack middle - damage stage
     public void SlamAttackMiddle() {
-
+        if (m_rSlamAttack) {
+            m_rSlamAttack.SetActive(true);
+            m_rSlamAttack.GetComponent<MeleeAttack>().m_bIsActive = true;
+        }
     }
 
     // Slam attack end - impact and reset
     public void SlamAttackReset() {
         if (!m_bSlamAttack) return;
-
+        if (m_rSlamAttack) {
+            m_rSlamAttack.SetActive(false);
+        }
 
         m_bCanAttack = true;
         // Clear slam attack flag
@@ -1006,10 +1013,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void OnReceiveMessage(MessageType _eMessageType, object _message) {
         switch (_eMessageType) {
             case MessageType.eDamageMessage: {
+                // If the player was damaged, check to see if they were damaged by a goon.
                 DamageMessage message = (DamageMessage)_message;
                 EnemyController goon = message.source.GetComponentInParent<EnemyController>();
                 if (goon) {
-                    Debug.Log("I was hit by a goon!");
+                    // If so, reward the goon with a map fragment
                     StealMapFragment(goon);
                 }
                 break;
