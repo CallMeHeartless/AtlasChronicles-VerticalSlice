@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 m_MovementDirection;
     [SerializeField] private Vector3 m_ExternalForce = Vector3.zero;
     private Vector3 m_MovementInput = Vector3.zero;
-    private bool m_bCanDoubleJump = true;
+    private bool m_bCanDoubleJump = false;
     [SerializeField]
     private Vector3 m_Velocity = Vector3.zero;
     private float m_fVerticalVelocity = 0.0f;
@@ -127,6 +127,11 @@ public class PlayerController : MonoBehaviour {
     private float m_bXSmoothSpeed = 0.0f;
     private float m_bZSmoothSpeed = 0.0f;
     private float m_fHorizontalSmoothSpeed = 0.3f;
+    private bool m_bCanGlide = false;
+    private bool m_bCoyoteAllowed = false;
+    private bool m_bInitialJumped = true;
+    public float m_fGlideTime = 0.5f;
+    private float m_fGlideTimer = 0.0f;
 
     [Header("Audio")]
     [SerializeField] private AudioPlayer m_rJumpAudio;
@@ -182,7 +187,19 @@ public class PlayerController : MonoBehaviour {
         if (!GameState.DoesPlayerHaveControl()) {
             return;
         }
-        
+
+        if (m_rCharacterController.isGrounded)
+        {
+            m_bCoyoteAllowed = true;
+            m_bInitialJumped = false;
+            m_bCanDoubleJump = false;
+
+        }
+        else
+        {
+            //m_bCoyoteAllowed = false;
+
+        }
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
@@ -256,74 +273,115 @@ public class PlayerController : MonoBehaviour {
     // Performs a simple jump
     private void Jump() {
         // Handle jump input
-        if (m_rCharacterController.isGrounded || m_bCanDoubleJump || m_fCoyoteTimer < m_fCoyoteTime) {
-            // Jump code
-            if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) { // Change this here
-                //m_fVerticalVelocity = m_fJumpPower;
-                if (m_rJumpAudio) {
-                    m_rJumpAudio.PlayAudio();
-                }
+        print("Coyote?: " + m_bCoyoteAllowed);
+        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding)
+        {
+            m_fGlideTimer = 0.0f;
+            if (m_rCharacterController.isGrounded)
+            {
+                m_bInitialJumped = true;
+                m_bCanDoubleJump = true;
+                m_bCanGlide = false;
                 m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
-                // Control use of double jump
-                if (!m_rCharacterController.isGrounded) {
-                    m_bCanDoubleJump = false;
-                }
-                // Stop sprinting
-                ToggleSprint(false);
+                m_fCoyoteTimer = 0.0f;
+                m_bCoyoteAllowed = false;
+                print("1 jump");
+
             }
+            else
+            {
+                if(!m_bInitialJumped)
+                {
+                    m_fCoyoteTimer += Time.deltaTime;
+
+                    if (m_fCoyoteTimer < m_fCoyoteTime)
+                    {
+                        m_bCoyoteAllowed = true;
+                    }
+                    else
+                    {
+                        m_bCoyoteAllowed = false;
+                    }
+                }
+
+                if (m_bCoyoteAllowed && !m_bCanDoubleJump)
+                {
+                    print("coyote jump");
+                    m_bInitialJumped = true;
+                    m_Velocity.y = m_fJumpPower;
+                    m_fGravityMulitplier = 1.0f;
+                    m_bCoyoteAllowed = false;
+                    m_bCanDoubleJump = true;
+                }
+                else if (m_bCanDoubleJump)
+                {
+                    m_Velocity.y = m_fJumpPower;
+                    m_fGravityMulitplier = 1.0f;
+                    m_bCanDoubleJump = false;
+                    m_bCoyoteAllowed = false;
+                    print("double jump");
+
+                }
+            }
+
+            if (m_rJumpAudio)
+            {
+                m_rJumpAudio.PlayAudio();
+            }
+            
+            // Stop sprinting
+            ToggleSprint(false);
         }
 
-        // Handle related variables
-        if (m_rCharacterController.isGrounded) {
-            m_bCanDoubleJump = true;
-            m_fCoyoteTimer = 0.0f;
-            if (m_bIsFloating) {
-                m_bIsFloating = false;
+        if (Input.GetAxis(m_strJumpButton) != 0)
+        {
+            if(!m_rCharacterController.isGrounded)
+            {
+                if(!m_bCanGlide)
+                {
+                    m_fGlideTimer += Time.deltaTime;
+                    if (m_fGlideTimer > m_fGlideTime)
+                    {
+                        m_bCanGlide = true;
+                    }
+                }
             }
-            if (Input.GetButton(m_strSprintButton)) {
-                ToggleSprint(true);
-            }
-        } else {
-            m_fCoyoteTimer += Time.deltaTime;
         }
+        else
+        {
+            m_bCanGlide = false;
+            ToggleFloatState(false);
+        }
+
     }
 
     //Detect if player is able to slide down a steep slope
     void SlideMethod() {
         m_bIsSliding = false;
         m_vSlideDir = Vector3.zero; //Reset slide direction
-        if (m_bSteepSlopeCollided)
-        {  //If the player is colliding with a steep slope
+        if (m_bSteepSlopeCollided) {  //If the player is colliding with a steep slope
             //Check if player if standing on a slope
-            if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f))
-            {
-                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit && Vector3.Angle(rayHit.normal, Vector3.up) < 180.0f)
-                {
+            if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f)) {
+                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit && Vector3.Angle(rayHit.normal, Vector3.up) < 180.0f) {
                     m_bIsSliding = true;
                 }
                 //If player is stuck on a steep slope while not on the ground, set sliding as true
-                else if (transform.position.y - rayHit.point.y >= 0.5f)
-                {
+                else if (transform.position.y - rayHit.point.y >= 0.5f) {
                     m_bIsSliding = true;
                 }
             }
         }
 
         //If player is not facing a slippery object, let player exit slide
-        if (m_bIsSliding)
-        {
-            if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f))
-            {
+        if (m_bIsSliding) {
+            if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f)) {
                 //Check if player is trying to move while on a slope and not facing slippery object
                 bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
                 if (playerIsMoving)
-                {
                     m_bIsSliding = false;
-                }
             }
-            else
-            {
+            else {
                 m_MovementInput = Vector3.zero;
             }
         }
@@ -332,8 +390,7 @@ public class PlayerController : MonoBehaviour {
             return;
 
         //If player is able to slide, apply sliding forces
-        if (m_rCharacterController.isGrounded && m_bIsSliding)
-        {
+        if (m_rCharacterController.isGrounded && m_bIsSliding) {
             m_ExternalForce = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
             Vector3.OrthoNormalize(ref hitNormal, ref m_ExternalForce);
             m_ExternalForce *= m_fSlideSpeed;
@@ -384,12 +441,14 @@ public class PlayerController : MonoBehaviour {
 
     // Handles the player floating slowly downwards
     private void ProcessFloat() {
-        if (!m_rCharacterController.isGrounded && !m_bCanDoubleJump) {
+        if (!m_rCharacterController.isGrounded) {
             // The player can start floating after a double jump
-            if (Input.GetButtonDown(m_strJumpButton) && m_fFloatTimer == 0.0f) { // Change comparison to < m_fFloatTimer for multiple floats per jump
+            if (m_bCanGlide && m_fFloatTimer == 0.0f) { // Change comparison to < m_fFloatTimer for multiple floats per jump
                 ToggleFloatState(true);
+                print("glide");
             }
             else if (Input.GetButtonUp(m_strJumpButton)) {
+                m_bCanGlide = false;
                 ToggleFloatState(false);
             }
         }

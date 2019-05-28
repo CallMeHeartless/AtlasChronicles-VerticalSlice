@@ -11,7 +11,7 @@ public class CheckpointController : MonoBehaviour
 
             // Update the most recent checkpoint
             RespawnController parentController = transform.root.GetComponent<RespawnController>();
-            Debug.Log("here");
+            //Debug.Log("here");
             if (parentController) {
                 if (m_bPoint)
                 {
