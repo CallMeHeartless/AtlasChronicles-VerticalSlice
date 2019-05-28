@@ -24,18 +24,19 @@ public class EndSwitchTimer : MonoBehaviour
         Debug.Log("Chit");
         if (GameObject.FindGameObjectWithTag("UI").transform.GetChild(4).gameObject.activeSelf == false)
         {
-            GetComponent<DamageController>().ApplyHealing(1);
+            GetComponent<DamageController>().ResetDamage();// ApplyHealing(1);
         }
         else
         {
             DamageMessage message = new DamageMessage();
             message.damage = 4;
             message.source = gameObject;
-            gameObject.GetComponent<DamageController>().ApplyDamage(message);
+            gameObject.GetComponent<DamageController>().ForceKill(message);
         }
     }
     public void death()
     {
+        //damagedoor
         Destroy(startPoint);
         Destroy(gameObject);
     }

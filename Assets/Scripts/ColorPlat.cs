@@ -26,17 +26,17 @@ public class ColorPlat : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 3)
-            {
-                changeColor();
-            }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 3)
+        //    {
+        //        changeColor();
+        //    }
            
-        }
+        //}
     }
     // Update is called once per frame
-    void CorrectColor()
+    private void CorrectColor()
     {
         if (m_colSetColor == m_colCurrentColor)
         {
@@ -76,9 +76,10 @@ public class ColorPlat : MonoBehaviour
             }
 
         }
+        GetComponent<DamageController>().ResetDamage();
     }
 
-    void changeColor()
+    public void changeColor()
     {
         if (m_Colors.yellow== m_colCurrentColor)
         {
