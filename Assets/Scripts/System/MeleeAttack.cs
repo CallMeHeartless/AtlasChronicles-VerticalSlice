@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 public class MeleeAttack : MonoBehaviour
@@ -16,6 +17,8 @@ public class MeleeAttack : MonoBehaviour
     private string[] m_strTargetTag;
     [HideInInspector]
     public bool m_bIsActive = false;
+
+    public UnityEvent OnHit;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,7 @@ public class MeleeAttack : MonoBehaviour
                     message.source = gameObject;
 
                     target.ApplyDamage(message);
+                    OnHit.Invoke();
                     m_bIsActive = false; // Prevent multiple collisions
                 }
             }
@@ -49,6 +53,7 @@ public class MeleeAttack : MonoBehaviour
                     message.source = gameObject;
 
                     target.ApplyDamage(message);
+                    OnHit.Invoke();
                     m_bIsActive = false; // Prevent multiple collisions
                 }
             }

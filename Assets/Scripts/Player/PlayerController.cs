@@ -79,6 +79,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField]
     private float m_fAttackCooldown = 1.0f;
     private bool m_bCanAttack = true;
+    private bool m_bSlamAttack = false;
+    [SerializeField]
+    private float m_fSlamAttackSpeed = 20.0f;
+    [SerializeField]
+    private GameObject m_rSlamAttack;
 
     // Ability variables
     [Header("Ability Variables")]
@@ -131,6 +136,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bCanGlide = false;
     private bool m_bCoyoteAllowed = false;
     private bool m_bInitialJumped = true;
+    private bool m_bCanExtraGlide = false;
+
     public float m_fGlideTime = 0.5f;
     private float m_fGlideTimer = 0.0f;
 
@@ -215,6 +222,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
         }
+        // Handle the player doing a slam attack on the ground
+        if(m_rCharacterController.isGrounded && m_bSlamAttack) {
+            m_bSlamAttack = false;
+            // Impact animation?
+            SlamAttackReset();
+        }
     }
 
     // Handles all of the functions that determine the vector to move the player, then move them
@@ -233,7 +246,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        if (m_MovementDirection!= Vector3.zero) {
+        if (m_bSlamAttack) {
+            m_rCharacterController.Move(Vector3.down * m_fSlamAttackSpeed * Time.deltaTime);
+        }
+        else if (m_MovementDirection!= Vector3.zero) {
             m_rCharacterController.Move(m_MovementDirection);
             transform.position += movement;
             movement = new Vector3(0, 0, 0);
@@ -274,87 +290,81 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Performs a simple jump
     private void Jump() {
         // Handle jump input
-        print("Coyote?: " + m_bCoyoteAllowed);
-        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding)
-        {
+        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) {
+            //Reset glide timer
             m_fGlideTimer = 0.0f;
-            if (m_rCharacterController.isGrounded)
-            {
-                m_bInitialJumped = true;
-                m_bCanDoubleJump = true;
-                m_bCanGlide = false;
+
+            //If player is grounded as they press the jump button
+            if (m_rCharacterController.isGrounded) {
+                m_bInitialJumped = true;    // jump is initial
+                m_bCanDoubleJump = true;    // double jump may be used
+                m_bCanGlide = false;        // gliding is reset
+                m_bCoyoteAllowed = false;   // coyote jump is no longer allowed
                 m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 m_fCoyoteTimer = 0.0f;
-                m_bCoyoteAllowed = false;
-                print("1 jump");
-
             }
-            else
-            {
-                if(!m_bInitialJumped)
-                {
+            else {
+                // If the player has not done an initial jump (jump on ground)
+                if(!m_bInitialJumped) {
                     m_fCoyoteTimer += Time.deltaTime;
-
-                    if (m_fCoyoteTimer < m_fCoyoteTime)
-                    {
+                    // Within the defined number of seconds, player is allowed a coyote jump
+                    if (m_fCoyoteTimer < m_fCoyoteTime) {
                         m_bCoyoteAllowed = true;
                     }
-                    else
-                    {
+                    else {
                         m_bCoyoteAllowed = false;
                     }
                 }
-
-                if (m_bCoyoteAllowed && !m_bCanDoubleJump)
-                {
-                    print("coyote jump");
-                    m_bInitialJumped = true;
+                // Handle Coyote jumping
+                if (m_bCoyoteAllowed && !m_bCanDoubleJump) {
+                    //Allow coyote jump
+                    m_bInitialJumped = true;        // Set coyote jump as the initial jump
+                    m_bCanDoubleJump = true;        // Allow a double jump
+                    m_bCoyoteAllowed = false;       // Coyote jump is no longer allowed
                     m_Velocity.y = m_fJumpPower;
                     m_fGravityMulitplier = 1.0f;
-                    m_bCoyoteAllowed = false;
-                    m_bCanDoubleJump = true;
                 }
-                else if (m_bCanDoubleJump)
-                {
+                // Handle double jump
+                else if (!m_bCoyoteAllowed && m_bCanDoubleJump) {
+                    m_bCanDoubleJump = false;       // Double jump is no longer allowed
+                    m_bCanExtraGlide = true;        // Allow an extra glide 
                     m_Velocity.y = m_fJumpPower;
                     m_fGravityMulitplier = 1.0f;
-                    m_bCanDoubleJump = false;
-                    m_bCoyoteAllowed = false;
-                    print("double jump");
-
+                }
+                // Handle extra glide
+                else if(m_bCanExtraGlide) {
+                    m_bCanGlide = true;             // Start gliding
+                    m_bCanExtraGlide = false;       // Extra glide is no longer allowed
                 }
             }
-
+            //Play jump audio
             if (m_rJumpAudio)
-            {
                 m_rJumpAudio.PlayAudio();
-            }
-            
             // Stop sprinting
             ToggleSprint(false);
         }
 
-        if (Input.GetAxis(m_strJumpButton) != 0)
-        {
-            if(!m_rCharacterController.isGrounded)
-            {
-                if(!m_bCanGlide)
-                {
+        // If player holds down the jump button
+        if (Input.GetAxis(m_strJumpButton) != 0) {
+            // If player is in the air
+            if (!m_rCharacterController.isGrounded) {
+                // If cannot currently glide
+                if (!m_bCanGlide) {
+                    //Handle button held glide through a timer
                     m_fGlideTimer += Time.deltaTime;
-                    if (m_fGlideTimer > m_fGlideTime)
-                    {
-                        m_bCanGlide = true;
+                    if (m_fGlideTimer > m_fGlideTime) {
+                        m_bCanGlide = true;          // Start gliding
+                        m_bCanExtraGlide = false;    // Do not allow an extra glide 
                     }
                 }
             }
         }
-        else
-        {
+        else {
+            //If the player lets go of the jump button, cancel glide
             m_bCanGlide = false;
             ToggleFloatState(false);
         }
-
     }
 
     //Detect if player is able to slide down a steep slope
@@ -506,6 +516,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Check the teleport tether thresholds
         HandleTeleportTethers();
 
+        // Don't process abilities if slamming
+        if (m_bSlamAttack) return;
+
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
             // Throw a tag if there is no  held object
@@ -536,20 +549,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             }
         }
         // Attack
-        else if (Input.GetButtonDown(m_strAttackButton) && !m_bIsFloating && m_bCanAttack) {
+        else if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
+            // Basic attack when on the ground
             m_rAnimator.SetTrigger("Attack");
+        }else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
+            // Slam attack when in the air
+            //m_rAnimator.SetTrigger("SlamAttack");
         }
 
-        // Toggle the projectile arc
-        // AimHeldObject();
-        // Pickup or throw an item
-        //if (Input.GetButtonDown(m_strPickupItemButton)) {
-        //    if (m_bIsAiming) {
-        //        ThrowHeldObject();
-        //    } else {
-        //        GrabObject();
-        //    }
-        //}
     }
 
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
@@ -970,18 +977,47 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 // Award a map fragment to the goon
                 --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
                 _Goon.ToggleMapFragment(true);
-                Debug.Log("That goon stole me map fragment!");
             }
+    }
+
+    // Slam attack begin - first stage
+    public void SlamAttackBegin() {
+        m_bSlamAttack = true;
+        ToggleFloatState(false);
+        m_Velocity = Vector3.zero;
+        m_bCanAttack = false;
+    }
+
+    // Slam attack middle - damage stage
+    public void SlamAttackMiddle() {
+        if (m_rSlamAttack) {
+            m_rSlamAttack.SetActive(true);
+            m_rSlamAttack.GetComponent<MeleeAttack>().m_bIsActive = true;
+        }
+    }
+
+    // Slam attack end - impact and reset
+    public void SlamAttackReset() {
+        if (!m_bSlamAttack) return;
+        if (m_rSlamAttack) {
+            m_rSlamAttack.SetActive(false);
+        }
+
+        m_bCanAttack = true;
+        // Clear slam attack flag
+        m_bSlamAttack = false;
+
     }
 
     // Message events
     public void OnReceiveMessage(MessageType _eMessageType, object _message) {
         switch (_eMessageType) {
             case MessageType.eDamageMessage: {
+                // If the player was damaged, check to see if they were damaged by a goon.
                 DamageMessage message = (DamageMessage)_message;
                 EnemyController goon = message.source.GetComponentInParent<EnemyController>();
                 if (goon) {
-                    Debug.Log("I was hit by a goon!");
+                    // If so, reward the goon with a map fragment
                     StealMapFragment(goon);
                 }
                 break;
