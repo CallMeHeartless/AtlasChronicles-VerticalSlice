@@ -15,7 +15,7 @@ public class Switchs : MonoBehaviour
         door, lift, Switch
     }
     public int PassNumber;
-    public m_eSwitch m_swSwitchType;
+    //public m_eSwitch m_swSwitchType;
     public m_Blockage m_MatType;
     public bool SwitchIsOn = false;
     // Start is called before the first frame update
@@ -23,17 +23,17 @@ public class Switchs : MonoBehaviour
     private void Update()
     {
         //for testing 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 3)
-            {
-                SwitchPressed();
-            }
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    if (Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) < 3)
+        //    {
+        //        SwitchPressed();
+        //    }
 
-        }
+        //}
     }
     // Update is called once per frame
-    void SwitchPressed()
+    public void SwitchPressed()
     {
         if (SwitchIsOn == false)
         {
@@ -73,31 +73,32 @@ public class Switchs : MonoBehaviour
             }
 
         }
+        //GetComponent<DamageController>().ResetDamage();
     }
 
    
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            switch (m_swSwitchType)
-            {
-                case m_eSwitch.Guild:
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        switch (m_swSwitchType)
+    //        {
+    //            case m_eSwitch.Guild:
 
-                    break;
-                case m_eSwitch.groundPound:
+    //                break;
+    //            case m_eSwitch.groundPound:
 
-                    break;
-                case m_eSwitch.hit:
+    //                break;
+    //            case m_eSwitch.hit:
 
-                    break;
-                case m_eSwitch.BigHit:
+    //                break;
+    //            case m_eSwitch.BigHit:
 
-                    break;
-                default:
-                    break;
-            }
-            SwitchPressed();
-        }
-    }
+    //                break;
+    //            default:
+    //                break;
+    //        }
+    //        SwitchPressed();
+    //    }
+    //}
 }

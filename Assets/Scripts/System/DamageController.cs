@@ -119,6 +119,16 @@ public class DamageController : MonoBehaviour
         OnReceiveHealing.Invoke();
     }
 
+    public void ForceKill(DamageMessage _message) {
+        // Return if already dead
+        if (m_iCurrentHealth <= 0) {
+            return;
+        }
+
+        m_iCurrentHealth = 0;
+        OnDeath.Invoke();
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
