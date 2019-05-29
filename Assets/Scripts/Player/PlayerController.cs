@@ -303,6 +303,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_Velocity.y = m_fJumpPower;
                 m_fGravityMulitplier = 1.0f;
                 m_fCoyoteTimer = 0.0f;
+
+                //Play jump audio
+                if (m_rJumpAudio)
+                    m_rJumpAudio.PlayAudio();
             }
             else {
                 // If the player has not done an initial jump (jump on ground)
@@ -324,6 +328,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                     m_bCoyoteAllowed = false;       // Coyote jump is no longer allowed
                     m_Velocity.y = m_fJumpPower;
                     m_fGravityMulitplier = 1.0f;
+
+                    //Play jump audio
+                    if (m_rJumpAudio)
+                        m_rJumpAudio.PlayAudio();
                 }
                 // Handle double jump
                 else if (!m_bCoyoteAllowed && m_bCanDoubleJump) {
@@ -331,6 +339,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                     m_bCanExtraGlide = true;        // Allow an extra glide 
                     m_Velocity.y = m_fJumpPower;
                     m_fGravityMulitplier = 1.0f;
+
+                    //Play jump audio
+                    if (m_rJumpAudio)
+                        m_rJumpAudio.PlayAudio();
                 }
                 // Handle extra glide
                 else if(m_bCanExtraGlide) {
@@ -338,9 +350,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                     m_bCanExtraGlide = false;       // Extra glide is no longer allowed
                 }
             }
-            //Play jump audio
-            if (m_rJumpAudio)
-                m_rJumpAudio.PlayAudio();
             // Stop sprinting
             ToggleSprint(false);
         }
