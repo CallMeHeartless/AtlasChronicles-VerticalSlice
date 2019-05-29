@@ -36,7 +36,6 @@ public class EndSwitchTimer : MonoBehaviour
     }
     public void death()
     {
-        //damagedoor
         Destroy(startPoint);
         Destroy(gameObject);
     }
