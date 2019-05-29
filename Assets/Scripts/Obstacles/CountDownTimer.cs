@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CountDownTimer : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class CountDownTimer : MonoBehaviour
                 else
                 {
                     m_fPauseDuration -= Time.deltaTime;
-                TextUI.GetComponent<Text>().text = m_fPauseDuration.ToString();
+                TextUI.GetComponent<TextMeshPro>().text = System.Math.Round(m_fPauseDuration,2).ToString();
             }
 
         }
@@ -44,13 +45,15 @@ public class CountDownTimer : MonoBehaviour
             case 1:
                 GetComponent<DamageController>().ApplyHealing(1);
                 m_fPauseDuration = m_fCurrentPause;
-                TextUI.GetComponent<Text>().text = m_fPauseDuration.ToString();
+                TextUI.GetComponent<TextMeshPro>().text = m_fPauseDuration.ToString();
                 break;
             case 2:
                 m_fPauseDuration = m_fCurrentPause;
-                TextUI.GetComponent<Text>().text = m_fPauseDuration.ToString();
                 TextUI.SetActive(true);
                 TImerOn = true;
+                TextUI.GetComponent<TextMeshPro>().text = m_fPauseDuration.ToString();
+               
+                
                 break;
             case 3:
                 m_fPauseDuration = m_fCurrentPause;
