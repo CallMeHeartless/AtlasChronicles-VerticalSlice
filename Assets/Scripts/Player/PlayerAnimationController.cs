@@ -12,14 +12,15 @@ public class PlayerAnimationController : MonoBehaviour
     private GameObject m_AttackCollider;
     [SerializeField]
     private GameObject m_HandCollider;
-    private PlayerController m_PlayerController;
+    private PlayerController m_rPlayerController;
     [SerializeField]
     private MeleeAttack m_rAttack;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        m_PlayerController = transform.root.GetComponent<PlayerController>();
+        m_rPlayerController = transform.root.GetComponent<PlayerController>();
         if (m_SwitchMarkerPrefab) {
             m_SwitchMarker = GameObject.Instantiate(m_SwitchMarkerPrefab);
             m_SwitchMarker.SetActive(false);
@@ -60,7 +61,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void PlayStep() {
-        m_PlayerController.HandleFootsteps();
+        m_rPlayerController.HandleFootsteps();
     }
 
     public void StartAttack() {
@@ -72,11 +73,11 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void AttackCooldown() {
-        StartCoroutine(m_PlayerController.AttackCooldown());
+        StartCoroutine(m_rPlayerController.AttackCooldown());
     }
 
     public void DisableTeleportScroll() {
-        m_PlayerController.ToggleTeleportScroll(false);
+        m_rPlayerController.ToggleTeleportScroll(false);
     }
 
     // Disable player control during teleportation
@@ -86,6 +87,14 @@ public class PlayerAnimationController : MonoBehaviour
 
     // External cue to perform the teleportation transition
     public void TeleportationTransition() {
-        m_PlayerController.TeleportationTransition();
+        m_rPlayerController.TeleportationTransition();
+    }
+
+    public void SlamAttackBegin() {
+        m_rPlayerController.SlamAttackBegin();
+    }
+
+    public void SlamAttackMiddle() {
+        m_rPlayerController.SlamAttackMiddle();
     }
 }
