@@ -69,7 +69,7 @@ public class PlatformBreaking : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
+        //Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(true);
@@ -97,7 +97,7 @@ public class PlatformBreaking : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            print("woops");
+            //print("woops");
             other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(false);
         }
     }
@@ -112,7 +112,7 @@ public class PlatformBreaking : MonoBehaviour
     }
     IEnumerator destoration()
     {
-        Debug.Log("help");
+        //Debug.Log("help");
         //cumbling effect
         yield return new WaitForSeconds(2);
         m_fTimer = m_fMaxTimer;
