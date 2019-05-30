@@ -5,7 +5,9 @@ using UnityEngine;
 namespace MessageSystem {
     public enum MessageType { // Add more message types here
         eDamageMessage,
-        eGroundSlam
+        eGroundSlam,
+        eReset,
+        eActivate
     }
 
     public interface IMessageReceiver {
