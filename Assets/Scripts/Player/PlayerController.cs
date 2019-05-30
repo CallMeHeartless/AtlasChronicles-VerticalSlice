@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private float m_fMovementSpeed;
     [SerializeField]
     private float m_fSprintMultiplier = 1.75f;
+    [SerializeField]
+    private float m_fWaterSlowMultiplier = 0.5f;
+    private bool m_bIsWading = false;
     private float m_fCurrentMovementSpeed;
     private float m_fTurnSpeed = 15.0f;
     [SerializeField]
@@ -68,7 +71,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [Tooltip("The fraction of that gravity affects the player while they are floating")] [SerializeField]
     private float m_fFloatGravityReduction = 0.8f;
     private bool m_bIsFloating = false;
-    private bool m_bIsWading = false;
     [SerializeField]
     private GameObject[] m_rGlideTrails;
 
@@ -898,6 +900,17 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rAnimator.speed = 1.0f;
             m_fCurrentMovementSpeed = m_fMovementSpeed;
             m_bIsSprinting = false;
+        }
+    }
+
+    public void ToggleWading(bool _bIsWading) {
+        if (_bIsWading) {
+            m_fCurrentMovementSpeed = m_fMovementSpeed * m_fWaterSlowMultiplier;
+            m_bIsWading = true;
+        }
+        else {
+            m_fCurrentMovementSpeed = m_fMovementSpeed;
+            m_bIsWading = false;
         }
     }
 
