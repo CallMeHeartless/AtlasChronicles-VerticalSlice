@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private float m_fMovementSpeed;
     [SerializeField]
     private float m_fSprintMultiplier = 1.75f;
+    [SerializeField]
+    private float m_fWaterSlowMultiplier = 0.5f;
+    private bool m_bIsWading = false;
     private float m_fCurrentMovementSpeed;
     private float m_fTurnSpeed = 15.0f;
     [SerializeField]
@@ -68,7 +71,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [Tooltip("The fraction of that gravity affects the player while they are floating")] [SerializeField]
     private float m_fFloatGravityReduction = 0.8f;
     private bool m_bIsFloating = false;
-    private bool m_bIsWading = false;
     [SerializeField]
     private GameObject[] m_rGlideTrails;
 
@@ -241,7 +243,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Limit vertical velocity
         m_Velocity.y = Mathf.Clamp(m_Velocity.y, -100.0f, 100.0f);
-        
         m_MovementDirection = (m_MovementInput + m_Velocity) * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
@@ -266,11 +267,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         if (m_MovementInput.sqrMagnitude == 0) {
             // Idle
-            m_rAnimator.ResetTrigger("Run");
+            m_rAnimator.ResetTrigger("Walk");
             m_rAnimator.SetTrigger("Idle");
         } else {
             m_rAnimator.ResetTrigger("Idle");
-            m_rAnimator.SetTrigger("Run");
+            m_rAnimator.SetTrigger("Walk");
         }
     }
 
@@ -441,7 +442,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_fGravityMulitplier = 1.0f;
             m_Velocity = Vector3.zero;
             m_fTurnSpeed = 15.0f;
-            m_fCurrentMovementSpeed = m_fMovementSpeed;
+            //m_fCurrentMovementSpeed = m_fMovementSpeed;
         }
         else {
             if (!m_bIsOnMovingPlatform) {
@@ -531,7 +532,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             if (!m_rHeldObject && m_rCharacterController.isGrounded) {
                 // Place on ground
                 m_rAnimator.ResetTrigger("Idle");
-                m_rAnimator.ResetTrigger("Run");
+                m_rAnimator.ResetTrigger("Walk");
                 m_rAnimator.SetTrigger("Pickup");
                 PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
             } else {
@@ -724,7 +725,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rCharacterController.Move(Vector3.up * 3.0f * Time.deltaTime);
         m_rAnimator.SetTrigger("Jump");
         m_rAnimator.ResetTrigger("Idle");
-        m_rAnimator.ResetTrigger("Run");
+        m_rAnimator.ResetTrigger("Walk");
         print("SetPlayerVerticalVelocity");
     }
 
@@ -890,14 +891,27 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Toggles whether the player should be sprinting
     private void ToggleSprint(bool _bSprinting) {
         if (_bSprinting) {
-            m_rAnimator.speed = 2.0f;
+            //m_rAnimator.speed = 2.0f;
+            m_rAnimator.SetBool("Running", true);
             m_fCurrentMovementSpeed = m_fMovementSpeed * m_fSprintMultiplier;
             m_bIsSprinting = true;
         }
         else {
-            m_rAnimator.speed = 1.0f;
+            //m_rAnimator.speed = 1.0f;
+            m_rAnimator.SetBool("Running", false);
             m_fCurrentMovementSpeed = m_fMovementSpeed;
             m_bIsSprinting = false;
+        }
+    }
+
+    public void ToggleWading(bool _bIsWading) {
+        if (_bIsWading) {
+            m_fCurrentMovementSpeed = m_fMovementSpeed * m_fWaterSlowMultiplier;
+            m_bIsWading = true;
+        }
+        else {
+            m_fCurrentMovementSpeed = m_fMovementSpeed;
+            m_bIsWading = false;
         }
     }
 
