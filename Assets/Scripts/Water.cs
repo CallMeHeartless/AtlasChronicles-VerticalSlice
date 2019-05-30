@@ -11,8 +11,9 @@ public class Water : MonoBehaviour
     private float m_fPauseDuration = 0;
     public float m_fCurrentPause = 2;
     public Vector3 m_vec3ResetWaterLevel;
-    public float MaxdDropLevel = 1.7f;
-    
+    public float m_fMaxdDropLevel = 1.7f;
+    public bool m_bWaterTouchHurts = true;
+    public bool m_bFirstTouch = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,7 @@ public class Water : MonoBehaviour
 
 
                 Box.center = m_vec3ResetWaterLevel;
-
+                m_bFirstTouch = true;
                 m_bQuicksandOn = false;
             }
             else
@@ -42,26 +43,48 @@ public class Water : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        
-  
+
+
         //Debug.Log("hit");
 
-       // Debug.Log(other.tag);
-       // if (other.CompareTag("Player"))
-       // {
-           // Debug.Log("dummy");
-            Box.center -= new Vector3(0, m_fDroppingLevel, 0);
+        // Debug.Log(other.tag);
+        // if (other.CompareTag("Player"))
+        // {
+        // Debug.Log("dummy");
+        Box.center -= new Vector3(0, m_fDroppingLevel, 0);
         m_bQuicksandOn = true;
         m_fPauseDuration = m_fCurrentPause;
-        if (Box.center.y <= MaxdDropLevel)
+        if (Box.center.y <= m_fMaxdDropLevel)
         {
-           // Debug.Log("Death");
+            // Debug.Log("Death");
             DamageMessage message = new DamageMessage();
             message.damage = 4;
             message.source = gameObject;
             other.GetComponent<DamageController>().ApplyDamage(message);
         }
-       // }
+        // }
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        other.GetComponent<PlayerController>().ToggleWading(true);
+        if (m_bWaterTouchHurts)
+        {
+            if (m_bFirstTouch)
+            {
+                Debug.Log("huret");
+                DamageMessage message = new DamageMessage();
+                message.damage = 1;
+                message.source = gameObject;
+                other.GetComponent<DamageController>().ApplyDamage(message);
+                m_bFirstTouch = false;
+            }
+        }
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        other.GetComponent<PlayerController>().ToggleWading(false);
+    }
 }
+   
