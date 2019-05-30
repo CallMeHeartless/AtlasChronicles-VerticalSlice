@@ -97,4 +97,8 @@ public class PlayerAnimationController : MonoBehaviour
     public void SlamAttackMiddle() {
         m_rPlayerController.SlamAttackMiddle();
     }
+
+    public void SlamAttackReset() {
+        m_rPlayerController.SlamAttackReset();
+    }
 }

@@ -21,8 +21,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private Animator m_rAnimator;
     private PlayerAnimationController m_rPAnimationController;
 
-    public Vector3 movement;
-
     #region INTERNAL_VARIABLES
     private static PlayerController m_rInstance = null;
     public static PlayerController instance { get { return m_rInstance; } }
@@ -80,6 +78,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private float m_fAttackCooldown = 1.0f;
     private bool m_bCanAttack = true;
     private bool m_bSlamAttack = false;
+    private bool m_bPlummeting = false;
     [SerializeField]
     private float m_fSlamAttackSpeed = 20.0f;
     [SerializeField]
@@ -224,9 +223,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
         // Handle the player doing a slam attack on the ground
         if(m_rCharacterController.isGrounded && m_bSlamAttack) {
-            m_bSlamAttack = false;
+            //m_bSlamAttack = false;
             // Impact animation?
-            SlamAttackReset();
+            m_rAnimator.SetBool("Grounded", true);
+            //SlamAttackReset();
         }
     }
 
@@ -246,13 +246,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
         // Move the player
-        if (m_bSlamAttack) {
+        if (m_bSlamAttack && m_bPlummeting) {
             m_rCharacterController.Move(Vector3.down * m_fSlamAttackSpeed * Time.deltaTime);
         }
-        else if (m_MovementDirection!= Vector3.zero) {
+        else if (m_MovementDirection!= Vector3.zero && !(m_bSlamAttack || m_bPlummeting)) {
             m_rCharacterController.Move(m_MovementDirection);
-            transform.position += movement;
-            movement = new Vector3(0, 0, 0);
         }
         
     }
@@ -465,7 +463,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             // The player can start floating after a double jump
             if (m_bCanGlide && m_fFloatTimer == 0.0f) { // Change comparison to < m_fFloatTimer for multiple floats per jump
                 ToggleFloatState(true);
-                print("glide");
             }
             else if (Input.GetButtonUp(m_strJumpButton)) {
                 m_bCanGlide = false;
@@ -563,7 +560,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rAnimator.SetTrigger("Attack");
         }else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
             // Slam attack when in the air
-            //m_rAnimator.SetTrigger("SlamAttack");
+            m_rAnimator.SetTrigger("GroundSlam");
         }
 
     }
@@ -1002,12 +999,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (m_rSlamAttack) {
             m_rSlamAttack.SetActive(true);
             m_rSlamAttack.GetComponent<MeleeAttack>().m_bIsActive = true;
+            m_bPlummeting = true;
         }
     }
 
     // Slam attack end - impact and reset
     public void SlamAttackReset() {
-        if (!m_bSlamAttack) return;
         if (m_rSlamAttack) {
             m_rSlamAttack.SetActive(false);
         }
@@ -1015,6 +1012,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_bCanAttack = true;
         // Clear slam attack flag
         m_bSlamAttack = false;
+        m_bPlummeting = false;
+        // Player is grounded
+        m_rAnimator.SetBool("Grounded", true);
+        m_rAnimator.ResetTrigger("GroundSlam");
 
     }
 

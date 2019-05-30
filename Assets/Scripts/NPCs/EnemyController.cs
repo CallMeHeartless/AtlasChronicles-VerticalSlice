@@ -44,6 +44,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float m_fKnockoutTime = 10.0f;
     private bool m_bIsKnockedOut = false;
+    private bool m_bIsTagged = false;
 
     // Start is called before the first frame update
     void Start(){
@@ -179,6 +180,15 @@ public class EnemyController : MonoBehaviour
         m_rAnimator.ResetTrigger("Death");
         m_bIsKnockedOut = false;
         m_rStateMachine.SetBool("bIsKnockedOut", false);
+    }
+
+    // Apply a tag to the enemy, disorienting them
+    public void SetTag(bool _bState) {
+        m_rStateMachine.SetBool("bIsTagged", _bState);
+        m_bIsTagged = _bState;
+        if (_bState) {
+            ToggleMapFragment(false);
+        }
     }
 
 
