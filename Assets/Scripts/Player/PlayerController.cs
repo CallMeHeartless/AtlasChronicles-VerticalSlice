@@ -243,7 +243,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Limit vertical velocity
         m_Velocity.y = Mathf.Clamp(m_Velocity.y, -100.0f, 100.0f);
-        
         m_MovementDirection = (m_MovementInput + m_Velocity) * Time.deltaTime;
         m_rAnimator.SetFloat("JumpSpeed", m_Velocity.y);
 
@@ -443,7 +442,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_fGravityMulitplier = 1.0f;
             m_Velocity = Vector3.zero;
             m_fTurnSpeed = 15.0f;
-            m_fCurrentMovementSpeed = m_fMovementSpeed;
+            //m_fCurrentMovementSpeed = m_fMovementSpeed;
         }
         else {
             if (!m_bIsOnMovingPlatform) {
