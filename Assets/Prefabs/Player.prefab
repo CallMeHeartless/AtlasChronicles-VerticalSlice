@@ -537,7 +537,6 @@ MonoBehaviour:
   m_rHitParticles: {fileID: 0}
   m_strTargetTag:
   - Enemy
-  - Box
   m_bIsActive: 0
   OnHit:
     m_PersistentCalls:
@@ -713,7 +712,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rCameraReference: {fileID: 0}
   m_rProjectileArc: {fileID: 4727328372385201593}
-  movement: {x: 0, y: 0, z: 0}
   m_fMovementSpeed: 8
   m_fSprintMultiplier: 1.75
   m_fJumpPower: 7
@@ -956,7 +954,7 @@ PrefabInstance:
     - target: {fileID: 3007775624667855692, guid: 7cf2bb99d50c3284ebec3b58f0082ea0,
         type: 3}
       propertyPath: m_strTargetTag.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3007775624667855692, guid: 7cf2bb99d50c3284ebec3b58f0082ea0,
         type: 3}
@@ -1002,6 +1000,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_iDamage
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3007775624667855692, guid: 7cf2bb99d50c3284ebec3b58f0082ea0,
+        type: 3}
+      propertyPath: m_strTargetTag.Array.data[2]
+      value: Box
       objectReference: {fileID: 0}
     - target: {fileID: 7319334247165886179, guid: 7cf2bb99d50c3284ebec3b58f0082ea0,
         type: 3}
@@ -2102,17 +2105,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6850383250669970808}
     m_Modifications:
-    - target: {fileID: 100178, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 100000, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_Name
+      value: anim_Player_Idle
       objectReference: {fileID: 0}
     - target: {fileID: 100176, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_Name
-      value: anim_Player_Idle
+    - target: {fileID: 100178, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_LocalPosition.x

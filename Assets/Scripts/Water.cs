@@ -44,18 +44,18 @@ public class Water : MonoBehaviour
     {
         
   
-        Debug.Log("hit");
+        //Debug.Log("hit");
 
-        Debug.Log(other.tag);
+       // Debug.Log(other.tag);
        // if (other.CompareTag("Player"))
        // {
-            Debug.Log("dummy");
+           // Debug.Log("dummy");
             Box.center -= new Vector3(0, m_fDroppingLevel, 0);
         m_bQuicksandOn = true;
         m_fPauseDuration = m_fCurrentPause;
         if (Box.center.y <= MaxdDropLevel)
         {
-            Debug.Log("Death");
+           // Debug.Log("Death");
             DamageMessage message = new DamageMessage();
             message.damage = 4;
             message.source = gameObject;
