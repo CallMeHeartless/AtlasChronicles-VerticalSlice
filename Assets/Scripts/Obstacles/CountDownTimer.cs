@@ -27,6 +27,13 @@ public class CountDownTimer : MonoBehaviour
 
                 GetComponent<DamageController>().ApplyHealing(1);
                 TextUI.SetActive(false);
+                if (GetComponent<Switchs>() != null)
+                {
+                    gameObject.GetComponent<Switchs>().SwitchPressed();
+
+                    Debug.Log("happens");
+                }
+                TImerOn = false;
             }
                 else
                 {
@@ -39,29 +46,15 @@ public class CountDownTimer : MonoBehaviour
     public void Damage()
     {
         Debug.Log("hit");
-        switch (GetComponent<DamageController>().iCurrentHealth)
-        {
-            
-            case 1:
-                GetComponent<DamageController>().ApplyHealing(1);
-                m_fPauseDuration = m_fCurrentPause;
-                TextUI.GetComponent<TextMeshProUGUI>().text = m_fPauseDuration.ToString();
-                break;
-            case 2:
-                m_fPauseDuration = m_fCurrentPause;
-                TextUI.SetActive(true);
-                TImerOn = true;
-                TextUI.GetComponent<TextMeshProUGUI>().text = m_fPauseDuration.ToString();
-               
-                
-                break;
-            case 3:
-                m_fPauseDuration = m_fCurrentPause;
-                TImerOn = true;
-                break;
-            default:
-                break;
-        }
+        
+        m_fPauseDuration = m_fCurrentPause;
+        TextUI.SetActive(true);
+      
+        TImerOn = true;
+        TextUI.GetComponent<TextMeshProUGUI>().text = m_fPauseDuration.ToString();
+        GetComponent<DamageController>().ResetDamage();
+        
+
     }
     public void Death()
     {

@@ -76,11 +76,12 @@ public class ColorPlat : MonoBehaviour
             }
 
         }
-        GetComponent<DamageController>().ResetDamage();
+        
     }
 
     public void changeColor()
     {
+        Debug.Log("Colorchange");
         if (m_Colors.yellow== m_colCurrentColor)
         {
             m_colCurrentColor = 0;
@@ -92,5 +93,6 @@ public class ColorPlat : MonoBehaviour
         }
         GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
         CorrectColor();
+        GetComponent<DamageController>().ResetDamage();
     }
 }

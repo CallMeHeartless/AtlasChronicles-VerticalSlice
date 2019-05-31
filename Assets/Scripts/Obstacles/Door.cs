@@ -8,29 +8,42 @@ public class Door : MonoBehaviour
     public GameObject m_gDoorOpen;
     public GameObject m_gDoorClosed;
     public float m_fSpeed = 0.01f;
-    bool Unlocked = true;
+    bool Unlocked = false;
+    private bool m_bMoving = false;
     // Start is called before the first frame update
     void Start()
     {
         LockedDoor();
+        m_bMoving = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Unlocked == true)
+        if (m_bMoving)
         {
-            transform.position = Vector3.MoveTowards(gameObject.transform.position, m_gDoorOpen.transform.position, m_fSpeed);
+            
+            if (Unlocked == true)
+            {
+                if (Vector3.Distance(transform.position, m_gDoorOpen.transform.position) < .1f)
+                {
+                    m_bMoving = false;
+                }
+                transform.position = Vector3.MoveTowards(gameObject.transform.position, m_gDoorOpen.transform.position, m_fSpeed);
+               
 
-
-            //doorOpen
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(gameObject.transform.position, m_gDoorClosed.transform.position, m_fSpeed);
-
-            // doorClosed
+                //doorOpen
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, m_gDoorClosed.transform.position) < .1f)
+                {
+                    m_bMoving = false;
+                }
+                transform.position = Vector3.MoveTowards(gameObject.transform.position, m_gDoorClosed.transform.position, m_fSpeed * 3);
+               
+                // doorClosed
+            }
         }
     }
 
@@ -51,20 +64,29 @@ public class Door : MonoBehaviour
                 break;
             default:
                 break;
-
-                
         }
-        LockedDoor();
-    }
-    void LockedDoor(){
 
-Unlocked = true;
+
+        bool newLock = LockedDoor();
+        Debug.Log("newLock: "+newLock);
+        Debug.Log("Unlocked: "+Unlocked);
+        if (newLock != Unlocked)
+        {
+            Unlocked = newLock;
+            m_bMoving = true;
+        }
+    }
+    bool LockedDoor(){
+
+        //Unlocked = true;
+       
         for (int i = 0; i< m_bDoorLocks.Length; i++)
         {
             if (m_bDoorLocks[i] == false)
             {
-                Unlocked = false;
+                return false;
             }
         }
-}
+        return true;
+    }
 }
