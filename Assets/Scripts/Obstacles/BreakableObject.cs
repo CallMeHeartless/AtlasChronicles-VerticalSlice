@@ -10,6 +10,10 @@ public class BreakableObject : MonoBehaviour
     [SerializeField] GameObject[] m_rPrizes;
     [SerializeField] float m_fRadius = 2.0f;
     float m_fCollectableHeight = 0.0f;
+
+    Transform[] m_rPrizeDestinations;
+
+
     private void Start()
     {
         if(m_rBrokenObject)
@@ -54,10 +58,22 @@ public class BreakableObject : MonoBehaviour
                 angle = i * Mathf.PI * 2.0f / m_rPrizes.Length;
                 newPos = new Vector3(Mathf.Cos(angle) * m_fRadius, m_fCollectableHeight, Mathf.Sin(angle) * m_fRadius);
             }
-           
-            GameObject go = Instantiate(m_rPrizes[i], transform.localPosition+newPos, Quaternion.identity);
+            GameObject newPrize = Instantiate(m_rPrizes[i], transform.localPosition + newPos, Quaternion.identity);
 
+            //GameObject newPrize = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity);
+            //newPrize.GetComponent<Collider>().enabled = false;
+            //newPrize.transform.position += newPos;
+            //m_rPrizeDestinations[i] = newPrize.transform;
             //Instantiate(m_rPrizes[i], transform.position, transform.rotation);
+        }
+    }
+
+    IEnumerator Spread()
+    {
+        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < m_rPrizes.Length; ++i)
+        {
+            //https://answers.unity.com/questions/1376271/move-object-in-an-arc.html
         }
     }
 
