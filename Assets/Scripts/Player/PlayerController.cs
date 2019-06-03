@@ -543,13 +543,21 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         else if (Input.GetButtonDown(m_strTeleportButton) && m_bTeleportMarkerDown) {
             m_bWasSwitchLastTeleportCommand = false;
             //TeleportToTeleportMarker();
-            m_rAnimator.SetTrigger("Teleport");
+            if (!m_bTeleportThresholdWarning)
+            {
+                m_rAnimator.SetTrigger("Teleport");
+            }
+
         }
         // Throw switch tag / switch teleport
         else if (Input.GetButtonDown(m_strSwitchButton)) {
             if (m_rSwitchTarget) {
-                m_bWasSwitchLastTeleportCommand = true;
-                m_rAnimator.SetTrigger("Teleport");
+                if (!m_bSwitchThresholdWarning)
+                {
+                    m_bWasSwitchLastTeleportCommand = true;
+                    m_rAnimator.SetTrigger("Teleport");
+                }
+
                 //SwitchWithTarget();
             } else if (!m_rHeldObject) {
                 m_rAnimator.SetTrigger("ThrowTag");
