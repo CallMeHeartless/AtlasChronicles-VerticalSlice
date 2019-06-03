@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField]
     private Camera m_rCameraReference;
     [SerializeField]
-    private GameObject m_rProjectileArc;
+    private GameObject m_rSwitchTagCrosshair;
     private PlayerAudioController m_rPlayerAudioController;
     private DisplayStat m_rUI;
 
@@ -164,7 +164,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
-        //m_rPlayerAudioController = GetComponentInChildren<PlayerAudioController>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -525,6 +524,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Don't process abilities if slamming
         if (m_bSlamAttack) return;
+        // Aim switch tag
+        AimSwitchTag();
 
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
@@ -550,7 +551,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         }
         // Throw switch tag / switch teleport
-        else if (Input.GetButtonDown(m_strSwitchButton)) {
+        else if (Input.GetButtonUp(m_strSwitchButton)) {
             if (m_rSwitchTarget) {
                 if (!m_bSwitchThresholdWarning)
                 {
@@ -651,7 +652,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         Rigidbody heldObjectRb = m_rHeldObject.GetComponent<Rigidbody>();
         heldObjectRb.isKinematic = false;
         // Get velocity
-        LineRenderer lineRenderer = m_rProjectileArc.GetComponent<LineRenderer>();
+        LineRenderer lineRenderer = m_rSwitchTagCrosshair.GetComponent<LineRenderer>();
         Vector3 vecVelocity = lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0);
         heldObjectRb.velocity = vecVelocity.normalized * m_fThrowSpeed;// Mathf.Sqrt(m_fThrowSpeed * m_fThrowSpeed + m_fThrowSpeed * m_fThrowSpeed);//m_fThrowSpeed;
 
@@ -659,27 +660,29 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //heldObjectRb.AddForce(vecVelocity.normalized * m_fThrowSpeed, ForceMode.Acceleration);
         m_rHeldObject = null;
         m_bIsAiming = false;
-        m_rProjectileArc.SetActive(false); // Consider removing depending on how input will be handled
+        m_rSwitchTagCrosshair.SetActive(false); // Consider removing depending on how input will be handled
         // Animation
         m_rAnimator.SetTrigger("Throw");
     }
 
-    // Show the projectile arc while the player is holding down the aim button || CHANGE CAMERA 
-    private void AimHeldObject() {
-        if (!m_rProjectileArc) {
+    // Align the player with a ray towards where the switch tag will go
+    private void AimSwitchTag() {
+        if (m_rSwitchTarget) {
             return;
         }
 
-        if (Input.GetAxis(m_strAimButton) < 0.0f || Input.GetKey(KeyCode.C)) {
-            ToggleAiming(true);
+        if (Input.GetButton(m_strSwitchButton)) {
+            //ToggleAiming(true);
+            m_rSwitchTagCrosshair.SetActive(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
             transform.rotation = Quaternion.Euler(0.0f, vecCameraRotation.y, 0.0f);
-            m_rProjectileArc.GetComponent<ProjectileArc>().SetRotation(vecCameraRotation.y);
+
+        }else if (Input.GetButtonUp(m_strSwitchButton)){
+            // Disable 
+            m_rSwitchTagCrosshair.SetActive(false);
         }
-        else if (m_rProjectileArc.activeSelf) {
-            ToggleAiming(false);
-        }
+        
     }
 
     // Changes parameters for when the player is / is not aiming
@@ -690,11 +693,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_bIsAiming = _bState;
         if (m_bIsAiming) {
             m_rAnimator.SetTrigger("Aim");
-            m_rProjectileArc.SetActive(true);
+            //m_rProjectileArc.SetActive(true);
         } else {
             m_rAnimator.ResetTrigger("Aim");
             m_rAnimator.SetTrigger("Cancel");
-            m_rProjectileArc.SetActive(false);
+           // m_rProjectileArc.SetActive(false);
         }
     }
 
