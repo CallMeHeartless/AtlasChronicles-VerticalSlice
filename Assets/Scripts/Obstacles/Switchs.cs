@@ -33,14 +33,21 @@ public class Switchs : MonoBehaviour
         //}
     }
     // Update is called once per frame
+    public void SwitchOn()
+    {
+        SwitchIsOn = true;
+        SwitchPressed();
+    }
     public void SwitchPressed()
     {
+        //Debug.Log(SwitchIsOn);
         if (SwitchIsOn == false)
         {
             switch (m_MatType)
             {
                 case m_Blockage.door:
-                    m_gEffectingObject.GetComponent<Door>().SwitchChanged(PassNumber, true);
+                    m_gEffectingObject.GetComponent<Door>().SwitchChanged(PassNumber, false);
+                    SwitchIsOn = true;
                     //passName  TRUE
                     break;
                 case m_Blockage.lift:
@@ -59,7 +66,8 @@ public class Switchs : MonoBehaviour
             switch (m_MatType)
             {
                 case m_Blockage.door:
-                    m_gEffectingObject.GetComponent<Door>().SwitchChanged(PassNumber, false);
+                    m_gEffectingObject.GetComponent<Door>().SwitchChanged(PassNumber, true);
+                    SwitchIsOn = false;
                     //passName FALSE
                     break;
                 case m_Blockage.lift:
