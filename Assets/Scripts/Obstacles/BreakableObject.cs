@@ -9,8 +9,8 @@ public class BreakableObject : MonoBehaviour
     [SerializeField] GameObject[] m_rPrizes;
 
     [Header("Arc settings")]
-    [SerializeField] AnimationCurve yCurve;
-    [SerializeField] float m_speedOfArc = 2.0f;
+    [SerializeField] AnimationCurve m_yCurve;
+    [SerializeField] float m_fSpeedOfArc = 2.0f;
     [SerializeField] float m_fRadius = 2.0f;
 
     Vector3[] m_rPrizeDestinations;
@@ -90,10 +90,10 @@ public class BreakableObject : MonoBehaviour
         Vector3 newVal = Vector3.zero;
 
         //If the curve lerp hasnt ended
-        while (timeElapsed < yCurve[yCurve.length-1].time)
+        while (timeElapsed < m_yCurve[m_yCurve.length-1].time)
         {
             //Increase time based on the speed specified
-            timeElapsed += Time.deltaTime * m_speedOfArc;
+            timeElapsed += Time.deltaTime * m_fSpeedOfArc;
 
             //Lerp each prize towards their destinations (calculated previously)
             //Move the y value based on the curve defined (in an arc)
@@ -102,7 +102,7 @@ public class BreakableObject : MonoBehaviour
                 m_rPrizes[i].transform.position = Vector3.Lerp(m_rPrizes[i].transform.position, m_rPrizeDestinations[i], timeElapsed);
 
                 newVal = m_rPrizes[i].transform.position;
-                newVal.y += yCurve.Evaluate(timeElapsed); //Set Y as the current position of on the curve
+                newVal.y += m_yCurve.Evaluate(timeElapsed); //Set Y as the current position of on the curve
 
                 m_rPrizes[i].transform.position = newVal;
             }
@@ -115,7 +115,6 @@ public class BreakableObject : MonoBehaviour
         {
             m_rPrizes[i].GetComponent<Collider>().enabled = true;
         }
-
         yield return null;
     }
     
