@@ -9,9 +9,9 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_MapFragment
   m_Shader: {fileID: 4800000, guid: 6bfebd1cce475694b89dc71cda8405de, type: 3}
-  m_ShaderKeywords: _NORMALMAP _USEFLATEMISSIVE_ON _USENORMAL_ON
+  m_ShaderKeywords: _NORMALMAP _USEEMISSIVE_ON _USENORMAL_ON
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emissive:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 770ce4d8975e6db42a898bd72a566a0a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -150,7 +150,7 @@ Material:
     - _DiffuseSaturation: 1.46
     - _DstBlend: 0
     - _EmissiveHue: 0
-    - _EmissiveIntensity: 1
+    - _EmissiveIntensity: 0.35
     - _EmissiveLightness: 1
     - _EmissiveSaturation: 1
     - _FlatMetallic: 0
@@ -178,8 +178,8 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _UseDetailNormal: 0
-    - _UseEmissive: 0
-    - _UseFlatEmissive: 1
+    - _UseEmissive: 1
+    - _UseFlatEmissive: 0
     - _UseFlatMetallic: 0
     - _UseFlatSmoothness: 0
     - _UseMetallic: 0

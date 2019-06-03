@@ -575,12 +575,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Update position
         transform.position = _vecTargetLocation;
 
-        // If marker was placed on thrown object, remove it
-        //if (m_rTeleportMarker.transform.parent) {
-        //    m_rTeleportMarker.transform.parent.position = vecPlayerPosition;
-        //    m_rTeleportMarker.transform.SetParent(null);
-        //}
-
         GameState.SetPlayerTeleportingFlag(false);
     }
 
