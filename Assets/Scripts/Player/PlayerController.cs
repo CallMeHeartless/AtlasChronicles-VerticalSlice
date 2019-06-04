@@ -199,17 +199,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
 
         if (m_rCharacterController.isGrounded)
-        {
-            m_bCoyoteAllowed = true;
-            m_bInitialJumped = false;
-            m_bCanDoubleJump = false;
+            ResetJump();
 
-        }
-        else
-        {
-            //m_bCoyoteAllowed = false;
-
-        }
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
@@ -374,6 +365,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_bCanGlide = false;
             ToggleFloatState(false);
         }
+    }
+
+    public void ResetJump()
+    {
+        m_bCoyoteAllowed = true;
+        m_bInitialJumped = false;
+        m_bCanDoubleJump = false;
     }
 
     //Detect if player is able to slide down a steep slope
@@ -854,7 +852,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_bSwitchThresholdWarning = false;
                 m_rSwitchTarget = null;
                 // Play sound / VFX
-                m_rTagAudio.PlayAudio(1);
+                m_rTagAudio.PlayAudio(2);
 
                 //m_rPlayerAudioController.TeleportThresholdBreak();
                 m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
@@ -862,7 +860,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
                 Debug.Log("Switch tag beyond use distance");
                 m_bSwitchThresholdWarning = true;
-                m_rTagAudio.PlayAudio(2);
+                m_rTagAudio.PlayAudio(1);
+
 
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdWarning();
