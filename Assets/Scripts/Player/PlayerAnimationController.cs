@@ -15,7 +15,6 @@ public class PlayerAnimationController : MonoBehaviour
     private PlayerController m_rPlayerController;
     [SerializeField]
     private MeleeAttack m_rAttack;
-    
 
     // Start is called before the first frame update
     void Start()
