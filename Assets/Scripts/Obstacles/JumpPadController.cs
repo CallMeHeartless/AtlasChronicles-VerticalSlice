@@ -15,18 +15,16 @@ public class JumpPadController : MonoBehaviour {
     private void OnTriggerStay(Collider other) {
 
         if (other.CompareTag("Player")) {
-            other.GetComponent<PlayerController>().ClearExternalForces();
-            other.GetComponent<PlayerController>().ResetGravityMultiplier();
-            other.GetComponent<PlayerController>().AddExternalForce(Vector3.up * m_fJumpForce);
+            PlayerController player = other.GetComponent<PlayerController>();
+
+            //Reset jump and glide when player lands on jump pad
+            player.ResetJump();
+            player.ResetFloatTimer();
+
+            player.ClearExternalForces();
+            player.ResetGravityMultiplier();
+            player.AddExternalForce(Vector3.up * m_fJumpForce);
             m_rAudioPlayer.PlayAudio();
         }
     }
-
-
-    //private void OnCollisionEnter(Collision collision) {
-    //    if (collision.gameObject.CompareTag("Player")) {
-    //        collision.gameObject.GetComponent<PlayerController>().SetPlayerVerticalVelocity(m_fJumpForce);
-    //        print("jump");
-    //    }
-    //}
 }

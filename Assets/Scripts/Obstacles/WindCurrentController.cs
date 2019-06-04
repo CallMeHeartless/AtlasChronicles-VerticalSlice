@@ -11,6 +11,7 @@ public class WindCurrentController : MonoBehaviour
         if (other.CompareTag("Player")) {
             PlayerController player = other.GetComponent<PlayerController>();
             if (player.IsFloating()) {
+                player.ResetJump();
                 player.ResetFloatTimer();
                 player.AddExternalForce(transform.up * m_fWindStrength);
             }
