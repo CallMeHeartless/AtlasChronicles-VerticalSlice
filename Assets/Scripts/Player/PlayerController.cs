@@ -146,6 +146,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private AudioPlayer m_rJumpAudio;
     [SerializeField] private AudioPlayer m_rWalkAudio;
     [SerializeField] private AudioPlayer m_rGliderAudio;
+    [SerializeField] private AudioPlayer m_rSlamAttackAudio;
+    [SerializeField] private AudioPlayer m_rTagAudio;
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
@@ -584,7 +586,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
         //m_Animator.SetTrigger("Tag");
-
+        m_rTagAudio.PlayAudio(0);
         m_rTeleportMarker.transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
         // Enable teleport marker
         if (!m_rTeleportMarker.activeSelf) {
@@ -841,12 +843,16 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_bSwitchThresholdWarning = false;
                 m_rSwitchTarget = null;
                 // Play sound / VFX
+                m_rTagAudio.PlayAudio(1);
+
                 //m_rPlayerAudioController.TeleportThresholdBreak();
                 m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
             }
             else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
                 Debug.Log("Switch tag beyond use distance");
                 m_bSwitchThresholdWarning = true;
+                m_rTagAudio.PlayAudio(2);
+
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdWarning();
             }
@@ -1008,6 +1014,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rSlamAttack.SetActive(true);
             m_rSlamAttack.GetComponent<MeleeAttack>().m_bIsActive = true;
             m_bPlummeting = true;
+            m_rSlamAttackAudio.PlayAudio();
         }
     }
 
