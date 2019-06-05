@@ -60,7 +60,8 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void PlayStep() {
-        m_rPlayerController.HandleFootsteps();
+        if(m_rPlayerController)
+            m_rPlayerController.HandleFootsteps();
     }
 
     public void StartAttack() {

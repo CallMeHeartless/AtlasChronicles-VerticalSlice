@@ -22,13 +22,14 @@ public class TimelineTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (!other.CompareTag("Player"))
             return;
 
         if (triggerType == TriggerType.Once && m_AlreadyTriggered)
             return;
 
         OnDirectorPlay.Invoke();
+        GameState.SetCinematicFlag(true);
         director.Play();
         m_AlreadyTriggered = true;
         Invoke("FinishInvoke", (float)director.duration);
@@ -37,5 +38,6 @@ public class TimelineTrigger : MonoBehaviour
     void FinishInvoke()
     {
         OnDirectorFinish.Invoke();
+        GameState.SetCinematicFlag(false);
     }
 }
