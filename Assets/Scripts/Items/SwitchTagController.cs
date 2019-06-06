@@ -62,6 +62,8 @@ public class SwitchTagController : MonoBehaviour
         // Handle objects with navmesh
         NavMeshAgent agent = m_AttachedObject.GetComponent<NavMeshAgent>();
         if (agent) {
+            // Enemy warp animation
+            //m_AttachedObject.GetComponentInChildren<>
             agent.Warp(_vecSwitchPosition);
         }
         else {

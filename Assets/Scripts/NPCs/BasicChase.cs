@@ -8,6 +8,8 @@ public class BasicChase : AIState
     private PlayerController m_rPlayerReference;
     private Vector3 m_PlayerPosition;
     private float m_fAttackRange = 1.75f;
+    private float m_fAttackCooldown = 1.0f;
+    private float m_fAttackTimer = 0.0f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
@@ -22,7 +24,13 @@ public class BasicChase : AIState
         if (PlayerInAttackRange()) {
             m_rAgent.isStopped = true;
             // Attack
-            m_rAI.Attack();
+            if(m_fAttackTimer >= m_fAttackCooldown) {
+                m_rAI.Attack();
+                m_fAttackTimer = 0.0f;
+            } else {
+                m_fAttackTimer += Time.deltaTime;
+            }
+
         }
         else {
             m_rAgent.isStopped = false;
