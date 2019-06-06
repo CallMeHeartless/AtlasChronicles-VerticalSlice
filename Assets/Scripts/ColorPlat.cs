@@ -8,7 +8,7 @@ public class ColorPlat : MonoBehaviour
     public GameObject m_gEffectingObject;
     public enum m_Colors
     {
-        blue,green,pink,red,yellow
+        blue,green,red
     }
     public enum m_Blockage
     {
@@ -82,7 +82,7 @@ public class ColorPlat : MonoBehaviour
     public void changeColor()
     {
         Debug.Log("Colorchange");
-        if (m_Colors.yellow== m_colCurrentColor)
+        if (m_Colors.red== m_colCurrentColor)
         {
             m_colCurrentColor = 0;
         }
