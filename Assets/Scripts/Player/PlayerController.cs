@@ -338,7 +338,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 // Handle extra glide
                 else if(m_bCanExtraGlide) {
                     m_bCanGlide = true;             // Start gliding
-                    m_bCanExtraGlide = false;       // Extra glide is no longer allowed
+                    //m_bCanExtraGlide = false;       // Extra glide is no longer allowed
                 }
             }
             // Stop sprinting
@@ -350,20 +350,20 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             // If player is in the air
             if (!m_rCharacterController.isGrounded) {
                 // If cannot currently glide
-                if (!m_bCanGlide) {
+                //if (!m_bCanGlide) {
                     //Handle button held glide through a timer
                     m_fGlideTimer += Time.deltaTime;
                     if (m_fGlideTimer > m_fGlideTime) {
                         m_bCanGlide = true;          // Start gliding
-                        m_bCanExtraGlide = false;    // Do not allow an extra glide 
+                        //m_bCanExtraGlide = false;    // Do not allow an extra glide 
                     }
-                }
+              //  }
             }
         }
         else {
             //If the player lets go of the jump button, cancel glide
-            m_bCanGlide = false;
-            ToggleFloatState(false);
+            //m_bCanGlide = false;
+            //ToggleFloatState(false);
         }
     }
 
