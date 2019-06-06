@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Water : MonoBehaviour
 {
     BoxCollider Box;
@@ -14,10 +15,14 @@ public class Water : MonoBehaviour
     public float m_fMaxdDropLevel = 1.7f;
     public bool m_bWaterTouchHurts = true;
     public bool m_bFirstTouch = true;
+    private float m_fInitialColliderHeight = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
         Box = gameObject.GetComponent<BoxCollider>();
+        m_fInitialColliderHeight = Box.center.y;
+        m_vec3ResetWaterLevel.y += m_fInitialColliderHeight;
     }
 
     // Update is called once per frame
@@ -25,12 +30,8 @@ public class Water : MonoBehaviour
     {
         if (m_bQuicksandOn)
         {
-
-
             if (m_fPauseDuration <= 0)
             {
-
-
                 Box.center = m_vec3ResetWaterLevel;
                 m_bFirstTouch = true;
                 m_bQuicksandOn = false;
@@ -41,6 +42,12 @@ public class Water : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionStay(Collision other)
+    {
+        
+    }
+
     private void OnTriggerStay(Collider other)
     {
 
@@ -51,40 +58,49 @@ public class Water : MonoBehaviour
         // if (other.CompareTag("Player"))
         // {
         // Debug.Log("dummy");
-        Box.center -= new Vector3(0, m_fDroppingLevel, 0);
-        m_bQuicksandOn = true;
-        m_fPauseDuration = m_fCurrentPause;
-        if (Box.center.y <= m_fMaxdDropLevel)
-        {
-            // Debug.Log("Death");
-            DamageMessage message = new DamageMessage();
-            message.damage = 4;
-            message.source = gameObject;
-            other.GetComponent<DamageController>().ApplyDamage(message);
-        }
-        // }
 
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        other.GetComponent<PlayerController>().ToggleWading(true);
-        if (m_bWaterTouchHurts)
+        if (other.CompareTag("Player"))
         {
-            if (m_bFirstTouch)
+            other.GetComponent<PlayerController>().ToggleWading(true);
+
+            Box.center -= new Vector3(0, m_fDroppingLevel, 0);
+            m_bQuicksandOn = true;
+            m_fPauseDuration = m_fCurrentPause;
+            if (Box.center.y <= m_fMaxdDropLevel)
             {
-                Debug.Log("huret");
+                Debug.Log("Death");
                 DamageMessage message = new DamageMessage();
-                message.damage = 1;
+                message.damage = 4;
                 message.source = gameObject;
                 other.GetComponent<DamageController>().ApplyDamage(message);
-                m_bFirstTouch = false;
             }
         }
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            if (m_bWaterTouchHurts)
+            {
+                if (m_bFirstTouch)
+                {
+                    Debug.Log("huret");
+                    DamageMessage message = new DamageMessage();
+                    message.damage = 1;
+                    message.source = gameObject;
+                    other.GetComponent<DamageController>().ApplyDamage(message);
+                    m_bFirstTouch = false;
+                }
+            }
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
-        other.GetComponent<PlayerController>().ToggleWading(false);
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerController>().ToggleWading(false);
+        }
     }
 }
    
