@@ -30,8 +30,8 @@ public class DisplayStat : MonoBehaviour
         showStats = true;
         collectableText.SetActive(true);
         mapCountText.SetActive(true);
-        collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iNoteBoard[GameStats.s_iLevelIndex].ToString() + "/100";
-        mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() + "/3";
+        collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iNoteBoard[GameStats.s_iLevelIndex].ToString() + "/???";
+        mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() + "/8";
     }
   
     public void NewHealth(int HP)
