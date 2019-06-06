@@ -36,7 +36,6 @@ public class MeleeAttack : MonoBehaviour
                     DamageMessage message = new DamageMessage();
                     message.damage = m_iDamage;
                     message.source = gameObject;
-
                     target.ApplyDamage(message);
                     OnHit.Invoke();
                     m_bIsActive = false; // Prevent multiple collisions
