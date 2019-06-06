@@ -162,6 +162,7 @@ public class EnemyController : MonoBehaviour
     public void Knockout() {
         m_bIsKnockedOut = true;
         m_rStateMachine.SetBool("bIsKnockedOut", true);
+        m_rAnimator.SetTrigger("Death");
         m_rNavAgent.isStopped = true;
         // VFX
 
@@ -178,6 +179,7 @@ public class EnemyController : MonoBehaviour
         m_rNavAgent.isStopped = false;
         GetComponent<DamageController>().ResetDamage();
         m_rAnimator.ResetTrigger("Death");
+        m_rAnimator.SetTrigger("GetUp");
         m_bIsKnockedOut = false;
         m_rStateMachine.SetBool("bIsKnockedOut", false);
     }
@@ -185,6 +187,7 @@ public class EnemyController : MonoBehaviour
     // Apply a tag to the enemy, disorienting them
     public void SetTag(bool _bState) {
         m_rStateMachine.SetBool("bIsTagged", _bState);
+        m_rAnimator.SetBool("Tagged", _bState);
         m_bIsTagged = _bState;
         if (_bState) {
             ToggleMapFragment(false);
