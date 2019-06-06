@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Component references
     private CharacterController m_rCharacterController;
-    private Animator m_rAnimator;
+    [SerializeField] Animator m_rAnimator;
     private PlayerAnimationController m_rPAnimationController;
 
     #region INTERNAL_VARIABLES
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Create component references
         m_rCharacterController = GetComponent<CharacterController>();
-        m_rAnimator = GetComponentInChildren<Animator>();
+        //m_rAnimator = GetComponentInChildren<Animator>();
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();

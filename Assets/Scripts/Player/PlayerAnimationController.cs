@@ -60,7 +60,8 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void PlayStep() {
-        m_rPlayerController.HandleFootsteps();
+        if(m_rPlayerController)
+            m_rPlayerController.HandleFootsteps();
     }
 
     public void StartAttack() {
@@ -76,7 +77,8 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void DisableTeleportScroll() {
-        m_rPlayerController.ToggleTeleportScroll(false);
+        if (m_rPlayerController)
+            m_rPlayerController.ToggleTeleportScroll(false);
     }
 
     // Disable player control during teleportation
@@ -86,18 +88,22 @@ public class PlayerAnimationController : MonoBehaviour
 
     // External cue to perform the teleportation transition
     public void TeleportationTransition() {
-        m_rPlayerController.TeleportationTransition();
+        if (m_rPlayerController)
+            m_rPlayerController.TeleportationTransition();
     }
 
     public void SlamAttackBegin() {
-        m_rPlayerController.SlamAttackBegin();
+        if (m_rPlayerController)
+            m_rPlayerController.SlamAttackBegin();
     }
 
     public void SlamAttackMiddle() {
-        m_rPlayerController.SlamAttackMiddle();
+        if (m_rPlayerController)
+            m_rPlayerController.SlamAttackMiddle();
     }
 
     public void SlamAttackReset() {
-        m_rPlayerController.SlamAttackReset();
+        if (m_rPlayerController)
+            m_rPlayerController.SlamAttackReset();
     }
 }

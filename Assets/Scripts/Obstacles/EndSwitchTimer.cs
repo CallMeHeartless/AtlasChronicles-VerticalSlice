@@ -36,6 +36,7 @@ public class EndSwitchTimer : MonoBehaviour
     }
     public void death()
     {
+        GameObject.FindGameObjectWithTag("UI").transform.GetChild(4).gameObject.SetActive(false);
         Destroy(startPoint);
         Destroy(gameObject);
     }
