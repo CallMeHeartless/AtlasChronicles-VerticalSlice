@@ -7,8 +7,15 @@ public class PlatformAttacher : MonoBehaviour
     private void OnTriggerStay(Collider other) {
         //Parent player to platform
         if (other.gameObject.CompareTag("Player")) {
-            other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(true);
-            other.gameObject.transform.parent = this.transform;
+            if(other.gameObject.GetComponent<PlayerController>().GetIsWading())
+            {
+                OnTriggerExit(other);
+            }
+            else
+            {
+                other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(true);
+                other.gameObject.transform.parent = this.transform;
+            }
         }
     }
 

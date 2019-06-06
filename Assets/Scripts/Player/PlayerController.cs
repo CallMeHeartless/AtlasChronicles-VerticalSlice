@@ -925,6 +925,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
     }
 
+    public bool GetIsWading()
+    {
+        return m_bIsWading;
+    }
+
     private void HandleSprint() {
         if((Input.GetButtonDown(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
             ToggleSprint(true);
