@@ -27,16 +27,15 @@ public class BasicChase : AIState
             if(m_fAttackTimer >= m_fAttackCooldown) {
                 m_rAI.Attack();
                 m_fAttackTimer = 0.0f;
-            } else {
-                m_fAttackTimer += Time.deltaTime;
-            }
-
+            } 
         }
         else {
             m_rAgent.isStopped = false;
             m_PlayerPosition = m_rPlayerReference.transform.position;
             m_rAI.SetDestination(m_PlayerPosition);
         }
+
+        m_fAttackTimer += Time.deltaTime;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
