@@ -27,14 +27,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Control References
     private string m_strJumpButton = "Jump";
-    private string m_strSwitchButton = "YButton";
+    private string m_strSwitchButton = "XBoxL2";
     private string m_strTeleportMarkerPlaceButton = "L1";
     private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
-    private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
     private string m_strSprintButton = "BButton";
     private string m_strAttackButton = "XBoxXButton";
+    private string m_strCameraLockButton = "XBoxR2";
 
     // Movement variables
     [Header("Movement Variables")]
@@ -931,7 +931,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private void HandleSprint() {
-        if((Input.GetButtonDown(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
+        if((Input.GetButton(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
             ToggleSprint(true);
         }else if (Input.GetButtonUp(m_strSprintButton) || Input.GetKeyUp(KeyCode.LeftShift)){
             ToggleSprint(false);
