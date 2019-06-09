@@ -1003,6 +1003,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (respawnController) {
             respawnController.GetComponent<RespawnController>().RespawnPlayer();
         }
+        Switchable.ResetAllPositions();
     }
 
     // Check if the player was damaged by a goon, stealing a map fragment from them if they have one

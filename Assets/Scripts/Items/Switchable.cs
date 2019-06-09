@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Switchable : MonoBehaviour
 {
@@ -42,6 +43,11 @@ public class Switchable : MonoBehaviour
 
     // Returns the switchable object to its original position
     public void ReturnToStartPosition() {
+        if (GetComponent<NavMeshAgent>()) return;
+        if(transform.position != m_OriginalTransform.position)
+        {
+            Debug.Log("Object has moved");
+        }
         transform.position = m_OriginalTransform.position;
         transform.rotation = m_OriginalTransform.rotation;
 
@@ -51,5 +57,14 @@ public class Switchable : MonoBehaviour
             rigidbody.velocity = Vector3.zero;
         }
         
+    }
+
+    public static void ResetAllPositions(){
+        Switchable[] switchables = GameObject.FindObjectsOfType<Switchable>();
+        Debug.Log("Switchable found: " + switchables.Length);
+        foreach(Switchable switchable in switchables){
+            switchable.ReturnToStartPosition();
+            Debug.Log(switchable.name);
+        }
     }
 }
