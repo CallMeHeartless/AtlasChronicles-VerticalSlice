@@ -999,11 +999,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Force the player to Respawn
     public void RespawnPlayer() {
         GetComponent<DamageController>().ResetDamage();
+        Switchable.ResetAllPositions();
         GameObject respawnController = GameObject.Find("RespawnController");
+
         if (respawnController) {
             respawnController.GetComponent<RespawnController>().RespawnPlayer();
         }
-        Switchable.ResetAllPositions();
+
     }
 
     // Check if the player was damaged by a goon, stealing a map fragment from them if they have one
