@@ -36,8 +36,6 @@ public class PlatformBreaking : MonoBehaviour
         if(collapse)
         {
             transform.localPosition = Random.insideUnitCircle * speed;
-
-            //transform.position = new Vector3(Mathf.Sin(Time.time * speed) * amount, transform.position.y, transform.position.z);
         }
 
         if (m_bCollapsing){
