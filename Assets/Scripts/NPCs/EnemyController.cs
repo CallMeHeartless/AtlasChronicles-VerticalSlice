@@ -13,7 +13,9 @@ public class EnemyController : MonoBehaviour
     private Animator m_rStateMachine;
     [SerializeField]
     private GameObject m_rMapFragmentPrefab;
-    //[SerializeField]
+    [SerializeField]
+    private GameObject m_rMap;
+
     [Header("Vision")]
     public AIVision m_rVision;
     [SerializeField][Tooltip("An empty game object positioned where the AI's eyes are, with forward direction aligned with its parent")]
@@ -122,6 +124,9 @@ public class EnemyController : MonoBehaviour
         } else {
             // Grab map fragment animation
             m_rAnimator.SetTrigger("StealMap");
+        }
+        if (m_rMap) {
+            m_rMap.SetActive(m_bHasMapFragment);
         }
         m_rStateMachine.SetBool("bIsEvading", m_bHasMapFragment);
 

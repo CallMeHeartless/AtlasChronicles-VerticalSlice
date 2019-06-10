@@ -33,6 +33,7 @@ public class PauseMenu : MonoBehaviour
             m_pausePanel.SetActive(true);
             if(m_cineCamera != null)
                 m_cineCamera.enabled = false;
+            GameState.SetPauseFlag(true);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && m_pausePanel.activeSelf)
         {
@@ -43,7 +44,7 @@ public class PauseMenu : MonoBehaviour
             m_settingsPanel.SetActive(false);
             if (m_cineCamera != null)
                 m_cineCamera.enabled = true;
-
+            GameState.SetPauseFlag(false);
         }
 
         if (!m_pausePanel.activeSelf)
