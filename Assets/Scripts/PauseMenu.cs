@@ -26,7 +26,7 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         //if (Input.GetButtonDown("Pause"))
-        if (Input.GetKeyDown(KeyCode.Escape) && !m_pausePanel.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && !m_pausePanel.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -34,7 +34,7 @@ public class PauseMenu : MonoBehaviour
             if(m_cineCamera != null)
                 m_cineCamera.enabled = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && m_pausePanel.activeSelf)
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && m_pausePanel.activeSelf)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
