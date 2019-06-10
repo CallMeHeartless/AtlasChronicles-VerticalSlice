@@ -189,7 +189,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             Debug.Log("UI not found");
         }
 
-
         if (!m_rInstance) {
             m_rInstance = this;
         }
@@ -205,7 +204,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             ResetJump();
 
         if (Input.GetButton(m_strCameraLockButton)) {
-            m_rFreeLook.m_YAxis.Value = 0.0f;
+            m_rFreeLook.m_YAxis.Value = 0.5f;
         }
 
         // Calculate movement for the frame
