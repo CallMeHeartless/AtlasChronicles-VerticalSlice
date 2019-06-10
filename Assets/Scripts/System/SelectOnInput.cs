@@ -15,7 +15,7 @@ public class SelectOnInput : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        eventSystem.SetSelectedGameObject(selectedObject);
+        //eventSystem.SetSelectedGameObject(selectedObject);
         bButtonSelected = true;
 
         m_Next = GetComponent<AudioSource>();
@@ -24,7 +24,12 @@ public class SelectOnInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && !bButtonSelected)
+        if (eventSystem == null || selectedObject == null)
+        {
+            return;
+        }
+
+        if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && !bButtonSelected)
         {
             eventSystem.SetSelectedGameObject(selectedObject);
             bButtonSelected = true;
@@ -46,6 +51,8 @@ public class SelectOnInput : MonoBehaviour {
 
     private void OnEnable()
     {
+        eventSystem = FindObjectOfType<EventSystem>();
+
         eventSystem.SetSelectedGameObject(selectedObject);
         bButtonSelected = true;
     }
