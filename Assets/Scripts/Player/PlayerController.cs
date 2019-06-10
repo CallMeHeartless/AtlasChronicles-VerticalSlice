@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [Header("External References")]
     [SerializeField]
     private Camera m_rCameraReference;
+    private CinemachineFreeLook m_rFreeLook;
     [SerializeField]
     private GameObject m_rSwitchTagCrosshair;
     private PlayerAudioController m_rPlayerAudioController;
@@ -165,7 +166,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
+
         }
+        m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -200,6 +203,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         if (m_rCharacterController.isGrounded)
             ResetJump();
+
+        if (Input.GetButton(m_strCameraLockButton)) {
+            m_rFreeLook.m_YAxis.Value = 0.0f;
+        }
 
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
