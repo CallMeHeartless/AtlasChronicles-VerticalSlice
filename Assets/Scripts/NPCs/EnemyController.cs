@@ -119,6 +119,9 @@ public class EnemyController : MonoBehaviour
             // Spawn the map fragment that was dropped
             GameObject.Instantiate<GameObject>(m_rMapFragmentPrefab, transform);
             Debug.Log("The goon dropped a map fragment");
+        } else {
+            // Grab map fragment animation
+            m_rAnimator.SetTrigger("StealMap");
         }
         m_rStateMachine.SetBool("bIsEvading", m_bHasMapFragment);
 
