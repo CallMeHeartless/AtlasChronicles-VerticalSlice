@@ -45,79 +45,84 @@ public class MovingPlatform : MonoBehaviour
         if (m_fCurrentPause <= 0)
         {
             //Move towards current destination point
-            transform.position = Vector3.MoveTowards(transform.position, m_rPoints[m_intCurrentPoint].transform.position, m_fSpeed);
-            timeITakes += Time.deltaTime;
-
-            if (m_bCurrentBreak == true)
+            if (m_rPoints[m_intCurrentPoint] != null)
             {
-                if (m_fPauseBreak>= 0)
+
+                transform.position = Vector3.MoveTowards(transform.position, m_rPoints[m_intCurrentPoint].transform.position, m_fSpeed);
+                timeITakes += Time.deltaTime;
+
+                if (m_bCurrentBreak == true)
                 {
-                    if (m_intCurrentPoint == 0)
+                    if (m_fPauseBreak >= 0)
                     {
-                        box.center += new Vector3(0.1f * ShinkSize, 0, 0);
-                    }
-                    else
-                    {
-                        box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
-                    }
-                    m_fPauseBreak -= Time.deltaTime;
-
-                }
-                else
-                {
-                    m_bCurrentBreak = false;
-                }
-            }
-            else
-            {
-                if (Shink)
-                {
-                    //shinking2();
-                    Shrinking();
-                }
-            }
-
-            if (Vector3.Distance(transform.position, m_rPoints[m_intCurrentPoint].transform.position) < 1)
-            {
-                //Debug.Log(timeITakes);
-                timeITakes = 0;
-                if (m_rPoints.Length - 1 == m_intCurrentPoint)
-                {
-                    m_intCurrentPoint = 0;
-                    m_fCurrentPause = m_fPauseDuration[m_intCurrentPoint];
-                  
-                    if (box) {
-                        box.size = new Vector3(1, 1, 1);
-                        box.center = new Vector3(0, 0, 0);
-                    }
-
-                }
-                else
-                {
-                    m_intCurrentPoint++;
-                    m_fCurrentPause = m_fPauseDuration[m_intCurrentPoint];
-                    
-                }
-
-                if (m_fPauseBreak>0)
-                {
-                    m_bCurrentBreak = true;
-                }
-
-                if (m_bDestoryAtPoint)
-                {
-                    if (m_intBreakableAtPoint == m_intCurrentPoint)
-                    {
-                        if (gameObject.GetComponent<PlatformBreaking>() == null)
+                        if (m_intCurrentPoint == 0)
                         {
-                            gameObject.AddComponent<PlatformBreaking>();
+                            box.center += new Vector3(0.1f * ShinkSize, 0, 0);
                         }
                         else
                         {
-                            gameObject.GetComponent<PlatformBreaking>().enabled = true;
+                            box.center += new Vector3(-0.1f * ShinkSize, 0, 0);
+                        }
+                        m_fPauseBreak -= Time.deltaTime;
+
+                    }
+                    else
+                    {
+                        m_bCurrentBreak = false;
+                    }
+                }
+                else
+                {
+                    if (Shink)
+                    {
+                        //shinking2();
+                        Shrinking();
+                    }
+                }
+
+                if (Vector3.Distance(transform.position, m_rPoints[m_intCurrentPoint].transform.position) < 1)
+                {
+                    //Debug.Log(timeITakes);
+                    timeITakes = 0;
+                    if (m_rPoints.Length - 1 == m_intCurrentPoint)
+                    {
+                        m_intCurrentPoint = 0;
+                        m_fCurrentPause = m_fPauseDuration[m_intCurrentPoint];
+
+                        if (box)
+                        {
+                            box.size = new Vector3(1, 1, 1);
+                            box.center = new Vector3(0, 0, 0);
                         }
 
-                        StartCoroutine(Collapse());
+                    }
+                    else
+                    {
+                        m_intCurrentPoint++;
+                        m_fCurrentPause = m_fPauseDuration[m_intCurrentPoint];
+
+                    }
+
+                    if (m_fPauseBreak > 0)
+                    {
+                        m_bCurrentBreak = true;
+                    }
+
+                    if (m_bDestoryAtPoint)
+                    {
+                        if (m_intBreakableAtPoint == m_intCurrentPoint)
+                        {
+                            if (gameObject.GetComponent<PlatformBreaking>() == null)
+                            {
+                                gameObject.AddComponent<PlatformBreaking>();
+                            }
+                            else
+                            {
+                                gameObject.GetComponent<PlatformBreaking>().enabled = true;
+                            }
+
+                            StartCoroutine(Collapse());
+                        }
                     }
                 }
             }
