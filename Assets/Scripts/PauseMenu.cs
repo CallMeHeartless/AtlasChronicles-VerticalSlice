@@ -47,7 +47,7 @@ public class PauseMenu : MonoBehaviour
             GameState.SetPauseFlag(false);
         }
 
-        if (!m_pausePanel.activeSelf)
+        if (!m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
         {
             GameState.SetPauseFlag(false);
             Cursor.lockState = CursorLockMode.Locked;
