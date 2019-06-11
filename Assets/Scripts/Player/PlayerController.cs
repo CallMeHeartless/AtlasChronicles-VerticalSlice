@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [Header("External References")]
     [SerializeField]
     private Camera m_rCameraReference;
+    private CinemachineFreeLook m_rFreeLook;
     [SerializeField]
     private GameObject m_rSwitchTagCrosshair;
     private PlayerAudioController m_rPlayerAudioController;
@@ -27,14 +28,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Control References
     private string m_strJumpButton = "Jump";
-    private string m_strSwitchButton = "YButton";
+    private string m_strSwitchButton = "XBoxL2";
     private string m_strTeleportMarkerPlaceButton = "L1";
     private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
-    private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
     private string m_strSprintButton = "BButton";
     private string m_strAttackButton = "XBoxXButton";
+    private string m_strCameraLockButton = "XBoxR2";
 
     // Movement variables
     [Header("Movement Variables")]
@@ -165,7 +166,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
+
         }
+        m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -186,7 +189,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             Debug.Log("UI not found");
         }
 
-
         if (!m_rInstance) {
             m_rInstance = this;
         }
@@ -200,6 +202,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         if (m_rCharacterController.isGrounded)
             ResetJump();
+
+        if (Input.GetButton(m_strCameraLockButton)) {
+            m_rFreeLook.m_YAxis.Value = 0.5f;
+        }
 
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
@@ -931,7 +937,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private void HandleSprint() {
-        if((Input.GetButtonDown(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
+        if((Input.GetButton(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
             ToggleSprint(true);
         }else if (Input.GetButtonUp(m_strSprintButton) || Input.GetKeyUp(KeyCode.LeftShift)){
             ToggleSprint(false);
@@ -999,10 +1005,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Force the player to Respawn
     public void RespawnPlayer() {
         GetComponent<DamageController>().ResetDamage();
+        Switchable.ResetAllPositions();
         GameObject respawnController = GameObject.Find("RespawnController");
+
         if (respawnController) {
             respawnController.GetComponent<RespawnController>().RespawnPlayer();
         }
+
     }
 
     // Check if the player was damaged by a goon, stealing a map fragment from them if they have one

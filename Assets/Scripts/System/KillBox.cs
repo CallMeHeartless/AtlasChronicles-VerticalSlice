@@ -10,12 +10,16 @@ public class KillBox : MonoBehaviour {
         // Check object is player
         if (other.CompareTag("Player")) {
             // Respawn the player
-            if (m_rRespawnController) {
-                m_rRespawnController.RespawnPlayer();
-            }
-            else {
-                Debug.LogError("ERROR: Killbox does not have respawn controller");
-            }
+            //if (m_rRespawnController) {
+            //    m_rRespawnController.RespawnPlayer();
+            //}
+            //else {
+            //    Debug.LogError("ERROR: Killbox does not have respawn controller");
+            //}
+            DamageMessage message = new DamageMessage();
+            message.damage = 4;
+            message.source = gameObject;
+            other.GetComponent<DamageController>().ApplyDamage(message);
         }
     }
 }
