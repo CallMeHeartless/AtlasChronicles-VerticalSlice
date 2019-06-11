@@ -26,28 +26,23 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         //if (Input.GetButtonDown("Pause"))
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && !m_pausePanel.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && !m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
         {
+            m_pausePanel.SetActive(true);
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            m_pausePanel.SetActive(true);
             if(m_cineCamera != null)
                 m_cineCamera.enabled = false;
             GameState.SetPauseFlag(true);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && m_pausePanel.activeSelf)
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && (m_pausePanel.activeSelf || m_settingsPanel.activeSelf))
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-
             m_pausePanel.SetActive(false);
             m_settingsPanel.SetActive(false);
-            if (m_cineCamera != null)
-                m_cineCamera.enabled = true;
-            GameState.SetPauseFlag(false);
         }
 
-        if (!m_pausePanel.activeSelf)
+        if (!m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
         {
             GameState.SetPauseFlag(false);
             Cursor.lockState = CursorLockMode.Locked;
