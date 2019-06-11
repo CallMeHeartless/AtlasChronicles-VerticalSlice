@@ -16,11 +16,30 @@ public class DisplayStat : MonoBehaviour
     {
         //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().h;
         NewHealth(4);
+
+
+        GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex] = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length;
+        GameStats.s_iMapsTotal[GameStats.s_iLevelIndex] = GameObject.FindGameObjectsWithTag("PrimaryPickup").Length;
+
+        GameObject[] boxes = GameObject.FindGameObjectsWithTag("Box");
+        for(int i = 0; i < boxes.Length; ++ i)
+        {
+            GameObject[] prizes = boxes[i].GetComponent<BreakableObject>().GetPrizes();
+            for (int j = 0; j < prizes.Length; ++j)
+            {
+                if(prizes[j].CompareTag("SecondaryPickup"))
+                {
+                    ++GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
+                }
+            }
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             ShowStat();
@@ -30,8 +49,8 @@ public class DisplayStat : MonoBehaviour
         showStats = true;
         collectableText.SetActive(true);
         mapCountText.SetActive(true);
-        collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iNoteBoard[GameStats.s_iLevelIndex].ToString() + "/???";
-        mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() + "/8";
+        collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString() + "/" + GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
+        mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
     }
   
     public void NewHealth(int HP)
@@ -58,7 +77,7 @@ public class DisplayStat : MonoBehaviour
             showStats = true;
             collectableText.SetActive(true);
             mapCountText.SetActive(true);
-            collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iNoteBoard[GameStats.s_iLevelIndex].ToString();
+            collectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString();
             mapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString();
         }
         else

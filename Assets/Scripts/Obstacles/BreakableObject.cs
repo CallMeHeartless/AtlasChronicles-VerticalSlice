@@ -124,4 +124,9 @@ public class BreakableObject : MonoBehaviour
         //their arc if the speed happens to be slower than when this Destroy method is Invoked
         Destroy(m_rBrokenObject);
     }
+
+    public GameObject[] GetPrizes()
+    {
+        return m_rPrizes;
+    }
 }
