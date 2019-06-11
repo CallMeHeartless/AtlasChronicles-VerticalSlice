@@ -7,13 +7,10 @@ using MessageSystem;
 
 public class SettingsScript : MonoBehaviour
 {
-    [SerializeField] Button m_leftButton;
-    [SerializeField] Button m_rightButton;
-
     [SerializeField] Image[] m_tabs;
     [SerializeField] GameObject[] m_groups;
 
-    int m_currentGroup = 0;
+    int m_currentGroup = -1;
 
     [SerializeField] Color m_inactiveColour;
     [SerializeField] Color m_highlightedColour;
@@ -33,6 +30,14 @@ public class SettingsScript : MonoBehaviour
                     m_tabs[m_currentGroup].color = m_highlightedColour;
                     m_groups[m_currentGroup].SetActive(true);
                 }
+            }
+
+            if(m_currentGroup == -1)
+            {
+                m_currentGroup = 0;
+                m_tabs[m_currentGroup].color = m_highlightedColour;
+                m_groups[m_currentGroup].SetActive(true);
+                return;
             }
             
             //deactivate any other active tabs
@@ -64,12 +69,10 @@ public class SettingsScript : MonoBehaviour
         }
         else if (Input.GetButtonDown("BButton"))
         {
-            OnBPressed.Invoke();
+            OnBPressed.Invoke(); //Back
         }
     }
-
-
-
+    
     public void MoveTabLeft(bool _moveLeft)
     {
         if (m_tabs == null && m_groups == null)
