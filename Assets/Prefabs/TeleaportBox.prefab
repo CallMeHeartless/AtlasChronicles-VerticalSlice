@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4198243330629954566}
   - component: {fileID: 4198243330629954567}
   - component: {fileID: 8370798759684792142}
+  - component: {fileID: 2132084220}
   m_Layer: 0
   m_Name: TeleaportBox
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4198243330629954565}
   m_LocalRotation: {x: 0, y: -0.43626794, z: 0, w: 0.8998169}
   m_LocalPosition: {x: 2.7339997, y: -0.046, z: -0.9129999}
-  m_LocalScale: {x: 0.02170536, y: 0.02170536, z: 0.02170536}
+  m_LocalScale: {x: 0.021705378, y: 0.02170536, z: 0.021705378}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -124,3 +125,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!54 &2132084220
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4198243330629954565}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
