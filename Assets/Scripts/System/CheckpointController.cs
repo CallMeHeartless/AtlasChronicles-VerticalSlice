@@ -10,22 +10,21 @@ public class CheckpointController : MonoBehaviour
         if (other.CompareTag("Player")){
 
             // Update the most recent checkpoint
-            RespawnController parentController = transform.root.GetComponent<RespawnController>();
+            PlayerController player = other.GetComponent<PlayerController>();
             //Debug.Log("here");
-            if (parentController) {
+            if (player) {
                 if (m_bPoint)
                 {
-                    parentController.SetRespawnPoint(transform.GetChild(0));
+                    player.m_rRespawnLocation =  transform.GetChild(0).position;
                 }
                 else
                 {
-                    parentController.SetRespawnPoint(transform);
+                    player.m_rRespawnLocation = transform.position;
                 }
-                
-                //Debug.Log("new");
+
             }
             else {
-                Debug.LogError("ERROR: Could not locate parent respawn controller. Is this checkpoint a child of the controller?");
+                Debug.LogError("ERROR: Could not update player respawn position");
             }
         }
     }

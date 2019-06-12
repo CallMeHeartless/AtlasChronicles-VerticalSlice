@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class KillBox : MonoBehaviour {
-    [SerializeField]
-    private RespawnController m_rRespawnController;
+    //[SerializeField]
+    //private RespawnController m_rRespawnController;
 
     private void OnTriggerEnter(Collider other) {
         // Check object is player

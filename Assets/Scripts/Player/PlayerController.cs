@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private GameObject m_rSwitchTagCrosshair;
     private PlayerAudioController m_rPlayerAudioController;
     private DisplayStat m_rUI;
+    public Vector3 m_rRespawnLocation;
 
     // Component references
     private CharacterController m_rCharacterController;
@@ -584,7 +585,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
     private IEnumerator TeleportToLocation(Vector3 _vecTargetLocation) {
         yield return new WaitForEndOfFrame();
-        Vector3 vecPlayerPosition = transform.position;
         // Play VFX
         TeleportParticles();
         // Update position
@@ -974,7 +974,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     public void UpdateHealth() {
         int iHealth = GetComponent<DamageController>().iCurrentHealth;
-        m_rUI.NewHealth(iHealth);
+        if (m_rUI) {
+            m_rUI.NewHealth(iHealth);
+        }
     }
 
     // Turn the glide scroll on / off
@@ -1006,12 +1008,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void RespawnPlayer() {
         GetComponent<DamageController>().ResetDamage();
         Switchable.ResetAllPositions();
-        GameObject respawnController = GameObject.Find("RespawnController");
 
-        if (respawnController) {
-            respawnController.GetComponent<RespawnController>().RespawnPlayer();
+        // Prevent null reference exception if no respawn location has been set
+        if (m_rRespawnLocation == null) {
+            m_rRespawnLocation = GameObject.FindGameObjectWithTag("spawns").transform.position;
         }
 
+        // Move player
+        StartCoroutine(MovePlayer());
     }
 
     // Check if the player was damaged by a goon, stealing a map fragment from them if they have one
@@ -1074,5 +1078,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
             default: break;
         }
+    }
+
+    private IEnumerator MovePlayer() {
+        yield return new WaitForEndOfFrame();
+        transform.position = m_rRespawnLocation;
     }
 }
