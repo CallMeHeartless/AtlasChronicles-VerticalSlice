@@ -1147,6 +1147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rCameraReference: {fileID: 0}
   m_rSwitchTagCrosshair: {fileID: 4966647083808954746}
+  m_rRespawnLocation: {x: 0, y: 0, z: 0}
   m_rAnimator: {fileID: 5715351494801350291}
   m_fMovementSpeed: 8
   m_fSprintMultiplier: 1.75
@@ -1533,6 +1534,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.7499979
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106732925265469563, guid: 7cf2bb99d50c3284ebec3b58f0082ea0,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106732925265469563, guid: 7cf2bb99d50c3284ebec3b58f0082ea0,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cf2bb99d50c3284ebec3b58f0082ea0, type: 3}
@@ -2640,17 +2651,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6850383250669970808}
     m_Modifications:
-    - target: {fileID: 100000, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_Name
-      value: anim_Player_Idle
+    - target: {fileID: 9500000, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9fd583a748a3b3645aee81a59e888fb6, type: 2}
+    - target: {fileID: 100178, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100176, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 100178, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 100000, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_Name
+      value: anim_Player_Idle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2696,10 +2711,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 9fd583a748a3b3645aee81a59e888fb6, type: 2}
     - target: {fileID: 13700002, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_CastShadows
       value: 0
