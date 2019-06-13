@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4230557030044928379}
+  - component: {fileID: 7711215383708444991}
   m_Layer: 0
   m_Name: Pfb_GrassBlades
   m_TagString: Untagged
@@ -25,12 +26,39 @@ Transform:
   m_GameObject: {fileID: 2198522522420812127}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 99.99999, y: 100, z: 99.99999}
   m_Children:
   - {fileID: 3994360301650436960}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &7711215383708444991
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198522522420812127}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.37821195, y: 0.32756495, z: -0.18446195}
+  m_Size: 2.7216232
+  m_FadeMode: 1
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.4980566
+    fadeTransitionWidth: 0.305
+    renderers:
+    - renderer: {fileID: 3994360301652730240}
+  - screenRelativeHeight: 0.20389338
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3994360301652730240}
+  - screenRelativeHeight: 0.067310944
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3994360301652730240}
+  m_Enabled: 1
 --- !u!1001 &3994360301650573792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,18 +127,24 @@ PrefabInstance:
       value: 1.9136673
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: a7c40977faf24204bb93fdbb5f1c3994, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e0cf04c2cff73964795b93c3569e3f85, type: 2}
-    - target: {fileID: 2300000, guid: a7c40977faf24204bb93fdbb5f1c3994, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: a7c40977faf24204bb93fdbb5f1c3994, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e0cf04c2cff73964795b93c3569e3f85, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7c40977faf24204bb93fdbb5f1c3994, type: 3}
 --- !u!4 &3994360301650436960 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: a7c40977faf24204bb93fdbb5f1c3994,
+    type: 3}
+  m_PrefabInstance: {fileID: 3994360301650573792}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3994360301652730240 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: a7c40977faf24204bb93fdbb5f1c3994,
     type: 3}
   m_PrefabInstance: {fileID: 3994360301650573792}
   m_PrefabAsset: {fileID: 0}
