@@ -1147,6 +1147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rCameraReference: {fileID: 0}
   m_rSwitchTagCrosshair: {fileID: 4966647083808954746}
+  m_rRespawnLocation: {x: 0, y: 0, z: 0}
   m_rAnimator: {fileID: 5715351494801350291}
   m_fMovementSpeed: 8
   m_fSprintMultiplier: 1.75
@@ -1347,7 +1348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6850383251018904600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6850383250669970808}
@@ -2611,15 +2612,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11900000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 3}
       propertyPath: m_FarClipPlane
-      value: 4.4
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 11900000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 3}
       propertyPath: m_FieldOfView
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 11900000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 3}
-      propertyPath: m_Orthographic
-      value: 0
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 11900000, guid: 28a5e79925e3ce04a82856c16a572cbe, type: 3}
       propertyPath: m_OrthographicSize
@@ -2640,17 +2637,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6850383250669970808}
     m_Modifications:
-    - target: {fileID: 100000, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_Name
-      value: anim_Player_Idle
+    - target: {fileID: 9500000, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9fd583a748a3b3645aee81a59e888fb6, type: 2}
+    - target: {fileID: 100178, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100176, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 100178, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 100000, guid: 24d3c768379791c48898726b57486d17, type: 3}
+      propertyPath: m_Name
+      value: anim_Player_Idle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2694,14 +2695,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 24d3c768379791c48898726b57486d17, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 9fd583a748a3b3645aee81a59e888fb6, type: 2}
-    - target: {fileID: 13700002, guid: 24d3c768379791c48898726b57486d17, type: 3}
-      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 24d3c768379791c48898726b57486d17, type: 3}
