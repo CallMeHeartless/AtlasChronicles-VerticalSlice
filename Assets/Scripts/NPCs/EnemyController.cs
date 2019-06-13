@@ -120,7 +120,8 @@ public class EnemyController : MonoBehaviour
         m_bHasMapFragment = _bState;
         if (!m_bHasMapFragment) {
             // Spawn the map fragment that was dropped
-            GameObject.Instantiate<GameObject>(m_rMapFragmentPrefab, transform);
+            GameObject map = GameObject.Instantiate<GameObject>(m_rMapFragmentPrefab, transform);
+            map.transform.SetParent(null);
             Debug.Log("The goon dropped a map fragment");
         } else {
             // Grab map fragment animation
