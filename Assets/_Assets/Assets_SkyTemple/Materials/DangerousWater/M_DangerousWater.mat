@@ -43,6 +43,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2e9fa7d2ec0144743bca78c8920a22c7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FoamAlpha:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -64,7 +68,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample1:
-        m_Texture: {fileID: 2800000, guid: 7b5189b03ec71094f9f9077d7b76d522, type: 3}
+        m_Texture: {fileID: 2800000, guid: 348b9abe40c233041bf24598c94ed990, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample2:
@@ -73,6 +77,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _TextureSample3:
         m_Texture: {fileID: 2800000, guid: 188a05f21ca3c4a47ab9a3f471e377fb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WAterFoamMask:
+        m_Texture: {fileID: 2800000, guid: 7b5189b03ec71094f9f9077d7b76d522, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaterColormask:
+        m_Texture: {fileID: 2800000, guid: 4b7e59b23e2465d45b198be8ba2ff831, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -90,36 +102,41 @@ Material:
     - _Float2: 0
     - _FoamDepth: 0
     - _FoamFalloff: 0
+    - _FoamIntensity: 0.22
     - _FoamSmoothness: 0.2
-    - _FoamTiling: 0.61
+    - _FoamTiling: 1
     - _Foamfalloff: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalScale: 0.7
+    - _NormalScale: 0.25
     - _OcclusionStrength: 1
-    - _Opacity: 0.7
+    - _Opacity: 0.2
     - _Parallax: 0.02
+    - _Power: 64.05
     - _Refraction: 1
+    - _Smoothness: 0.8
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _UVScale: -0.07
+    - _UVScale: 64.34
     - _UVSec: 0
     - _WaterDepth: 8
-    - _WaterFalloff: -0.6
+    - _WaterFalloff: -0.45
     - _WaterSmoothness: 1
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepColor: {r: 0.014812163, g: 0, b: 0.39622623, a: 0}
+    - _Color: {r: 0, g: 0.75764304, b: 0.9509999, a: 1}
+    - _DeepColor: {r: 0.014812163, g: 0, b: 0.3962262, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 0}
     - _FoamPan: {r: 0.41, g: 0, b: 0, a: 0}
     - _Normal01_PanSpeed: {r: 0.05, g: 0.02, b: 0, a: 0}
     - _Normal02_PanSpeed: {r: -0.005, g: 0.02, b: 0, a: 0}
     - _NormalTile0: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _ReflectionColor: {r: 0, g: 0.20489168, b: 1, a: 0}
     - _ShadowColor: {r: 1, g: 1, b: 1, a: 0}
-    - _ShalowColor: {r: 0.0047169924, g: 1, b: 0.9112188, a: 0}
+    - _ShalowColor: {r: 0, g: 0.60158604, b: 0.754717, a: 1}
