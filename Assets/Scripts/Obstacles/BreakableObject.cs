@@ -34,6 +34,8 @@ public class BreakableObject : MonoBehaviour
     {
         if(m_rOriginalObject && m_rBrokenObject)
         {
+            print("Local: " + transform.localPosition);
+
             //Activate the broken box
             m_rBrokenObject.SetActive(true);
             //Destroy the original box
@@ -78,8 +80,10 @@ public class BreakableObject : MonoBehaviour
 
             //Set the newly calculated destinations into an array
             m_rPrizeDestinations[i] = transform.localPosition + newPos;
+
         }
 
+        print("fruit: " + m_rPrizeDestinations[0]);
         //Move the spawned prizes in an arc towards the calculated positions to simulate spreading
         StartCoroutine(Spread());
     }
