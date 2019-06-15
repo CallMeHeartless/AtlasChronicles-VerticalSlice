@@ -15,8 +15,9 @@ public class SelectOnInput : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        OnEnable();
         eventSystem = FindObjectOfType<EventSystem>();
+
+        OnEnable();
 
         //eventSystem.SetSelectedGameObject(null);
         //eventSystem.SetSelectedGameObject(selectedObject);
@@ -45,8 +46,8 @@ public class SelectOnInput : MonoBehaviour {
                 m_Next.Play();
         }
 
-        if (Input.GetMouseButtonDown(0))
-            eventSystem.SetSelectedGameObject(selectedObject);
+        //if (Input.GetMouseButtonDown(0))
+        //    eventSystem.SetSelectedGameObject(selectedObject);
     }
 
     private void OnDisable()
@@ -55,6 +56,10 @@ public class SelectOnInput : MonoBehaviour {
 
     private void OnEnable()
     {
+        if(eventSystem == null)
+        {
+            eventSystem = FindObjectOfType<EventSystem>();
+        }
         eventSystem.SetSelectedGameObject(null);
         eventSystem.SetSelectedGameObject(selectedObject);
         bButtonSelected = true;

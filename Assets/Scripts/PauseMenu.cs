@@ -12,14 +12,15 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject m_pausePanel;
     [SerializeField] GameObject m_settingsPanel;
-    [SerializeField] CinemachineFreeLook m_cineCamera;
+    //[SerializeField]
+    CinemachineFreeLook m_cineCamera;
 
     // Start is called before the first frame update
     void Start()
     {
         m_pausePanel.SetActive(false);
         m_settingsPanel.SetActive(false);
-        
+        m_cineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
     }
 
     // Update is called once per frame
