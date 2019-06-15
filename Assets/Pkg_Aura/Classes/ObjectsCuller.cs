@@ -126,8 +126,11 @@ namespace AuraAPI
         /// </summary>
         public void Dispose()
         {
-            _cullingGroup.Dispose();
-            _cullingGroup = null;
+            if(_cullingGroup != null)
+            {
+                _cullingGroup.Dispose();
+                _cullingGroup = null;
+            }
 
             Aura.OnPreCullEvent -= Aura_onPreCullEvent;
         }
