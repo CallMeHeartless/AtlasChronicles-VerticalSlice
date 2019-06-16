@@ -86,6 +86,9 @@ public class PlayerAnimationController : MonoBehaviour
     // Disable player control during teleportation
     public void BeginTeleportation() {
         GameState.SetPlayerTeleportingFlag(true);
+        if (m_rPlayerController) {
+            m_rPlayerController.ToggleTeleportScroll(true);
+        }
     }
 
     // External cue to perform the teleportation transition
