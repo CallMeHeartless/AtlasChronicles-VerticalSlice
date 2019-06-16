@@ -189,7 +189,10 @@ namespace AuraAPI
             if(applyAsPostProcess)
             {
                 Profiler.BeginSample("Aura : Post process");
-                Graphics.Blit(src, dest, _postProcessMaterial);
+                if(_postProcessMaterial)
+                {
+                    Graphics.Blit(src, dest, _postProcessMaterial);
+                }
                 Profiler.EndSample();
             }
             else

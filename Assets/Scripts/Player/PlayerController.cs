@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [Header("External References")]
     [SerializeField]
     private Camera m_rCameraReference;
+    private CinemachineFreeLook m_rFreeLook;
     [SerializeField]
     private GameObject m_rSwitchTagCrosshair;
     private PlayerAudioController m_rPlayerAudioController;
     private DisplayStat m_rUI;
+    public Vector3 m_rRespawnLocation;
 
     // Component references
     private CharacterController m_rCharacterController;
@@ -27,14 +29,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Control References
     private string m_strJumpButton = "Jump";
-    private string m_strSwitchButton = "YButton";
+    private string m_strSwitchButton = "XBoxL2";
     private string m_strTeleportMarkerPlaceButton = "L1";
     private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
-    private string m_strAimButton = "XBoxL2";
     private string m_strPickupItemButton = "L1";
     private string m_strSprintButton = "BButton";
     private string m_strAttackButton = "XBoxXButton";
+    private string m_strCameraLockButton = "XBoxR2";
 
     // Movement variables
     [Header("Movement Variables")]
@@ -165,7 +167,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
+
         }
+        m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -186,7 +190,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             Debug.Log("UI not found");
         }
 
-
         if (!m_rInstance) {
             m_rInstance = this;
         }
@@ -200,6 +203,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         if (m_rCharacterController.isGrounded)
             ResetJump();
+
+        if (Input.GetButton(m_strCameraLockButton)) {
+            m_rFreeLook.m_YAxis.Value = 0.5f;
+        }
 
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
@@ -578,7 +585,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
     private IEnumerator TeleportToLocation(Vector3 _vecTargetLocation) {
         yield return new WaitForEndOfFrame();
-        Vector3 vecPlayerPosition = transform.position;
         // Play VFX
         TeleportParticles();
         // Update position
@@ -931,7 +937,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private void HandleSprint() {
-        if((Input.GetButtonDown(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
+        if((Input.GetButton(m_strSprintButton) || Input.GetKeyDown(KeyCode.LeftShift)) && m_rCharacterController.isGrounded) {
             ToggleSprint(true);
         }else if (Input.GetButtonUp(m_strSprintButton) || Input.GetKeyUp(KeyCode.LeftShift)){
             ToggleSprint(false);
@@ -968,7 +974,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     public void UpdateHealth() {
         int iHealth = GetComponent<DamageController>().iCurrentHealth;
-        m_rUI.NewHealth(iHealth);
+        if (m_rUI) {
+            m_rUI.NewHealth(iHealth);
+        }
     }
 
     // Turn the glide scroll on / off
@@ -999,10 +1007,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Force the player to Respawn
     public void RespawnPlayer() {
         GetComponent<DamageController>().ResetDamage();
-        GameObject respawnController = GameObject.Find("RespawnController");
-        if (respawnController) {
-            respawnController.GetComponent<RespawnController>().RespawnPlayer();
+        Switchable.ResetAllPositions();
+
+        // Prevent null reference exception if no respawn location has been set
+        if (m_rRespawnLocation == null) {
+            m_rRespawnLocation = GameObject.FindGameObjectWithTag("spawns").transform.position;
         }
+
+        // Move player
+        StartCoroutine(MovePlayer());
     }
 
     // Check if the player was damaged by a goon, stealing a map fragment from them if they have one
@@ -1065,5 +1078,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
             default: break;
         }
+    }
+
+    private IEnumerator MovePlayer() {
+        yield return new WaitForEndOfFrame();
+        transform.position = m_rRespawnLocation;
     }
 }

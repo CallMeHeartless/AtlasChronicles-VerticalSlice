@@ -10,10 +10,13 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent m_rNavAgent;
     [SerializeField]
     private Animator m_rAnimator;
+    public Animator animator { get { return m_rAnimator; } }
     private Animator m_rStateMachine;
     [SerializeField]
     private GameObject m_rMapFragmentPrefab;
-    //[SerializeField]
+    [SerializeField]
+    private GameObject m_rMap;
+
     [Header("Vision")]
     public AIVision m_rVision;
     [SerializeField][Tooltip("An empty game object positioned where the AI's eyes are, with forward direction aligned with its parent")]
@@ -44,6 +47,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float m_fKnockoutTime = 10.0f;
     private bool m_bIsKnockedOut = false;
+    public bool isKnockedOut { get { return m_bIsKnockedOut; } }
     private bool m_bIsTagged = false;
 
     // Start is called before the first frame update
@@ -79,6 +83,7 @@ public class EnemyController : MonoBehaviour
         if (m_rPlayer) {
             // Move to player
             m_rStateMachine.SetBool("bCanSeePlayer", true);
+
             // If beyond home range, give up on chasing
             if (IsBeyondHomeRange()) {
                 m_rStateMachine.SetBool("bCanSeePlayer", false);
@@ -117,8 +122,15 @@ public class EnemyController : MonoBehaviour
         m_bHasMapFragment = _bState;
         if (!m_bHasMapFragment) {
             // Spawn the map fragment that was dropped
-            GameObject.Instantiate<GameObject>(m_rMapFragmentPrefab, transform);
+            GameObject map = GameObject.Instantiate<GameObject>(m_rMapFragmentPrefab, transform);
+            map.transform.SetParent(null);
             Debug.Log("The goon dropped a map fragment");
+        } else {
+            // Grab map fragment animation
+            m_rAnimator.SetTrigger("StealMap");
+        }
+        if (m_rMap) {
+            m_rMap.SetActive(m_bHasMapFragment);
         }
         m_rStateMachine.SetBool("bIsEvading", m_bHasMapFragment);
 
@@ -192,6 +204,10 @@ public class EnemyController : MonoBehaviour
         if (_bState) {
             ToggleMapFragment(false);
         }
+    }
+
+    public void Patrol() {
+        m_rAnimator.SetTrigger("Patrol");
     }
 
 

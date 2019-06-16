@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Switchable : MonoBehaviour
 {
@@ -11,11 +12,13 @@ public class Switchable : MonoBehaviour
     [SerializeField]
     private Material m_Material;
     private Transform m_OriginalTransform;
+    private Vector3 m_StartPosition;
     private EnemyController m_Enemy = null;
 
     private void Start() {
         //m_Material = GetComponent<MeshRenderer>().material;
         m_OriginalTransform = transform;
+        m_StartPosition = transform.position;
         m_Enemy = GetComponent<EnemyController>();
     }
 
@@ -42,7 +45,8 @@ public class Switchable : MonoBehaviour
 
     // Returns the switchable object to its original position
     public void ReturnToStartPosition() {
-        transform.position = m_OriginalTransform.position;
+        if (GetComponent<NavMeshAgent>()) return;
+        transform.position = m_StartPosition;
         transform.rotation = m_OriginalTransform.rotation;
 
         // Check for rigidbody
@@ -51,5 +55,12 @@ public class Switchable : MonoBehaviour
             rigidbody.velocity = Vector3.zero;
         }
         
+    }
+
+    public static void ResetAllPositions(){
+        Switchable[] switchables = GameObject.FindObjectsOfType<Switchable>();
+        foreach(Switchable switchable in switchables){
+            switchable.ReturnToStartPosition();
+        }
     }
 }

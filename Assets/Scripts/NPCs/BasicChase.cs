@@ -10,33 +10,37 @@ public class BasicChase : AIState
     private float m_fAttackRange = 1.75f;
     private float m_fAttackCooldown = 1.0f;
     private float m_fAttackTimer = 0.0f;
+    private Animator m_rAnimator = null;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (!m_rPlayerReference) {
             m_rPlayerReference = GameObject.Find("Player").GetComponent<PlayerController>();
         }
+        if (!m_rAnimator) {
+            m_rAnimator = m_rAI.animator;
+        }
         m_rAgent.stoppingDistance = m_fAttackRange;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        if (!GameState.DoesPlayerHaveControl()) return;
         if (PlayerInAttackRange()) {
             m_rAgent.isStopped = true;
             // Attack
             if(m_fAttackTimer >= m_fAttackCooldown) {
                 m_rAI.Attack();
                 m_fAttackTimer = 0.0f;
-            } else {
-                m_fAttackTimer += Time.deltaTime;
-            }
-
+            } 
         }
         else {
             m_rAgent.isStopped = false;
             m_PlayerPosition = m_rPlayerReference.transform.position;
             m_rAI.SetDestination(m_PlayerPosition);
         }
+
+        m_fAttackTimer += Time.deltaTime;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

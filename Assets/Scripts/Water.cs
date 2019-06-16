@@ -68,7 +68,7 @@ public class Water : MonoBehaviour
             m_fPauseDuration = m_fCurrentPause;
             if (Box.center.y <= m_fMaxdDropLevel)
             {
-                Debug.Log("Death");
+                //Debug.Log("Death");
                 DamageMessage message = new DamageMessage();
                 message.damage = 4;
                 message.source = gameObject;
@@ -85,7 +85,7 @@ public class Water : MonoBehaviour
             {
                 if (m_bFirstTouch)
                 {
-                    Debug.Log("huret");
+                    //Debug.Log("huret");
                     DamageMessage message = new DamageMessage();
                     message.damage = 1;
                     message.source = gameObject;

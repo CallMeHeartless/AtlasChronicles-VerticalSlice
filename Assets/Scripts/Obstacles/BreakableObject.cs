@@ -78,8 +78,8 @@ public class BreakableObject : MonoBehaviour
 
             //Set the newly calculated destinations into an array
             m_rPrizeDestinations[i] = transform.localPosition + newPos;
-        }
 
+        }
         //Move the spawned prizes in an arc towards the calculated positions to simulate spreading
         StartCoroutine(Spread());
     }
@@ -123,5 +123,10 @@ public class BreakableObject : MonoBehaviour
         //Note: Didnt destroy this current object holder as the prizes do not complete 
         //their arc if the speed happens to be slower than when this Destroy method is Invoked
         Destroy(m_rBrokenObject);
+    }
+
+    public GameObject[] GetPrizes()
+    {
+        return m_rPrizes;
     }
 }

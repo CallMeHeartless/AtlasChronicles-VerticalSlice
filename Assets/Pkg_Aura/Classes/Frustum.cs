@@ -325,7 +325,10 @@ namespace AuraAPI
         /// </summary>
         public void Dispose()
         {
-            _buffers.ReleaseBuffers();
+            if(_buffers != null)
+            {
+                _buffers.ReleaseBuffers();
+            }
         }
 
         /// <summary>
