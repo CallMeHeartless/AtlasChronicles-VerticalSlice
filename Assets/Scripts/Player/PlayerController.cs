@@ -112,13 +112,19 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private float m_fPickupRadius = 0.95f;
     [SerializeField]
     private float m_fThrowSpeed = 10.0f;
+    private bool m_bWasSwitchLastTeleportCommand = false; // An internal flag to determine if the most recent teleport command was to switch or teleport to the marker
+
+    [Header("Scroll Objects | Effects")]
     [SerializeField]
     private GameObject m_rTeleportParticles;
     [SerializeField]
     private GameObject m_rTeleportScroll;
     [SerializeField]
     private GameObject m_rGlideScroll;
-    private bool m_bWasSwitchLastTeleportCommand = false; // An internal flag to determine if the most recent teleport command was to switch or teleport to the marker
+    [SerializeField]
+    private GameObject m_rHipScroll;
+    [SerializeField]
+    private GameObject m_rWeaponScroll;
 
     [Header("Slide Detection Variables")]
     [SerializeField] private bool m_bIsSliding = false;
@@ -965,6 +971,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private void ToggleGlideScroll(bool _bState) {
         if (m_rGlideScroll) {
             m_rGlideScroll.SetActive(_bState);
+            ToggleHipScroll(!_bState);
         }
     }
 
@@ -972,6 +979,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void ToggleTeleportScroll(bool _bState) {
         if (m_rTeleportScroll) {
             m_rTeleportScroll.SetActive(_bState);
+            ToggleHipScroll(!_bState);
         }
     }
 
@@ -1016,6 +1024,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         ToggleFloatState(false);
         m_Velocity = Vector3.zero;
         m_bCanAttack = false;
+        ToggleWeaponScroll(true);
+        ToggleHipScroll(false);
     }
 
     // Slam attack middle - damage stage
@@ -1041,6 +1051,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Player is grounded
         m_rAnimator.SetBool("Grounded", true);
         m_rAnimator.ResetTrigger("GroundSlam");
+        ToggleWeaponScroll(false);
+        ToggleHipScroll(true);
 
     }
 
@@ -1065,5 +1077,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private IEnumerator MovePlayer() {
         yield return new WaitForEndOfFrame();
         transform.position = m_rRespawnLocation;
+    }
+
+    // Toggles the hip scroll item
+    public void ToggleHipScroll(bool _bState) {
+        m_rHipScroll.SetActive(_bState);
+    }
+
+    // Toggles the weapon scroll
+    public void ToggleWeaponScroll(bool _bState) {
+        m_rWeaponScroll.SetActive(_bState);
     }
 }
