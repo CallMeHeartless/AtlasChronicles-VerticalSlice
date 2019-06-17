@@ -75,9 +75,10 @@ public class EnemyController : MonoBehaviour
     void Update(){
         // Do not process the enemy if they should be disabled
         if (!GameState.DoesPlayerHaveControl() || m_bIsKnockedOut) {
+            m_rNavAgent.isStopped = true;
             return;
         }
-
+        m_rNavAgent.isStopped = false;
         // Look for the player
         m_rPlayer = m_rVision.DetectPlayer(m_rEyes);
         if (m_rPlayer) {
