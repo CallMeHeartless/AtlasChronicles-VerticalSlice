@@ -10,11 +10,15 @@ public class BasicChase : AIState
     private float m_fAttackRange = 1.75f;
     private float m_fAttackCooldown = 1.0f;
     private float m_fAttackTimer = 0.0f;
+    private Animator m_rAnimator = null;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (!m_rPlayerReference) {
             m_rPlayerReference = GameObject.Find("Player").GetComponent<PlayerController>();
+        }
+        if (!m_rAnimator) {
+            m_rAnimator = m_rAI.animator;
         }
         m_rAgent.stoppingDistance = m_fAttackRange;
     }

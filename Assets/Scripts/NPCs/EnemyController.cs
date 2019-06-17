@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent m_rNavAgent;
     [SerializeField]
     private Animator m_rAnimator;
+    public Animator animator { get { return m_rAnimator; } }
     private Animator m_rStateMachine;
     [SerializeField]
     private GameObject m_rMapFragmentPrefab;
@@ -46,6 +47,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float m_fKnockoutTime = 10.0f;
     private bool m_bIsKnockedOut = false;
+    public bool isKnockedOut { get { return m_bIsKnockedOut; } }
     private bool m_bIsTagged = false;
 
     // Start is called before the first frame update
@@ -202,6 +204,10 @@ public class EnemyController : MonoBehaviour
         if (_bState) {
             ToggleMapFragment(false);
         }
+    }
+
+    public void Patrol() {
+        m_rAnimator.SetTrigger("Patrol");
     }
 
 
