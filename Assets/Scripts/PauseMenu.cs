@@ -30,9 +30,11 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && !m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
         {
             m_pausePanel.SetActive(true);
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if(Input.GetJoystickNames().Length == 0)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
             if(m_cineCamera != null)
                 m_cineCamera.enabled = false;
             GameState.SetPauseFlag(true);

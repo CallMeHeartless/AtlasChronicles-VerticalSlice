@@ -68,10 +68,14 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void StartAttack() {
         m_rAttack.m_bIsActive = true;
+        m_rPlayerController.ToggleWeaponScroll(true);
+        m_rPlayerController.ToggleHipScroll(false);
     }
 
     public void EndAttack() {
         m_rAttack.m_bIsActive = false;
+        m_rPlayerController.ToggleWeaponScroll(false);
+        m_rPlayerController.ToggleHipScroll(true);
     }
 
     public void AttackCooldown() {
