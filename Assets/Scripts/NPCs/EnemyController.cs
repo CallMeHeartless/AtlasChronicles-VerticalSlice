@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     private GameObject m_rMapFragmentPrefab;
     [SerializeField]
     private GameObject m_rMap;
+    [SerializeField]
+    private GameObject m_rTagOnHead;
 
     [Header("Vision")]
     public AIVision m_rVision;
@@ -208,6 +210,12 @@ public class EnemyController : MonoBehaviour
 
     public void Patrol() {
         m_rAnimator.SetTrigger("Patrol");
+    }
+
+    public void ToggleTagOnHead(bool _bState) {
+        if (m_rTagOnHead) {
+            m_rTagOnHead.SetActive(_bState);
+        }
     }
 
 

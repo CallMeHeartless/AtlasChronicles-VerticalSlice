@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bIsFloating = false;
     [SerializeField]
     private GameObject[] m_rGlideTrails;
+    [SerializeField]
+    private GameObject[] m_rFootDust;
 
     // Combat variables
     [Header("Combat Variables")]
