@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strSprintButton = "BButton";
     private string m_strAttackButton = "XBoxXButton";
     private string m_strCameraLockButton = "XBoxR2";
+    private AxisToButton m_rSwitchButton = new AxisToButton();
 
     // Movement variables
     [Header("Movement Variables")]
@@ -196,6 +197,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             Debug.LogError("UI not found");
         }
 
+        // Initialise trigger to button
+        m_rSwitchButton.m_strAxis = m_strSwitchButton;
+
         // Set static instance for ease of reference
         if (!m_rInstance) {
             m_rInstance = this;
@@ -219,10 +223,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
-
-        if (Input.GetButton(m_strSwitchButton)) {
-            Debug.Log(m_strSwitchButton);
-        }
     }
 
     private void LateUpdate() {
@@ -561,7 +561,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         }
         // Throw switch tag / switch teleport
-        else if (Input.GetButtonUp(m_strSwitchButton)) {
+        else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {//|| (Input.GetAxisRaw(m_strSwitchButton) == 0.0f)
             if (m_rSwitchTarget) {
                 if (!m_bSwitchThresholdWarning)
                 {
@@ -575,7 +575,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             }
         }
         // Attack
-        else if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
+        if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
             // Basic attack when on the ground
             m_rAnimator.SetTrigger("Attack");
         }else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
@@ -680,12 +680,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
 
-        if (Input.GetButton(m_strSwitchButton)) {
+        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed || Input.GetButton("SwitchTagKeyboard")) {//Input.GetButton(m_strSwitchButton)
             ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
             transform.rotation = Quaternion.Euler(0.0f, vecCameraRotation.y, 0.0f);
-        }else if (Input.GetButtonUp(m_strSwitchButton)){
+        }
+        else {//if(Input.GetButtonUp(m_strSwitchButton) && m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Released)
             // Disable 
             ToggleAiming(false);
         }   
