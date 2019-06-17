@@ -1,5 +1,155 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1499969746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499969747}
+  - component: {fileID: 1499969751}
+  - component: {fileID: 1499969750}
+  - component: {fileID: 1499969749}
+  - component: {fileID: 1499969748}
+  m_Layer: 0
+  m_Name: SwitchTagBox (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499969747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499969746}
+  m_LocalRotation: {x: -0, y: 0.6195583, z: -0, w: 0.7849506}
+  m_LocalPosition: {x: -16.830002, y: 9.63, z: 37.56}
+  m_LocalScale: {x: 8.763069, y: 4.271181, z: 27.022064}
+  m_Children: []
+  m_Father: {fileID: 4591605128209259004}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 76.568, z: 0}
+--- !u!114 &1499969751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499969746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hideSelf: 0
+  m_showOnce: 0
+  OnTrigStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7010834524428544018}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 7010834524428544018}
+        m_MethodName: SetGuideText
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: InkTag a box by holding down and Aiming with (R3)
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timeUntilHide: 3
+  OnTrigExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7010834524428544018}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!33 &1499969750
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499969746}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1499969749
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499969746}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &1499969748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499969746}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4591605126646707712
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,8 +478,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4591605126712765545}
   m_LocalRotation: {x: -0, y: 0.72727954, z: -0, w: 0.6863414}
-  m_LocalPosition: {x: -26.13, y: 0.28852344, z: 22.24}
-  m_LocalScale: {x: 26.613153, y: 1.9472866, z: 29.31184}
+  m_LocalPosition: {x: -26.13, y: 1.93, z: 22.24}
+  m_LocalScale: {x: 26.613153, y: 5.11669, z: 29.31184}
   m_Children: []
   m_Father: {fileID: 4591605127065636090}
   m_RootOrder: 0
@@ -371,7 +521,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Goons can steal your map fragments! Press Attack (Y) in
-            mid-air to Slam Attack them or throw an InkTag (RT) in their face to stun
+            mid-air to Slam Attack them or throw an InkTag (R3) in their face to stun
             them.
           m_BoolArgument: 1
         m_CallState: 2
@@ -1485,9 +1635,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: InkTag a box by Aiming with the Right Analog and holding
-            (RT) then releasing it to shoot. When the box turns pink, press (LT) to
-            switch.
+          m_StringArgument: InkTag a box by holding down and Aiming with (R3)
           m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -2313,6 +2461,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4591605127482344311}
+  - {fileID: 1499969747}
   m_Father: {fileID: 4591605128129703568}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
