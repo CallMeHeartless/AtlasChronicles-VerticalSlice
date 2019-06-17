@@ -10,6 +10,8 @@ Shader "S_TeleportBox"
 		_Emi("Emi", 2D) = "white" {}
 		_Smoothness("Smoothness", Range( 0 , 1)) = 0
 		_Metallic("Metallic", Range( 0 , 1)) = 0
+		_EmissiveColor("EmissiveColor", Color) = (0,0,0,0)
+		_EmissiveMult("EmissiveMult", Float) = 0
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
@@ -33,6 +35,10 @@ Shader "S_TeleportBox"
 		uniform float4 _Emi_ST;
 
 		UNITY_INSTANCING_BUFFER_START(S_TeleportBox)
+			UNITY_DEFINE_INSTANCED_PROP(float4, _EmissiveColor)
+#define _EmissiveColor_arr S_TeleportBox
+			UNITY_DEFINE_INSTANCED_PROP(float, _EmissiveMult)
+#define _EmissiveMult_arr S_TeleportBox
 			UNITY_DEFINE_INSTANCED_PROP(float, _Metallic)
 #define _Metallic_arr S_TeleportBox
 			UNITY_DEFINE_INSTANCED_PROP(float, _Smoothness)
@@ -43,9 +49,10 @@ Shader "S_TeleportBox"
 		{
 			float2 uv_Diff = i.uv_texcoord * _Diff_ST.xy + _Diff_ST.zw;
 			o.Albedo = tex2D( _Diff, uv_Diff ).rgb;
-			float4 color6 = IsGammaSpace() ? float4(0,0,0,0) : float4(0,0,0,0);
+			float4 _EmissiveColor_Instance = UNITY_ACCESS_INSTANCED_PROP(_EmissiveColor_arr, _EmissiveColor);
 			float2 uv_Emi = i.uv_texcoord * _Emi_ST.xy + _Emi_ST.zw;
-			o.Emission = ( ( color6 * tex2D( _Emi, uv_Emi ) ) * 0.0 ).rgb;
+			float _EmissiveMult_Instance = UNITY_ACCESS_INSTANCED_PROP(_EmissiveMult_arr, _EmissiveMult);
+			o.Emission = ( ( _EmissiveColor_Instance * tex2D( _Emi, uv_Emi ) ) * _EmissiveMult_Instance ).rgb;
 			float _Metallic_Instance = UNITY_ACCESS_INSTANCED_PROP(_Metallic_arr, _Metallic);
 			o.Metallic = _Metallic_Instance;
 			float _Smoothness_Instance = UNITY_ACCESS_INSTANCED_PROP(_Smoothness_arr, _Smoothness);
@@ -62,9 +69,9 @@ Shader "S_TeleportBox"
 Version=16400
 1927;1;1266;964;2061.729;674.4091;1.779095;True;False
 Node;AmplifyShaderEditor.SamplerNode;4;-1437.266,181.3356;Float;True;Property;_Emi;Emi;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;6;-1314.509,-46.38854;Float;False;Constant;_EmissiveColor;EmissiveColor;4;0;Create;True;0;0;False;0;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;6;-1314.509,-46.38854;Float;False;InstancedProperty;_EmissiveColor;EmissiveColor;4;0;Create;True;0;0;False;0;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;5;-855.5021,277.4068;Float;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;8;-937.3405,480.2236;Float;False;Constant;_EmissiveMult;EmissiveMult;4;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;8;-937.3405,480.2236;Float;False;InstancedProperty;_EmissiveMult;EmissiveMult;5;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;3;-355.5764,250.7202;Float;False;InstancedProperty;_Smoothness;Smoothness;2;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;2;-375.1465,158.2072;Float;False;InstancedProperty;_Metallic;Metallic;3;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;1;-853.7231,-169.1463;Float;True;Property;_Diff;Diff;0;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -79,4 +86,4 @@ WireConnection;0;2;7;0
 WireConnection;0;3;2;0
 WireConnection;0;4;3;0
 ASEEND*/
-//CHKSM=2B31B33541E482A478D489795F5A8FB27D674983
+//CHKSM=4C8E4C1B4A4F805FE39C4EC6C69EF01AE7CADDE4
