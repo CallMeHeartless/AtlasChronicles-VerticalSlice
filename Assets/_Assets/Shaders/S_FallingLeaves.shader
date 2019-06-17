@@ -115,7 +115,7 @@ Shader "Custom/S_FallingLeaves"
 }
 /*ASEBEGIN
 Version=16400
-1928;4;1266;964;863.0251;618.3565;1.490896;True;True
+1927;7;1266;958;938.6732;469.2571;1.190896;True;False
 Node;AmplifyShaderEditor.ColorNode;2;-278,-133.5;Float;False;Constant;_Color0;Color 0;2;0;Create;True;0;0;False;0;0.1386169,0.3301887,0.1635169,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;3;-70,34.5;Float;False;Constant;_Float0;Float 0;2;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;1;-352,72.5;Float;True;Property;_T_FallingLeaves_Mask;T_FallingLeaves_Mask;0;0;Create;True;0;0;False;0;2e2fbeba8d736f54b987f4e8332c6667;2e2fbeba8d736f54b987f4e8332c6667;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -125,4 +125,4 @@ WireConnection;0;3;3;0
 WireConnection;0;4;3;0
 WireConnection;0;9;1;1
 ASEEND*/
-//CHKSM=51124378FFFB077AAC51CFDFD8F5B9F361E41ABC
+//CHKSM=0F8F79C88D9BEB8679D631D0A3B9ECFD114D6AAD

@@ -10,11 +10,14 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent m_rNavAgent;
     [SerializeField]
     private Animator m_rAnimator;
+    public Animator animator { get { return m_rAnimator; } }
     private Animator m_rStateMachine;
     [SerializeField]
     private GameObject m_rMapFragmentPrefab;
     [SerializeField]
     private GameObject m_rMap;
+    [SerializeField]
+    private GameObject m_rTagOnHead;
 
     [Header("Vision")]
     public AIVision m_rVision;
@@ -46,6 +49,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private float m_fKnockoutTime = 10.0f;
     private bool m_bIsKnockedOut = false;
+    public bool isKnockedOut { get { return m_bIsKnockedOut; } }
     private bool m_bIsTagged = false;
 
     // Start is called before the first frame update
@@ -73,9 +77,10 @@ public class EnemyController : MonoBehaviour
     void Update(){
         // Do not process the enemy if they should be disabled
         if (!GameState.DoesPlayerHaveControl() || m_bIsKnockedOut) {
+            m_rNavAgent.isStopped = true;
             return;
         }
-
+        m_rNavAgent.isStopped = false;
         // Look for the player
         m_rPlayer = m_rVision.DetectPlayer(m_rEyes);
         if (m_rPlayer) {
@@ -201,6 +206,16 @@ public class EnemyController : MonoBehaviour
         m_bIsTagged = _bState;
         if (_bState) {
             ToggleMapFragment(false);
+        }
+    }
+
+    public void Patrol() {
+        m_rAnimator.SetTrigger("Patrol");
+    }
+
+    public void ToggleTagOnHead(bool _bState) {
+        if (m_rTagOnHead) {
+            m_rTagOnHead.SetActive(_bState);
         }
     }
 

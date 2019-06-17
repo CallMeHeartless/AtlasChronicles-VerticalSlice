@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bIsFloating = false;
     [SerializeField]
     private GameObject[] m_rGlideTrails;
+    [SerializeField]
+    private GameObject[] m_rFootDust;
 
     // Combat variables
     [Header("Combat Variables")]
@@ -112,13 +114,19 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private float m_fPickupRadius = 0.95f;
     [SerializeField]
     private float m_fThrowSpeed = 10.0f;
+    private bool m_bWasSwitchLastTeleportCommand = false; // An internal flag to determine if the most recent teleport command was to switch or teleport to the marker
+
+    [Header("Scroll Objects | Effects")]
     [SerializeField]
     private GameObject m_rTeleportParticles;
     [SerializeField]
     private GameObject m_rTeleportScroll;
     [SerializeField]
     private GameObject m_rGlideScroll;
-    private bool m_bWasSwitchLastTeleportCommand = false; // An internal flag to determine if the most recent teleport command was to switch or teleport to the marker
+    [SerializeField]
+    private GameObject m_rHipScroll;
+    [SerializeField]
+    private GameObject m_rWeaponScroll;
 
     [Header("Slide Detection Variables")]
     [SerializeField] private bool m_bIsSliding = false;
@@ -159,11 +167,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     void Awake() {
         // Lock mouse
         Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
 
         // Create component references
         m_rCharacterController = GetComponent<CharacterController>();
-        //m_rAnimator = GetComponentInChildren<Animator>();
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
@@ -187,9 +193,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rUI = GameObject.Find("GameUI").GetComponent<DisplayStat>();
         }
         else {
-            Debug.Log("UI not found");
+            Debug.LogError("UI not found");
         }
 
+        // Set static instance for ease of reference
         if (!m_rInstance) {
             m_rInstance = this;
         }
@@ -222,13 +229,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
         }
-        // Handle the player doing a slam attack on the ground
-        if(m_rCharacterController.isGrounded && m_bSlamAttack) {
-            //m_bSlamAttack = false;
-            // Impact animation?
-            m_rAnimator.SetBool("Grounded", true);
-            //SlamAttackReset();
-        }
     }
 
     // Handles all of the functions that determine the vector to move the player, then move them
@@ -251,8 +251,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
         else if (m_MovementDirection!= Vector3.zero && !(m_bSlamAttack || m_bPlummeting)) {
             m_rCharacterController.Move(m_MovementDirection);
-        }
-        
+        }        
     }
 
     // Calculate movement
@@ -541,7 +540,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 // Place on ground
                 m_rAnimator.ResetTrigger("Idle");
                 m_rAnimator.ResetTrigger("Walk");
-                m_rAnimator.SetTrigger("Pickup");
+                m_rAnimator.SetTrigger("PlaceTag");
                 PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
             } else {
                 TagHeldObject();
@@ -671,24 +670,21 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rAnimator.SetTrigger("Throw");
     }
 
-    // Align the player with a ray towards where the switch tag will go
+    // Align the player with the camera and indicate where the switch tag is being aimed
     private void AimSwitchTag() {
         if (m_rSwitchTarget) {
             return;
         }
 
         if (Input.GetButton(m_strSwitchButton)) {
-            //ToggleAiming(true);
-            m_rSwitchTagCrosshair.SetActive(true);
+            ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
             transform.rotation = Quaternion.Euler(0.0f, vecCameraRotation.y, 0.0f);
-
         }else if (Input.GetButtonUp(m_strSwitchButton)){
             // Disable 
-            m_rSwitchTagCrosshair.SetActive(false);
-        }
-        
+            ToggleAiming(false);
+        }   
     }
 
     // Changes parameters for when the player is / is not aiming
@@ -697,14 +693,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
         m_bIsAiming = _bState;
-        if (m_bIsAiming) {
-            m_rAnimator.SetTrigger("Aim");
-            //m_rProjectileArc.SetActive(true);
-        } else {
-            m_rAnimator.ResetTrigger("Aim");
-            m_rAnimator.SetTrigger("Cancel");
-           // m_rProjectileArc.SetActive(false);
-        }
+        m_rSwitchTagCrosshair.SetActive(m_bIsAiming);
+        m_rAnimator.SetBool("IsAiming", m_bIsAiming);
     }
 
     // Pickup the nearest item or drop the held item
@@ -983,6 +973,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private void ToggleGlideScroll(bool _bState) {
         if (m_rGlideScroll) {
             m_rGlideScroll.SetActive(_bState);
+            ToggleHipScroll(!_bState);
         }
     }
 
@@ -990,6 +981,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void ToggleTeleportScroll(bool _bState) {
         if (m_rTeleportScroll) {
             m_rTeleportScroll.SetActive(_bState);
+            ToggleHipScroll(!_bState);
         }
     }
 
@@ -1034,6 +1026,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         ToggleFloatState(false);
         m_Velocity = Vector3.zero;
         m_bCanAttack = false;
+        ToggleWeaponScroll(true);
+        ToggleHipScroll(false);
     }
 
     // Slam attack middle - damage stage
@@ -1059,6 +1053,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Player is grounded
         m_rAnimator.SetBool("Grounded", true);
         m_rAnimator.ResetTrigger("GroundSlam");
+        ToggleWeaponScroll(false);
+        ToggleHipScroll(true);
 
     }
 
@@ -1083,5 +1079,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private IEnumerator MovePlayer() {
         yield return new WaitForEndOfFrame();
         transform.position = m_rRespawnLocation;
+    }
+
+    // Toggles the hip scroll item
+    public void ToggleHipScroll(bool _bState) {
+        m_rHipScroll.SetActive(_bState);
+    }
+
+    // Toggles the weapon scroll
+    public void ToggleWeaponScroll(bool _bState) {
+        m_rWeaponScroll.SetActive(_bState);
     }
 }

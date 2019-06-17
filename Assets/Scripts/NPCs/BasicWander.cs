@@ -5,7 +5,6 @@ using UnityEngine;
 public class BasicWander : AIState
 {
     private AIWanderProperties m_rWanderProperties;
-
     private float m_fWanderIntervalTimer = 0.0f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -22,11 +21,20 @@ public class BasicWander : AIState
             FindNewPosition();
             m_fWanderIntervalTimer = 0.0f;
         }
+
+        // Determine which animation should be played
+        if (m_rAgent.velocity.sqrMagnitude == 0.0f) {
+            m_rAI.animator.SetTrigger("Idle");
+        } else {
+            m_rAI.animator.SetTrigger("Patrol");
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-
+        if (!m_rAI.isKnockedOut) {
+            m_rAI.animator.SetTrigger("SpotPlayer");
+        }
     }
 
     private void FindNewPosition() {

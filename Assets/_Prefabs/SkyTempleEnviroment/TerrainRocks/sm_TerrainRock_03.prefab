@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5250338530620916677}
+  - component: {fileID: 8890385204737914051}
   m_Layer: 0
   m_Name: sm_TerrainRock_03
   m_TagString: Untagged
@@ -31,6 +32,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &8890385204737914051
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250338530620825573}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0.0000009536743}
+  m_Size: 14.36813
+  m_FadeMode: 1
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.19040625
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5250338530618622247}
+  - screenRelativeHeight: 0.19040625
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5250338530618622247}
+  - screenRelativeHeight: 0.19040625
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5250338530618622247}
+  m_Enabled: 1
 --- !u!1 &5250338530620825575
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,6 +71,7 @@ GameObject:
   - component: {fileID: 5250338530617492455}
   - component: {fileID: 5250338530618622247}
   - component: {fileID: 6883954204977274415}
+  - component: {fileID: 1494928008530313555}
   m_Layer: 0
   m_Name: sm_TerrainRock_03
   m_TagString: Untagged
@@ -123,3 +152,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 36e463173a2a02948b3537e7fb753508, type: 3}
+--- !u!208 &1494928008530313555
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250338530620825575}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 7.1840005, y: 5.0820003, z: 7.1840005}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

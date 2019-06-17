@@ -78,8 +78,8 @@ public class BreakableObject : MonoBehaviour
 
             //Set the newly calculated destinations into an array
             m_rPrizeDestinations[i] = transform.localPosition + newPos;
-        }
 
+        }
         //Move the spawned prizes in an arc towards the calculated positions to simulate spreading
         StartCoroutine(Spread());
     }

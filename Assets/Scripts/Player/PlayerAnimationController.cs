@@ -15,6 +15,8 @@ public class PlayerAnimationController : MonoBehaviour
     private PlayerController m_rPlayerController;
     [SerializeField]
     private MeleeAttack m_rAttack;
+    [SerializeField]
+    private ParticleSystem m_rGroundSlamParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -66,10 +68,14 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void StartAttack() {
         m_rAttack.m_bIsActive = true;
+        m_rPlayerController.ToggleWeaponScroll(true);
+        m_rPlayerController.ToggleHipScroll(false);
     }
 
     public void EndAttack() {
         m_rAttack.m_bIsActive = false;
+        m_rPlayerController.ToggleWeaponScroll(false);
+        m_rPlayerController.ToggleHipScroll(true);
     }
 
     public void AttackCooldown() {
@@ -84,6 +90,9 @@ public class PlayerAnimationController : MonoBehaviour
     // Disable player control during teleportation
     public void BeginTeleportation() {
         GameState.SetPlayerTeleportingFlag(true);
+        if (m_rPlayerController) {
+            m_rPlayerController.ToggleTeleportScroll(true);
+        }
     }
 
     // External cue to perform the teleportation transition
@@ -92,18 +101,26 @@ public class PlayerAnimationController : MonoBehaviour
             m_rPlayerController.TeleportationTransition();
     }
 
+    // Trigger first part of slam attack
     public void SlamAttackBegin() {
         if (m_rPlayerController)
             m_rPlayerController.SlamAttackBegin();
     }
 
+    // Trigger middle of slam attack
     public void SlamAttackMiddle() {
         if (m_rPlayerController)
             m_rPlayerController.SlamAttackMiddle();
     }
 
+    // Trigger slam attack finish
     public void SlamAttackReset() {
         if (m_rPlayerController)
             m_rPlayerController.SlamAttackReset();
+    }
+
+    // Play slam particles
+    public void PlaySlamParticles() {
+        m_rGroundSlamParticles.Play();
     }
 }
