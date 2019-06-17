@@ -10,6 +10,7 @@ public class Pendulum : MonoBehaviour
     public float m_fBack;
     public float m_fSpeed =10;
     public JointMotor m_JointCaneHingeMotor;
+    public int m_fDamage = 1;
    // public bool X, Y, Z = false;
     // Start is called before the first frame update
     void Start()
@@ -51,5 +52,16 @@ public class Pendulum : MonoBehaviour
             }
            
         
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            DamageMessage message = new DamageMessage();
+            message.damage = m_fDamage;
+            message.source = gameObject;
+            collision.gameObject.GetComponent<DamageController>().ApplyDamage(message);
+            //collision.gameObject.GetComponent<Rigidbody>().AddForce((gameObject.transform.position - collision.gameObject.transform.position)*100, ForceMode.Impulse);
+        }
     }
 }
