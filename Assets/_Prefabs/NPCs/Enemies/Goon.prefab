@@ -185,6 +185,7 @@ MonoBehaviour:
   m_rMapFragmentPrefab: {fileID: 9155770641131760257, guid: 4293cbe2da160be4ea8b8ee7262c65dc,
     type: 3}
   m_rMap: {fileID: 3329021978473494418}
+  m_rTagOnHead: {fileID: 5921199826145724403}
   m_rVision:
     m_fVisionRadius: 10
     m_fVisionAngle: 275
@@ -267,6 +268,17 @@ MonoBehaviour:
           m_StringArgument: Death
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2744388183069921981}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnReceiveDamage:
@@ -324,7 +336,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnResetDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2744388183069921981}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnDamageMessageReceivers: []
@@ -442,6 +465,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6625952502292613535, guid: f4ca33aa8afeb1647a57c7a3722e7c9f,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243556441277748768, guid: 6da555e14e3cb1447a086e349371c1d2,
+        type: 2}
     - target: {fileID: 7764021918841456312, guid: f4ca33aa8afeb1647a57c7a3722e7c9f,
         type: 3}
       propertyPath: defaultAudio.clips.Array.size
@@ -462,12 +491,6 @@ PrefabInstance:
       propertyPath: defaultAudio.clips.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 571d49d99ff14224cbd8d5159dfd4766, type: 3}
-    - target: {fileID: 6625952502292613535, guid: f4ca33aa8afeb1647a57c7a3722e7c9f,
-        type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 243556441277748768, guid: 6da555e14e3cb1447a086e349371c1d2,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4ca33aa8afeb1647a57c7a3722e7c9f, type: 3}
 --- !u!4 &5238179934445662427 stripped
@@ -595,6 +618,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Tag
       objectReference: {fileID: 0}
+    - target: {fileID: 8770177014926448843, guid: fefb65c8dc4d28c4db83e84196bbcca4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3052183053268181858, guid: fefb65c8dc4d28c4db83e84196bbcca4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -667,6 +695,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fefb65c8dc4d28c4db83e84196bbcca4, type: 3}
+--- !u!1 &5921199826145724403 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8770177014926448843, guid: fefb65c8dc4d28c4db83e84196bbcca4,
+    type: 3}
+  m_PrefabInstance: {fileID: 3141751508529962808}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3329021978473460018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -857,6 +891,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_Dazed
       objectReference: {fileID: 0}
+    - target: {fileID: 7035653173098192765, guid: c4c0724127eeda144a03005dc49f9eec,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7035653173098192752, guid: c4c0724127eeda144a03005dc49f9eec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -924,6 +963,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4c0724127eeda144a03005dc49f9eec, type: 3}
+--- !u!1 &2744388183069921981 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7035653173098192765, guid: c4c0724127eeda144a03005dc49f9eec,
+    type: 3}
+  m_PrefabInstance: {fileID: 5167229437262400960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6181275847731812491
 PrefabInstance:
   m_ObjectHideFlags: 0
