@@ -22,6 +22,7 @@ public class CheckpointController : MonoBehaviour
                     player.m_rRespawnLocation = transform.position;
                 }
 
+                other.gameObject.GetComponent<DamageController>().ResetDamage();
             }
             else {
                 Debug.LogError("ERROR: Could not update player respawn position");
