@@ -219,6 +219,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
+
+        if (Input.GetButton(m_strSwitchButton)) {
+            Debug.Log(m_strSwitchButton);
+        }
     }
 
     private void LateUpdate() {
