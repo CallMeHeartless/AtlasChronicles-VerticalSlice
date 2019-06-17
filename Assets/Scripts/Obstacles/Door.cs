@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MessageSystem;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IMessageReceiver
 {
     public bool[] m_bDoorLocks;
     public GameObject m_gDoorOpen;
     public GameObject m_gDoorClosed;
     public float m_fSpeed = 0.01f;
-    bool Unlocked = false;
+    private bool m_bUnlocked = false;
     private bool m_bMoving = false;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class Door : MonoBehaviour
         if (m_bMoving)
         {
             
-            if (Unlocked == true)
+            if (m_bUnlocked == true)
             {
                 if (Vector3.Distance(transform.position, m_gDoorOpen.transform.position) < .1f)
                 {
@@ -69,10 +70,10 @@ public class Door : MonoBehaviour
 
         bool newLock = LockedDoor();
         Debug.Log("newLock: "+newLock);
-        Debug.Log("Unlocked: "+Unlocked);
-        if (newLock != Unlocked)
+        Debug.Log("Unlocked: "+m_bUnlocked);
+        if (newLock != m_bUnlocked)
         {
-            Unlocked = newLock;
+            m_bUnlocked = newLock;
             m_bMoving = true;
         }
     }
@@ -88,5 +89,31 @@ public class Door : MonoBehaviour
             }
         }
         return true;
+    }
+
+    // Implement Message interface
+    public void OnReceiveMessage(MessageType _message, object _source) {
+        switch (_message) {
+            // Open the door
+            case MessageType.eActivate: {
+                m_bUnlocked = true;
+                m_bMoving = true;
+                for(int i = 0; i < m_bDoorLocks.Length; ++i) {
+                    m_bDoorLocks[i] = true;
+                }
+                break;
+            }
+            // Reset the door
+            case MessageType.eReset: {
+                m_bUnlocked = false;
+                m_bMoving = true;
+                for (int i = 0; i < m_bDoorLocks.Length; ++i) {
+                    m_bDoorLocks[i] = false;
+                }
+                break;
+            }
+
+            default:break;
+        }
     }
 }

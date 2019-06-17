@@ -29,7 +29,16 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
             IMessageReceiver target = m_ObjectsToMessage[i] as IMessageReceiver;
                 target.OnReceiveMessage(MessageType.eActivate, null);
         }
-        Debug.Log("Messages sent");
+        Debug.Log("Activate Messages sent");
+    }
+
+    public void SendResetMessages() {
+        // Send message
+        for (int i = 0; i < m_ObjectsToMessage.Count; ++i) {
+            IMessageReceiver target = m_ObjectsToMessage[i] as IMessageReceiver;
+            target.OnReceiveMessage(MessageType.eReset, null);
+        }
+        Debug.Log("Reset Messages sent");
     }
 
     public void OnReceiveMessage(MessageType _eType, object _message) {
