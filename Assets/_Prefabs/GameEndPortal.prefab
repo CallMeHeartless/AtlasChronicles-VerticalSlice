@@ -30,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8763963999021712553}
+  - {fileID: 1486986140174253012}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_strEndText: Congrats! You obtained all seven map fragments. Return with them to
     the start to leave the world.
-  m_rPortalParticles: {fileID: 8529370698832784107}
+  m_rPortalParticles: {fileID: 1486986140174253015}
 --- !u!1 &8529370698832784107
 GameObject:
   m_ObjectHideFlags: 0
@@ -4759,3 +4760,89 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1001 &2402373442904217228
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2216185426755426649}
+    m_Modifications:
+    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_Name
+      value: VFX_EndPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5c03bbdf43308eb4e8b68cbce4263ef9, type: 3}
+--- !u!1 &1486986140174253015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2402373442904217228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1486986140174253012 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2402373442904217228}
+  m_PrefabAsset: {fileID: 0}
