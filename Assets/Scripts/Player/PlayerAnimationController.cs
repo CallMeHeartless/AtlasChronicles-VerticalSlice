@@ -17,6 +17,8 @@ public class PlayerAnimationController : MonoBehaviour
     private MeleeAttack m_rAttack;
     [SerializeField]
     private ParticleSystem m_rGroundSlamParticles;
+    [SerializeField]
+    private ParticleSystem m_rFootDustParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +65,10 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void PlayStep() {
         if(m_rPlayerController)
+        {
             m_rPlayerController.HandleFootsteps();
+            m_rFootDustParticles.Play();
+        }
     }
 
     public void StartAttack() {
