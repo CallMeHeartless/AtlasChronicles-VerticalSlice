@@ -212,6 +212,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
 
+        // Update L2
+        m_rSwitchButton.Update();
+
+        // Check if the character is grounded to reset jump count
         if (m_rCharacterController.isGrounded)
             ResetJump();
 
