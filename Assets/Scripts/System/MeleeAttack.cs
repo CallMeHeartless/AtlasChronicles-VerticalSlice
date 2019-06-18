@@ -37,6 +37,9 @@ public class MeleeAttack : MonoBehaviour
                     message.damage = m_iDamage;
                     message.source = gameObject;
                     target.ApplyDamage(message);
+                    if (m_rHitParticles) {
+                        m_rHitParticles.Play();
+                    }
                     OnHit.Invoke();
                     m_bIsActive = false; // Prevent multiple collisions
                 }
@@ -51,6 +54,9 @@ public class MeleeAttack : MonoBehaviour
                     message.damage = m_iDamage;
                     message.source = gameObject;
                     target.ApplyDamage(message);
+                    if (m_rHitParticles) {
+                        m_rHitParticles.Play();
+                    }
                     OnHit.Invoke();
                     m_bIsActive = false; // Prevent multiple collisions
                 }

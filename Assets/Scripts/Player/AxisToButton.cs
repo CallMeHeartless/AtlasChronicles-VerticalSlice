@@ -17,8 +17,14 @@ public class AxisToButton
     
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
+        m_fPrevious = m_fCurrent;
+        m_fCurrent = Input.GetAxisRaw(m_strAxis);
+        Debug.Log(Input.GetAxisRaw(m_strAxis));
+    }
+
+    public void UpdateButton() {
         m_fPrevious = m_fCurrent;
         m_fCurrent = Input.GetAxisRaw(m_strAxis);
     }
