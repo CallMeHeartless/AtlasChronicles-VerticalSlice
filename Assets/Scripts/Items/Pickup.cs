@@ -31,7 +31,7 @@ public class Pickup : MonoBehaviour
                 GetComponent<AudioSource>().Play();
                 GameStats.s_iMapsBoard[GameStats.s_iLevelIndex]++;
                 // Check for end of game
-                GameEndController.instance.CheckMapCollection(); 
+                GameEndController.CheckMapCollection(); 
             }
             if (gameObject.CompareTag("SecondaryPickup"))
             {   // Level specific collectables
