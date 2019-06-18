@@ -18,7 +18,9 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField]
     private ParticleSystem m_rGroundSlamParticles;
     [SerializeField]
-    private ParticleSystem m_rFootDustParticles;
+    private ParticleSystem m_rLeftFootDustParticles;
+    [SerializeField]
+    private ParticleSystem m_rRightFootDustParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +69,29 @@ public class PlayerAnimationController : MonoBehaviour
         if(m_rPlayerController)
         {
             m_rPlayerController.HandleFootsteps();
-            m_rFootDustParticles.Play();
+            //m_rFootDustParticles.Play();
+        }
+    }
+
+    public void PlayLandDust()
+    {
+        m_rLeftFootDustParticles.Play();
+
+        m_rRightFootDustParticles.Play();
+    }
+
+    public void PlayFootDust(int _leftFoot)
+    {
+        if (!m_rPlayerController.GetComponent<CharacterController>().isGrounded)
+            return;
+
+        if(_leftFoot == 0)
+        {
+            m_rLeftFootDustParticles.Play();
+        }
+        else
+        {
+            m_rRightFootDustParticles.Play();
         }
     }
 
