@@ -37,6 +37,7 @@ public class GameEndController : MonoBehaviour
     public static void CheckMapCollection() {
         if (!instance) {
             Debug.LogError("ERROR: GameEndController instance does not exist. Check that it has been added to the scene.");
+            return;
         }
         // If MAPS_COLLECTED >= MAPS_TOTAL
         Debug.Log("Collected: " + GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] + "  portal is: " + instance.m_bIsActive);
