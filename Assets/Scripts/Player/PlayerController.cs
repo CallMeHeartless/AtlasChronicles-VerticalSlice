@@ -653,27 +653,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rSwitchTarget = _switchTarget;
     }
 
-    public void ThrowHeldObject() {
-        if (!m_rHeldObject) {
-            return;
-        }
-        m_rHeldObject.transform.SetParent(null);
-        Rigidbody heldObjectRb = m_rHeldObject.GetComponent<Rigidbody>();
-        heldObjectRb.isKinematic = false;
-        // Get velocity
-        LineRenderer lineRenderer = m_rSwitchTagCrosshair.GetComponent<LineRenderer>();
-        Vector3 vecVelocity = lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0);
-        heldObjectRb.velocity = vecVelocity.normalized * m_fThrowSpeed;// Mathf.Sqrt(m_fThrowSpeed * m_fThrowSpeed + m_fThrowSpeed * m_fThrowSpeed);//m_fThrowSpeed;
-
-        m_rHeldObject.GetComponent<HoldableItem>().ToggleCollider();
-        //heldObjectRb.AddForce(vecVelocity.normalized * m_fThrowSpeed, ForceMode.Acceleration);
-        m_rHeldObject = null;
-        m_bIsAiming = false;
-        m_rSwitchTagCrosshair.SetActive(false); // Consider removing depending on how input will be handled
-        // Animation
-        m_rAnimator.SetTrigger("Throw");
-    }
-
     // Align the player with the camera and indicate where the switch tag is being aimed
     private void AimSwitchTag() {
         if (m_rSwitchTarget) {
