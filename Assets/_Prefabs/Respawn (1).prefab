@@ -43,8 +43,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1449828880739291940}
   - {fileID: 5468118844984447721}
+  - {fileID: 1449828880739291940}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61,6 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bPoint: 0
+  m_rInactive: {fileID: 2100000, guid: 78e130ea72357bc49935a6d1a9367f53, type: 2}
+  m_rActive: {fileID: 2100000, guid: 7bcb14c94561f39418bebc6c2d2bf0d9, type: 2}
 --- !u!65 &7129958891724293978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -119,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 45d8c28d6c41cfa4bb1be3233dbd9d6c, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 45d8c28d6c41cfa4bb1be3233dbd9d6c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -170,10 +172,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 507057861123323940}
     m_Modifications:
-    - target: {fileID: 100000, guid: 423228b33b6655b47a974287dc862af0, type: 3}
-      propertyPath: m_Name
-      value: sm_CheckPoint
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 423228b33b6655b47a974287dc862af0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -204,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 423228b33b6655b47a974287dc862af0, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 423228b33b6655b47a974287dc862af0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -217,6 +215,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 423228b33b6655b47a974287dc862af0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 423228b33b6655b47a974287dc862af0, type: 3}
+      propertyPath: m_Name
+      value: sm_CheckPoint
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 423228b33b6655b47a974287dc862af0, type: 3}
       propertyPath: m_Materials.Array.data[0]
