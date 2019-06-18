@@ -34,13 +34,16 @@ public class GameEndController : MonoBehaviour
     }
 
     // Called when the player collects a map fragment to check if they have them all (or when they have lost one)
-    public void CheckMapCollection() {
+    public static void CheckMapCollection() {
+        if (!instance) {
+            Debug.LogError("ERROR: GameEndController instance does not exist. Check that it has been added to the scene.");
+        }
         // If MAPS_COLLECTED >= MAPS_TOTAL
-        Debug.Log("Collected: " + GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] + "  portal is: " + m_bIsActive);
+        Debug.Log("Collected: " + GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] + "  portal is: " + instance.m_bIsActive);
         if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= GameStats.s_iMapsTotal[GameStats.s_iLevelIndex]) {
-            TogglePortal(true);
+            instance.TogglePortal(true);
         } else {
-            TogglePortal(false);
+            instance.TogglePortal(false);
         }
     }
 
