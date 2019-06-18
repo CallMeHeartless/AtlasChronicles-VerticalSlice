@@ -1017,12 +1017,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Check if the player was damaged by a goon, stealing a map fragment from them if they have one
     private void StealMapFragment(EnemyController _Goon) {
-            // Check if the player has swag to steal
-            if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
-                // Award a map fragment to the goon
-                --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
-                _Goon.ToggleMapFragment(true);
-            }
+        // Check if the player has swag to steal
+        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
+            // Award a map fragment to the goon
+            --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
+            _Goon.ToggleMapFragment(true);
+            GameEndController.instance.CheckMapCollection();
+        }
     }
 
     // Slam attack begin - first stage
