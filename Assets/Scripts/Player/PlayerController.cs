@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strSprintButton = "BButton";
     private string m_strAttackButton = "XBoxXButton";
     private string m_strCameraLockButton = "XBoxR2";
+    private AxisToButton m_rSwitchButton = new AxisToButton();
 
     // Movement variables
     [Header("Movement Variables")]
@@ -196,6 +197,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             Debug.LogError("UI not found");
         }
 
+        // Initialise trigger to button
+        m_rSwitchButton.m_strAxis = m_strSwitchButton;
+
         // Set static instance for ease of reference
         if (!m_rInstance) {
             m_rInstance = this;
@@ -208,6 +212,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
 
+        // Update L2
+        m_rSwitchButton.Update();
+
+        // Check if the character is grounded to reset jump count
         if (m_rCharacterController.isGrounded)
             ResetJump();
 
@@ -557,7 +565,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         }
         // Throw switch tag / switch teleport
-        else if (Input.GetButtonUp(m_strSwitchButton)) {
+        else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {//|| (Input.GetAxisRaw(m_strSwitchButton) == 0.0f)
             if (m_rSwitchTarget) {
                 if (!m_bSwitchThresholdWarning)
                 {
@@ -571,7 +579,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             }
         }
         // Attack
-        else if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
+        if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
             // Basic attack when on the ground
             m_rAnimator.SetTrigger("Attack");
         }else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
@@ -649,39 +657,19 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rSwitchTarget = _switchTarget;
     }
 
-    public void ThrowHeldObject() {
-        if (!m_rHeldObject) {
-            return;
-        }
-        m_rHeldObject.transform.SetParent(null);
-        Rigidbody heldObjectRb = m_rHeldObject.GetComponent<Rigidbody>();
-        heldObjectRb.isKinematic = false;
-        // Get velocity
-        LineRenderer lineRenderer = m_rSwitchTagCrosshair.GetComponent<LineRenderer>();
-        Vector3 vecVelocity = lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0);
-        heldObjectRb.velocity = vecVelocity.normalized * m_fThrowSpeed;// Mathf.Sqrt(m_fThrowSpeed * m_fThrowSpeed + m_fThrowSpeed * m_fThrowSpeed);//m_fThrowSpeed;
-
-        m_rHeldObject.GetComponent<HoldableItem>().ToggleCollider();
-        //heldObjectRb.AddForce(vecVelocity.normalized * m_fThrowSpeed, ForceMode.Acceleration);
-        m_rHeldObject = null;
-        m_bIsAiming = false;
-        m_rSwitchTagCrosshair.SetActive(false); // Consider removing depending on how input will be handled
-        // Animation
-        m_rAnimator.SetTrigger("Throw");
-    }
-
     // Align the player with the camera and indicate where the switch tag is being aimed
     private void AimSwitchTag() {
         if (m_rSwitchTarget) {
             return;
         }
 
-        if (Input.GetButton(m_strSwitchButton)) {
+        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed || Input.GetButton("SwitchTagKeyboard")) {//Input.GetButton(m_strSwitchButton)
             ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
             transform.rotation = Quaternion.Euler(0.0f, vecCameraRotation.y, 0.0f);
-        }else if (Input.GetButtonUp(m_strSwitchButton)){
+        }
+        else {//if(Input.GetButtonUp(m_strSwitchButton) && m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Released)
             // Disable 
             ToggleAiming(false);
         }   
@@ -1012,12 +1000,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Check if the player was damaged by a goon, stealing a map fragment from them if they have one
     private void StealMapFragment(EnemyController _Goon) {
-            // Check if the player has swag to steal
-            if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
-                // Award a map fragment to the goon
-                --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
-                _Goon.ToggleMapFragment(true);
-            }
+        // Check if the player has swag to steal
+        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
+            // Award a map fragment to the goon
+            --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
+            _Goon.ToggleMapFragment(true);
+            GameEndController.CheckMapCollection();
+        }
     }
 
     // Slam attack begin - first stage

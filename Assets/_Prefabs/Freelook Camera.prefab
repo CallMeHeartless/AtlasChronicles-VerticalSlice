@@ -1,60 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1144940867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1280811138983755663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdcd06815c47d30489f70df42db56a48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frustum:
-    settings:
-      enableVolumes: 1
-      enableVolumesTextureMask: 1
-      enableVolumesNoiseMask: 1
-      enableDirectionalLights: 1
-      enableDirectionalLightsShadows: 1
-      enableSpotLights: 1
-      enableSpotLightsShadows: 1
-      enablePointLights: 1
-      enablePointLightsShadows: 1
-      enableLightsCookies: 1
-      enableOcclusionCulling: 1
-      occlusionCullingAccuracy: 2
-      enableTemporalReprojection: 1
-      temporalReprojectionFactor: 0.9
-      resolution: {x: 160, y: 88, z: 128}
-      farClipPlaneDistance: 50
-      density: 0
-      anisotropy: 0.5
-      color: {r: 0.25, g: 0.25, b: 0.25, a: 1}
-      colorStrength: 0.25
-    _computeMaximumDepthComputeShader: {fileID: 7200000, guid: a5d52c8a306e8b746ab60b306575aa3e,
-      type: 3}
-    _processOcclusionMapShader: {fileID: 4800000, guid: b9b5b0990ea6cfa4d96c89a9c1cec3e9,
-      type: 3}
-    _computeDataComputeShader: {fileID: 7200000, guid: 971d5d94be5bebc44aa6d832c17f5e62,
-      type: 3}
-    _computeAccumulationComputeShader: {fileID: 7200000, guid: 41ac7d79af1f9614ebe54df4f30ac3e0,
-      type: 3}
-  applyAsPostProcess: 1
-  computeMaximumDepthComputeShader: {fileID: 7200000, guid: a5d52c8a306e8b746ab60b306575aa3e,
-    type: 3}
-  processOcclusionMapShader: {fileID: 4800000, guid: b9b5b0990ea6cfa4d96c89a9c1cec3e9,
-    type: 3}
-  computeDataComputeShader: {fileID: 7200000, guid: 971d5d94be5bebc44aa6d832c17f5e62,
-    type: 3}
-  computeAccumulationComputeShader: {fileID: 7200000, guid: 41ac7d79af1f9614ebe54df4f30ac3e0,
-    type: 3}
-  postProcessShader: {fileID: 4800000, guid: 50255fa344dbd814c910fdafc5692b09, type: 3}
-  blueNoiseTexturesArray: {fileID: 18700000, guid: 518b8337a0340444aa49dd0780efa9c2,
-    type: 2}
-  _hasBeenAssigned: 1
 --- !u!1 &4385144532454148413
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,9 +767,9 @@ MonoBehaviour:
   m_Strategy: 1
   m_MaximumEffort: 9
   m_SmoothingTime: 1.5
-  m_Damping: 0.5
+  m_Damping: 2
   m_DampingWhenOccluded: 2
-  m_OptimalTargetDistance: 0
+  m_OptimalTargetDistance: 5
 --- !u!1001 &906752247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -840,37 +785,37 @@ PrefabInstance:
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -66.55256
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.984522
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -119.83746
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1788047
+      value: 0.059179086
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.08492866
+      value: 0.9287442
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.015494137
+      value: -0.1694372
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9800898
+      value: 0.3243811
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
@@ -925,12 +870,6 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdabd27d67b22864abbffc0166ccb75a, type: 3}
---- !u!1 &1280811138983755663 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1280811138748419960, guid: cdabd27d67b22864abbffc0166ccb75a,
-    type: 3}
-  m_PrefabInstance: {fileID: 906752247}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1280811138983755659 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
