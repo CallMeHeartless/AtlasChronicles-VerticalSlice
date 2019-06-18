@@ -1022,7 +1022,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             // Award a map fragment to the goon
             --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
             _Goon.ToggleMapFragment(true);
-            GameEndController.instance.CheckMapCollection();
+            GameEndController.CheckMapCollection();
         }
     }
 
