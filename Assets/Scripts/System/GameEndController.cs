@@ -24,7 +24,7 @@ public class GameEndController : MonoBehaviour
         if (!m_sInstance) {
             m_sInstance = this;
         }
-        m_rGuidePanel = GameObject.Find("Guide");
+        m_rGuidePanel = GameObject.FindWithTag("Guide");
         if (m_rGuidePanel) {
             m_rText = m_rGuidePanel.GetComponentInChildren<TextMeshProUGUI>();
         } else {
