@@ -15,6 +15,11 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        GameStats.s_iMapsBoard[0] = 0;
+        GameStats.s_iCollectableBoard[0] = 0;
         if (PlayButton) {
             PlayButton.Select();
         }

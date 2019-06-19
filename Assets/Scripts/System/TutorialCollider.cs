@@ -6,8 +6,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider))]
 public class TutorialCollider : MonoBehaviour
 {
+    [SerializeField] TutorialGuide m_rGuide = null;
     [SerializeField] bool m_bHideSelf = false;
     [SerializeField] int m_iTimesToDisplay = 1;
+    [TextArea(3, 3)]
+    [SerializeField] string m_sTutorialText = "";
     private int m_iTimesDisplayed = 0;
 
     public UnityEvent OnTrigStay;
@@ -30,6 +33,7 @@ public class TutorialCollider : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             OnTrigStay.Invoke();
+            m_rGuide.SetGuideText(m_sTutorialText);
         }
     }
 
@@ -61,5 +65,10 @@ public class TutorialCollider : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+    }
+
+    public void SetText(string _text)
+    {
+        m_sTutorialText = _text;
     }
 }

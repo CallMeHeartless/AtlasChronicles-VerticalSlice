@@ -13,9 +13,14 @@ public class GameEndController : MonoBehaviour
     // Properties / references
     private GameObject m_rGuidePanel;
     private TextMeshProUGUI m_rText;
+
     public string m_strEndText = "Congrats! You obtained all seven map fragments. Return with them to the start to leave the world.";
     [SerializeField]
     private GameObject m_rPortalParticles = null;
+    [SerializeField]
+    private GameObject m_rInfo = null; //Just ui telling player the portal is open
+    [SerializeField]
+    private TutorialCollider m_rNPCCompleteMsg = null; 
     private bool m_bIsActive = false;
 
     void Awake()
@@ -30,7 +35,6 @@ public class GameEndController : MonoBehaviour
         else {
             Debug.LogError("ERROR: Could not find guide panel (GameEndController reference)");
         }
-
     }
 
     // Called when the player collects a map fragment to check if they have them all (or when they have lost one)
@@ -41,7 +45,7 @@ public class GameEndController : MonoBehaviour
         }
         // If MAPS_COLLECTED >= MAPS_TOTAL
         Debug.Log("Collected: " + GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] + "  portal is: " + instance.m_bIsActive);
-        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= GameStats.s_iMapsTotal[GameStats.s_iLevelIndex]) {
+        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= 5 && GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex] >= 100) {
             instance.TogglePortal(true);
         } else {
             instance.TogglePortal(false);
@@ -54,6 +58,14 @@ public class GameEndController : MonoBehaviour
         m_bIsActive = _bState;
         if (m_rPortalParticles) {
             m_rPortalParticles.SetActive(_bState);
+            if(m_rInfo)
+            {
+                m_rInfo.SetActive(true);
+            }
+            if(m_rNPCCompleteMsg)
+            {
+                m_rNPCCompleteMsg.SetText("Congrats Kid! Enter the portal to leave the world or stay behind and adventure some more. (Wait.. those Pechapples are for me.. right?)");
+            }
         }
         // Display text
         m_rGuidePanel.SetActive(_bState);
@@ -67,7 +79,7 @@ public class GameEndController : MonoBehaviour
     // Return the player to the main menu upon completion
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene(0);
         }
     }
 }

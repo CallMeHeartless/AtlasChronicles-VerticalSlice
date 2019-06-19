@@ -37,6 +37,7 @@ public class Pickup : MonoBehaviour
             {   // Level specific collectables
                 GetComponent<AudioSource>().Play();
                 GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex]++;
+                GameEndController.CheckMapCollection();
             }
 
             // Turn on VFX
