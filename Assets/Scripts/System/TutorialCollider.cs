@@ -6,8 +6,10 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider))]
 public class TutorialCollider : MonoBehaviour
 {
-    [SerializeField] bool m_hideSelf = false;
-    [SerializeField] bool m_showOnce = false;
+    [SerializeField] bool m_bHideSelf = false;
+    [SerializeField] int m_iTimesToDisplay = 1;
+    private int m_iTimesDisplayed = 0;
+
     public UnityEvent OnTrigStay;
     [SerializeField] float timeUntilHide = 2.0f;
     public UnityEvent OnTrigExit;
@@ -42,16 +44,20 @@ public class TutorialCollider : MonoBehaviour
     public void HideTutorial()
     {
         OnTrigExit.Invoke();
-        if(m_showOnce)
+        if(m_iTimesDisplayed < m_iTimesToDisplay)
+        {
+            ++m_iTimesDisplayed;
+        }
+        else if (m_iTimesDisplayed >= m_iTimesToDisplay)
         {
             //If part of a group
-            if(!m_hideSelf)
+            if (!m_bHideSelf)
             {
                 gameObject.transform.parent.gameObject.SetActive(false);
             }
             else
             {
-                //If individual
+                //If this is an individual tutorial that is not part of a group
                 gameObject.SetActive(false);
             }
         }

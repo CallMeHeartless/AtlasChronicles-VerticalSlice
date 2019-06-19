@@ -18,8 +18,7 @@ public class GameEndController : MonoBehaviour
     private GameObject m_rPortalParticles = null;
     private bool m_bIsActive = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (!m_sInstance) {
             m_sInstance = this;
@@ -27,7 +26,8 @@ public class GameEndController : MonoBehaviour
         m_rGuidePanel = GameObject.FindWithTag("Guide");
         if (m_rGuidePanel) {
             m_rText = m_rGuidePanel.GetComponentInChildren<TextMeshProUGUI>();
-        } else {
+        }
+        else {
             Debug.LogError("ERROR: Could not find guide panel (GameEndController reference)");
         }
 
