@@ -7,6 +7,7 @@ public class BreakableObject : MonoBehaviour
     [SerializeField] GameObject m_rOriginalObject;
     [SerializeField] GameObject m_rBrokenObject;
     [SerializeField] GameObject[] m_rPrizes;
+    [SerializeField] AudioSource m_rBreakingAudio;
 
     [Header("Arc settings")]
     [SerializeField] AnimationCurve m_yCurve;
@@ -18,8 +19,11 @@ public class BreakableObject : MonoBehaviour
 
     private void Start()
     {
+        m_rBreakingAudio = GetComponent<AudioSource>();
+        if(m_rBreakingAudio)
+            m_rBreakingAudio.Stop();
         //If there is a broken object
-        if(m_rBrokenObject)
+        if (m_rBrokenObject)
             m_rBrokenObject.SetActive(false);
 
         //Initialise a prize destination array based on the amount of prizes that exist
@@ -34,6 +38,8 @@ public class BreakableObject : MonoBehaviour
     {
         if(m_rOriginalObject && m_rBrokenObject)
         {
+            if (m_rBreakingAudio)
+                m_rBreakingAudio.Play();
             //Activate the broken box
             m_rBrokenObject.SetActive(true);
             //Destroy the original box
