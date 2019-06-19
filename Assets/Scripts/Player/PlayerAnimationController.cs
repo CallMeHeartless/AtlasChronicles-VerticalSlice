@@ -82,7 +82,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void PlayFootDust(int _leftFoot)
     {
-        if (!m_rPlayerController.GetComponent<CharacterController>().isGrounded)
+        if (!m_rPlayerController.GetComponent<CharacterController>().isGrounded || m_rPlayerController.GetIsWading())
             return;
 
         if(_leftFoot == 0)
