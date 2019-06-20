@@ -61,7 +61,8 @@ public class AudioPlayer : MonoBehaviour
     // Start is called before the first frame update
     public void PlayAudio()
     {
-        PickRandomSound(null);
+        if(!m_Audiosource.isPlaying)
+            PickRandomSound(null);
     }
 
     public void PickRandomSound(Material _overrideMaterial)

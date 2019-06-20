@@ -8,11 +8,14 @@ Shader "S_MossyRock"
 	{
 		_RockDiffuse("Rock Diffuse", 2D) = "white" {}
 		_MossDiffuse("Moss Diffuse", 2D) = "white" {}
-		_RockNormal("RockNormal", 2D) = "white" {}
-		_MossNormal("MossNormal", 2D) = "white" {}
+		_MossMask("Moss Mask", 2D) = "white" {}
+		_RockNormal("RockNormal", 2D) = "bump" {}
+		_MossNormal("MossNormal", 2D) = "bump" {}
 		_MossAmount("Moss Amount", Float) = 0
 		_RockSmoothness("RockSmoothness", Float) = 0
 		_MossSmoothness("MossSmoothness", Float) = 0
+		_MaskCoord("Mask Coord", Float) = 0
+		_MossIntensity("Moss Intensity", Float) = 0
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
@@ -49,10 +52,15 @@ Shader "S_MossyRock"
 		uniform float4 _RockDiffuse_ST;
 		uniform sampler2D _MossDiffuse;
 		uniform float4 _MossDiffuse_ST;
+		uniform sampler2D _MossMask;
 
 		UNITY_INSTANCING_BUFFER_START(S_MossyRock)
 			UNITY_DEFINE_INSTANCED_PROP(float, _MossAmount)
 #define _MossAmount_arr S_MossyRock
+			UNITY_DEFINE_INSTANCED_PROP(float, _MaskCoord)
+#define _MaskCoord_arr S_MossyRock
+			UNITY_DEFINE_INSTANCED_PROP(float, _MossIntensity)
+#define _MossIntensity_arr S_MossyRock
 			UNITY_DEFINE_INSTANCED_PROP(float, _RockSmoothness)
 #define _RockSmoothness_arr S_MossyRock
 			UNITY_DEFINE_INSTANCED_PROP(float, _MossSmoothness)
@@ -70,7 +78,11 @@ Shader "S_MossyRock"
 			o.Normal = lerpResult8;
 			float2 uv_RockDiffuse = i.uv_texcoord * _RockDiffuse_ST.xy + _RockDiffuse_ST.zw;
 			float2 uv_MossDiffuse = i.uv_texcoord * _MossDiffuse_ST.xy + _MossDiffuse_ST.zw;
-			float4 lerpResult9 = lerp( tex2D( _RockDiffuse, uv_RockDiffuse ) , tex2D( _MossDiffuse, uv_MossDiffuse ) , temp_output_14_0);
+			float _MaskCoord_Instance = UNITY_ACCESS_INSTANCED_PROP(_MaskCoord_arr, _MaskCoord);
+			float2 temp_cast_0 = (_MaskCoord_Instance).xx;
+			float2 uv_TexCoord19 = i.uv_texcoord * temp_cast_0;
+			float _MossIntensity_Instance = UNITY_ACCESS_INSTANCED_PROP(_MossIntensity_arr, _MossIntensity);
+			float4 lerpResult9 = lerp( tex2D( _RockDiffuse, uv_RockDiffuse ) , tex2D( _MossDiffuse, uv_MossDiffuse ) , ( ( temp_output_14_0 * tex2D( _MossMask, uv_TexCoord19 ).r ) * _MossIntensity_Instance ));
 			o.Albedo = lerpResult9.rgb;
 			o.Metallic = 0.0;
 			float _RockSmoothness_Instance = UNITY_ACCESS_INSTANCED_PROP(_RockSmoothness_arr, _RockSmoothness);
@@ -165,37 +177,50 @@ Shader "S_MossyRock"
 }
 /*ASEBEGIN
 Version=16400
-1927;23;1266;942;2701.204;711.5095;2.006005;True;False
-Node;AmplifyShaderEditor.RangedFloatNode;12;-2158.311,-20.65907;Float;False;InstancedProperty;_MossAmount;Moss Amount;4;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
+1543;1;1906;1020;3386.215;1911.178;3.011328;True;True
+Node;AmplifyShaderEditor.RangedFloatNode;12;-2158.311,-20.65907;Float;False;InstancedProperty;_MossAmount;Moss Amount;5;0;Create;True;0;0;False;0;0;12.97;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;20;-1601.736,-338.3633;Float;False;InstancedProperty;_MaskCoord;Mask Coord;8;0;Create;True;0;0;False;0;0;3.58;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.WorldNormalVector;11;-2006.084,-289.8907;Float;True;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-1710.59,-158.823;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;19;-1368.736,-359.3633;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SaturateNode;14;-1439.508,-218.286;Float;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;5;-937.4206,575.8539;Float;False;InstancedProperty;_RockSmoothness;RockSmoothness;5;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;4;-1622.712,147.7222;Float;True;Property;_MossNormal;MossNormal;3;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;True;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;2;-946.5328,-386.7822;Float;True;Property;_MossDiffuse;Moss Diffuse;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;6;-931.8049,694.8194;Float;False;InstancedProperty;_MossSmoothness;MossSmoothness;6;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;1;-963.7058,-592.8564;Float;True;Property;_RockDiffuse;Rock Diffuse;0;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;3;-1639.885,-58.35201;Float;True;Property;_RockNormal;RockNormal;2;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;True;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;17;-1315.736,-115.3633;Float;True;Property;_MossMask;Moss Mask;2;0;Create;True;0;0;False;0;None;0935969a560ba4640917c784912732ef;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;18;-1061.736,-150.3633;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;22;-1007.391,25.20184;Float;False;InstancedProperty;_MossIntensity;Moss Intensity;9;0;Create;True;0;0;False;0;0;0.36;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;3;-1639.885,-58.35201;Float;True;Property;_RockNormal;RockNormal;3;0;Create;True;0;0;False;0;None;c4d3a5a467253064d8694853fe7161d5;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;2;-946.5328,-386.7822;Float;True;Property;_MossDiffuse;Moss Diffuse;1;0;Create;True;0;0;False;0;None;2e2992173cd3b3e40a9b4389684c4ad5;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;6;-931.8049,694.8194;Float;False;InstancedProperty;_MossSmoothness;MossSmoothness;7;0;Create;True;0;0;False;0;0;0.1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;1;-963.7058,-592.8564;Float;True;Property;_RockDiffuse;Rock Diffuse;0;0;Create;True;0;0;False;0;None;2a419a0f5c1db9444a2a722974ed0166;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;5;-937.4206,575.8539;Float;False;InstancedProperty;_RockSmoothness;RockSmoothness;6;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;4;-1622.712,147.7222;Float;True;Property;_MossNormal;MossNormal;4;0;Create;True;0;0;False;0;None;c4d3a5a467253064d8694853fe7161d5;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;21;-849.3909,-65.79816;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;10;-657.7446,519.7542;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;15;-690.7356,-171.3633;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.LerpOp;9;-594.85,-395.9921;Float;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;7;-157.3823,108.7343;Float;False;Constant;_Metallic;Metallic;4;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.LerpOp;8;-1213.535,169.0835;Float;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.LerpOp;10;-657.7446,519.7542;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Standard;S_MossyRock;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;-1;0;False;-1;False;0;False;-1;0;False;-1;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;0;False;-1;False;0;False;-1;255;False;-1;255;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;-1;False;2;15;10;25;False;0.5;True;0;0;False;-1;0;False;-1;0;0;False;-1;0;False;-1;0;False;-1;0;False;-1;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;-1;-1;0;False;-1;0;0;0;False;0.1;False;-1;0;False;-1;16;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;13;0;11;2
 WireConnection;13;1;12;0
+WireConnection;19;0;20;0
 WireConnection;14;0;13;0
-WireConnection;9;0;1;0
-WireConnection;9;1;2;0
-WireConnection;9;2;14;0
-WireConnection;8;0;3;0
-WireConnection;8;1;4;0
-WireConnection;8;2;14;0
+WireConnection;17;1;19;0
+WireConnection;18;0;14;0
+WireConnection;18;1;17;1
+WireConnection;21;0;18;0
+WireConnection;21;1;22;0
 WireConnection;10;0;5;0
 WireConnection;10;1;6;0
 WireConnection;10;2;14;0
+WireConnection;9;0;1;0
+WireConnection;9;1;2;0
+WireConnection;9;2;21;0
+WireConnection;8;0;3;0
+WireConnection;8;1;4;0
+WireConnection;8;2;14;0
 WireConnection;0;0;9;0
 WireConnection;0;1;8;0
 WireConnection;0;3;7;0
 WireConnection;0;4;10;0
 ASEEND*/
-//CHKSM=085550F3ED0C26FAC1A245056913ADADCD7C8E9F
+//CHKSM=B7AA5C0B43DD5708DAECA7C3BA7E6072E31F58EE

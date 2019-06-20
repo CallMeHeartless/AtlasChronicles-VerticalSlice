@@ -77,8 +77,8 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 50, y: 50, z: 50}
   m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: 3.26, z: 0}
   m_TimeToStationary: 0.5
 --- !u!54 &2132084220
@@ -243,10 +243,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4198243330629954564}
     m_Modifications:
-    - target: {fileID: 100000, guid: f9c76b2033959744e8ee2262e38f179d, type: 3}
-      propertyPath: m_Name
-      value: SM_TeleportBox
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f9c76b2033959744e8ee2262e38f179d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -302,6 +298,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f9c76b2033959744e8ee2262e38f179d, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f9c76b2033959744e8ee2262e38f179d, type: 3}
+      propertyPath: m_Name
+      value: SM_TeleportBox
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f9c76b2033959744e8ee2262e38f179d, type: 3}
       propertyPath: m_Materials.Array.data[0]
