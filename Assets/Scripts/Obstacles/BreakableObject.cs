@@ -7,7 +7,7 @@ public class BreakableObject : MonoBehaviour
     [SerializeField] GameObject m_rOriginalObject;
     [SerializeField] GameObject m_rBrokenObject;
     [SerializeField] GameObject[] m_rPrizes;
-    [SerializeField] AudioSource m_rBreakingAudio;
+    AudioSource m_rBreakingAudio;
 
     [Header("Arc settings")]
     [SerializeField] AnimationCurve m_yCurve;
