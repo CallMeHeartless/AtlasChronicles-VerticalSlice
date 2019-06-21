@@ -81,7 +81,7 @@ public class ColorPlat : MonoBehaviour
 
     public void changeColor()
     {
-        Debug.Log("Colorchange");
+        //Debug.Log("Colorchange");
         if (m_Colors.red== m_colCurrentColor)
         {
             m_colCurrentColor = 0;

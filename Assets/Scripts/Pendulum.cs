@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Pendulum : MonoBehaviour
 {
-    Rigidbody m_ridBody;
+    // External references
+    [Header("External References")]
+   
     public Vector3 m_vec3StartingVeloicty;
     public float m_fForward;
     public float m_fBack;
     public float m_fSpeed =10;
     public JointMotor m_JointCaneHingeMotor;
+
     public int m_fDamage = 1;
-   // public bool X, Y, Z = false;
+
+    Rigidbody m_ridBody;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,29 +28,35 @@ public class Pendulum : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
 
 
-            if (((transform.rotation.x > 0) && (transform.rotation.x < m_fForward))||((transform.rotation.z > 0) && (transform.rotation.z < m_fForward)) && (m_ridBody.angularVelocity.y > 0) && (m_ridBody.angularVelocity.y < m_vec3StartingVeloicty.y))
+        //change dirction to forward
+        if (((transform.rotation.x > 0) && (transform.rotation.x < m_fForward))||((transform.rotation.z > 0) && (transform.rotation.z < m_fForward)) && (m_ridBody.angularVelocity.y > 0) && (m_ridBody.angularVelocity.y < m_vec3StartingVeloicty.y))
             {
                
                 m_ridBody.angularVelocity = m_vec3StartingVeloicty;
             }
-            if (((transform.rotation.x > m_fForward)||((transform.rotation.z > m_fForward))) && (m_ridBody.angularVelocity.y < m_vec3StartingVeloicty.y))
+
+        //swing forward
+        if (((transform.rotation.x > m_fForward)||((transform.rotation.z > m_fForward))) && (m_ridBody.angularVelocity.y < m_vec3StartingVeloicty.y))
             {
-            //Debug.Log("here1");
+            
             m_JointCaneHingeMotor.targetVelocity = -m_vec3StartingVeloicty.y;
                 m_JointCaneHingeMotor.force = m_fSpeed;
                 GetComponent<HingeJoint>().motor = m_JointCaneHingeMotor;
             }
+
+            //change dirction to backwards
             if (((transform.rotation.x < 0) && (transform.rotation.x > m_fBack))||((transform.rotation.z < 0) && (transform.rotation.z > m_fBack)) && (m_ridBody.angularVelocity.y < 0) && (m_ridBody.angularVelocity.y > -m_vec3StartingVeloicty.y))
             {
                 
                 m_ridBody.angularVelocity = -1 * m_vec3StartingVeloicty;
             }
+
+            //swing backwards
             if (((transform.rotation.x < m_fBack)||(transform.rotation.z < m_fBack)) && (m_ridBody.angularVelocity.y > -m_vec3StartingVeloicty.y))
             {
-            //Debug.Log("here2");
+           
             m_JointCaneHingeMotor.targetVelocity = m_vec3StartingVeloicty.y;
                 m_JointCaneHingeMotor.force = m_fSpeed;
                 GetComponent<HingeJoint>().motor = m_JointCaneHingeMotor;
@@ -53,6 +64,7 @@ public class Pendulum : MonoBehaviour
            
         
     }
+    //hit player
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))

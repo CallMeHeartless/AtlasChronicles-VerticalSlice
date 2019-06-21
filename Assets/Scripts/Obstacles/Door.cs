@@ -69,8 +69,8 @@ public class Door : MonoBehaviour, IMessageReceiver
 
 
         bool newLock = LockedDoor();
-        Debug.Log("newLock: "+newLock);
-        Debug.Log("Unlocked: "+m_bUnlocked);
+        //Debug.Log("newLock: "+newLock);
+        //Debug.Log("Unlocked: "+m_bUnlocked);
         if (newLock != m_bUnlocked)
         {
             m_bUnlocked = newLock;

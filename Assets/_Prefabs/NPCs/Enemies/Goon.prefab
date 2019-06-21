@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 7804704985898512706}
   - component: {fileID: 1679043091239925680}
   - component: {fileID: 7905677579001137324}
+  - component: {fileID: 2147483359718482965}
   m_Layer: 0
   m_Name: Goon
   m_TagString: Enemy
@@ -351,6 +352,25 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnDamageMessageReceivers: []
+--- !u!205 &2147483359718482965
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911810980302994007}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.099080324, y: 1.016964, z: -0.23253584}
+  m_Size: 3.116982
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.103774555
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1353771385544737513}
+  m_Enabled: 1
 --- !u!1 &5249945546850264913
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +593,12 @@ Transform:
 --- !u!95 &1353771385540475945 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 3e239c917afa61941813bcb04cda86de,
+    type: 3}
+  m_PrefabInstance: {fileID: 1353771385547819337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1353771385544737513 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700000, guid: 3e239c917afa61941813bcb04cda86de,
     type: 3}
   m_PrefabInstance: {fileID: 1353771385547819337}
   m_PrefabAsset: {fileID: 0}
