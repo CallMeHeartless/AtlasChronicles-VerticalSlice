@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private float m_fWaterSlowMultiplier = 0.5f;
     private bool m_bIsWading = false;
     private float m_fCurrentMovementSpeed;
+    [SerializeField]
+    private float m_fPlayerTurnSpeed = 15.0f;
     private float m_fTurnSpeed = 15.0f;
     [SerializeField]
     private float m_fJumpPower;
@@ -61,8 +63,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bCanDoubleJump = false;
     [SerializeField]
     private Vector3 m_Velocity = Vector3.zero;
-    private float m_fVerticalVelocity = 0.0f;
-    private float m_fExternal = 0.0f;
+    //private float m_fExternal = 0.0f;
     private float m_fGravityMulitplier = 1.0f;
     [SerializeField] private float m_fMaxGravityMultiplier = 2.0f;
     [SerializeField][Tooltip("The rate by which gravity is multiplied every frame, up to the maximum")]
@@ -454,7 +455,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rAnimator.SetBool("Grounded", true);
             m_fGravityMulitplier = 1.0f;
             m_Velocity = Vector3.zero;
-            m_fTurnSpeed = 15.0f;
+            m_fTurnSpeed = m_fPlayerTurnSpeed;
             //m_fCurrentMovementSpeed = m_fMovementSpeed;
         }
         else {
@@ -708,15 +709,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Sets the player's vertical velocity 
-    public void SetPlayerVerticalVelocity(float _fVelocity) {
-        //m_fVerticalVelocity = _fVelocity;
-        m_fExternal = _fVelocity;
-        m_rCharacterController.Move(Vector3.up * 3.0f * Time.deltaTime);
-        m_rAnimator.SetTrigger("Jump");
-        m_rAnimator.ResetTrigger("Idle");
-        m_rAnimator.ResetTrigger("Walk");
-        print("SetPlayerVerticalVelocity");
-    }
+    //public void SetPlayerVerticalVelocity(float _fVelocity) {
+    //    //m_fVerticalVelocity = _fVelocity;
+    //    m_fExternal = _fVelocity;
+    //    m_rCharacterController.Move(Vector3.up * 3.0f * Time.deltaTime);
+    //    m_rAnimator.SetTrigger("Jump");
+    //    m_rAnimator.ResetTrigger("Idle");
+    //    m_rAnimator.ResetTrigger("Walk");
+    //    print("SetPlayerVerticalVelocity");
+    //}
 
     // Finds the closest holdable object
     private GameObject GetClosestHoldableItem() {
