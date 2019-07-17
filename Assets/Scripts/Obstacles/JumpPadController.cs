@@ -12,10 +12,15 @@ public class JumpPadController : MonoBehaviour {
         m_rAudioPlayer = GetComponentInChildren<AudioPlayer>();
     }
 
-    private void OnTriggerStay(Collider other) {
+    private void OnTriggerEnter(Collider other) {
 
         if (other.CompareTag("Player")) {
             PlayerController player = other.GetComponent<PlayerController>();
+
+            // Do nothing if the player is floating
+            if (player.IsFloating()) {
+                return;
+            }
 
             //Reset jump and glide when player lands on jump pad
             player.ResetJump();

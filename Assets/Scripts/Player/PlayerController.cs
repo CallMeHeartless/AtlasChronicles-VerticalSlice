@@ -593,12 +593,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
     private IEnumerator TeleportToLocation(Vector3 _vecTargetLocation) {
         yield return new WaitForEndOfFrame();
+        m_rCharacterController.enabled = false;
+      
         // Play VFX
         TeleportParticles();
         // Update position
         transform.position = _vecTargetLocation;
 
         GameState.SetPlayerTeleportingFlag(false);
+        m_rCharacterController.enabled = true;
     }
 
     // Place the teleport marker on the ground
@@ -645,8 +648,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Switch positions
         Vector3 vecPlayerPosition = transform.position;
-        //transform.position = m_rSwitchTarget.transform.position;
-        StartCoroutine(TeleportToLocation(m_rSwitchTarget.transform.position));
+        Vector3 vecObjectPosition = m_rSwitchTarget.transform.position;
+        StartCoroutine(TeleportToLocation(vecObjectPosition));
         StartCoroutine(m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().Switch(vecPlayerPosition));
 
         // Remove reference
