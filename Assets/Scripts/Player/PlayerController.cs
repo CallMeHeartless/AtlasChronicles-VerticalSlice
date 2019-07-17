@@ -676,6 +676,18 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }   
     }
 
+    // Cancel the switch tag
+    private void CancelSwitchTag() {
+        if (!m_rSwitchTarget) {
+            return;
+        }
+        SwitchTagController rSwitchTag = m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>();
+        if (rSwitchTag) {
+            rSwitchTag.DetachFromObject();
+        }
+
+    }
+
     // Changes parameters for when the player is / is not aiming
     private void ToggleAiming(bool _bState) {
         if (m_bIsAiming == _bState) {
@@ -1080,4 +1092,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void ToggleWeaponScroll(bool _bState) {
         m_rWeaponScroll.SetActive(_bState);
     }
+
+
 }
