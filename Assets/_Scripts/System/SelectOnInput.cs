@@ -38,10 +38,7 @@ public class SelectOnInput : MonoBehaviour {
         {
             eventSystem.SetSelectedGameObject(selectedObject);
             bButtonSelected = true;
-        }
 
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        {
             if (null != m_Next)
                 m_Next.Play();
         }
@@ -63,5 +60,6 @@ public class SelectOnInput : MonoBehaviour {
         eventSystem.SetSelectedGameObject(null);
         eventSystem.SetSelectedGameObject(selectedObject);
         bButtonSelected = true;
+
     }
 }
