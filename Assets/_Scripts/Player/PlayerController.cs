@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
+    private int Weight = 3;
     #endregion
 
     // Start is called before the first frame update
@@ -1095,6 +1096,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void ToggleWeaponScroll(bool _bState) {
         m_rWeaponScroll.SetActive(_bState);
     }
-
+    public int getWeight()
+    {
+          return Weight;
+    }
 
 }

@@ -9,7 +9,8 @@ public class weighted : MonoBehaviour, IMessageReceiver
     {
         Green,
         Blue,
-        Red
+        Red,
+        None
     }
     public List<GameObject> ObjectInArea = new List<GameObject>();
     public List<Color> ObjectColor = new List<Color>();
@@ -41,16 +42,16 @@ public class weighted : MonoBehaviour, IMessageReceiver
             //Objects.Sort(Sorter);
             if (m_RequirmentWeight)
             {
-                m_Weight += ObjectWeight[ObjectWeight.Count-1 ];
+                m_Weight += ObjectWeight[ObjectWeight.Count - 1];
             }
             else
             {
-                switch (ObjectColor[ObjectColor.Count-1])
+                switch (ObjectColor[ObjectColor.Count - 1])
                 {
                     case Color.Green:
                         m_ColorList[0]++;
                         break;
-                        
+
                     case Color.Red:
                         m_ColorList[1]++;
                         break;
@@ -63,7 +64,13 @@ public class weighted : MonoBehaviour, IMessageReceiver
             }
             UpdateDoor();
         }
-    }
+        else if (other.CompareTag("Player"))
+        {
+            ObjectInArea.Add(other.gameObject);
+            ObjectColor.Add(Color.None);
+            ObjectWeight.Add();
+        }
+        }
     private void OnTriggerExit(Collider other)
     {
 
