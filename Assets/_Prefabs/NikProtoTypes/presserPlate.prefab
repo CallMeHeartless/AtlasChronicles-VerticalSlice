@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1441625105958265017
+--- !u!1 &9100442221701383038
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8860723180126902059}
-  - component: {fileID: 6765369096934727924}
-  - component: {fileID: 2550419815103009735}
-  - component: {fileID: 7325682413758231958}
-  - component: {fileID: 2109964343080184353}
-  - component: {fileID: 2593401595299320558}
+  - component: {fileID: 9100442221701383024}
+  - component: {fileID: 9100442221701383027}
+  - component: {fileID: 9100442221701383026}
+  - component: {fileID: 9100442221701383037}
+  - component: {fileID: 9100442221701383036}
+  - component: {fileID: 9100442221701383039}
   m_Layer: 0
-  m_Name: dropApple
+  m_Name: presserPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8860723180126902059
+--- !u!4 &9100442221701383024
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441625105958265017}
+  m_GameObject: {fileID: 9100442221701383038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -73.51, y: 16.97, z: 163.63284}
+  m_LocalScale: {x: 5, y: 1, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6765369096934727924
+--- !u!33 &9100442221701383027
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441625105958265017}
+  m_GameObject: {fileID: 9100442221701383038}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2550419815103009735
+--- !u!23 &9100442221701383026
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441625105958265017}
+  m_GameObject: {fileID: 9100442221701383038}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -80,46 +80,51 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7325682413758231958
+--- !u!65 &9100442221701383037
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441625105958265017}
+  m_GameObject: {fileID: 9100442221701383038}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &2109964343080184353
-Rigidbody:
+--- !u!65 &9100442221701383036
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441625105958265017}
+  m_GameObject: {fileID: 9100442221701383038}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2593401595299320558
+  m_Size: {x: 1, y: 5, z: 1}
+  m_Center: {x: 0, y: 2.5, z: 0}
+--- !u!114 &9100442221701383039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441625105958265017}
+  m_GameObject: {fileID: 9100442221701383038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2448532c4d24cd24c84a2a400dd9b030, type: 3}
+  m_Script: {fileID: 11500000, guid: 314999da1f2600f49a27a67b6d05e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_iDamage: 0
-  m_bDestoryOnGround: 1
+  ObjectInArea: []
+  ObjectColor: 
+  ObjectWeight: 
+  m_PassNumber: 1
+  m_gEffectingObject: {fileID: 0}
+  m_ColorListRequirment: 010000000000000000000000
+  m_WeightRequirment: 2
+  m_ColorList: 000000000000000000000000
+  m_Weight: 0
+  m_RequirmentWeight: 1

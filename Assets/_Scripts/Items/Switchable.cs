@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class Switchable : MonoBehaviour
 {
+    public int Weight =2;
+    [SerializeField]
+    public weighted.Color ObjectColor;
     [SerializeField]
     private bool m_bChangeMaterialOnTag = false;
     [SerializeField]
@@ -14,6 +17,7 @@ public class Switchable : MonoBehaviour
     private Transform m_OriginalTransform;
     private Vector3 m_StartPosition;
     private EnemyController m_Enemy = null;
+   
 
     private void Start() {
         //m_Material = GetComponent<MeshRenderer>().material;
