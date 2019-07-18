@@ -14,13 +14,13 @@ public class SettingsScript : MonoBehaviour
 
     [SerializeField] Color m_inactiveColour;
     [SerializeField] Color m_highlightedColour;
-    [SerializeField] AudioSource m_rButtonClick;
+    [SerializeField] AudioSource m_rButtonMove;
 
     public UnityEvent OnBPressed;
 
     private void Start()
     {
-        if(m_tabs != null && m_groups != null)
+        if (m_tabs != null && m_groups != null)
         {
             //Check for active tab
             for (int i = 0; i < m_tabs.Length; ++i)
@@ -76,7 +76,10 @@ public class SettingsScript : MonoBehaviour
 
     public void PlayClick()
     {
-        m_rButtonClick.Play();
+        if(m_rButtonMove.enabled)
+        {
+            m_rButtonMove.Play();
+        }
     }
 
     public void MoveTabLeft(bool _moveLeft)
@@ -116,6 +119,6 @@ public class SettingsScript : MonoBehaviour
                 m_groups[m_currentGroup].SetActive(true);
             }
         }
-        //m_rButtonClick.Play();
+        m_rButtonMove.Play();
     }
 }

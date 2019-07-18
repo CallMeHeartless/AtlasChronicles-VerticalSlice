@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_settingsPanel;
     //[SerializeField]
     CinemachineFreeLook m_cineCamera;
+    [SerializeField] AudioSource m_rButtonClick;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class PauseMenu : MonoBehaviour
         //if (Input.GetButtonDown("Pause"))
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && !m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
         {
+            m_rButtonClick.Play();
             m_pausePanel.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -38,6 +40,7 @@ public class PauseMenu : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && (m_pausePanel.activeSelf || m_settingsPanel.activeSelf))
         {
+            m_rButtonClick.Play();
             m_pausePanel.SetActive(false);
             m_settingsPanel.SetActive(false);
         }
@@ -54,6 +57,11 @@ public class PauseMenu : MonoBehaviour
 
     }
 
+    public void Click()
+    {
+        m_rButtonClick.Play();
+    }
+
     public void ToggleCameraX(bool _invert)
     {
         m_cineCamera.m_XAxis.m_InvertInput = _invert;
@@ -66,11 +74,13 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
+        m_rButtonClick.Play();
         SceneManager.LoadScene("Menu_Main");
     }
 
     public void ExitGame()
     {
+        m_rButtonClick.Play();
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
