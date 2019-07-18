@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MessageSystem;
 
-public class weighted : MonoBehaviour
+public class weighted : MonoBehaviour, IMessageReceiver
 {
     public enum Color
     {
@@ -15,7 +16,8 @@ public class weighted : MonoBehaviour
     public List<int> ObjectWeight = new List<int>();
 
     public int m_PassNumber;
-    public GameObject m_gEffectingObject;
+    public List<MonoBehaviour> m_gEffectingObject;
+    
 
     public int[] m_ColorListRequirment = new int[3];
     public int m_WeightRequirment = 0;
@@ -39,11 +41,11 @@ public class weighted : MonoBehaviour
             //Objects.Sort(Sorter);
             if (m_RequirmentWeight)
             {
-                m_Weight += ObjectWeight[ObjectWeight.Count];
+                m_Weight += ObjectWeight[ObjectWeight.Count-1 ];
             }
             else
             {
-                switch (ObjectColor[ObjectColor.Count])
+                switch (ObjectColor[ObjectColor.Count-1])
                 {
                     case Color.Green:
                         m_ColorList[0]++;
@@ -102,11 +104,19 @@ public class weighted : MonoBehaviour
         {
             if (m_Weight == m_WeightRequirment)
             {
-                m_gEffectingObject.GetComponent<Door>().SwitchChanged(m_PassNumber, true);
+                for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                {
+                    IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                    target.OnReceiveMessage(MessageType.eOn, m_PassNumber);//true
+                }
             }
             else
             {
-                m_gEffectingObject.GetComponent<Door>().SwitchChanged(m_PassNumber, false);
+                for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                {
+                    IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                    target.OnReceiveMessage(MessageType.eOff, m_PassNumber);//false
+                }
             }
 
         }
@@ -114,12 +124,30 @@ public class weighted : MonoBehaviour
         {
             if ((m_ColorList[0] == m_ColorListRequirment[0])&& (m_ColorList[1] == m_ColorListRequirment[1])&& (m_ColorList[2] == m_ColorListRequirment[2]))
             {
-                m_gEffectingObject.GetComponent<Door>().SwitchChanged(m_PassNumber, true);
+                for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                {
+                    IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                    target.OnReceiveMessage(MessageType.eOn, m_PassNumber);//true
+                }
             }
             else
             {
-                m_gEffectingObject.GetComponent<Door>().SwitchChanged(m_PassNumber, false);
+                for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                {
+                    IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                    target.OnReceiveMessage(MessageType.eOff, m_PassNumber);//false
+                }
             }
         }
-    }  
+
+    }
+
+    public void OnReceiveMessage(MessageType _eType, object _message)
+    {
+        switch (_eType)
+        {
+           
+            default: break;
+        }
+    }
 }

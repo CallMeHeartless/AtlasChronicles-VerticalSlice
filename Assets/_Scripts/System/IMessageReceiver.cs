@@ -7,7 +7,9 @@ namespace MessageSystem {
         eDamageMessage,
         eGroundSlam,
         eReset,
-        eActivate
+        eActivate,
+        eOn,
+        eOff
     }
 
     public interface IMessageReceiver {
