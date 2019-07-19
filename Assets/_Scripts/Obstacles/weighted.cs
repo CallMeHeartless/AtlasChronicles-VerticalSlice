@@ -68,7 +68,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
         {
             ObjectInArea.Add(other.gameObject);
             ObjectColor.Add(Color.None);
-            ObjectWeight.Add();
+            //ObjectWeight.Add();
         }
         }
     private void OnTriggerExit(Collider other)
