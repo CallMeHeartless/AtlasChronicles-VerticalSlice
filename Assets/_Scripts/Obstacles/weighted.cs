@@ -66,7 +66,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
         }
         else if (other.CompareTag("Player"))
         {
-<<<<<<< HEAD
+
             if (!ObjectInArea.Contains(other.gameObject))
             {
                 ObjectInArea.Add(other.gameObject);
@@ -82,13 +82,12 @@ public class weighted : MonoBehaviour, IMessageReceiver
             {
                 //Debug.Log(ObjectInArea.Contains(other.gameObject));
             }
-=======
+
             ObjectInArea.Add(other.gameObject);
             ObjectColor.Add(Color.None);
-            //ObjectWeight.Add();
+            ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
         }
->>>>>>> origin/StabilityTest
-        }
+        
     }
     private void OnTriggerExit(Collider other)
     {
@@ -143,7 +142,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
             }
             else
             {
-                Debug.Log(ObjectInArea.Contains(other.gameObject));
+                //Debug.Log(ObjectInArea.Contains(other.gameObject));
             }
         }
     }
