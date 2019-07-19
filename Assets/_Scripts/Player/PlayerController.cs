@@ -552,9 +552,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_rAnimator.ResetTrigger("Walk");
                 m_rAnimator.SetTrigger("PlaceTag");
                 PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
-            } else {
-                TagHeldObject();
-            }
+            } 
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton) && m_bTeleportMarkerDown) {
@@ -613,9 +611,17 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //m_Animator.SetTrigger("Tag");
         m_rTagAudio.PlayAudio(0);
         m_rTeleportMarker.transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
+        AttachMarkerToGround();
         // Enable teleport marker
         if (!m_rTeleportMarker.activeSelf) {
             ToggleTeleportMarker(true);
+        }
+    }
+
+    private void AttachMarkerToGround() {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, Vector3.down, out hit)) {
+
         }
     }
 
@@ -723,17 +729,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rHeldObject = null;
         }
     }
-
-    // Sets the player's vertical velocity 
-    //public void SetPlayerVerticalVelocity(float _fVelocity) {
-    //    //m_fVerticalVelocity = _fVelocity;
-    //    m_fExternal = _fVelocity;
-    //    m_rCharacterController.Move(Vector3.up * 3.0f * Time.deltaTime);
-    //    m_rAnimator.SetTrigger("Jump");
-    //    m_rAnimator.ResetTrigger("Idle");
-    //    m_rAnimator.ResetTrigger("Walk");
-    //    print("SetPlayerVerticalVelocity");
-    //}
 
     // Finds the closest holdable object
     private GameObject GetClosestHoldableItem() {

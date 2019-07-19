@@ -44,7 +44,6 @@ public class GameEndController : MonoBehaviour
             return;
         }
         // If MAPS_COLLECTED >= MAPS_TOTAL
-        Debug.Log("Collected: " + GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] + "  portal is: " + instance.m_bIsActive);
         if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= 5 && GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex] >= 100) {
             instance.TogglePortal(true);
         } else {
