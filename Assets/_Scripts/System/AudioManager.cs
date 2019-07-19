@@ -6,32 +6,42 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    public enum AudioType { BGM, SFX };
+    [SerializeField] private AudioMixer m_rMixer;
+    private Slider m_rSlider;
+    private PlayerPrefsManager m_rPrefs;
 
-    public static AudioManager instance;
-    [SerializeField] private AudioMixer m_mixer;
-    [SerializeField] private AudioType m_type;
-    [SerializeField] [Range(0.0001f, 1.0f)] private float m_defaultVal = 1.0f;
-
-    Slider m_slider;
+    public enum AudioType { NONE, BGM, SFX };
+    public AudioType m_rType = AudioType.NONE;
 
     // Start is called before the first frame update
     public void Start()
     {
-        m_slider = GetComponent<Slider>();
-        m_slider.value = m_defaultVal;
-        SetVol(m_slider.value);
+        m_rPrefs = PlayerPrefsManager.GetInstance();
+        m_rSlider = GetComponent<Slider>();
+        if (m_rType == AudioType.BGM)
+        {
+            m_rSlider.value = m_rPrefs.RetrieveAudioBGM();
+            SetVol(m_rPrefs.RetrieveAudioBGM());
+        }
+        else if(m_rType == AudioType.SFX)
+        {
+            m_rSlider.value = m_rPrefs.RetrieveAudioVFX();
+            SetVol(m_rPrefs.RetrieveAudioVFX());
+        }
     }
 
     public void SetVol(float _sliderVal)
     {
-        if (m_type == AudioType.BGM)
+        float audioVal = Mathf.Log10(_sliderVal) * 20;
+        if (m_rType == AudioType.BGM)
         {
-            m_mixer.SetFloat("BGMVol", Mathf.Log10(_sliderVal) * 20);
+            m_rMixer.SetFloat("BGMVol", audioVal);
+            m_rPrefs.StoreAudioBGM(_sliderVal);
         }
-        else
+        else if (m_rType == AudioType.SFX)
         {
-            m_mixer.SetFloat("SFXVol", Mathf.Log10(_sliderVal) * 20);
+            m_rMixer.SetFloat("SFXVol", audioVal);
+            m_rPrefs.StoreAudioVFX(_sliderVal);
         }
     }
 }

@@ -43,8 +43,10 @@ public class SelectOnInput : MonoBehaviour {
                 m_Next.Play();
         }
 
-        //if (Input.GetMouseButtonDown(0))
-        //    eventSystem.SetSelectedGameObject(selectedObject);
+        if (Input.GetMouseButtonDown(0) && eventSystem.currentSelectedGameObject == null)
+        {
+            eventSystem.SetSelectedGameObject(selectedObject);
+        }
     }
 
     private void OnDisable()

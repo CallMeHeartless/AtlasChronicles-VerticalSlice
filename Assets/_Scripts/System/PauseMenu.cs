@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_settingsPanel;
     //[SerializeField]
     CinemachineFreeLook m_cineCamera;
+    [SerializeField] AudioSource m_rButtonClick;
 
     // Start is called before the first frame update
     void Start()
@@ -21,23 +22,30 @@ public class PauseMenu : MonoBehaviour
         m_pausePanel.SetActive(false);
         m_settingsPanel.SetActive(false);
         m_cineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetButtonDown("Pause"))
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && !m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
+        //Pausing
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart")) 
+            && !m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
         {
+            m_rButtonClick.Play();
             m_pausePanel.SetActive(true);
+            //Pausing
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            if(m_cineCamera != null)
+
+            if (m_cineCamera != null)
                 m_cineCamera.enabled = false;
             GameState.SetPauseFlag(true);
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") && (m_pausePanel.activeSelf || m_settingsPanel.activeSelf))
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") || (Input.GetButtonDown("BButton"))) 
+            && (m_pausePanel.activeSelf || m_settingsPanel.activeSelf))
         {
+            print("UnPause on button pressed");
             m_pausePanel.SetActive(false);
             m_settingsPanel.SetActive(false);
         }
@@ -49,28 +57,30 @@ public class PauseMenu : MonoBehaviour
             Cursor.visible = false;
 
             if (m_cineCamera != null)
+            {
                 m_cineCamera.enabled = true;
+            }
         }
-
     }
 
-    public void ToggleCameraX(bool _invert)
+    public void Click()
     {
-        m_cineCamera.m_XAxis.m_InvertInput = _invert;
-    }
-
-    public void ToggleCameraY(bool _invert)
-    {
-        m_cineCamera.m_YAxis.m_InvertInput = _invert;
+        //Plays button click audio
+        m_rButtonClick.Play();
     }
 
     public void MainMenu()
     {
+        //Loads the main menu after playing the click audio
+        Click();
         SceneManager.LoadScene("Menu_Main");
     }
 
     public void ExitGame()
     {
+        Click();
+
+        //If user is in the Unity editor, quit application.
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else

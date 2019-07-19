@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+
 
 public class MainMenuController : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -24,13 +27,7 @@ public class MainMenuController : MonoBehaviour
             m_playButton.Select();
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     public void PlayGame() {
         m_rButtonClick.Play();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -46,7 +43,7 @@ public class MainMenuController : MonoBehaviour
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
-		    Application.Quit();
+		Application.Quit();
 #endif
     }
 
