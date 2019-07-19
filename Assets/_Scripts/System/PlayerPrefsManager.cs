@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
+using Cinemachine;
 
 public class PlayerPrefsManager : MonoBehaviour
 {
@@ -24,12 +26,7 @@ public class PlayerPrefsManager : MonoBehaviour
     {
         return instance;
     }
-
-    private void Start()
-    {
-
-    }
-
+    
     //PlayerPref Setters
     public void StoreCamX(bool _camX)
     {
@@ -63,6 +60,6 @@ public class PlayerPrefsManager : MonoBehaviour
     }
     public float RetrieveAudioVFX()
     {
-        return PlayerPrefs.GetFloat("AudioVFXVal", 1);
+        return PlayerPrefs.GetFloat("AudioVFXVal", 0.38f);
     }
 }

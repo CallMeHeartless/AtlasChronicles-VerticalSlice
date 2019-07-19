@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioBGM : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class AudioBGM : MonoBehaviour
         if (activeAudio != null)
             activeAudio.Play();
     }
-
+    
     public void Stop()
     {
         foreach (var i in audioSources) i.Stop();
@@ -84,6 +85,7 @@ public class AudioBGM : MonoBehaviour
 
     void Reset()
     {
+       
         //Reset by replacing the current audio array with the gameobjects children
         audioSources = GetComponentsInChildren<AudioSource>();
     }
