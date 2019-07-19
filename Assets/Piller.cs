@@ -7,7 +7,7 @@ using MessageSystem;
 public class Piller : MonoBehaviour, IMessageReceiver
 {
    public GameObject[] m_gPillersPostion;
-    int currentPostion=0; 
+    public int currentPostion=0; 
     public float m_fSpeed = 0.01f;
     private bool m_bUnlocked = false;
     private bool m_bMoving = false;
