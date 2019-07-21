@@ -7,15 +7,15 @@ using Cinemachine;
 
 public class PlayerPrefsManager : MonoBehaviour
 {
-    public static PlayerPrefsManager instance = null;
+    public static PlayerPrefsManager s_rInstance = null;
 
     private void Awake()
     {
-        if (instance == null)
+        if (s_rInstance == null)
         {
-            instance = this;
+            s_rInstance = this;
         }
-        else if (instance != this)
+        else if (s_rInstance != this)
         {
             Destroy(gameObject);
         }
@@ -24,7 +24,11 @@ public class PlayerPrefsManager : MonoBehaviour
 
     static public PlayerPrefsManager GetInstance()
     {
-        return instance;
+        if(s_rInstance == null) {
+            s_rInstance = new PlayerPrefsManager();
+        }
+
+        return s_rInstance;
     }
     
     //PlayerPref Setters
