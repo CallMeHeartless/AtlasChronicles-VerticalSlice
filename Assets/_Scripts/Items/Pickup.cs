@@ -69,8 +69,9 @@ public class Pickup : MonoBehaviour
             {   // Level specific collectables
                 GetComponent<AudioSource>().Play();
                 GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex]++;
-                GameEndController.CheckMapCollection();
-
+                GameEndController.CheckMapCollection(); // Review later
+                // Update the ink gauge
+                InkGauge.GetInstance().IncrementGaugeLimit();
                 if (m_rPickupPic)
                 {
                     m_rPickupPic.GetComponent<Animator>().SetTrigger("Animate");

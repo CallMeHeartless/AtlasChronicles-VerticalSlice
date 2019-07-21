@@ -14,6 +14,7 @@ public class InkGauge : MonoBehaviour
     }
 
     // Internal Variables
+    private static InkGauge s_rInstance = null;
     [Header("Properties")]
     [SerializeField]
     private float m_fValue = 0.0f;
@@ -29,6 +30,13 @@ public class InkGauge : MonoBehaviour
     [SerializeField]
     private Slider m_rInkSlider;
 
+    private void Awake() {
+        if (!s_rInstance) {
+            s_rInstance = this;
+        } else if (s_rInstance != this) {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start(){
@@ -80,6 +88,11 @@ public class InkGauge : MonoBehaviour
     // Externally sets what the ink gauge should be doing
     public void SetGaugeState(EInkGaugeState _eState) {
         m_eGaugeState = _eState;
+    }
+
+    // A static instance is used for ease of access when pickups are collected
+    public static InkGauge GetInstance() {
+        return s_rInstance;
     }
 
     // Increments the current limit that the ink gauge can go to (based on secondary collectibles)
