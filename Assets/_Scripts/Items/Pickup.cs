@@ -71,7 +71,11 @@ public class Pickup : MonoBehaviour
                 GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex]++;
                 GameEndController.CheckMapCollection(); // Review later
                 // Update the ink gauge
-                InkGauge.GetInstance().IncrementGaugeLimit();
+                InkGauge rInkGauge = InkGauge.GetInstance();
+                if (rInkGauge) {
+                    rInkGauge.IncrementGaugeLimit();
+                }
+
                 if (m_rPickupPic)
                 {
                     m_rPickupPic.GetComponent<Animator>().SetTrigger("Animate");
