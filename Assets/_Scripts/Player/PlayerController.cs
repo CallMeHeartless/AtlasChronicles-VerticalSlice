@@ -464,13 +464,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_rAnimator.SetBool("Grounded", false);
                 if (!m_bIsFloating)
                 {// && m_Velocity.y < 0.0f
-                    m_fGravityMulitplier *= m_fGravityMultiplierRate;
+                    //m_fGravityMulitplier *= m_fGravityMultiplierRate;
+                    m_fGravityMulitplier *= (m_Velocity.y < 0.0f ? m_fGravityMultiplierRate * 3.0f : m_fGravityMultiplierRate);
                     m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, m_fMaxGravityMultiplier);
                     m_fCurrentMovementSpeed = m_fMovementSpeed;
                 }
             }
         }
-        //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
     }
 
     // Handles the player floating slowly downwards
@@ -879,8 +879,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         BreakMarkerTether();
         // Break switch tag tether
         CancelSwitchTag();
-
-        Debug.Log("Tethers should be broken");
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {
