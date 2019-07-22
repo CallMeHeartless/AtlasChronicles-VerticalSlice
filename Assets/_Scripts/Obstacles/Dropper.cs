@@ -6,7 +6,7 @@ public class Dropper : MonoBehaviour
 {
     public float m_fTimer;
     public float m_fMaxTimer= 2;
-    public GameObject Apple;
+    public GameObject m_gApple;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class Dropper : MonoBehaviour
     {
         if (m_fTimer <= 0)
         {
-            Instantiate(Apple, transform.position, Quaternion.identity);
+            Instantiate(m_gApple, transform.position, Quaternion.identity);
             m_fTimer = m_fMaxTimer;
         }
         else

@@ -7,7 +7,16 @@ public class FallingItem : MonoBehaviour
     public int m_iDamage;
     private bool m_bFirstHit = true;
     public bool m_bDestoryOnGround;
+
+   // public float m_Timer;
+   // public float m_MaxTimer;
     // Start is called before the first frame update
+    private void Update()
+    {
+        
+    }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -31,15 +40,16 @@ public class FallingItem : MonoBehaviour
         }
         else
         {
+           // Debug.Log("hit");
             if (m_bDestoryOnGround)
             {
-                Destroy(gameObject);
+                Destroy(transform.parent.gameObject);
             }
             else
             {
-                if (collision.gameObject.CompareTag("DestoryArea"))
+                if (collision.gameObject.CompareTag("Ground"))
                 {
-                    Destroy(gameObject);
+                    Destroy(transform.parent.gameObject);
                 }
             }
             
