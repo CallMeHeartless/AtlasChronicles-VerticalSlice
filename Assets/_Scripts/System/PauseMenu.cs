@@ -10,55 +10,70 @@ using UnityEditor;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] GameObject m_pausePanel;
-    [SerializeField] GameObject m_settingsPanel;
-    //[SerializeField]
-    CinemachineFreeLook m_cineCamera;
+    [SerializeField] GameObject m_rPausePanel;      //Panel containing pause menu elements
+    [SerializeField] GameObject m_rPauseSection;    //Pause menu UI
+    [SerializeField] GameObject m_rSettingsPanel;   //Settings panel
+    [SerializeField] GameObject m_rMapPanel;        // Map panel containing map elements
+    [SerializeField] GameObject m_rGuidePanel;      // Guide panel containing tutorial elements
+
+    CinemachineFreeLook m_rCineCamera;
     [SerializeField] AudioSource m_rButtonClick;
+
+    private bool m_bIsPaused = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_pausePanel.SetActive(false);
-        m_settingsPanel.SetActive(false);
-        m_cineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
+        m_rPausePanel.SetActive(false);
+        m_rSettingsPanel.SetActive(false);
+        m_rMapPanel.SetActive(false);
+        m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Pausing
+        // Pausing
         if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart")) 
-            && !m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
+            && !m_rPausePanel.activeSelf && !m_rSettingsPanel.activeSelf && !m_rMapPanel.activeSelf)
         {
             m_rButtonClick.Play();
-            m_pausePanel.SetActive(true);
-            //Pausing
+            m_rPausePanel.SetActive(true);
+            m_rPauseSection.SetActive(true); //Enable pause UI (note: pause UI was initially hidden when other panels were active)
+
+            m_rGuidePanel.SetActive(false);
+
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            if (m_cineCamera != null)
-                m_cineCamera.enabled = false;
+            if (m_rCineCamera != null)
+                m_rCineCamera.enabled = false;
             GameState.SetPauseFlag(true);
         }
+        // Resume gameplay
         else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") || (Input.GetButtonDown("BButton"))) 
-            && (m_pausePanel.activeSelf || m_settingsPanel.activeSelf))
+            && (m_rPausePanel.activeSelf || m_rSettingsPanel.activeSelf || m_rMapPanel.activeSelf))
         {
-            print("UnPause on button pressed");
-            m_pausePanel.SetActive(false);
-            m_settingsPanel.SetActive(false);
+            print("Resume on button pressed");
+            m_rPausePanel.SetActive(false);
+            m_rSettingsPanel.SetActive(false);
+            m_rMapPanel.SetActive(false);
+            m_rPauseSection.SetActive(true); //Enable pause UI (note: pause UI was initially hidden when other panels were active)
+            GameState.SetPauseFlag(false);
+
         }
 
-        if (!m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
+        //Make sure cursor is hidden on resume
+        if (GameState.GetPauseFlag() && !m_rPausePanel.activeSelf && !m_rSettingsPanel.activeSelf && !m_rMapPanel.activeSelf)
         {
             GameState.SetPauseFlag(false);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            if (m_cineCamera != null)
+            if (m_rCineCamera != null)
             {
-                m_cineCamera.enabled = true;
+                m_rCineCamera.enabled = true;
             }
         }
     }
@@ -74,6 +89,12 @@ public class PauseMenu : MonoBehaviour
         //Loads the main menu after playing the click audio
         Click();
         SceneManager.LoadScene("Menu_Main");
+    }
+
+    public void Map()
+    {
+        //Loads the main menu after playing the click audio
+        Click();
     }
 
     public void ExitGame()
