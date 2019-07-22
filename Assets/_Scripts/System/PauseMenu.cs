@@ -15,6 +15,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_rSettingsPanel;   //Settings panel
     [SerializeField] GameObject m_rMapPanel;        // Map panel containing map elements
     [SerializeField] GameObject m_rGuidePanel;      // Guide panel containing tutorial elements
+    [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
 
     CinemachineFreeLook m_rCineCamera;
     [SerializeField] AudioSource m_rButtonClick;
@@ -27,6 +28,7 @@ public class PauseMenu : MonoBehaviour
         m_rPausePanel.SetActive(false);
         m_rSettingsPanel.SetActive(false);
         m_rMapPanel.SetActive(false);
+        m_rUIPanel.SetActive(true);
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
         
     }
@@ -41,7 +43,6 @@ public class PauseMenu : MonoBehaviour
             m_rButtonClick.Play();
             m_rPausePanel.SetActive(true);
             m_rPauseSection.SetActive(true); //Enable pause UI (note: pause UI was initially hidden when other panels were active)
-
             m_rGuidePanel.SetActive(false);
 
             Cursor.lockState = CursorLockMode.None;
@@ -50,23 +51,26 @@ public class PauseMenu : MonoBehaviour
             if (m_rCineCamera != null)
                 m_rCineCamera.enabled = false;
             GameState.SetPauseFlag(true);
+            m_bIsPaused = true;
         }
         // Resume gameplay
         else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") || (Input.GetButtonDown("BButton"))) 
             && (m_rPausePanel.activeSelf || m_rSettingsPanel.activeSelf || m_rMapPanel.activeSelf))
         {
-            print("Resume on button pressed");
             m_rPausePanel.SetActive(false);
             m_rSettingsPanel.SetActive(false);
             m_rMapPanel.SetActive(false);
             m_rPauseSection.SetActive(true); //Enable pause UI (note: pause UI was initially hidden when other panels were active)
-            GameState.SetPauseFlag(false);
+            m_rUIPanel.SetActive(true);
 
+            //Set gamestate pause to false
+            GameState.SetPauseFlag(false);
         }
 
         //Make sure cursor is hidden on resume
-        if (GameState.GetPauseFlag() && !m_rPausePanel.activeSelf && !m_rSettingsPanel.activeSelf && !m_rMapPanel.activeSelf)
+        if (m_bIsPaused && !m_rPausePanel.activeSelf && !m_rSettingsPanel.activeSelf && !m_rMapPanel.activeSelf)
         {
+            m_bIsPaused = false;
             GameState.SetPauseFlag(false);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
