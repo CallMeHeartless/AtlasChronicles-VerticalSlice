@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strSprintButton = "BButton";
     private string m_strAttackButton = "XBoxXButton";
     private string m_strCameraLockButton = "XBoxR2";
+    private string m_strTetherBreakButton = "XBoxRightStickClick";
     private AxisToButton m_rSwitchButton = new AxisToButton();
 
     // Movement variables
@@ -578,6 +579,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_rAnimator.SetTrigger("ThrowTag");
             }
         }
+        // Allow the player to manually cancel their switch tag
+        else if (Input.GetButtonDown(m_strTetherBreakButton)) {
+            CancelSwitchTag();
+        }
         // Attack
         if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
             // Basic attack when on the ground
@@ -687,7 +692,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Cancel the switch tag
-    private void CancelSwitchTag() {
+    public void CancelSwitchTag() {
         if (!m_rSwitchTarget) {
             return;
         }
@@ -695,6 +700,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (rSwitchTag) {
             rSwitchTag.DetachFromObject();
             m_rSwitchTarget = null;
+            // VFX / SFX feedback
         }
 
     }
@@ -866,7 +872,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Break the teleport marker tether
-    private void BreakMarkerTether() {
+    public void BreakMarkerTether() {
         ToggleTeleportMarker(false);
         m_rTeleportMarker.transform.SetParent(null);
         m_bTeleportThresholdWarning = false;
@@ -874,6 +880,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //m_rPlayerAudioController.TeleportThresholdBreak();
     }
 
+    // Used to remove both switch tag and teleport tethers from the player
     public void BreakTethers() {
         // Break teleport marker
         BreakMarkerTether();
