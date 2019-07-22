@@ -16,6 +16,7 @@ public class BasicChase : AIState
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (!m_rPlayerReference) {
             m_rPlayerReference = GameObject.Find("Player").GetComponent<PlayerController>();
+            m_fAttackCooldown = m_rAI.m_fAttackCooldown;
         }
         if (!m_rAnimator) {
             m_rAnimator = m_rAI.animator;

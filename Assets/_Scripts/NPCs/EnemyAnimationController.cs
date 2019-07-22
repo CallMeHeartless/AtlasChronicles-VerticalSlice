@@ -22,13 +22,14 @@ public class EnemyAnimationController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void ToggleAttacks(bool _bState) {
-        foreach(MeleeAttack weapon in m_Weapons) {
-            weapon.gameObject.SetActive(_bState);
-            weapon.m_bIsActive = _bState;
-        }
-    }
+    //public void ToggleAttacks(bool _bState) {
+    //    foreach(MeleeAttack weapon in m_Weapons) {
+    //        weapon.gameObject.SetActive(_bState);
+    //        weapon.m_bIsActive = _bState;
+    //    }
+    //}
 
+    // Readies all melee weapons for attacking
     public void EnableAttacks() {
         foreach (MeleeAttack weapon in m_Weapons) {
             weapon.gameObject.SetActive(true);
@@ -36,6 +37,7 @@ public class EnemyAnimationController : MonoBehaviour
         }
     }
 
+    // Disables all melee weapons
     public void DisableAttacks() {
         foreach (MeleeAttack weapon in m_Weapons) {
             weapon.gameObject.SetActive(false);
@@ -43,7 +45,18 @@ public class EnemyAnimationController : MonoBehaviour
         }
     }
 
+    // Stun the goon
     public void Knockout() {
         m_rEnemyController.Knockout();
+    }
+
+    // Stops the navmesh agent
+    public void StopAgent() {
+        m_rEnemyController.StopAgent();
+    }
+
+    // Releases the navemesh agent
+    public void FreeAgent() {
+        m_rEnemyController.FreeAgent();
     }
 }

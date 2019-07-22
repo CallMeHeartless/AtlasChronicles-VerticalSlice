@@ -17,6 +17,12 @@ public class Switchable : MonoBehaviour
     private Transform m_OriginalTransform;
     private Vector3 m_StartPosition;
     private EnemyController m_Enemy = null;
+    [SerializeField]
+    private bool m_bReturnAfterDelay = false;
+    private bool m_bHasMoved = false;
+    [SerializeField]
+    private float m_fReturnTime = 3.0f;
+    private float m_fReturnCount = 0.0f;
    
 
     private void Start() {
@@ -24,6 +30,18 @@ public class Switchable : MonoBehaviour
         m_OriginalTransform = transform;
         m_StartPosition = transform.position;
         m_Enemy = GetComponent<EnemyController>();
+    }
+
+    private void Update() {
+        // Process moving the object back to its start position (if relevent)
+        if (m_bReturnAfterDelay && m_bHasMoved) {
+            m_fReturnCount += Time.deltaTime;
+            if(m_fReturnCount >= m_fReturnTime) {
+                m_fReturnCount = 0.0f;
+                m_bHasMoved = false;
+                ReturnToStartPosition();
+            }
+        }
     }
 
     // Called to indicated the switchable object has been tagged
@@ -61,10 +79,16 @@ public class Switchable : MonoBehaviour
         
     }
 
+    // Returns all switchable objects to their original positions
     public static void ResetAllPositions(){
         Switchable[] switchables = GameObject.FindObjectsOfType<Switchable>();
         foreach(Switchable switchable in switchables){
             switchable.ReturnToStartPosition();
         }
+    }
+
+    // Used to indicate that a switchable object has been moved - used for objects on a timer
+    public void MoveSwitchable() {
+        m_bHasMoved = true;
     }
 }
