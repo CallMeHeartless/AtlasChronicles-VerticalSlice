@@ -46,6 +46,7 @@ public class Zone : MonoBehaviour
             // Check if the fragment ID matches the zone ID
             if (zone.DoesIDMatchZone(_uiFragmentID)) {
                 zone.SetMapFragmentStatus(true);
+                Debug.Log("Collected map for zone " + _uiFragmentID);
             }
         }
     }
