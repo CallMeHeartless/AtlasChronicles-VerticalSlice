@@ -694,6 +694,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         SwitchTagController rSwitchTag = m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>();
         if (rSwitchTag) {
             rSwitchTag.DetachFromObject();
+            m_rSwitchTarget = null;
         }
 
     }
@@ -822,11 +823,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             float fMarkerDistance = (transform.position - m_rTeleportMarker.transform.position).magnitude;
             // Compare to threshold distances
             if (fMarkerDistance >= m_fTeleportBreakDistance) {
-                ToggleTeleportMarker(false);
-                m_rTeleportMarker.transform.SetParent(null);
-                m_bTeleportThresholdWarning = false;
-                // Play sound / VFX
-                //m_rPlayerAudioController.TeleportThresholdBreak();
+                BreakMarkerTether();
             }
             else if (fMarkerDistance >= m_fTeleportTetherDistance && !m_bTeleportThresholdWarning) {
                 m_bTeleportThresholdWarning = true;
@@ -866,6 +863,24 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_bSwitchThresholdWarning = false;
             }
         }
+    }
+
+    // Break the teleport marker tether
+    private void BreakMarkerTether() {
+        ToggleTeleportMarker(false);
+        m_rTeleportMarker.transform.SetParent(null);
+        m_bTeleportThresholdWarning = false;
+        // Play sound / VFX
+        //m_rPlayerAudioController.TeleportThresholdBreak();
+    }
+
+    public void BreakTethers() {
+        // Break teleport marker
+        BreakMarkerTether();
+        // Break switch tag tether
+        CancelSwitchTag();
+
+        Debug.Log("Tethers should be broken");
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {
