@@ -110,7 +110,8 @@ Node;AmplifyShaderEditor.SimpleTimeNode;701;-896,1664;Float;False;1;0;FLOAT;1;Fa
 Node;AmplifyShaderEditor.RangedFloatNode;48;-896,1536;Half;False;Property;_Rotation;Rotation;4;1;[IntRange];Create;True;0;0;False;0;0;0;0;360;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;255;-640,1664;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;276;-512,1536;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.CommentaryNode;431;-940.4822,846.6917;Float;False;860;219;Switch between Perspective / Orthographic camera;4;268;309;267;1007;CAMERA MODE;1,0,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;431;-940.4822,846.6917;Float;False;860;219;Switch between Perspective / Orthographic 
+;4;268;309;267;1007;CAMERA MODE;1,0,1,1;0;0
 Node;AmplifyShaderEditor.RadiansOpNode;47;-384,1536;Float;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.OrthoParams;267;-892.4822,894.6918;Float;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;1007;-444.4821,894.6918;Fixed;False;Constant;_Float7;Float 7;47;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
