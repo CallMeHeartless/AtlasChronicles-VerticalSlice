@@ -8,10 +8,11 @@ public class DisplayStat : MonoBehaviour
 {
     bool showStats = false;
     [SerializeField] GameObject m_rCollectableText;
-    [SerializeField] public GameObject m_rMapCountText;
-    [SerializeField] public GameObject[] m_rHearts;
+    [SerializeField] GameObject m_rMapCountText;
+    [SerializeField] GameObject[] m_rHearts;
     private GameObject[] m_rMapReferences;
     public int m_iHP = 4;
+
     // Start is called before the first frame update
     void Start()
     {

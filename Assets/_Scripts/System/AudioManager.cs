@@ -8,7 +8,6 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioMixer m_rMixer;
     private Slider m_rSlider;
-    private PlayerPrefsManager m_rPrefs;
 
     public enum AudioType { NONE, BGM, SFX };
     public AudioType m_rType = AudioType.NONE;
@@ -16,17 +15,16 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-        m_rPrefs = PlayerPrefsManager.GetInstance();
         m_rSlider = GetComponent<Slider>();
         if (m_rType == AudioType.BGM)
         {
-            m_rSlider.value = m_rPrefs.RetrieveAudioBGM();
-            SetVol(m_rPrefs.RetrieveAudioBGM());
+            m_rSlider.value = PlayerPrefsManager.RetrieveAudioBGM();
+            SetVol(PlayerPrefsManager.RetrieveAudioBGM());
         }
         else if(m_rType == AudioType.SFX)
         {
-            m_rSlider.value = m_rPrefs.RetrieveAudioVFX();
-            SetVol(m_rPrefs.RetrieveAudioVFX());
+            m_rSlider.value = PlayerPrefsManager.RetrieveAudioVFX();
+            SetVol(PlayerPrefsManager.RetrieveAudioVFX());
         }
     }
 
@@ -36,12 +34,12 @@ public class AudioManager : MonoBehaviour
         if (m_rType == AudioType.BGM)
         {
             m_rMixer.SetFloat("BGMVol", audioVal);
-            m_rPrefs.StoreAudioBGM(_sliderVal);
+            PlayerPrefsManager.StoreAudioBGM(_sliderVal);
         }
         else if (m_rType == AudioType.SFX)
         {
             m_rMixer.SetFloat("SFXVol", audioVal);
-            m_rPrefs.StoreAudioVFX(_sliderVal);
+            PlayerPrefsManager.StoreAudioVFX(_sliderVal);
         }
     }
 }

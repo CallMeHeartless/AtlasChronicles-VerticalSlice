@@ -10,7 +10,7 @@ using Cinemachine;
 public class SettingsScript : MonoBehaviour
 {
     private CinemachineFreeLook m_rCineCamera;
-    private PlayerPrefsManager m_rPrefs;
+    private PlayerPrefsManager PlayerPrefsManager;
     private int m_currentGroup = -1;
 
     [SerializeField] Image[] m_rTabs;
@@ -31,28 +31,27 @@ public class SettingsScript : MonoBehaviour
         m_rSettings.SetActive(false);
 
         // Get the references for necessary components
-        m_rPrefs = PlayerPrefsManager.GetInstance();
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
 
         if (m_rCineCamera) 
         {
             //Assign player-stored camera values into cinemachine
-            m_rCineCamera.m_XAxis.m_InvertInput = m_rPrefs.RetrieveCamX();
-            m_rCineCamera.m_YAxis.m_InvertInput = m_rPrefs.RetrieveCamY();
+            m_rCineCamera.m_XAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamX();
+            m_rCineCamera.m_YAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamY();
         }
 
         //Set toggle buttons within settings based on player preferences
         if (m_camToggleX && m_camToggleY)
         {
-            m_camToggleX.isOn = m_rPrefs.RetrieveCamX();
-            m_camToggleY.isOn = m_rPrefs.RetrieveCamY();
+            m_camToggleX.isOn = PlayerPrefsManager.RetrieveCamX();
+            m_camToggleY.isOn = PlayerPrefsManager.RetrieveCamY();
         }
 
         //Set mixer values based on what is stored in player preferences
         if (m_rMixer)
         {
-            m_rMixer.SetFloat("BGMVol", Mathf.Log10(m_rPrefs.RetrieveAudioBGM()) * 20);
-            m_rMixer.SetFloat("SFXVol", Mathf.Log10(m_rPrefs.RetrieveAudioVFX()) * 20);
+            m_rMixer.SetFloat("BGMVol", Mathf.Log10(PlayerPrefsManager.RetrieveAudioBGM()) * 20);
+            m_rMixer.SetFloat("SFXVol", Mathf.Log10(PlayerPrefsManager.RetrieveAudioVFX()) * 20);
         }
     }
 
@@ -62,8 +61,8 @@ public class SettingsScript : MonoBehaviour
         // set the current camera settings to the cinemachine camera.
         if (m_rCineCamera)
         {
-            m_rCineCamera.m_XAxis.m_InvertInput = m_rPrefs.RetrieveCamX();
-            m_rCineCamera.m_YAxis.m_InvertInput = m_rPrefs.RetrieveCamY();
+            m_rCineCamera.m_XAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamX();
+            m_rCineCamera.m_YAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamY();
         }
 
         if (m_rTabs != null && m_rGroups != null)
@@ -181,7 +180,7 @@ public class SettingsScript : MonoBehaviour
             m_rCineCamera.m_XAxis.m_InvertInput = _invert;
         }
         //Store value in the player prefs
-        m_rPrefs.StoreCamX(_invert);
+        PlayerPrefsManager.StoreCamX(_invert);
     }
 
     public void ToggleCameraY(bool _invert)
@@ -192,6 +191,6 @@ public class SettingsScript : MonoBehaviour
             m_rCineCamera.m_YAxis.m_InvertInput = _invert;
         }
         //Store value in the player prefs
-        m_rPrefs.StoreCamY(_invert);
+        PlayerPrefsManager.StoreCamY(_invert);
     }
 }

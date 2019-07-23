@@ -11,8 +11,7 @@ public class Pickup : MonoBehaviour
     private RectTransform m_rCanvasRect;
     private Camera m_rCamera;
     float m_fCollectionSpeed = 0.4f;
-    [SerializeField]
-    private int m_uiID;
+    [SerializeField] private int m_uiID = 0;
 
     public void Start()
     {
@@ -22,6 +21,8 @@ public class Pickup : MonoBehaviour
         }
 
         m_rPickupPic = GameObject.FindGameObjectWithTag("PickupPicUI");
+        print("DKJFHADSDHFKS: " + (m_rPickupPic == null));
+
         m_rMapPic = GameObject.FindGameObjectWithTag("MapPicUI");
         m_rCamera = GameObject.Find("Camera").GetComponent<Camera>();
     }
@@ -37,6 +38,7 @@ public class Pickup : MonoBehaviour
             }
             else
             {
+                print("DKJFHADSDHFKS: " + (m_rPickupPic == null));
                 screenPoint = m_rPickupPic.transform.position + new Vector3(0, 10.0f, 5.0f);
             }
             Vector3 worldPos = m_rCamera.ScreenToWorldPoint(screenPoint);
