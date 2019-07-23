@@ -42,9 +42,7 @@ public class EnemyController : MonoBehaviour
     public AIWanderProperties m_rWanderProperties { get { return m_WanderProperties; } }
 
     [Header("Combat Properties")]
-    [SerializeField]
-    private float m_fAttackCooldown;
-    private float m_fAttackTimer = 0.0f;
+    public float m_fAttackCooldown;
     private bool m_bHasMapFragment = false;
     [SerializeField]
     private float m_fKnockoutTime = 10.0f;
@@ -92,9 +90,10 @@ public class EnemyController : MonoBehaviour
                 m_rStateMachine.SetBool("bCanSeePlayer", false);
             }
         }
-        else {
+        else if(m_rStateMachine.GetBool("bCanSeePlayer")){
             m_rStateMachine.SetBool("bCanSeePlayer", false);
             // Transition to look, then return home
+            m_rAnimator.SetTrigger("LoseSight");
         }
 
         // Check if away from navmesh
@@ -168,6 +167,7 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    // Plays the attack animation 
     public void Attack() {
         if (m_rAnimator) {
             m_rAnimator.SetTrigger("Attack");
@@ -177,6 +177,7 @@ public class EnemyController : MonoBehaviour
     public void Knockout() {
         m_bIsKnockedOut = true;
         m_rStateMachine.SetBool("bIsKnockedOut", true);
+        m_rStateMachine.SetTrigger("KnockOut");
         m_rAnimator.SetTrigger("Death");
         m_rNavAgent.isStopped = true;
         // VFX
@@ -201,6 +202,7 @@ public class EnemyController : MonoBehaviour
 
     // Apply a tag to the enemy, disorienting them
     public void SetTag(bool _bState) {
+        m_rStateMachine.SetTrigger("Disorient");
         m_rStateMachine.SetBool("bIsTagged", _bState);
         m_rAnimator.SetBool("Tagged", _bState);
         m_bIsTagged = _bState;
@@ -219,6 +221,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    // Stops the agent from moving (used by animation keyframe events)
+    public void StopAgent() {
+        m_rNavAgent.isStopped = true;
+    }
+
+    // Frees the agent (used by animation events)
+    public void FreeAgent() {
+        m_rNavAgent.isStopped = false;
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {

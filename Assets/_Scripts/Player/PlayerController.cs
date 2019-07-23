@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strSprintButton = "BButton";
     private string m_strAttackButton = "XBoxXButton";
     private string m_strCameraLockButton = "XBoxR2";
+    private string m_strTetherBreakButton = "XBoxRightStickClick";
     private AxisToButton m_rSwitchButton = new AxisToButton();
 
     // Movement variables
@@ -464,13 +465,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_rAnimator.SetBool("Grounded", false);
                 if (!m_bIsFloating)
                 {// && m_Velocity.y < 0.0f
-                    m_fGravityMulitplier *= m_fGravityMultiplierRate;
+                    //m_fGravityMulitplier *= m_fGravityMultiplierRate;
+                    m_fGravityMulitplier *= (m_Velocity.y < 0.0f ? m_fGravityMultiplierRate * 3.0f : m_fGravityMultiplierRate);
                     m_fGravityMulitplier = Mathf.Clamp(m_fGravityMulitplier, 1.0f, m_fMaxGravityMultiplier);
                     m_fCurrentMovementSpeed = m_fMovementSpeed;
                 }
             }
         }
-        //m_fVerticalVelocity = Mathf.Clamp(m_fVerticalVelocity, -100.0f, 100.0f);
     }
 
     // Handles the player floating slowly downwards
@@ -577,6 +578,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             } else if (!m_rHeldObject) {
                 m_rAnimator.SetTrigger("ThrowTag");
             }
+        }
+        // Allow the player to manually cancel their switch tag
+        else if (Input.GetButtonDown(m_strTetherBreakButton)) {
+            CancelSwitchTag();
         }
         // Attack
         if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
@@ -687,7 +692,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Cancel the switch tag
-    private void CancelSwitchTag() {
+    public void CancelSwitchTag() {
         if (!m_rSwitchTarget) {
             return;
         }
@@ -695,6 +700,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (rSwitchTag) {
             rSwitchTag.DetachFromObject();
             m_rSwitchTarget = null;
+            // VFX / SFX feedback
         }
 
     }
@@ -866,7 +872,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Break the teleport marker tether
-    private void BreakMarkerTether() {
+    public void BreakMarkerTether() {
         ToggleTeleportMarker(false);
         m_rTeleportMarker.transform.SetParent(null);
         m_bTeleportThresholdWarning = false;
@@ -874,13 +880,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //m_rPlayerAudioController.TeleportThresholdBreak();
     }
 
+    // Used to remove both switch tag and teleport tethers from the player
     public void BreakTethers() {
         // Break teleport marker
         BreakMarkerTether();
         // Break switch tag tether
         CancelSwitchTag();
-
-        Debug.Log("Tethers should be broken");
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {

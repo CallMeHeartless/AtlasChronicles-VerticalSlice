@@ -11,6 +11,8 @@ public class flyTrap : MonoBehaviour
     public float m_fSpeed = 0.1f;
     public float m_fTimer;
     public float m_fMaxTimer = 2;
+    public Material m_mBite;
+    public Material m_mWait;
 
     float speed = 0.05f; //how fast it shakes
     bool collapse = false;
@@ -50,6 +52,15 @@ public class flyTrap : MonoBehaviour
             PlayerOnFlyTrap();
         }
 
+        if (collapse)
+        {
+            //eat
+            //collapse = false;
+            GetComponent<Renderer>().material = m_mBite;
+            StartCoroutine("destoration");
+            m_bCollapsing = false;
+            m_fTimer = 3;
+        }
 
     }
     void flyTrapAuto()
@@ -71,31 +82,18 @@ public class flyTrap : MonoBehaviour
             //shake 
         }
 
-        if (collapse)
-        {
-            //eat
-            //collapse = false;
-            StartCoroutine("destoration");
-            m_bCollapsing = false;
-            m_fTimer = 3;
-        }
+       
     }
 
     void PlayerOnFlyTrap() {
 
-        if (collapse)
-        {
-            //eat
-            //collapse = false;
-            StartCoroutine("destoration");
-            m_bCollapsing = false;
-            m_fTimer = 3;
-        }
+       
 
         if (m_bCollapsing)
         {
             if (m_fTimer <= 0.5)
             {
+              
                 //shake 
             }
             if (m_fTimer <= 0)
@@ -180,10 +178,11 @@ public class flyTrap : MonoBehaviour
     {
         //Debug.Log("help");
         //cumbling effect
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.8f);
         m_fTimer = 2;
         m_intStanability = m_intIntisalStanability;
         collapse = false;
+        GetComponent<Renderer>().material = m_mWait;
 
     }
 }

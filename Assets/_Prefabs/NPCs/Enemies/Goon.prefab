@@ -204,7 +204,7 @@ MonoBehaviour:
     m_fMinWanderRadius: 1
     m_fMaxWanderRadius: 15
     m_fWanderInterval: 5
-  m_fAttackCooldown: 0
+  m_fAttackCooldown: 2
   m_fKnockoutTime: 10
 --- !u!95 &7804704985898512706
 Animator:
@@ -237,9 +237,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93eb620f36c467144bd0e370e0393b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Weight: 2
+  ObjectColor: 0
   m_bChangeMaterialOnTag: 0
   m_AlternateMaterial: {fileID: 0}
   m_Material: {fileID: 0}
+  m_bReturnAfterDelay: 0
+  m_fReturnTime: 3
 --- !u!114 &7905677579001137324
 MonoBehaviour:
   m_ObjectHideFlags: 0
