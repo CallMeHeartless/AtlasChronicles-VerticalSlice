@@ -12,6 +12,7 @@ public class BasicWander : AIState
         // Reset wander interval timer
         m_fWanderIntervalTimer = 0.0f;
         m_rWanderProperties = m_rAI.m_rWanderProperties;
+        m_rAI.animator.SetTrigger("Idle");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -24,9 +25,11 @@ public class BasicWander : AIState
 
         // Determine which animation should be played
         if (m_rAgent.velocity.sqrMagnitude == 0.0f) {
-            m_rAI.animator.SetTrigger("Idle");
+            //m_rAI.animator.SetTrigger("Idle");
+            m_rAI.animator.SetBool("bIsWandering", false);
         } else {
-            m_rAI.animator.SetTrigger("Patrol");
+            //m_rAI.animator.SetTrigger("Patrol");
+            m_rAI.animator.SetBool("bIsWandering", true);
         }
     }
 

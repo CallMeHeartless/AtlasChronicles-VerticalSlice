@@ -231,6 +231,11 @@ public class EnemyController : MonoBehaviour
         m_rNavAgent.isStopped = false;
     }
 
+    // Tells the Goon to go back to patrolling (called when they have lost sight of the player
+    public void ReturnToWandering() {
+        m_rStateMachine.SetTrigger("ReturnToWander");
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
         m_rVision.EditorGizmo(m_rEyes.transform);
