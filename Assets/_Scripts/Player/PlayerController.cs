@@ -105,12 +105,27 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField]
     private Vector3 m_vecTeleportMarkerOffset;
     private Vector3 m_vecTeleportLocation;
-    private bool m_bTeleportMarkerDown = false;
-    private bool m_bTeleportThresholdWarning = false;
-    private bool m_bSwitchThresholdWarning = false;
-    private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
-    private GameObject m_rSwitchTarget;
+   // private bool m_bTeleportMarkerDown = false;
+    //private bool m_bTeleportThresholdWarning = false;
+    //private bool m_bSwitchThresholdWarning = false;
+   // private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
+   // private GameObject m_rSwitchTarget;
     private GameObject m_rHeldObject;
+
+    //telepot change
+    private GameObject[] m_rTeleportLoctation = new GameObject[3];
+    public enum TeleportStat
+    {
+        Nulled,
+        MarkedInRangeGround,
+        MarkedOutOfRangeGround,
+        MarkedInRangeSwitch,
+        MarkedOutOfRangeSwitch,
+        Break
+    }
+    private int m_UsedTeleport = 0;
+    private TeleportStat[] m_rTeleportCondiction = new TeleportStat[3];
+
     private bool m_bIsAiming = false;
     [SerializeField]
     private Transform m_rHeldObjectLocation;
@@ -186,10 +201,25 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         m_fCurrentMovementSpeed = m_fMovementSpeed;
 
-        if (m_rTeleportMarkerPrefab) {
-            m_rTeleportMarker = Instantiate(m_rTeleportMarkerPrefab);
-            m_rTeleportMarker.SetActive(false);
+        //if (m_rTeleportMarkerPrefab) {
+        //    m_rTeleportMarker = Instantiate(m_rTeleportMarkerPrefab);
+        //    m_rTeleportMarker.SetActive(false);
+        //}
+
+        if (m_rTeleportMarkerPrefab)
+        {
+            Debug.Log(m_rTeleportLoctation.Length);
+            for (int i = 0; i < m_rTeleportLoctation.Length; i++)
+            {
+               
+                    Debug.Log("hello");
+                    m_rTeleportLoctation[i] = Instantiate(m_rTeleportMarkerPrefab);
+                    m_rTeleportLoctation[i].SetActive(false);
+                    m_rTeleportCondiction[i] = TeleportStat.Nulled;
+               
+            }
         }
+        
 
         // Find UI
         GameObject ui = GameObject.Find("GameUI");
@@ -549,17 +579,28 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             // Throw a tag if there is no  held object
             if (!m_rHeldObject && m_rCharacterController.isGrounded) {
                 // Place on ground
-                m_rAnimator.ResetTrigger("Idle");
-                m_rAnimator.ResetTrigger("Walk");
-                m_rAnimator.SetTrigger("PlaceTag");
-                PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
+               
+                //PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
+
+                if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.Nulled)
+                {
+                    PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
+                    m_rAnimator.ResetTrigger("Idle");
+                    m_rAnimator.ResetTrigger("Walk");
+                    m_rAnimator.SetTrigger("PlaceTag");
+
+                }
+                else
+                {
+                    Debug.Log("Tag in Use");
+                }
             } 
         }
         // Teleporting to the marker
-        else if (Input.GetButtonDown(m_strTeleportButton) && m_bTeleportMarkerDown) {
+        else if (Input.GetButtonDown(m_strTeleportButton) && m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround) {
             m_bWasSwitchLastTeleportCommand = false;
             //TeleportToTeleportMarker();
-            if (!m_bTeleportThresholdWarning)
+            if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround)
             {
                 m_rAnimator.SetTrigger("Teleport");
             }
@@ -567,8 +608,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
         // Throw switch tag / switch teleport
         else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {//|| (Input.GetAxisRaw(m_strSwitchButton) == 0.0f)
-            if (m_rSwitchTarget) {
-                if (!m_bSwitchThresholdWarning)
+            if (m_rTeleportLoctation[m_UsedTeleport].activeInHierarchy) {
+                if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)
                 {
                     m_bWasSwitchLastTeleportCommand = true;
                     m_rAnimator.SetTrigger("Teleport");
@@ -610,16 +651,18 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Place the teleport marker on the ground
     public void PlaceTeleportMarker(Vector3 _vecPlacementLocation) {
-        if (!m_rTeleportMarker) {
+        if (!m_rTeleportLoctation[m_UsedTeleport]) {
+            Debug.Log("break");
             return;
         }
         //m_Animator.SetTrigger("Tag");
         m_rTagAudio.PlayAudio(0);
-        m_rTeleportMarker.transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
+        m_rTeleportLoctation[m_UsedTeleport].transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
         AttachMarkerToGround();
         // Enable teleport marker
-        if (!m_rTeleportMarker.activeSelf) {
+        if (!m_rTeleportLoctation[m_UsedTeleport].activeSelf) {
             ToggleTeleportMarker(true);
+            m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkedInRangeGround;
         }
     }
 
@@ -635,24 +678,25 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (!m_rHeldObject) {
             return;
         }
-        m_rTeleportMarker.transform.position = m_rHeldObject.transform.position;
-        m_rTeleportMarker.transform.SetParent(m_rHeldObject.transform);
+        m_rTeleportLoctation[m_UsedTeleport].transform.position = m_rHeldObject.transform.position;
+        m_rTeleportLoctation[m_UsedTeleport].transform.SetParent(m_rHeldObject.transform);
         ToggleTeleportMarker(true);
     }
 
     private void TeleportToTeleportMarker() {
-        if (!m_bTeleportMarkerDown || !m_rTeleportMarker || m_rHeldObject || m_bTeleportThresholdWarning) {
+        if (m_rTeleportCondiction[m_UsedTeleport] != TeleportStat.MarkedInRangeGround || !m_rTeleportLoctation[m_UsedTeleport] || m_rHeldObject) {
             return; // Error animation / noise
         }
         ToggleTeleportScroll(true);
-        StartCoroutine(TeleportToLocation(m_rTeleportMarker.transform.position));
+        StartCoroutine(TeleportToLocation(m_rTeleportLoctation[m_UsedTeleport].transform.position));
+        m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.Nulled;
         // Disable teleport marker
         ToggleTeleportMarker(false);
     }
 
     // Trade places with the switch target, then clear the target state
     private void SwitchWithTarget() {
-        if (!m_rSwitchTarget || m_bSwitchThresholdWarning) {
+        if (!m_rTeleportLoctation[m_UsedTeleport] || m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.Nulled) {
             return;
         }
         ToggleTeleportScroll(true);
@@ -660,22 +704,22 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Switch positions
         Vector3 vecPlayerPosition = transform.position;
-        Vector3 vecObjectPosition = m_rSwitchTarget.transform.position;
+        Vector3 vecObjectPosition = m_rTeleportLoctation[m_UsedTeleport].transform.position;
         StartCoroutine(TeleportToLocation(vecObjectPosition));
         StartCoroutine(m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().Switch(vecPlayerPosition));
 
         // Remove reference
-        m_rSwitchTarget = null;
+        m_rTeleportLoctation[m_UsedTeleport] = null;
     }
 
     // Sets the player controller's switch target
     public void SetSwitchTarget(GameObject _switchTarget) {
-        m_rSwitchTarget = _switchTarget;
+        m_rTeleportLoctation[m_UsedTeleport] = _switchTarget;
     }
 
     // Align the player with the camera and indicate where the switch tag is being aimed
     private void AimSwitchTag() {
-        if (m_rSwitchTarget) {
+        if (m_rTeleportLoctation[m_UsedTeleport]) {
             return;
         }
 
@@ -693,13 +737,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Cancel the switch tag
     public void CancelSwitchTag() {
-        if (!m_rSwitchTarget) {
+        if (!m_rTeleportLoctation[m_UsedTeleport]) {
             return;
         }
         SwitchTagController rSwitchTag = m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>();
         if (rSwitchTag) {
             rSwitchTag.DetachFromObject();
-            m_rSwitchTarget = null;
+            m_rTeleportLoctation[m_UsedTeleport] = null;
             // VFX / SFX feedback
         }
 
@@ -818,47 +862,50 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private void ToggleTeleportMarker(bool _bState) {
-        m_rTeleportMarker.SetActive(_bState);
-        m_bTeleportMarkerDown = _bState;
+        m_rTeleportLoctation[m_UsedTeleport].SetActive(_bState);
+        
     }
 
     // Checks if the player has passed through warning and breaking thresholds for teleport markers / switch tags
     private void HandleTeleportTethers() {
         // Check teleport maker
-        if (m_bTeleportMarkerDown) {
-            float fMarkerDistance = (transform.position - m_rTeleportMarker.transform.position).magnitude;
+        if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround|| m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedOutOfRangeGround) {
+            float fMarkerDistance = (transform.position - m_rTeleportLoctation[m_UsedTeleport].transform.position).magnitude;
             // Compare to threshold distances
             if (fMarkerDistance >= m_fTeleportBreakDistance) {
+               
                 BreakMarkerTether();
             }
-            else if (fMarkerDistance >= m_fTeleportTetherDistance && !m_bTeleportThresholdWarning) {
-                m_bTeleportThresholdWarning = true;
+            else if (fMarkerDistance >= m_fTeleportTetherDistance && m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround) {
+                Debug.Log("Outer Range");
+                m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkedOutOfRangeGround;
                 // Play sound / VFX
                 //m_rPlayerAudioController.TeleportThresholdWarning();
             }
             if (fMarkerDistance < m_fTeleportTetherDistance) {
-                m_bTeleportThresholdWarning = false;
+                Debug.Log("back in Range");
+                m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkedInRangeGround;
             }
         }
 
 
         // Check switch tag
-        if (m_rSwitchTarget) {
-            float fSwitchTagDistance = (transform.position - m_rSwitchTarget.transform.position).magnitude;
+        if (m_rTeleportLoctation[m_UsedTeleport] && (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)) {
+            float fSwitchTagDistance = (transform.position - m_rTeleportLoctation[m_UsedTeleport].transform.position).magnitude;
             // Compare to threshold distances
             if (fSwitchTagDistance >= m_fTeleportBreakDistance) {
                 Debug.Log("Switch tag beyond break distance");
-                m_bSwitchThresholdWarning = false;
-                m_rSwitchTarget = null;
+                m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkedInRangeSwitch;
+                m_rTeleportLoctation[m_UsedTeleport] = null;
                 // Play sound / VFX
                 m_rTagAudio.PlayAudio(2);
 
                 //m_rPlayerAudioController.TeleportThresholdBreak();
                 m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
             }
-            else if (fSwitchTagDistance >= m_fTeleportTetherDistance && !m_bSwitchThresholdWarning) {
+            else if (fSwitchTagDistance >= m_fTeleportTetherDistance && m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch) {
                 Debug.Log("Switch tag beyond use distance");
-                m_bSwitchThresholdWarning = true;
+                m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkedOutOfRangeSwitch;
                 m_rTagAudio.PlayAudio(1);
 
 
@@ -866,7 +913,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 //m_rPlayerAudioController.TeleportThresholdWarning();
             }
             if (fSwitchTagDistance < m_fTeleportTetherDistance) {
-                m_bSwitchThresholdWarning = false;
+                m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkedInRangeSwitch;
             }
         }
     }
@@ -874,8 +921,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Break the teleport marker tether
     public void BreakMarkerTether() {
         ToggleTeleportMarker(false);
-        m_rTeleportMarker.transform.SetParent(null);
-        m_bTeleportThresholdWarning = false;
+        Debug.Log("break");
+        m_rTeleportLoctation[m_UsedTeleport].transform.SetParent(null);
+        m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.Nulled;
         // Play sound / VFX
         //m_rPlayerAudioController.TeleportThresholdBreak();
     }
