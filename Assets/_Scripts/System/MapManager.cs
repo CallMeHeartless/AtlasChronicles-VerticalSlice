@@ -50,10 +50,13 @@ public class MapManager : MonoBehaviour
             m_rZoneMapCollected[i] = m_rZones[i].GetIsMapFragmentCollected();
             if(m_rZoneMapCollected[i])
             {
+                
                 m_rMapRegions[i].SetActive(true);
                 ++m_rMapsCollected;
             }
         }
+        print("Num maps update?: " + m_rMapsCollected);
+
         MapDefaultSettings();
     }
 
@@ -70,12 +73,10 @@ public class MapManager : MonoBehaviour
         m_rMapDetailCollectableCount.SetActive(false);
     }
 
-    public void TurnOffDefaultSettings()
+    public void ActivateDetails()
     {
         m_rMapDetailRegionCount.SetActive(false);    //Counter of how many regions have been 
-
         //Turn on all region details
-        m_rMapDetailRegionCount.SetActive(true);
         m_rMapDetailMapCount.SetActive(true);
         m_rMapDetailChestCount.SetActive(true);
         m_rMapDetailCollectableCount.SetActive(true);

@@ -21,30 +21,28 @@ public class Pickup : MonoBehaviour
         }
 
         m_rPickupPic = GameObject.FindGameObjectWithTag("PickupPicUI");
-        print("DKJFHADSDHFKS: " + (m_rPickupPic == null));
-
         m_rMapPic = GameObject.FindGameObjectWithTag("MapPicUI");
-        m_rCamera = GameObject.Find("Camera").GetComponent<Camera>();
+        //m_rCamera = GameObject.Find("Camera").GetComponent<Camera>();
     }
 
-    private void FixedUpdate()
-    {
-        if(m_bIsCollected)
-        {
-            Vector3 screenPoint;
-            if (gameObject.CompareTag("PrimaryPickup"))
-            {
-                screenPoint = m_rMapPic.transform.position + new Vector3(0, -10.0f, 5.0f);
-            }
-            else
-            {
-                print("DKJFHADSDHFKS: " + (m_rPickupPic == null));
-                screenPoint = m_rPickupPic.transform.position + new Vector3(0, 10.0f, 5.0f);
-            }
-            Vector3 worldPos = m_rCamera.ScreenToWorldPoint(screenPoint);
-            transform.position = Vector3.MoveTowards(transform.position, worldPos, m_fCollectionSpeed);
-        }
-    }
+    //private void FixedUpdate()
+    //{
+    //    if(m_bIsCollected)
+    //    {
+    //        Vector3 screenPoint;
+    //        if (gameObject.CompareTag("PrimaryPickup"))
+    //        {
+    //            screenPoint = m_rMapPic.transform.position + new Vector3(0, -10.0f, 5.0f);
+    //        }
+    //        else
+    //        {
+    //            print("DKJFHADSDHFKS: " + (m_rPickupPic == null));
+    //            screenPoint = m_rPickupPic.transform.position + new Vector3(0, 10.0f, 5.0f);
+    //        }
+    //        Vector3 worldPos = m_rCamera.ScreenToWorldPoint(screenPoint);
+    //        transform.position = Vector3.MoveTowards(transform.position, worldPos, m_fCollectionSpeed);
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
