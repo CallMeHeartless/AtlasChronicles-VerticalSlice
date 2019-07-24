@@ -15,10 +15,11 @@ public class SwitchTagController : MonoBehaviour
     [SerializeField] private float m_ftimer;
     [SerializeField] private float m_fMaxtimer = 5;
     private int m_Tagslot;
+
     public void SetUp()
     {
         m_Tagslot = m_rPlayerReference.getUsedTeleport();
-        if (m_fMaxtimer<= 0 )
+        if (m_fMaxtimer <= 0)
         {
             m_fMaxtimer = 2;
         }
@@ -32,19 +33,21 @@ public class SwitchTagController : MonoBehaviour
         {
             if (m_bIsMoving)
             {
+                //not attacthed to object so deactivate it
                 gameObject.SetActive(false);
-                m_rPlayerReference.setm_rTeleportCondiction(m_Tagslot);
+                m_rPlayerReference.SetTeleportCondiction(m_Tagslot);
             }
         }
         else
         {
+            // Move the tag forward if it has been thrown
             if (m_bIsMoving)
             {
                 transform.Translate(Vector3.forward * m_fMoveSpeed * Time.deltaTime);
             }
             m_ftimer -= Time.deltaTime;
         }
-        // Move the tag forward if it has been thrown
+      
         
     }
 

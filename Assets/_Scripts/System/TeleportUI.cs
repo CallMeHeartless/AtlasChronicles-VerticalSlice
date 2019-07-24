@@ -5,44 +5,44 @@ using UnityEngine.UI;
 
 public class TeleportUI : MonoBehaviour
 {
-    [SerializeField] private Image[] TeleportImage = new Image[6];
+    [SerializeField] private Image[] m_fTeleportImage = new Image[6];
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             gameObject.transform.GetChild(i).GetComponent<Image>().color = Color.black;
-            //gameObject.GetComponent<Image>().sprite = TeleportImage[0].sprite;
-        } 
+            //gameObject.GetComponent<Image>().sprite = m_fTeleportImage[0].sprite;
+        }
     }
 
-   public void changeUI(string UIChange,int Tag)
+   public void changeUI(string _UIChange,int _Tag)
     {
-        switch (UIChange)
+        switch (_UIChange)
         {
-            case "Nulled":
-                gameObject.transform.GetChild(Tag).GetComponent<Image>().color = Color.black;
-               // gameObject.GetComponent<Image>().sprite = TeleportImage[0].sprite;
+            case "eNulled":
+                gameObject.transform.GetChild(_Tag).GetComponent<Image>().color = Color.black;
+                // gameObject.GetComponent<Image>().sprite = m_fTeleportImage[0].sprite;
                 break;
-            case "MarkedInRangeGround":
-                gameObject.transform.GetChild(Tag).GetComponent<Image>().color = Color.blue;
-                // gameObject.GetComponent<Image>().sprite = TeleportImage[1].sprite;
+            case "eMarkedInRangeGround":
+                gameObject.transform.GetChild(_Tag).GetComponent<Image>().color = Color.blue;
+                // gameObject.GetComponent<Image>().sprite = m_fTeleportImage[1].sprite;
                 break;
-            case "MarkedOutOfRangeGround":
-                gameObject.transform.GetChild(Tag).GetComponent<Image>().color = Color.red;
-                //  gameObject.GetComponent<Image>().sprite = TeleportImage[2].sprite;
+            case "eMarkedOutOfRangeGround":
+                gameObject.transform.GetChild(_Tag).GetComponent<Image>().color = Color.red;
+                //  gameObject.GetComponent<Image>().sprite = m_fTeleportImage[2].sprite;
                 break;
-            case "MarkedInRangeSwitch":
-                gameObject.transform.GetChild(Tag).GetComponent<Image>().color = Color.gray;
-                //  gameObject.GetComponent<Image>().sprite = TeleportImage[3].sprite;
+            case "eMarkedInRangeSwitch":
+                gameObject.transform.GetChild(_Tag).GetComponent<Image>().color = Color.gray;
+                //  gameObject.GetComponent<Image>().sprite = m_fTeleportImage[3].sprite;
                 break;
-            case "MarkedOutOfRangeSwitch":
-                gameObject.transform.GetChild(Tag).GetComponent<Image>().color = Color.yellow;
-                //  gameObject.GetComponent<Image>().sprite = TeleportImage[4].sprite;
+            case "eMarkedOutOfRangeSwitch":
+                gameObject.transform.GetChild(_Tag).GetComponent<Image>().color = Color.yellow;
+                //  gameObject.GetComponent<Image>().sprite = m_fTeleportImage[4].sprite;
                 break;
-            case "MarkMoving":
-                gameObject.transform.GetChild(Tag).GetComponent<Image>().color = Color.magenta;
-                //  gameObject.GetComponent<Image>().sprite = TeleportImage[5].sprite;
+            case "eMarkMoving":
+                gameObject.transform.GetChild(_Tag).GetComponent<Image>().color = Color.magenta;
+                //  gameObject.GetComponent<Image>().sprite = m_fTeleportImage[5].sprite;
                 break;
             default:
                 break;
