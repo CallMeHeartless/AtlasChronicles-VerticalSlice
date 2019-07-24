@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         MarkMoving
     }
    private int m_UsedTeleport = 0;
-     private TeleportStat[] m_rTeleportCondiction = new TeleportStat[3];
+    [SerializeField]  private TeleportStat[] m_rTeleportCondiction = new TeleportStat[3];
 
     private bool m_bIsAiming = false;
     [SerializeField]
@@ -215,6 +215,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                
                     Debug.Log("hello");
                     m_rTeleportLoctation[i] = Instantiate(m_rTeleportMarkerPrefab);
+                m_rTeleportLoctation[i].GetComponent<Tagbraking>().tagLoctation = i;
                     m_rTeleportLoctation[i].SetActive(false);
                     m_rTeleportCondiction[i] = TeleportStat.Nulled;
                 m_rTelePortUI.GetComponent<TeleportUI>().changeUI(m_rTeleportCondiction[i].ToString(), m_UsedTeleport);
@@ -1226,7 +1227,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void setm_rTeleportCondiction(int TagSlot)
     {
         m_rTeleportCondiction[TagSlot] = TeleportStat.Nulled;
-        m_rTelePortUI.GetComponent<TeleportUI>().changeUI(m_rTeleportCondiction[m_UsedTeleport].ToString(), m_UsedTeleport);
+        m_rTelePortUI.GetComponent<TeleportUI>().changeUI(m_rTeleportCondiction[TagSlot].ToString(), m_UsedTeleport);
     }
     public int getUsedTeleport()
     {

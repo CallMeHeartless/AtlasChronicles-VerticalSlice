@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8475096787858310413}
   - component: {fileID: 6826367789313439785}
   - component: {fileID: 3281868040506294281}
+  - component: {fileID: 142651510149891325}
   m_Layer: 0
   m_Name: TestTeleportMarker
   m_TagString: Untagged
@@ -88,10 +89,23 @@ SphereCollider:
   m_GameObject: {fileID: 4014711655795980374}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &142651510149891325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4014711655795980374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c50df404a79af0c4393e632621da0546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagLoctation: 0
 --- !u!1001 &7171926046179819561
 PrefabInstance:
   m_ObjectHideFlags: 0
