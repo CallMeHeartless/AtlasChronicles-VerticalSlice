@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tagbraking : MonoBehaviour
 {
-    public int m_TagLoctation;
+    private int m_TagLoctation;
     private PlayerController m_fPlayerController;
     private void Start()
     {
