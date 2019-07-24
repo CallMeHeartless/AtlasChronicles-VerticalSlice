@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     //private bool m_bSwitchThresholdWarning = false;
    // private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
    // private GameObject m_rSwitchTarget;
-    private GameObject m_rHeldObject;
+    //private GameObject m_rHeldObject;
 
     //telepot change
     private GameObject[] m_rTeleportLoctation = new GameObject[3];
@@ -577,7 +577,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
             // Throw a tag if there is no  held object
-            if (!m_rHeldObject && m_rCharacterController.isGrounded) {
+            if ( m_rCharacterController.isGrounded) {
                 // Place on ground
                
                 //PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
@@ -597,10 +597,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             } 
         }
         // Teleporting to the marker
-        else if (Input.GetButtonDown(m_strTeleportButton) && m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround) {
+        else if (Input.GetButtonDown(m_strTeleportButton) && (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround|| m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)) {
             m_bWasSwitchLastTeleportCommand = false;
             //TeleportToTeleportMarker();
-            if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround)
+            if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround || m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)
             {
                 m_rAnimator.SetTrigger("Teleport");
             }
@@ -608,15 +608,16 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
         // Throw switch tag / switch teleport
         else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {//|| (Input.GetAxisRaw(m_strSwitchButton) == 0.0f)
+            Debug.Log(m_rTeleportLoctation[m_UsedTeleport].activeInHierarchy);
             if (m_rTeleportLoctation[m_UsedTeleport].activeInHierarchy) {
-                if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)
-                {
-                    m_bWasSwitchLastTeleportCommand = true;
-                    m_rAnimator.SetTrigger("Teleport");
-                }
+                //if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)
+                //{
+                //    m_bWasSwitchLastTeleportCommand = true;
+                //    m_rAnimator.SetTrigger("Teleport");
+                //}
 
                 //SwitchWithTarget();
-            } else if (!m_rHeldObject) {
+           
                 m_rAnimator.SetTrigger("ThrowTag");
             }
         }
@@ -675,16 +676,17 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Parent the teleport marker to the held object
     private void TagHeldObject() {
-        if (!m_rHeldObject) {
+        if (m_rTeleportLoctation[m_UsedTeleport].activeInHierarchy)
+        {
             return;
         }
-        m_rTeleportLoctation[m_UsedTeleport].transform.position = m_rHeldObject.transform.position;
-        m_rTeleportLoctation[m_UsedTeleport].transform.SetParent(m_rHeldObject.transform);
+        m_rTeleportLoctation[m_UsedTeleport].transform.position = m_rTeleportLoctation[m_UsedTeleport].transform.position;
+        m_rTeleportLoctation[m_UsedTeleport].transform.SetParent(m_rTeleportLoctation[m_UsedTeleport].transform.parent);
         ToggleTeleportMarker(true);
     }
 
     private void TeleportToTeleportMarker() {
-        if (m_rTeleportCondiction[m_UsedTeleport] != TeleportStat.MarkedInRangeGround || !m_rTeleportLoctation[m_UsedTeleport] || m_rHeldObject) {
+        if (m_rTeleportCondiction[m_UsedTeleport] != TeleportStat.MarkedInRangeGround || !m_rTeleportLoctation[m_UsedTeleport]) {
             return; // Error animation / noise
         }
         ToggleTeleportScroll(true);
@@ -760,26 +762,26 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Pickup the nearest item or drop the held item
-    private void GrabObject() {
-        // Pick up the item
-        if (!m_rHeldObject) {
-            GameObject nearestItem = GetClosestHoldableItem();
-            m_rAnimator.SetTrigger("Pickup");
-            if (!nearestItem) {
-                return;
-            }
-            m_rHeldObject = nearestItem;
-            m_rHeldObject.transform.position = m_rHeldObjectLocation.transform.position;
-            m_rHeldObject.transform.SetParent(m_rHeldObjectLocation);
-            // Disable rigibody
-            m_rHeldObject.GetComponent<Rigidbody>().isKinematic = true;
-        } else {
-            // Drop item
-            m_rHeldObject.transform.SetParent(null);
-            m_rHeldObject.GetComponent<Rigidbody>().isKinematic = false;
-            m_rHeldObject = null;
-        }
-    }
+    //private void GrabObject() {
+    //    // Pick up the item
+    //    if (!m_rHeldObject) {
+    //        GameObject nearestItem = GetClosestHoldableItem();
+    //        m_rAnimator.SetTrigger("Pickup");
+    //        if (!nearestItem) {
+    //            return;
+    //        }
+    //        m_rHeldObject = nearestItem;
+    //        m_rHeldObject.transform.position = m_rHeldObjectLocation.transform.position;
+    //        m_rHeldObject.transform.SetParent(m_rHeldObjectLocation);
+    //        // Disable rigibody
+    //        m_rHeldObject.GetComponent<Rigidbody>().isKinematic = true;
+    //    } else {
+    //        // Drop item
+    //        m_rHeldObject.transform.SetParent(null);
+    //        m_rHeldObject.GetComponent<Rigidbody>().isKinematic = false;
+    //        m_rHeldObject = null;
+    //    }
+    //}
 
     // Finds the closest holdable object
     private GameObject GetClosestHoldableItem() {
