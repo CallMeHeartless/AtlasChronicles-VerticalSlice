@@ -46,6 +46,7 @@ public class PlayerAnimationController : MonoBehaviour
         // Make active
         m_SwitchMarker.SetActive(true);
         m_SwitchMarker.GetComponent<SwitchTagController>().SetMoving(true);
+        m_SwitchMarker.GetComponent<SwitchTagController>().SetUp();
     }
 
     // Removes the switch tag

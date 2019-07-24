@@ -12,20 +12,46 @@ public class SwitchTagController : MonoBehaviour
     [SerializeField]
     private Vector3 m_vecOffset;
     private PlayerController m_rPlayerReference;
-
-  
+    [SerializeField] private float m_ftimer;
+    [SerializeField] private float m_fMaxtimer = 5;
+    private int m_Tagslot;
+    public void SetUp()
+    {
+        m_Tagslot = m_rPlayerReference.getUsedTeleport();
+        if (m_fMaxtimer<= 0 )
+        {
+            m_fMaxtimer = 2;
+        }
+        m_ftimer = m_fMaxtimer;
+    }
 
     // Update is called once per frame
     void Update(){
-        // Move the tag forward if it has been thrown
-        if (m_bIsMoving) {
-            transform.Translate(Vector3.forward * m_fMoveSpeed * Time.deltaTime);
+
+        if (m_ftimer <= 0)
+        {
+            if (m_bIsMoving)
+            {
+                gameObject.SetActive(false);
+                m_rPlayerReference.setm_rTeleportCondiction(m_Tagslot);
+            }
         }
+        else
+        {
+            if (m_bIsMoving)
+            {
+                transform.Translate(Vector3.forward * m_fMoveSpeed * Time.deltaTime);
+            }
+            m_ftimer -= Time.deltaTime;
+        }
+        // Move the tag forward if it has been thrown
+        
     }
 
     // Instructs the tag to fly forwards or not
     public void SetMoving(bool _bState) {
         m_bIsMoving = _bState;
+
     }
 
     void OnTriggerEnter(Collider other) {

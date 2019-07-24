@@ -121,10 +121,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         MarkedOutOfRangeGround,
         MarkedInRangeSwitch,
         MarkedOutOfRangeSwitch,
-        Break
+        MarkMoving
     }
-    private int m_UsedTeleport = 0;
-    private TeleportStat[] m_rTeleportCondiction = new TeleportStat[3];
+    [SerializeField] private int m_UsedTeleport = 0;
+    [SerializeField] private TeleportStat[] m_rTeleportCondiction = new TeleportStat[3];
 
     private bool m_bIsAiming = false;
     [SerializeField]
@@ -577,7 +577,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Handle placing a teleport marker
         if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
             // Throw a tag if there is no  held object
-            if ( m_rCharacterController.isGrounded) {
+            if (m_rCharacterController.isGrounded) {
                 // Place on ground
                
                 //PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
@@ -597,18 +597,24 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             } 
         }
         // Teleporting to the marker
-        else if (Input.GetButtonDown(m_strTeleportButton) && (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround|| m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)) {
+        else if (Input.GetButtonDown(m_strTeleportButton) &&( m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround || m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)) {
             m_bWasSwitchLastTeleportCommand = false;
             //TeleportToTeleportMarker();
-            if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround || m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)
+            if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround)
             {
                 m_rAnimator.SetTrigger("Teleport");
+            }
+            else
+            {
+                m_bWasSwitchLastTeleportCommand = true;
+                m_rAnimator.SetTrigger("Teleport");
+                
             }
 
         }
         // Throw switch tag / switch teleport
         else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {//|| (Input.GetAxisRaw(m_strSwitchButton) == 0.0f)
-            Debug.Log(m_rTeleportLoctation[m_UsedTeleport].activeInHierarchy);
+           
             if (m_rTeleportLoctation[m_UsedTeleport].activeInHierarchy) {
                 //if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch)
                 //{
@@ -617,8 +623,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 //}
 
                 //SwitchWithTarget();
-           
+            } else if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.Nulled) {
+               
                 m_rAnimator.SetTrigger("ThrowTag");
+                Debug.Log(m_rTeleportCondiction[m_UsedTeleport]);
+                m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkMoving;
+            }
+            else
+            {
+                Debug.Log("Tag in Use");
             }
         }
         // Allow the player to manually cancel their switch tag
@@ -633,7 +646,28 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             // Slam attack when in the air
             m_rAnimator.SetTrigger("GroundSlam");
         }
-
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            if (m_UsedTeleport != 2)
+            {
+                m_UsedTeleport++;
+            }
+            else
+            {
+                m_UsedTeleport = 0;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (m_UsedTeleport != 0)
+            {
+                m_UsedTeleport--;
+            }
+            else
+            {
+                m_UsedTeleport = 2;
+            }
+        }
     }
 
     // Teleports the player directly to a location (Should become called from PlayerAnimationController)
@@ -681,7 +715,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
         m_rTeleportLoctation[m_UsedTeleport].transform.position = m_rTeleportLoctation[m_UsedTeleport].transform.position;
-        m_rTeleportLoctation[m_UsedTeleport].transform.SetParent(m_rTeleportLoctation[m_UsedTeleport].transform.parent);
+        m_rTeleportLoctation[m_UsedTeleport].transform.SetParent(m_rTeleportLoctation[m_UsedTeleport].transform);
         ToggleTeleportMarker(true);
     }
 
@@ -717,15 +751,17 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Sets the player controller's switch target
     public void SetSwitchTarget(GameObject _switchTarget) {
         m_rTeleportLoctation[m_UsedTeleport] = _switchTarget;
+        m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.MarkedInRangeSwitch;
     }
 
     // Align the player with the camera and indicate where the switch tag is being aimed
     private void AimSwitchTag() {
-        if (m_rTeleportLoctation[m_UsedTeleport]) {
+        if (m_rTeleportLoctation[m_UsedTeleport].activeInHierarchy && m_rTeleportCondiction[m_UsedTeleport]!= TeleportStat.Nulled) {
             return;
         }
-
+       // Debug.Log("begun aim");
         if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed || Input.GetButton("SwitchTagKeyboard")) {//Input.GetButton(m_strSwitchButton)
+            //Debug.Log("aim");
             ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
@@ -734,19 +770,31 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         else {//if(Input.GetButtonUp(m_strSwitchButton) && m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Released)
             // Disable 
             ToggleAiming(false);
+            
         }   
     }
 
     // Cancel the switch tag
     public void CancelSwitchTag() {
-        if (!m_rTeleportLoctation[m_UsedTeleport]) {
+        if ((m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.Nulled) || (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkMoving)){
             return;
         }
-        SwitchTagController rSwitchTag = m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>();
-        if (rSwitchTag) {
-            rSwitchTag.DetachFromObject();
+        if ((m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedOutOfRangeSwitch)|| (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeSwitch))
+        {
+            SwitchTagController rSwitchTag = m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>();
+            if (rSwitchTag)
+            {
+                rSwitchTag.DetachFromObject();
+                m_rTeleportLoctation[m_UsedTeleport] = null;
+                m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.Nulled;
+                // VFX / SFX feedback
+            }
+
+        }
+        else if ((m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedOutOfRangeGround) || (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.MarkedInRangeGround))
+        {
             m_rTeleportLoctation[m_UsedTeleport] = null;
-            // VFX / SFX feedback
+            m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.Nulled;
         }
 
     }
@@ -1060,10 +1108,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Determine which teleport command to execute
         if (m_bWasSwitchLastTeleportCommand) {
             SwitchWithTarget();
+           
         }
         else {
             TeleportToTeleportMarker();
         }
+        m_rTeleportCondiction[m_UsedTeleport] = TeleportStat.Nulled;
     }
 
     // Force the player to Respawn
@@ -1165,5 +1215,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     {
           return Weight;
     }
-
+    public void setm_rTeleportCondiction(int TagSlot)
+    {
+        m_rTeleportCondiction[TagSlot] = TeleportStat.Nulled;
+    }
+    public int getUsedTeleport()
+    {
+        return m_UsedTeleport;
+    }
 }
