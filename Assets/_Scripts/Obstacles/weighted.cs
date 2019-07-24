@@ -71,7 +71,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
             {
                 ObjectInArea.Add(other.gameObject);
                 ObjectColor.Add(Color.None);
-                ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
+                ObjectWeight.Add(other.GetComponent<PlayerController>().GetWeight());
                 if (m_RequirmentWeight)
                 {
                     m_Weight += ObjectWeight[ObjectWeight.Count - 1];
@@ -85,7 +85,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
 
             ObjectInArea.Add(other.gameObject);
             ObjectColor.Add(Color.None);
-            ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
+            ObjectWeight.Add(other.GetComponent<PlayerController>().GetWeight());
         }
         
     }

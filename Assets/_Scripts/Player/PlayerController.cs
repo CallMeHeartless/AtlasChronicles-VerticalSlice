@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
-    private int Weight = 3;
+    private int m_Weight = 3;
     #endregion
 
     // Start is called before the first frame update
@@ -1210,7 +1210,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
     public int GetWeight()
     {
-          return Weight;
+          return m_Weight;
     }
     public void SetTeleportCondiction(int _TagSlot)
     {
