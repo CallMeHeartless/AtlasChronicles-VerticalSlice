@@ -8,17 +8,21 @@ public class Zone : MonoBehaviour
 
     [Header("Properties")]
     [SerializeField][Tooltip("This ID is used to differentiate zones and must be unique. It should match the map fragment assigned to it.")]
-    private int m_iZoneID;
-    private bool m_bMapFragmentTaken = false;
+    private int m_iZoneID = 0;
+    private bool m_bMapFragmentCollected = false;
+    private int m_iCollectableCount = 0;
+    private int m_iChestCount = 0;
 
     // Generate a list of zones for future efficiency
-    void Start(){
+    private void Awake()
+    {
         // Create new list if it does not exist
-        if (s_Zones == null) {
+        if (s_Zones == null)
+        {
             s_Zones = new List<Zone>();
         }
 
-        // Add this zone to the list
+        // Add this zone list
         s_Zones.Add(this);
     }
 
@@ -27,13 +31,13 @@ public class Zone : MonoBehaviour
     }
 
     // Checks if the map fragment has been taken
-    public bool IsMapFragmentTaken() {
-        return m_bMapFragmentTaken;
+    public bool GetIsMapFragmentCollected() {
+        return m_bMapFragmentCollected;
     }
 
     // Set whether the zone's map fragment has been collected or not (will almost always be set to true, but you never know)
     public void SetMapFragmentStatus(bool _bState) {
-        m_bMapFragmentTaken = _bState;
+        m_bMapFragmentCollected = _bState;
     }
 
     // Static function tick off a zone when its map fragment is collected
@@ -49,5 +53,15 @@ public class Zone : MonoBehaviour
                 Debug.Log("Collected map for zone " + _uiFragmentID);
             }
         }
+    }
+
+    public int GetZoneID()
+    {
+        return m_iZoneID;
+    }
+
+    public static List<Zone> GetZoneList()
+    {
+        return s_Zones;
     }
 }

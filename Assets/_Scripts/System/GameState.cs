@@ -13,8 +13,12 @@ public class GameState : MonoBehaviour
     public static void SetPauseFlag(bool _bState) {
         s_bIsPaused = _bState;
     }
+    public static bool GetPauseFlag()
+    {
+        return s_bIsPaused;
+    }
 
-    // Toggles the cinematic flag
+        // Toggles the cinematic flag
     public static void SetCinematicFlag(bool _bState) {
         s_bInCinematic = _bState;
     }
