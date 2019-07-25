@@ -85,7 +85,7 @@ public class LogsOnRiver : MonoBehaviour
         }
 
         m_v3LogsLoction = Vector3.MoveTowards(transform.position, m_rPoints[m_intCurrentPoint].transform.position, m_fSpeed);
-       // m_v3LogsLoction.y = m_fLogHeight.y;
+       //    m_v3LogsLoction.y = m_fLogHeight.y;
         = m_v3LogsLoction;
     }
 
