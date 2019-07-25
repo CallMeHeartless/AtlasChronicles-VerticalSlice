@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EatingPlant : MonoBehaviour
 {
-    private GameObject m_fStartPoint;
-    private GameObject m_fEatingPoint;
-    private bool m_bEating = false;
-    private bool m_bAgro = false;
+    [SerializeField] private GameObject m_fStartPoint;
+    List<GameObject> m_fEatingPoint = new List<GameObject>();
+    [SerializeField] private bool m_bEating = false;
+    [SerializeField] private bool m_bAgro = false;
     private float m_fTimer;
     private float m_fMaxTimer;
     public float m_fSpeed = 0.05f;
@@ -23,46 +23,64 @@ public class EatingPlant : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_bAgro)
-        {
-            if (Vector3.Distance(transform.position, m_fEatingPoint.transform.position) < 1) {
-
-               // m_fEatingPoint
-                    }
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, m_fEatingPoint.transform.position, m_fSpeed);
-            }
-        }
-        else
-        {
-            if (Vector3.Distance(transform.position, m_fStartPoint.transform.position) < 1)
-            {
-
-               // m_fStartPoint
-                    }
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, m_fStartPoint.transform.position, m_fSpeed);
-            }
-        }
+       
 
 
         if (m_bEating)
         {
-            if (m_fTimer <= 0)
+            
+                if (Vector3.Distance(transform.GetChild(0).transform.position, m_fStartPoint.transform.position) < 0.1f)
+                {
+
+                    if (m_fTimer <= 0)
+                    {
+                        if (m_fEatingPoint.Count !=0)
+                        {
+                        m_bAgro = true;
+                         }
+                    }
+                    else
+                    {
+                        m_fTimer -= Time.deltaTime;
+                    }
+                }
+                else
+                {
+                    transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, m_fStartPoint.transform.position, m_fSpeed);
+                }
+          
+        }
+        else
+        {
+            if (m_bAgro)
             {
-                m_fTimer = m_fMaxTimer;
+                if (Vector3.Distance(transform.GetChild(0).transform.position, m_fEatingPoint[0].transform.position) < 1f)
+                {
+
+                    // m_fEatingPoint
+                }
+                else
+                {
+                    transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, m_fEatingPoint[0].transform.position, m_fSpeed);
+                }
             }
             else
             {
-                m_fTimer -= Time.deltaTime;
+                if (Vector3.Distance(transform.GetChild(0).transform.position, m_fStartPoint.transform.position) < 1f)
+                {
+
+                    // m_fStartPoint
+                }
+                else
+                {
+                    transform.GetChild(0).transform.position = Vector3.MoveTowards(transform.GetChild(0).transform.position, m_fStartPoint.transform.position, m_fSpeed);
+                }
             }
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        m_fEatingPoint = other.gameObject;
+        m_fEatingPoint.Add(other.gameObject);
         if (!m_bEating)
         {
             m_bAgro = true;
@@ -76,8 +94,18 @@ public class EatingPlant : MonoBehaviour
             m_bAgro = false;
         }
     }
-    public EatingPlant()
+    public void Eating()
     {
+        if( m_fEatingPoint[0].CompareTag("Player"))
+        {
+            //m_fEatingPoint[0].GetComponent<PlayerController>().
+        }
+        else
+	    {
+            m_fEatingPoint.RemoveAt(0);
+        }
+      
         m_bEating = true;
+        m_fTimer = m_fMaxTimer;
     }
 }
