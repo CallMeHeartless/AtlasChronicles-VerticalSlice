@@ -106,15 +106,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField]
     private Vector3 m_vecTeleportMarkerOffset;
     private Vector3 m_vecTeleportLocation;
-   // private bool m_bTeleportMarkerDown = false;
+    // private bool m_bTeleportMarkerDown = false;
     //private bool m_bTeleportThresholdWarning = false;
     //private bool m_bSwitchThresholdWarning = false;
-   // private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
-   // private GameObject m_rSwitchTarget;
+    // private GameObject m_rTeleportMarker; // Object to be instantiated and moved accordingly
+    // private GameObject m_rSwitchTarget;
     //private GameObject m_rHeldObject;
 
     //telepot change
-    private GameObject[] m_rTeleportLoctation = new GameObject[3];
+    [SerializeField] private GameObject[] m_rTeleportLoctation = new GameObject[3];
     public enum TeleportStat
     {
         eNulled,
@@ -616,6 +616,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.eNulled) {
                
                 m_rAnimator.SetTrigger("ThrowTag");
+                m_rAnimator.GetComponent<PlayerAnimationController>().SetOrgialLoctation(m_rTeleportLoctation[m_UsedTeleport]);
                 Debug.Log(m_rTeleportCondiction[m_UsedTeleport]);
                 EffectMarker(TeleportStat.eMarkMoving);
             }
@@ -670,6 +671,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Update position
         transform.position = _vecTargetLocation;
 
+        if (m_rTeleportLoctation[m_UsedTeleport] != m_rTeleportMarkerPrefab)
+        {
+            //detact
+        }
         GameState.SetPlayerTeleportingFlag(false);
         m_rCharacterController.enabled = true;
     }
@@ -728,11 +733,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         TeleportParticles();
 
         // Switch positions
+      
         Vector3 vecPlayerPosition = transform.position;
         Vector3 vecObjectPosition = m_rTeleportLoctation[m_UsedTeleport].transform.position;
         StartCoroutine(TeleportToLocation(vecObjectPosition));
+       
         StartCoroutine(m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().Switch(vecPlayerPosition));
-        
+      
+        //reset the tag to orginal
+
     }
 
     // Sets the player controller's switch target
@@ -740,6 +749,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rTeleportLoctation[m_UsedTeleport] = _switchTarget;
         EffectMarker(TeleportStat.eMarkedInRangeSwitch);
         m_rTelePortUI.GetComponent<TeleportUI>().changeUI(m_rTeleportCondiction[m_UsedTeleport].ToString(), m_UsedTeleport);
+    }
+    public void ResetSwitchTarget(GameObject _switchTarget)
+    {
+        m_rTeleportLoctation[m_UsedTeleport] = _switchTarget;
+       
     }
 
     // Align the player with the camera and indicate where the switch tag is being aimed

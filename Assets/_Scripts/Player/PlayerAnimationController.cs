@@ -38,6 +38,7 @@ public class PlayerAnimationController : MonoBehaviour
     // Throws the switch tag
     public void ThrowSwitchTag() {
         // Remove from any existing objects
+       
         m_SwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
         // Update transform
         m_SwitchMarker.transform.position = m_HandCollider.transform.position;
@@ -48,7 +49,10 @@ public class PlayerAnimationController : MonoBehaviour
         m_SwitchMarker.GetComponent<SwitchTagController>().SetMoving(true);
         m_SwitchMarker.GetComponent<SwitchTagController>().SetUp();
     }
-
+    public void SetOrgialLoctation(GameObject _tag)
+    {
+        m_SwitchMarker.GetComponent<SwitchTagController>().OrgialTag(_tag);
+    }
     // Removes the switch tag
     public void RemoveSwitchTag() {
         m_SwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();

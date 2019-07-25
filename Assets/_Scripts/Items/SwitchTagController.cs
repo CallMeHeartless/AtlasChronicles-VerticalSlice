@@ -14,10 +14,12 @@ public class SwitchTagController : MonoBehaviour
     private PlayerController m_rPlayerReference;
     [SerializeField] private float m_ftimer;
     [SerializeField] private float m_fMaxtimer = 5;
+    private GameObject m_gTagOfGameObject;
     private int m_Tagslot;
 
     public void SetUp()
     {
+
         m_Tagslot = m_rPlayerReference.getUsedTeleport();
         if (m_fMaxtimer <= 0)
         {
@@ -26,8 +28,11 @@ public class SwitchTagController : MonoBehaviour
         m_ftimer = m_fMaxtimer;
     }
 
-    // Update is called once per frame
-    void Update(){
+    public void OrgialTag (GameObject _tag){
+        m_gTagOfGameObject = _tag;
+    }
+// Update is called once per frame
+void Update(){
 
         if (m_ftimer <= 0)
         {
@@ -40,7 +45,7 @@ public class SwitchTagController : MonoBehaviour
         }
         else
         {
-            // Move the tag forward if it has been thrown
+              // Move the tag forward if it has been thrown
             if (m_bIsMoving)
             {
                 transform.Translate(Vector3.forward * m_fMoveSpeed * Time.deltaTime);
@@ -77,6 +82,7 @@ public class SwitchTagController : MonoBehaviour
         transform.SetParent(null);
         if (m_AttachedObject) {
             m_AttachedObject.GetComponent<Switchable>().DeTag();
+            m_rPlayerReference.ResetSwitchTarget(m_gTagOfGameObject);
         }
        
         m_AttachedObject = null;
