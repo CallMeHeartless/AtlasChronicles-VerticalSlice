@@ -22,13 +22,6 @@ public class EnemyAnimationController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //public void ToggleAttacks(bool _bState) {
-    //    foreach(MeleeAttack weapon in m_Weapons) {
-    //        weapon.gameObject.SetActive(_bState);
-    //        weapon.m_bIsActive = _bState;
-    //    }
-    //}
-
     // Readies all melee weapons for attacking
     public void EnableAttacks() {
         foreach (MeleeAttack weapon in m_Weapons) {

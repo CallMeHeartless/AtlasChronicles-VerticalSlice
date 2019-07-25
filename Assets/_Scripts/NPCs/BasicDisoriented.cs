@@ -8,6 +8,7 @@ public class BasicDisoriented : AIState
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         m_rAgent.isStopped = true;
         m_rAI.ToggleTagOnHead(true);
+        m_rAI.animator.SetBool("Tagged", true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,17 +21,7 @@ public class BasicDisoriented : AIState
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         m_rAgent.isStopped = false;
         m_rAI.ToggleTagOnHead(false);
+        m_rAI.animator.SetBool("Tagged", false);
     }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }
