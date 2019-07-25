@@ -26,13 +26,7 @@ public class EnemyController : MonoBehaviour
     private PlayerController m_rPlayer = null;
 
     // Internal variables
-    [Header("Navmesh properties")]
-    [SerializeField]
-    private float m_fMovementSpeed;
-    [SerializeField]
-    private float m_fTurningSpeed;
-    [SerializeField]
-    private float m_fMaxAcceleration;
+    [Header("Navigation properties")]
     private Vector3 m_HomeLocation;
     private Vector3 m_CurrentTarget;
     [SerializeField]
@@ -53,8 +47,6 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         m_rNavAgent = GetComponent<NavMeshAgent>();
-        // Define agent properties
-        m_rNavAgent.speed = m_fMovementSpeed;
 
         // Initialise wander properties
         m_WanderProperties.m_HomePosition = transform.position;
@@ -90,10 +82,10 @@ public class EnemyController : MonoBehaviour
                 m_rStateMachine.SetBool("bCanSeePlayer", false);
             }
         }
-        else if(m_rStateMachine.GetBool("bCanSeePlayer")){
+        else if(m_rStateMachine.GetBool("bCanSeePlayer")){ // Do not execute multiple times
             m_rStateMachine.SetBool("bCanSeePlayer", false);
             // Transition to look, then return home
-            m_rAnimator.SetTrigger("LoseSight");
+            //m_rAnimator.SetTrigger("LoseSight"); /// Removed to be called at the start of BasicLosePlayer
         }
 
         // Check if away from navmesh
@@ -174,6 +166,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    // Knocks the goon unconcious and schedule their rivival
     public void Knockout() {
         m_bIsKnockedOut = true;
         m_rStateMachine.SetBool("bIsKnockedOut", true);
@@ -189,6 +182,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(Revive());
     }
 
+    // Revives the Goon after a duration
     private IEnumerator Revive() {
         yield return new WaitForSeconds(m_fKnockoutTime);
         // Renable enemy

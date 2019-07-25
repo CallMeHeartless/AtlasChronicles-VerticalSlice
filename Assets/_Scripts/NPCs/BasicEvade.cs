@@ -7,7 +7,6 @@ public class BasicEvade : AIState
 {
     private GameObject m_rPlayer;
     private AIWanderProperties m_rWanderProperties;
-    //private NavMeshAgent m_rAgent;
     private Vector3 m_PreviousPlayerPosition = Vector3.zero;
     private Vector3 m_PlayerVelocity = Vector3.zero;
 
