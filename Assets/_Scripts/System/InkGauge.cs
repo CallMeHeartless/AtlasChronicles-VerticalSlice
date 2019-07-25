@@ -29,6 +29,7 @@ public class InkGauge : MonoBehaviour
     private EInkGaugeState m_eGaugeState = EInkGaugeState.eIdle;
     [SerializeField]
     private Slider m_rInkSlider;
+    private Image m_rInkFill;
 
     private void Awake() {
         if (!s_rInstance) {
@@ -41,6 +42,7 @@ public class InkGauge : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         m_rInkSlider = GetComponent<Slider>();
+        m_rInkFill = GetComponent<Image>();
     }
 
     void Update(){
@@ -76,9 +78,9 @@ public class InkGauge : MonoBehaviour
         m_fValue = Mathf.Clamp(m_fValue, 0.0f, m_fGaugeLimitValue);
         // UI change
         m_rInkSlider.value = m_fValue;
-
+        m_rInkFill.fillAmount = m_fValue / m_fMaxValue;
         // Check for a state change
-        if(m_fValue == 0.0f) {
+        if (m_fValue == 0.0f) {
             m_eGaugeState = EInkGaugeState.eWaiting;
         }else if(m_fValue == m_fGaugeLimitValue) {
             m_eGaugeState = EInkGaugeState.eIdle;
