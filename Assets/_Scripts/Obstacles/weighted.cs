@@ -66,9 +66,10 @@ public class weighted : MonoBehaviour, IMessageReceiver
         }
         else if (other.CompareTag("Player"))
         {
-
+           
             if (!ObjectInArea.Contains(other.gameObject))
             {
+                Debug.Log("durug");
                 ObjectInArea.Add(other.gameObject);
                 ObjectColor.Add(Color.None);
                 ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
@@ -80,12 +81,12 @@ public class weighted : MonoBehaviour, IMessageReceiver
             }
             else
             {
-                //Debug.Log(ObjectInArea.Contains(other.gameObject));
+                Debug.Log(ObjectInArea.Contains(other.gameObject));
             }
 
-            ObjectInArea.Add(other.gameObject);
-            ObjectColor.Add(Color.None);
-            ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
+            //ObjectInArea.Add(other.gameObject);
+            //ObjectColor.Add(Color.None);
+            //ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
         }
         
     }
@@ -117,7 +118,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
                         break;
                 }
                 
-                // m_gObjects.Remove(new ObjectPressPad(other.gameObject, other.GetComponent<Switchable>().ObjectColor, other.GetComponent<Switchable>().Weight));
+                //m_gObjects.Remove(new ObjectPressPad(other.gameObject, other.GetComponent<Switchable>().ObjectColor, other.GetComponent<Switchable>().Weight));
 
             }
             UpdateDoor();
@@ -142,7 +143,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
             }
             else
             {
-                //Debug.Log(ObjectInArea.Contains(other.gameObject));
+                Debug.Log(ObjectInArea.Contains(other.gameObject));
             }
         }
     }

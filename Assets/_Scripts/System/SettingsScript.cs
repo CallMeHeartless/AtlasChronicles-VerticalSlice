@@ -9,20 +9,19 @@ using Cinemachine;
 
 public class SettingsScript : MonoBehaviour
 {
-    private CinemachineFreeLook m_rCineCamera;
-    private PlayerPrefsManager m_rPrefs;
-    private int m_currentGroup = -1;
+    [SerializeField] private Image[] m_rTabs;           // The tab array containing settings tab images
+    [SerializeField] private GameObject[] m_rGroups;    // The group aray containing each settings tag group 
+    [SerializeField] private GameObject m_rSettings;    // The Settings gameObject
+    [SerializeField] private AudioSource m_rButtonMove; //The audio to play when moving across buttons
+    [SerializeField] private Color m_inactiveColour;    //The button's inactive colour
+    [SerializeField] private Color m_highlightedColour; //The button's highlighted colour
+    [SerializeField] private Toggle m_camToggleX, m_camToggleY; //The toggle UI components
+    [SerializeField] private AudioMixer m_rMixer;       //The Audio Mixer for the game
 
-    [SerializeField] Image[] m_rTabs;
-    [SerializeField] GameObject[] m_rGroups;
-    [SerializeField] GameObject m_rSettings;
-
-    [SerializeField] AudioSource m_rButtonMove;
-    [SerializeField] Color m_inactiveColour;
-    [SerializeField] Color m_highlightedColour;
-    [SerializeField] Toggle m_camToggleX, m_camToggleY;
-    [SerializeField] AudioMixer m_rMixer;
-
+    private CinemachineFreeLook m_rCineCamera;  //The camera reference
+    private int m_currentGroup = -1;            //The currently selected tab group
+    
+    //Create a UnityEvent for the script
     public UnityEvent OnBPressed;
 
     private void Start()
@@ -31,28 +30,27 @@ public class SettingsScript : MonoBehaviour
         m_rSettings.SetActive(false);
 
         // Get the references for necessary components
-        m_rPrefs = PlayerPrefsManager.GetInstance();
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
 
         if (m_rCineCamera) 
         {
             //Assign player-stored camera values into cinemachine
-            m_rCineCamera.m_XAxis.m_InvertInput = m_rPrefs.RetrieveCamX();
-            m_rCineCamera.m_YAxis.m_InvertInput = m_rPrefs.RetrieveCamY();
+            m_rCineCamera.m_XAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamX();
+            m_rCineCamera.m_YAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamY();
         }
 
         //Set toggle buttons within settings based on player preferences
         if (m_camToggleX && m_camToggleY)
         {
-            m_camToggleX.isOn = m_rPrefs.RetrieveCamX();
-            m_camToggleY.isOn = m_rPrefs.RetrieveCamY();
+            m_camToggleX.isOn = PlayerPrefsManager.RetrieveCamX();
+            m_camToggleY.isOn = PlayerPrefsManager.RetrieveCamY();
         }
 
         //Set mixer values based on what is stored in player preferences
         if (m_rMixer)
         {
-            m_rMixer.SetFloat("BGMVol", Mathf.Log10(m_rPrefs.RetrieveAudioBGM()) * 20);
-            m_rMixer.SetFloat("SFXVol", Mathf.Log10(m_rPrefs.RetrieveAudioVFX()) * 20);
+            m_rMixer.SetFloat("BGMVol", Mathf.Log10(PlayerPrefsManager.RetrieveAudioBGM()) * 20);
+            m_rMixer.SetFloat("SFXVol", Mathf.Log10(PlayerPrefsManager.RetrieveAudioVFX()) * 20);
         }
     }
 
@@ -62,8 +60,8 @@ public class SettingsScript : MonoBehaviour
         // set the current camera settings to the cinemachine camera.
         if (m_rCineCamera)
         {
-            m_rCineCamera.m_XAxis.m_InvertInput = m_rPrefs.RetrieveCamX();
-            m_rCineCamera.m_YAxis.m_InvertInput = m_rPrefs.RetrieveCamY();
+            m_rCineCamera.m_XAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamX();
+            m_rCineCamera.m_YAxis.m_InvertInput = PlayerPrefsManager.RetrieveCamY();
         }
 
         if (m_rTabs != null && m_rGroups != null)
@@ -135,11 +133,13 @@ public class SettingsScript : MonoBehaviour
 
     public void MoveTabLeft(bool _moveLeft)
     {
+        //Don't access function if the settings panel is inactive and the tabs and groups do not exist
         if (!m_rSettings.activeSelf || m_rTabs == null || m_rGroups == null)
         {
             return;
         }
 
+        //Switch tab groups by shifting to the left
         if (_moveLeft)
         {
             if (m_currentGroup > 0)
@@ -157,6 +157,7 @@ public class SettingsScript : MonoBehaviour
         }
         else
         {
+            //Switch tab groups by shifting to the right
             if (m_currentGroup < m_rTabs.Length - 1)
             {
                 //Hide current group
@@ -181,7 +182,7 @@ public class SettingsScript : MonoBehaviour
             m_rCineCamera.m_XAxis.m_InvertInput = _invert;
         }
         //Store value in the player prefs
-        m_rPrefs.StoreCamX(_invert);
+        PlayerPrefsManager.StoreCamX(_invert);
     }
 
     public void ToggleCameraY(bool _invert)
@@ -192,6 +193,6 @@ public class SettingsScript : MonoBehaviour
             m_rCineCamera.m_YAxis.m_InvertInput = _invert;
         }
         //Store value in the player prefs
-        m_rPrefs.StoreCamY(_invert);
+        PlayerPrefsManager.StoreCamY(_invert);
     }
 }

@@ -10,55 +10,88 @@ using UnityEditor;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] GameObject m_pausePanel;
-    [SerializeField] GameObject m_settingsPanel;
-    //[SerializeField]
-    CinemachineFreeLook m_cineCamera;
-    [SerializeField] AudioSource m_rButtonClick;
+    [SerializeField] GameObject m_rPausePanel;      //Panel containing pause menu elements
+    [SerializeField] GameObject m_rPauseSection;    //Pause menu UI
+    [SerializeField] GameObject m_rSettingsPanel;   //Settings panel
+    [SerializeField] GameObject m_rMapPanel;        // Map panel containing map elements
+    [SerializeField] GameObject m_rGuidePanel;      // Guide panel containing tutorial elements
+    [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
+
+    CinemachineFreeLook m_rCineCamera;              //Reference to main camera
+    [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
+
+    private bool m_bIsPaused = false;               //Local pause variable
 
     // Start is called before the first frame update
     void Start()
     {
-        m_pausePanel.SetActive(false);
-        m_settingsPanel.SetActive(false);
-        m_cineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
-        
+        //Reset pause menu 
+        m_rPausePanel.SetActive(false);
+        m_rSettingsPanel.SetActive(false);
+        m_rMapPanel.SetActive(false);
+        m_rUIPanel.SetActive(true);
+        //Find the camera
+        m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Pausing
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart")) 
-            && !m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
+        // Pausing
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart"))
+            && !m_rPausePanel.activeSelf && !m_rSettingsPanel.activeSelf && !m_rMapPanel.activeSelf)
         {
-            m_rButtonClick.Play();
-            m_pausePanel.SetActive(true);
-            //Pausing
+            m_rButtonClick.Play();          // Play a click sound when player accesses the pause menu
+            m_rPausePanel.SetActive(true);  //Activate the pause menu
+            m_rPauseSection.SetActive(true);//Activate the pause section
+            m_rGuidePanel.SetActive(false); // Disable the guide panel when paused
+
+            //Unlock cursor so player can use the mouse when the game is paused
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            if (m_cineCamera != null)
-                m_cineCamera.enabled = false;
+            //Disable camera usage when paused
+            if (m_rCineCamera != null)
+            {
+                m_rCineCamera.enabled = false;
+            }
+
+            // Set game as paused 
             GameState.SetPauseFlag(true);
+            m_bIsPaused = true;
         }
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") || (Input.GetButtonDown("BButton"))) 
-            && (m_pausePanel.activeSelf || m_settingsPanel.activeSelf))
+        // Resume gameplay
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") || (Input.GetButtonDown("BButton")))
+            && (m_rPausePanel.activeSelf || m_rSettingsPanel.activeSelf || m_rMapPanel.activeSelf))
         {
-            print("UnPause on button pressed");
-            m_pausePanel.SetActive(false);
-            m_settingsPanel.SetActive(false);
+            m_rButtonClick.Play();              // Play a clicking sound to resume gameplay
+            m_rSettingsPanel.SetActive(false);  // Hide settings if it is not already hidden
+            m_rMapPanel.SetActive(false);       //Hide map settings if it is not already hidden
+
+            //Enable pause UI (note: pause UI is initially hidden when other panels were active)
+            m_rPausePanel.SetActive(false);  //Pause panel contains pause section and can contain a script in the future
+            m_rPauseSection.SetActive(true); //Container for the pause buttons
+            m_rUIPanel.SetActive(true);      //Re-activate the panel containing all the counters
+
+            //Set gamestate pause to false
+            GameState.SetPauseFlag(false);
         }
 
-        if (!m_pausePanel.activeSelf && !m_settingsPanel.activeSelf)
+        //Make sure cursor is hidden on resume
+        if (m_bIsPaused && !m_rPausePanel.activeSelf && !m_rSettingsPanel.activeSelf && !m_rMapPanel.activeSelf)
         {
+            //Set game as not paused
+            m_bIsPaused = false;
             GameState.SetPauseFlag(false);
+
+            //Lock cursor when resumed
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            if (m_cineCamera != null)
+            //Enable camera usage when resumed
+            if (m_rCineCamera != null)
             {
-                m_cineCamera.enabled = true;
+                m_rCineCamera.enabled = true;
             }
         }
     }
@@ -72,19 +105,24 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         //Loads the main menu after playing the click audio
-        Click();
         SceneManager.LoadScene("Menu_Main");
     }
 
     public void ExitGame()
     {
-        Click();
+        //Invoke an application exit function after 0.1f seconds when player presses exit game
+        //In order to play a clear button click sound before exiting
+        // If user is in the Unity editor, stop game mode
+        // Otherwise, quit.
+        Invoke("ChooseExitType", 0.1f);
+    }
 
-        //If user is in the Unity editor, quit application.
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-		    Application.Quit();
-#endif
+    public void ChooseExitType()
+    {
+        #if UNITY_EDITOR
+                EditorApplication.isPlaying = false;
+        #else
+                    Application.Quit();
+        #endif
     }
 }

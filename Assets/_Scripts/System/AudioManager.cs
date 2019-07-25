@@ -8,40 +8,52 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioMixer m_rMixer;
     private Slider m_rSlider;
-    private PlayerPrefsManager m_rPrefs;
 
-    public enum AudioType { NONE, BGM, SFX };
-    public AudioType m_rType = AudioType.NONE;
+    public enum AudioType { eNONE, eBGM, eSFX };
+    public AudioType m_rType = AudioType.eNONE;
 
     // Start is called before the first frame update
     public void Start()
     {
-        m_rPrefs = PlayerPrefsManager.GetInstance();
+        //Get the slider of the component this script is currently on
         m_rSlider = GetComponent<Slider>();
-        if (m_rType == AudioType.BGM)
+
+        //Check which type the user has set the audio type to be
+        if (m_rType == AudioType.eBGM)
         {
-            m_rSlider.value = m_rPrefs.RetrieveAudioBGM();
-            SetVol(m_rPrefs.RetrieveAudioBGM());
+            //Set slider value and volume to whatever value is stored in player prefs
+            m_rSlider.value = PlayerPrefsManager.RetrieveAudioBGM();
+
+            //Set the current BGM Volume on the AudioMixer
+            SetVol(PlayerPrefsManager.RetrieveAudioBGM());
         }
-        else if(m_rType == AudioType.SFX)
+        else if(m_rType == AudioType.eSFX)
         {
-            m_rSlider.value = m_rPrefs.RetrieveAudioVFX();
-            SetVol(m_rPrefs.RetrieveAudioVFX());
+            //Set slider value and volume to whatever value is stored in player prefs
+            m_rSlider.value = PlayerPrefsManager.RetrieveAudioVFX();
+
+            //Set the current SFX Volume on the AudioMixer
+            SetVol(PlayerPrefsManager.RetrieveAudioVFX());
         }
     }
 
     public void SetVol(float _sliderVal)
     {
+        // Convert slider value to be compatible with the AudioMixer values
         float audioVal = Mathf.Log10(_sliderVal) * 20;
-        if (m_rType == AudioType.BGM)
+        if (m_rType == AudioType.eBGM)
         {
+            //Set the BGM volume value to whatever the player has selected
             m_rMixer.SetFloat("BGMVol", audioVal);
-            m_rPrefs.StoreAudioBGM(_sliderVal);
+            //Store the un-converted slider value in player prefs
+            PlayerPrefsManager.StoreAudioBGM(_sliderVal);
         }
-        else if (m_rType == AudioType.SFX)
+        else if (m_rType == AudioType.eSFX)
         {
+            //Set the SFX volume value to whatever the player has selected
             m_rMixer.SetFloat("SFXVol", audioVal);
-            m_rPrefs.StoreAudioVFX(_sliderVal);
+            //Store the un-converted slider value in player prefs
+            PlayerPrefsManager.StoreAudioVFX(_sliderVal);
         }
     }
 }
