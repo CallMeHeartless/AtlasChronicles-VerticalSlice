@@ -29,8 +29,6 @@ public class InkGauge : MonoBehaviour
     private float m_fRecoveryTime = 5.0f;
     private float m_fRecoveryCounter = 0.0f;
     [SerializeField]  private EInkGaugeState m_eGaugeState = EInkGaugeState.eIdle;
-    [SerializeField]
-    private Slider m_rInkSlider;
     private Image m_rInkFill;
     [SerializeField]
     private TextMeshProUGUI m_rDebugText;
