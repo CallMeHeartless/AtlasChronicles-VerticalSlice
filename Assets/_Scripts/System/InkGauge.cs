@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InkGauge : MonoBehaviour
 {
@@ -20,15 +21,19 @@ public class InkGauge : MonoBehaviour
     private float m_fValue = 0.0f;
     [SerializeField][Tooltip("The time in seconds that a full ink gauge will last for.")]
     private float m_fMaxValue = 30.0f;
-    private float m_fGaugeLimitValue; // The current limit, influenced by the number of crystals collected
+    [SerializeField]
+    private float m_fGaugeLimitValue = 1.0f; // The current limit, influenced by the number of crystals collected
     [SerializeField][Tooltip("The time in seconds it takes for the ink gauge to refill.")]
     private float m_fRefillTime = 5.0f;
     [SerializeField][Tooltip("The delay before the ink gauge begins to refill after being used.")]
     private float m_fRecoveryTime = 5.0f;
     private float m_fRecoveryCounter = 0.0f;
-    private EInkGaugeState m_eGaugeState = EInkGaugeState.eIdle;
+    [SerializeField]  private EInkGaugeState m_eGaugeState = EInkGaugeState.eIdle;
     [SerializeField]
     private Slider m_rInkSlider;
+    private Image m_rInkFill;
+    [SerializeField]
+    private TextMeshProUGUI m_rDebugText;
 
     private void Awake() {
         if (!s_rInstance) {
@@ -40,7 +45,7 @@ public class InkGauge : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
-        m_rInkSlider = GetComponent<Slider>();
+        m_rInkFill = GetComponent<Image>();
     }
 
     void Update(){
@@ -74,11 +79,11 @@ public class InkGauge : MonoBehaviour
     // Set Slider Value and checks for state change
     private void UpdateInkGauge() {
         m_fValue = Mathf.Clamp(m_fValue, 0.0f, m_fGaugeLimitValue);
-        // UI change
-        m_rInkSlider.value = m_fValue;
-
+        // UI change (Change image fill amount based on values)
+        m_rInkFill.fillAmount = m_fValue / m_fGaugeLimitValue;
+        m_rDebugText.text = "Fill Amount: \n" + m_rInkFill.fillAmount;
         // Check for a state change
-        if(m_fValue == 0.0f) {
+        if (m_fValue == 0.0f) {
             m_eGaugeState = EInkGaugeState.eWaiting;
         }else if(m_fValue == m_fGaugeLimitValue) {
             m_eGaugeState = EInkGaugeState.eIdle;
