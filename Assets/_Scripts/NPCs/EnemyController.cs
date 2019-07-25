@@ -196,11 +196,11 @@ public class EnemyController : MonoBehaviour
 
     // Apply a tag to the enemy, disorienting them
     public void SetTag(bool _bState) {
-        m_rStateMachine.SetTrigger("Disorient");
         m_rStateMachine.SetBool("bIsTagged", _bState);
-        m_rAnimator.SetBool("Tagged", _bState);
+        //m_rAnimator.SetBool("Tagged", _bState); // Moved to BasicDisorient
         m_bIsTagged = _bState;
-        if (_bState) {
+        if (_bState) { // Represents a Goon being tagged
+            m_rStateMachine.SetTrigger("Disorient");
             ToggleMapFragment(false);
         }
     }
