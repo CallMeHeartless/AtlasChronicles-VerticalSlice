@@ -11,6 +11,7 @@ public class ButtonMask : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Set alpha to wrap around the image while excluding transparent areas.
         this.GetComponent<Image>().alphaHitTestMinimumThreshold = m_fAlphaThreshold;
     }
 }

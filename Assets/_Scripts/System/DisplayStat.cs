@@ -6,7 +6,6 @@ using TMPro;
 
 public class DisplayStat : MonoBehaviour
 {
-    bool showStats = false;
     [SerializeField] GameObject m_rCollectableText;
     [SerializeField] GameObject m_rMapCountText;
     [SerializeField] GameObject[] m_rHearts;
@@ -18,6 +17,7 @@ public class DisplayStat : MonoBehaviour
     {
         NewHealth(m_iHP); // NIK //Set the player to have 4 health
 
+        //VIV-----
         //Find all collectables placed in the level
         GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex] = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length;
 
@@ -27,7 +27,7 @@ public class DisplayStat : MonoBehaviour
         //Assign the amount of map fragments in the level to GameStats
         GameStats.s_iMapsTotal[GameStats.s_iLevelIndex] = m_rMapReferences.Length;
         
-        //Find all treasure chests in the level and count thhe number of secondary pickups that are contained in them
+        //Find all treasure chests in the level and count the number of secondary pickups that are contained in them
         GameObject[] chests = GameObject.FindGameObjectsWithTag("Box");
         for(int i = 0; i < chests.Length; ++ i)
         {
@@ -45,22 +45,24 @@ public class DisplayStat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ShowStat();
-        }
 
-        //show all stats
-        showStats = true;
+        //Enable text for counters
         m_rCollectableText.SetActive(true);
         m_rMapCountText.SetActive(true);
-        m_rCollectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString() + "/" + GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
-        m_rMapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
+
+        //Update text based on how many collectables have been collected
+        m_rCollectableText.GetComponent<TextMeshProUGUI>().text = 
+            GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString() 
+            + "/" + GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
+
+        //Update text based on how many maps have been collected
+        m_rMapCountText.GetComponent<TextMeshProUGUI>().text = 
+            GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() 
+            + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
     }
   
     public void NewHealth(int HP)
     {
-        
         for (int i = 0; i < m_rHearts.Length; i++)
         {
             if (HP<= i)
@@ -72,25 +74,5 @@ public class DisplayStat : MonoBehaviour
                 m_rHearts[i].SetActive(true);
             }
         }
-
-    }
-
-    void ShowStat()
-    {
-        if (!showStats)
-        {
-            showStats = true;
-            m_rCollectableText.SetActive(true);
-            m_rMapCountText.SetActive(true);
-            m_rCollectableText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString();
-            m_rMapCountText.GetComponent<TextMeshProUGUI>().text = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString();
-        }
-        else
-        {
-            showStats = false;
-            m_rCollectableText.SetActive(false);
-            m_rMapCountText.SetActive(false);
-        }
-
     }
 }

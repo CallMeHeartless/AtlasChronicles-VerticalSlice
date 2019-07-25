@@ -6,16 +6,15 @@ using TMPro;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] m_rMapRegions;
+    [SerializeField] GameObject[] m_rMapRegions;    // Array of map region buttons
 
-    [SerializeField] TextMeshProUGUI m_rMapDetailTitle;
-    [SerializeField] GameObject m_rMapDetailRegionCount;
-    [SerializeField] GameObject m_rMapDetailMapCount;
-    [SerializeField] GameObject m_rMapDetailChestCount;
-    [SerializeField] GameObject m_rMapDetailCollectableCount;
+    [SerializeField] TextMeshProUGUI m_rMapDetailTitle;     // The details title text
+    [SerializeField] GameObject m_rMapDetailRegionCount;    // The region count that is only displayed in default mode (when no region is selected)
+    [SerializeField] GameObject m_rMapDetailMapCount;       // The gameobject containing the image UI and text to display a map count
+    [SerializeField] GameObject m_rMapDetailChestCount;     // The gameobject containing the image UI and text to display a chest count
+    [SerializeField] GameObject m_rMapDetailCollectableCount;   // The gameobject containing the image UI and text to display a collectable count
 
-    private Zone[] m_rZones;
-    private bool[] m_rZoneMapCollected;
+    private Zone[] m_rZones;    //Zone array from the Zone script.
     private int m_rMapsCollected = 0;
 
     // Start is called before the first frame update
@@ -23,41 +22,50 @@ public class MapManager : MonoBehaviour
     {
         List<Zone> zoneList = Zone.GetZoneList();
         m_rZones = new Zone[zoneList.Count];
-        m_rZoneMapCollected = new bool[zoneList.Count];
 
         //Populate arrays with values from zone
         foreach (Zone zone in zoneList)
         {
             int i = zone.GetZoneID();
             m_rZones[i - 1] = zone;
-            m_rZoneMapCollected[i - 1] = m_rZones[i - 1].GetIsMapFragmentCollected();
         }
 
-        for (int i = 0; i < m_rMapRegions.Length; ++i)
-        {
-            m_rMapRegions[i].SetActive(false);
-        }
+        //Set all map regions inactive
+        HideAllMapUIZones();
 
+        //Set a default view for the map details UI
         MapDefaultSettings();
     }
 
     // Update is called once per frame
     public void OpenMap()
     {
+        //Update collection data onto map
         m_rMapsCollected = 0;
+
+        //For each zone, check if the map has been collected.
         for (int i = 0; i < m_rZones.Length; ++i)
         {
-            m_rZoneMapCollected[i] = m_rZones[i].GetIsMapFragmentCollected();
-            if(m_rZoneMapCollected[i])
+            if(m_rZones[i].GetIsMapFragmentCollected())
             {
-                
                 m_rMapRegions[i].SetActive(true);
                 ++m_rMapsCollected;
             }
         }
         print("Num maps update?: " + m_rMapsCollected);
 
+        //Update the UI to display details
         MapDefaultSettings();
+    }
+
+    public void HideAllMapUIZones()
+    {
+        //Hide all button sections of the map
+        m_rMapsCollected = 0;
+        for (int i = 0; i < m_rMapRegions.Length; ++i)
+        {
+            m_rMapRegions[i].SetActive(false);
+        }
     }
 
     public void MapDefaultSettings()
@@ -75,7 +83,9 @@ public class MapManager : MonoBehaviour
 
     public void ActivateDetails()
     {
-        m_rMapDetailRegionCount.SetActive(false);    //Counter of how many regions have been 
+        //Counter of how many regions have been 
+        m_rMapDetailRegionCount.SetActive(false);    
+
         //Turn on all region details
         m_rMapDetailMapCount.SetActive(true);
         m_rMapDetailChestCount.SetActive(true);
@@ -84,6 +94,7 @@ public class MapManager : MonoBehaviour
 
     public void SetRegionSelected(int _num)
     {
-        m_rMapDetailTitle.text = "REGION " + _num;  //Change title text to 'region #'
+        //Change title text to 'region #'
+        m_rMapDetailTitle.text = "REGION " + _num; 
     }
 }

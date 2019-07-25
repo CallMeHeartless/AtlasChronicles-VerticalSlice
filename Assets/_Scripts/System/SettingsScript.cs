@@ -9,20 +9,19 @@ using Cinemachine;
 
 public class SettingsScript : MonoBehaviour
 {
-    private CinemachineFreeLook m_rCineCamera;
-    private PlayerPrefsManager PlayerPrefsManager;
-    private int m_currentGroup = -1;
+    [SerializeField] private Image[] m_rTabs;           // The tab array containing settings tab images
+    [SerializeField] private GameObject[] m_rGroups;    // The group aray containing each settings tag group 
+    [SerializeField] private GameObject m_rSettings;    // The Settings gameObject
+    [SerializeField] private AudioSource m_rButtonMove; //The audio to play when moving across buttons
+    [SerializeField] private Color m_inactiveColour;    //The button's inactive colour
+    [SerializeField] private Color m_highlightedColour; //The button's highlighted colour
+    [SerializeField] private Toggle m_camToggleX, m_camToggleY; //The toggle UI components
+    [SerializeField] private AudioMixer m_rMixer;       //The Audio Mixer for the game
 
-    [SerializeField] Image[] m_rTabs;
-    [SerializeField] GameObject[] m_rGroups;
-    [SerializeField] GameObject m_rSettings;
-
-    [SerializeField] AudioSource m_rButtonMove;
-    [SerializeField] Color m_inactiveColour;
-    [SerializeField] Color m_highlightedColour;
-    [SerializeField] Toggle m_camToggleX, m_camToggleY;
-    [SerializeField] AudioMixer m_rMixer;
-
+    private CinemachineFreeLook m_rCineCamera;  //The camera reference
+    private int m_currentGroup = -1;            //The currently selected tab group
+    
+    //Create a UnityEvent for the script
     public UnityEvent OnBPressed;
 
     private void Start()
@@ -134,11 +133,13 @@ public class SettingsScript : MonoBehaviour
 
     public void MoveTabLeft(bool _moveLeft)
     {
+        //Don't access function if the settings panel is inactive and the tabs and groups do not exist
         if (!m_rSettings.activeSelf || m_rTabs == null || m_rGroups == null)
         {
             return;
         }
 
+        //Switch tab groups by shifting to the left
         if (_moveLeft)
         {
             if (m_currentGroup > 0)
@@ -156,6 +157,7 @@ public class SettingsScript : MonoBehaviour
         }
         else
         {
+            //Switch tab groups by shifting to the right
             if (m_currentGroup < m_rTabs.Length - 1)
             {
                 //Hide current group
