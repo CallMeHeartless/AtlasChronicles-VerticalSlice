@@ -26,13 +26,7 @@ public class EnemyController : MonoBehaviour
     private PlayerController m_rPlayer = null;
 
     // Internal variables
-    [Header("Navmesh properties")]
-    [SerializeField]
-    private float m_fMovementSpeed;
-    [SerializeField]
-    private float m_fTurningSpeed;
-    [SerializeField]
-    private float m_fMaxAcceleration;
+    [Header("Navigation properties")]
     private Vector3 m_HomeLocation;
     private Vector3 m_CurrentTarget;
     [SerializeField]
@@ -53,8 +47,6 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         m_rNavAgent = GetComponent<NavMeshAgent>();
-        // Define agent properties
-        m_rNavAgent.speed = m_fMovementSpeed;
 
         // Initialise wander properties
         m_WanderProperties.m_HomePosition = transform.position;
@@ -78,7 +70,7 @@ public class EnemyController : MonoBehaviour
             m_rNavAgent.isStopped = true;
             return;
         }
-        m_rNavAgent.isStopped = false;
+        //m_rNavAgent.isStopped = false;
         // Look for the player
         m_rPlayer = m_rVision.DetectPlayer(m_rEyes);
         if (m_rPlayer) {
@@ -90,10 +82,10 @@ public class EnemyController : MonoBehaviour
                 m_rStateMachine.SetBool("bCanSeePlayer", false);
             }
         }
-        else if(m_rStateMachine.GetBool("bCanSeePlayer")){
+        else if(m_rStateMachine.GetBool("bCanSeePlayer")){ // Do not execute multiple times
             m_rStateMachine.SetBool("bCanSeePlayer", false);
             // Transition to look, then return home
-            m_rAnimator.SetTrigger("LoseSight");
+            //m_rAnimator.SetTrigger("LoseSight"); /// Removed to be called at the start of BasicLosePlayer
         }
 
         // Check if away from navmesh
@@ -174,12 +166,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    // Knocks the goon unconcious and schedule their rivival
     public void Knockout() {
         m_bIsKnockedOut = true;
         m_rStateMachine.SetBool("bIsKnockedOut", true);
         m_rStateMachine.SetTrigger("KnockOut");
         m_rAnimator.SetTrigger("Death");
-        m_rNavAgent.isStopped = true;
+        //m_rNavAgent.isStopped = true;
         // VFX
 
         // Drop map (if holding)
@@ -189,10 +182,11 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(Revive());
     }
 
+    // Revives the Goon after a duration
     private IEnumerator Revive() {
         yield return new WaitForSeconds(m_fKnockoutTime);
         // Renable enemy
-        m_rNavAgent.isStopped = false;
+        //m_rNavAgent.isStopped = false;
         GetComponent<DamageController>().ResetDamage();
         m_rAnimator.ResetTrigger("Death");
         m_rAnimator.SetTrigger("GetUp");
@@ -202,11 +196,11 @@ public class EnemyController : MonoBehaviour
 
     // Apply a tag to the enemy, disorienting them
     public void SetTag(bool _bState) {
-        m_rStateMachine.SetTrigger("Disorient");
         m_rStateMachine.SetBool("bIsTagged", _bState);
-        m_rAnimator.SetBool("Tagged", _bState);
+        //m_rAnimator.SetBool("Tagged", _bState); // Moved to BasicDisorient
         m_bIsTagged = _bState;
-        if (_bState) {
+        if (_bState) { // Represents a Goon being tagged
+            m_rStateMachine.SetTrigger("Disorient");
             ToggleMapFragment(false);
         }
     }
@@ -229,6 +223,11 @@ public class EnemyController : MonoBehaviour
     // Frees the agent (used by animation events)
     public void FreeAgent() {
         m_rNavAgent.isStopped = false;
+    }
+
+    // Tells the Goon to go back to patrolling (called when they have lost sight of the player
+    public void ReturnToWandering() {
+        m_rStateMachine.SetTrigger("ReturnToWander");
     }
 
 #if UNITY_EDITOR

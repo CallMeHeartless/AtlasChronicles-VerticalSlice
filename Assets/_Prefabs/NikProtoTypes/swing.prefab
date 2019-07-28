@@ -217,7 +217,7 @@ HingeJoint:
   m_UseSpring: 0
   m_Spring:
     spring: 0
-    damper: 0
+    damper: 50
     targetPosition: 0
   m_UseMotor: 1
   m_Motor:
@@ -249,7 +249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203439456f4786647ba54b248eccd668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bGoingX: 1
+  m_bGoingY: 0
+  m_bGoingZ: 0
   m_vec3StartingVeloicty: {x: 0, y: 50, z: 0}
   m_fForward: 0.5
   m_fBack: -0.5
   m_fSpeed: 10
+  m_vec3Axies: {x: 1, y: 0, z: 0}
+  m_Damage: 1
