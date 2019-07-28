@@ -70,7 +70,7 @@ public class EnemyController : MonoBehaviour
             m_rNavAgent.isStopped = true;
             return;
         }
-        m_rNavAgent.isStopped = false;
+        //m_rNavAgent.isStopped = false;
         // Look for the player
         m_rPlayer = m_rVision.DetectPlayer(m_rEyes);
         if (m_rPlayer) {
@@ -172,7 +172,7 @@ public class EnemyController : MonoBehaviour
         m_rStateMachine.SetBool("bIsKnockedOut", true);
         m_rStateMachine.SetTrigger("KnockOut");
         m_rAnimator.SetTrigger("Death");
-        m_rNavAgent.isStopped = true;
+        //m_rNavAgent.isStopped = true;
         // VFX
 
         // Drop map (if holding)
@@ -186,7 +186,7 @@ public class EnemyController : MonoBehaviour
     private IEnumerator Revive() {
         yield return new WaitForSeconds(m_fKnockoutTime);
         // Renable enemy
-        m_rNavAgent.isStopped = false;
+        //m_rNavAgent.isStopped = false;
         GetComponent<DamageController>().ResetDamage();
         m_rAnimator.ResetTrigger("Death");
         m_rAnimator.SetTrigger("GetUp");
