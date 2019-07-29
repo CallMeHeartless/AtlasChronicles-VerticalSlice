@@ -20,6 +20,10 @@ public class DamageController : MonoBehaviour
     [Range(0.0f, 360.0f)]
     private float m_fHitAngle = 360.0f;
     private Collider m_HitBox;
+    [SerializeField][Tooltip("Place a reference to a mesh / skinned mesh renderer here to have the object flash while they are invlunerable.")]
+    private Renderer m_rInvulnerableFlash = null;
+    private Material m_rInvulernableMaterial = null;
+    private float m_fFlashTimer = 0.0f;
 
 
     //[Header("Damage Events")]
@@ -38,6 +42,11 @@ public class DamageController : MonoBehaviour
     {
         m_HitBox = GetComponent<Collider>();
         ResetDamage();
+
+        // Check if there is a material for the invulernable state
+        if (m_rInvulnerableFlash){
+            m_rInvulernableMaterial = m_rInvulnerableFlash.material;
+        }
     }
 
     // Update is called once per frame
@@ -48,12 +57,25 @@ public class DamageController : MonoBehaviour
         }
     }
 
+    // Handles the period of invulnerablity
     private void ProcessInvulnerabilityTimer() {
         m_fInvulnerabilityCounter += Time.deltaTime;
+        // Check for material flash
+        if (m_rInvulernableMaterial){
+            // Increment flash timer
+            m_fFlashTimer += Time.deltaTime;
+            // Use a sine function to oscillate the player's lightness property
+            float fValue = Mathf.Sin(60.0f * m_fFlashTimer) * 1.1f;
+            m_rInvulernableMaterial.SetFloat("_Lightness", fValue);
+        }
         if(m_fInvulnerabilityCounter >= m_fInvulnerabilityTime) {
             m_fInvulnerabilityCounter = 0.0f;
             m_bIsInvulnerable = false;
             OnBecomeVulnerable.Invoke();
+            // Reset material flash if needed
+            if (m_rInvulernableMaterial) {
+                m_rInvulernableMaterial.SetFloat("_Lightness", 1.1f);
+            }
         }
     }
 
