@@ -108,6 +108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fMoveSpeed: 20
   m_vecOffset: {x: 0, y: 1, z: 0}
+  m_ftimer: 0
+  m_fMaxtimer: 2
 --- !u!54 &351052730387678557
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,11 +133,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8879317358597215136}
     m_Modifications:
-    - target: {fileID: 2945361510605111586, guid: e50a9f865c752144893e866729653460,
-        type: 3}
-      propertyPath: m_Name
-      value: VFX_Tag
-      objectReference: {fileID: 0}
     - target: {fileID: 8867134013840636555, guid: e50a9f865c752144893e866729653460,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -205,6 +202,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945361510605111586, guid: e50a9f865c752144893e866729653460,
+        type: 3}
+      propertyPath: m_Name
+      value: VFX_Tag
       objectReference: {fileID: 0}
     - target: {fileID: 5827269754431723027, guid: e50a9f865c752144893e866729653460,
         type: 3}

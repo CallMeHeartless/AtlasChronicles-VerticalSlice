@@ -698,7 +698,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private void AttachMarkerToGround() {
         RaycastHit hit;
         if(Physics.Raycast(transform.position, Vector3.down, out hit)) {
-
+            GameObject dummy = GameObject.Find(hit.transform.name);
+            m_rTeleportLoctation[m_UsedTeleport].transform.parent= dummy.transform;
+            Debug.Log("attach");
         }
     }
 
