@@ -19,11 +19,17 @@ public class TutorialGuide : MonoBehaviour
 
     public void SetGuidePanelActive(bool _active)
     {
-        m_rGuidePanel.SetActive(_active);
+        if(m_rGuidePanel && GameState.DoesPlayerHaveControl())
+        {
+            m_rGuidePanel.SetActive(_active);
+        }
     }
 
     public void SetGuideText(string _guideText)
     {
-        m_rText.SetText(_guideText);
+        if (m_rGuidePanel && GameState.DoesPlayerHaveControl())
+        {
+            m_rText.SetText(_guideText);
+        }
     }
 }

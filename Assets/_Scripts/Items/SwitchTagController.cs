@@ -103,6 +103,10 @@ void Update(){
         }
         else {
             m_AttachedObject.position = _vecSwitchPosition;
+            Switchable switchable = m_AttachedObject.GetComponent<Switchable>();
+            if (switchable) {
+                switchable.MoveSwitchable();
+            }
         }
         DetachFromObject();
     }

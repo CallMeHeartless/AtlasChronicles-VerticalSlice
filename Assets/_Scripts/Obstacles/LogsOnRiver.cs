@@ -21,86 +21,101 @@ public class LogsOnRiver : MonoBehaviour
     float m_fYEffector;
     Vector3 m_v3LogsLoction;
     float m_fLogHeight;
+    Vector3 currentAim;
+    public float speed = 1f;
+    float time = 0;
     // Start is called before the first frame update
     void Start()
     {
-        m_fYEffector = transform.position.y;
-       // m_v3Sinkheight.y -= m_fYEffector;
-        //m_v3Riseheight.y += m_fYEffector;
-        Debug.Log(m_fYEffector);
+        
+        currentAim = m_rPoints[m_intCurrentPoint].transform.position;
         if (m_bAboveWater)
         {
-
+            //currentAim += m_v3Riseheight;
             m_v3Currentheight = m_v3Riseheight;
 
         }
         else
         {
+            //currentAim += m_v3Sinkheight;
             m_v3Currentheight = m_v3Sinkheight;
         }
         //Debug.Log(m_rPoints.Length);
-
+       
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
 
-        //Debug.Log(transform.position.y + " and "+ (m_rPoints[m_intCurrentPoint].transform.position.y)+ " and " + m_v3Currentheight.y);
-        if (Vector3.Distance(transform.position, m_rPoints[m_intCurrentPoint].transform.position+ m_v3Currentheight+ new Vector3(0, m_fYEffector,0)) < 1)
-                {
-                    //Debug.Log(timeITakes);
+        //Debug.Log(transform.position.y + " and " + currentAim + " and " + transform.position.y);
+        if (Vector3.Distance(transform.position, currentAim) < 1)
+        {
+            //Debug.Log(timeITakes);
 
-                   
-                        if (m_rPoints.Length - 1 == m_intCurrentPoint)
-                        {
+
+            if (m_rPoints.Length - 1 == m_intCurrentPoint)
+            {
                 Destroy(transform.parent.gameObject);
                 //destorySelf
 
 
 
             }
-                        else
-                        {
-                            m_intCurrentPoint++;
-                            m_bchangingHieght = true;
-                            if (m_bAboveWater)
-                            {
+            else
+            {
+                time = 0;
+                m_intCurrentPoint++;
+                m_bchangingHieght = true;
+                currentAim = m_rPoints[m_intCurrentPoint].transform.position;
+                if (m_bAboveWater)
+                {
+                    //currentAim+= m_v3Sinkheight;
                     m_v3Currentheight = m_v3Sinkheight;
                     m_bAboveWater = false;
-                            }
-                            else
-                            {
-                    m_v3Currentheight = m_v3Riseheight ;
+                }
+                else
+                {
+                   // currentAim+= m_v3Riseheight;
+                    m_v3Currentheight = m_v3Riseheight;
                     m_bAboveWater = true;
-                            }
-                            //changeHieght();
-                        }
+                }
+                //changeHieght();
+            }
 
         }
+
+      
+        m_v3LogsLoction = Vector3.MoveTowards(transform.position, currentAim, m_fSpeed);
 
         if (m_bchangingHieght)
         {
             changeHieght();
         }
 
-        m_v3LogsLoction = Vector3.MoveTowards(transform.position, m_rPoints[m_intCurrentPoint].transform.position, m_fSpeed);
-        m_v3LogsLoction.y = m_fLogHeight;
+        
         transform.position = m_v3LogsLoction;
+        //    m_v3LogsLoction.y = m_fLogHeight.y;
+        // = m_v3LogsLoction;
     }
 
-   void changeHieght()
+    void changeHieght()
     {
+       
         if (m_bAboveWater)
         {
             if ((transform.position.y < m_v3Riseheight.y))
             {
+               
                 //going up
-                m_fLogHeight += .02f;
+                m_v3LogsLoction.y += .02f;
+                currentAim.y = transform.position.y;
             }
             else
             {
+               
                 // m_v3Currentheight = Vector3.zero;
+                currentAim.y = transform.position.y;
                 m_bchangingHieght = false;
             }
         }
@@ -109,13 +124,15 @@ public class LogsOnRiver : MonoBehaviour
             //Debug.Log(transform.position.y);
             if ((transform.position.y > m_v3Sinkheight.y))
             {
-                m_fLogHeight -= .02f;
+               
+                m_v3LogsLoction.y -= .02f;
             }
             else
             {
-
+               
                 //m_v3Currentheight = Vector3.zero;
                 //m_v3Currentheight = new Vector3(0, -2, 0);
+                currentAim.y = transform.position.y;
                 m_bchangingHieght = false;
             }
         }

@@ -10,15 +10,16 @@ public class BasicChase : AIState
     private float m_fAttackRange = 1.75f;
     private float m_fAttackCooldown = 1.0f;
     private float m_fAttackTimer = 0.0f;
-    private Animator m_rAnimator = null;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (!m_rPlayerReference) {
             m_rPlayerReference = GameObject.Find("Player").GetComponent<PlayerController>();
+            m_fAttackCooldown = m_rAI.m_fAttackCooldown;
         }
-        if (!m_rAnimator) {
-            m_rAnimator = m_rAI.animator;
+        if (!m_rAI.isKnockedOut){
+            // Play this animation when the Goon starts chasing the player
+            m_rAI.animator.SetTrigger("SpotPlayer");
         }
         m_rAgent.stoppingDistance = m_fAttackRange;
     }
@@ -27,7 +28,7 @@ public class BasicChase : AIState
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (!GameState.DoesPlayerHaveControl()) return;
         if (PlayerInAttackRange()) {
-            m_rAgent.isStopped = true;
+            m_rAgent.isStopped = true; // Stop the agent from moving while attacking
             // Attack
             if(m_fAttackTimer >= m_fAttackCooldown) {
                 m_rAI.Attack();
@@ -35,7 +36,7 @@ public class BasicChase : AIState
             } 
         }
         else {
-            m_rAgent.isStopped = false;
+           // m_rAgent.isStopped = false;
             m_PlayerPosition = m_rPlayerReference.transform.position;
             m_rAI.SetDestination(m_PlayerPosition);
         }
@@ -48,19 +49,8 @@ public class BasicChase : AIState
         m_rAgent.stoppingDistance = 0.0f;
     }
 
+    // Returns true if the player is in the defined attack range
     private bool PlayerInAttackRange() {
         return (m_rAI.transform.position - m_rPlayerReference.transform.position).sqrMagnitude <= m_fAttackRange * m_fAttackRange;
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

@@ -12,6 +12,7 @@ public class BasicWander : AIState
         // Reset wander interval timer
         m_fWanderIntervalTimer = 0.0f;
         m_rWanderProperties = m_rAI.m_rWanderProperties;
+        m_rAI.animator.SetTrigger("Idle");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -20,28 +21,32 @@ public class BasicWander : AIState
         if(m_fWanderIntervalTimer >= m_rWanderProperties.m_fWanderInterval) {
             FindNewPosition();
             m_fWanderIntervalTimer = 0.0f;
+            m_rAgent.isStopped = false;
         }
 
         // Determine which animation should be played
         if (m_rAgent.velocity.sqrMagnitude == 0.0f) {
-            m_rAI.animator.SetTrigger("Idle");
+            //m_rAI.animator.SetTrigger("Idle");
+            m_rAI.animator.SetBool("bIsWandering", false);
         } else {
-            m_rAI.animator.SetTrigger("Patrol");
+            //m_rAI.animator.SetTrigger("Patrol");
+            m_rAI.animator.SetBool("bIsWandering", true);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        if (!m_rAI.isKnockedOut) {
-            m_rAI.animator.SetTrigger("SpotPlayer");
-        }
+        //if (!m_rAI.isKnockedOut) {
+        //    m_rAI.animator.SetTrigger("SpotPlayer");
+        //}
     }
 
+    // Obtains a new destination for the Goon within their wander properties
     private void FindNewPosition() {
-        float fRandomAngle = Random.Range(0.0f, 360.0f);
-        float fRandomRadius = Random.Range(m_rWanderProperties.m_fMinWanderRadius, m_rWanderProperties.m_fMaxWanderRadius);
+        float fRandomAngle = Random.Range(0.0f, 360.0f); // Angle within the circle
+        float fRandomRadius = Random.Range(m_rWanderProperties.m_fMinWanderRadius, m_rWanderProperties.m_fMaxWanderRadius); // Random radius
         Vector3 target = Quaternion.AngleAxis(fRandomAngle, Vector3.up) * Vector3.right * fRandomRadius;
-        target += m_rWanderProperties.m_HomePosition;
+        target += m_rWanderProperties.m_HomePosition; // Add vector to home position to find offset point
         m_rAI.SetDestination(target);
     }
 

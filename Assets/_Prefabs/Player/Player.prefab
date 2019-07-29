@@ -1191,6 +1191,7 @@ MonoBehaviour:
   m_iMaxHealth: 4
   m_fInvulnerabilityTime: 2
   m_fHitAngle: 360
+  m_rInvulnerableFlash: {fileID: 2934529704921276769}
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -1219,6 +1220,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2934529704925585319}
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Damage
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -1856,6 +1868,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2934529704918198983}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &2934529704921276769 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 13700006, guid: 10137af36dbbfbf4bb048dd463a81b00,
+    type: 3}
+  m_PrefabInstance: {fileID: 2934529704918198983}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2934529704918166929 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100182, guid: 10137af36dbbfbf4bb048dd463a81b00,
@@ -2097,15 +2115,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c6f182148c00ec49a372e239e4913d9, type: 3}
---- !u!198 &6586341422062289491 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 102134927275997670, guid: 3c6f182148c00ec49a372e239e4913d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 6489046650198490037}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6586341422062289490 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 102134927275997671, guid: 3c6f182148c00ec49a372e239e4913d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6489046650198490037}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6586341422062289491 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 102134927275997670, guid: 3c6f182148c00ec49a372e239e4913d9,
     type: 3}
   m_PrefabInstance: {fileID: 6489046650198490037}
   m_PrefabAsset: {fileID: 0}
