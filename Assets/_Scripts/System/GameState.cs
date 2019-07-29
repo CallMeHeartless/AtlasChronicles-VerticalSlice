@@ -29,6 +29,7 @@ public class GameState : MonoBehaviour
     }
 
     public static bool DoesPlayerHaveControl() {
+        print("Cinematic on?: " + s_bInCinematic);
         return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting); // Add here accordingly
     }
 

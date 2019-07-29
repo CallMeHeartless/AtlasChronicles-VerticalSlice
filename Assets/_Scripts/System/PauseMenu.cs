@@ -32,6 +32,10 @@ public class PauseMenu : MonoBehaviour
         m_rUIPanel.SetActive(true);
         //Find the camera
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
+        if (m_rCineCamera != null)
+        {
+            m_rCineCamera.enabled = true;
+        }
     }
 
     // Update is called once per frame
