@@ -21,7 +21,17 @@ public class Dropper : MonoBehaviour
     {
         if (m_fTimer <= 0)
         {
-            Instantiate(m_gApple, transform.position, Quaternion.identity);
+           
+            GameObject item = Instantiate(m_gApple, transform.position, Quaternion.identity);
+           // Debug.Log(item.GetComponentInChildren<LogsOnRiver>());
+            if (item.GetComponentInChildren<LogsOnRiver>())
+            {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    item.GetComponentInChildren<LogsOnRiver>().m_rPoints[i] = transform.GetChild(i).gameObject;
+                }
+               
+            }
             m_fTimer = m_fMaxTimer;
         }
         else
