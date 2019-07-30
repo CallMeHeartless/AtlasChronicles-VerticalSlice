@@ -1094,6 +1094,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (m_rSlamAttack) {
             m_rSlamAttack.SetActive(false);
         }
+        ToggleGlideScroll(false);
 
         m_bCanAttack = true;
         // Clear slam attack flag
