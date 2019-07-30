@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strAttackButton = "XBoxXButton";
     private string m_strCameraLockButton = "XBoxR2";
     private string m_strTetherBreakButton = "XBoxRightStickClick";
+    private string m_strYAxisButton = "RightYAxis";
+    private string m_strXAxisButton = "RightXAxis";
     private AxisToButton m_rSwitchButton = new AxisToButton();
 
     // Movement variables
@@ -177,7 +179,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
-
         }
         m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
 
@@ -212,6 +213,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Update is called once per frame
     void Update() {
         if (!GameState.DoesPlayerHaveControl()) {
+            m_rAnimator.SetTrigger("Idle");
+
             return;
         }
 
@@ -959,6 +962,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //transform.localScale = Vector3.one;
     }
 
+    public Animator GetAnimator()
+    {
+        return m_rAnimator;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("SlipperyObject"))
@@ -1116,4 +1124,17 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
           return Weight;
     }
 
+    public void DisableCameraInput(bool _disable)
+    {
+        if (_disable)
+        {
+            m_rFreeLook.m_XAxis.m_InputAxisName = "";
+            m_rFreeLook.m_YAxis.m_InputAxisName = "";
+        }
+        else
+        {
+            m_rFreeLook.m_XAxis.m_InputAxisName = m_strXAxisButton;
+            m_rFreeLook.m_YAxis.m_InputAxisName = m_strYAxisButton;
+        }
+    }
 }

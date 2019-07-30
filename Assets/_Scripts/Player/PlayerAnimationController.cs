@@ -69,7 +69,6 @@ public class PlayerAnimationController : MonoBehaviour
         if(m_rPlayerController)
         {
             m_rPlayerController.HandleFootsteps();
-            //m_rFootDustParticles.Play();
         }
     }
 
@@ -82,6 +81,8 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void PlayFootDust(int _leftFoot)
     {
+        if (!m_rPlayerController)
+            return;
         if (!m_rPlayerController.GetComponent<CharacterController>().isGrounded || m_rPlayerController.GetIsWading())
             return;
 

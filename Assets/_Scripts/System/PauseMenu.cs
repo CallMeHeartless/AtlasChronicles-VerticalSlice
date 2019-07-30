@@ -16,9 +16,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_rMapPanel;        // Map panel containing map elements
     [SerializeField] GameObject m_rGuidePanel;      // Guide panel containing tutorial elements
     [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
+    [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
 
     CinemachineFreeLook m_rCineCamera;              //Reference to main camera
-    [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
+    CinematicManager m_rCineManager;                //Reference to cinematics manager that holds all cinematics
 
     private bool m_bIsPaused = false;               //Local pause variable
 
@@ -30,12 +31,14 @@ public class PauseMenu : MonoBehaviour
         m_rSettingsPanel.SetActive(false);
         m_rMapPanel.SetActive(false);
         m_rUIPanel.SetActive(true);
+
         //Find the camera
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
+        m_rCineManager = GameObject.FindGameObjectWithTag("CinematicManager").GetComponent<CinematicManager>();
+
+        //Activate camera if component is not null
         if (m_rCineCamera != null)
-        {
             m_rCineCamera.enabled = true;
-        }
     }
 
     // Update is called once per frame
@@ -56,9 +59,11 @@ public class PauseMenu : MonoBehaviour
 
             //Disable camera usage when paused
             if (m_rCineCamera != null)
-            {
                 m_rCineCamera.enabled = false;
-            }
+
+            //Disable cinematic functionality when paused
+            if(m_rCineManager != null)
+                m_rCineManager.ActivateCinematics(false);
 
             // Set game as paused 
             GameState.SetPauseFlag(true);
@@ -94,9 +99,11 @@ public class PauseMenu : MonoBehaviour
 
             //Enable camera usage when resumed
             if (m_rCineCamera != null)
-            {
                 m_rCineCamera.enabled = true;
-            }
+
+            //Enable cinematic functionality when resumed
+            if (m_rCineManager != null)
+                m_rCineManager.ActivateCinematics(true);
         }
     }
 
@@ -123,10 +130,11 @@ public class PauseMenu : MonoBehaviour
 
     public void ChooseExitType()
     {
+        //If using the editor, switch off via variable, else, quit.
         #if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
+            EditorApplication.isPlaying = false;
         #else
-                    Application.Quit();
+            Application.Quit();
         #endif
     }
 }
