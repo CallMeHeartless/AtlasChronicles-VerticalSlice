@@ -21,14 +21,18 @@ public class MapManager : MonoBehaviour
     void Start()
     {
         List<Zone> zoneList = Zone.GetZoneList();
-        m_rZones = new Zone[zoneList.Count];
-
-        //Populate arrays with values from zone
-        foreach (Zone zone in zoneList)
+        if(m_rZones != null)
         {
-            int i = zone.GetZoneID();
-            m_rZones[i - 1] = zone;
+            m_rZones = new Zone[zoneList.Count];
+
+            //Populate arrays with values from zone
+            foreach (Zone zone in zoneList)
+            {
+                int i = zone.GetZoneID();
+                m_rZones[i - 1] = zone;
+            }
         }
+        
 
         //Set all map regions inactive
         HideAllMapUIZones();
@@ -40,6 +44,8 @@ public class MapManager : MonoBehaviour
     // Update is called once per frame
     public void OpenMap()
     {
+        if (m_rZones == null)
+            return;
         //Update collection data onto map
         m_rMapsCollected = 0;
 

@@ -69,7 +69,6 @@ public class PlayerAnimationController : MonoBehaviour
         if(m_rPlayerController)
         {
             m_rPlayerController.HandleFootsteps();
-            //m_rFootDustParticles.Play();
         }
     }
 
@@ -82,6 +81,8 @@ public class PlayerAnimationController : MonoBehaviour
 
     public void PlayFootDust(int _leftFoot)
     {
+        if (!m_rPlayerController)
+            return;
         if (!m_rPlayerController.GetComponent<CharacterController>().isGrounded || m_rPlayerController.GetIsWading())
             return;
 
@@ -151,5 +152,11 @@ public class PlayerAnimationController : MonoBehaviour
     // Play slam particles
     public void PlaySlamParticles() {
         m_rGroundSlamParticles.Play();
+    }
+
+    public void ActivateScroll(int _activate)
+    {
+        if (m_rPlayerController)
+            m_rPlayerController.ToggleGlideScroll((_activate == 1 ? true : false));
     }
 }

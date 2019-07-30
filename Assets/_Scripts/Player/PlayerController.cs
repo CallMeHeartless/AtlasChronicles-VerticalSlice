@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strAttackButton = "XBoxXButton";
     private string m_strCameraLockButton = "XBoxR2";
     private string m_strTetherBreakButton = "XBoxRightStickClick";
+    private string m_strYAxisButton = "RightYAxis";
+    private string m_strXAxisButton = "RightXAxis";
     private AxisToButton m_rSwitchButton = new AxisToButton();
 
     // Movement variables
@@ -165,6 +167,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
     private int Weight = 3;
+    private bool m_bCineGroundCheck = false;
     #endregion
 
     // Start is called before the first frame update
@@ -177,7 +180,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rPAnimationController = GetComponentInChildren<PlayerAnimationController>();
         if (!m_rCameraReference) {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
-
         }
         m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
 
@@ -212,6 +214,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Update is called once per frame
     void Update() {
         if (!GameState.DoesPlayerHaveControl()) {
+            ClearPlayerEvents();
             return;
         }
 
@@ -453,7 +456,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_ExternalForce.y = 0.0f;
         }
 
-        if (m_rCharacterController.isGrounded) {
+        if (m_rCharacterController.isGrounded || m_bCineGroundCheck) {
             m_rAnimator.SetBool("Grounded", true);
             m_fGravityMulitplier = 1.0f;
             m_Velocity = Vector3.zero;
@@ -506,7 +509,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
         m_bIsFloating = _bState;
-        ToggleGlideScroll(_bState);
+        if(!_bState)
+        {
+            ToggleGlideScroll(_bState);
+        }
 
         if (m_bIsFloating) {
             // Level out the player's upward velocity to begin gliding
@@ -914,6 +920,23 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         return m_bIsFloating;
     }
 
+    public void ClearPlayerEvents()
+    {
+        //Set player on ground // Used when playing cinematics
+        ToggleGlideScroll(false);
+        m_rAnimator.SetBool("Glide", false);
+        m_rAnimator.SetTrigger("Idle");
+        m_rAnimator.SetFloat("JumpSpeed", 0.0f);
+        if (m_rGlideTrails[0])
+        {
+            foreach (GameObject trail in m_rGlideTrails)
+            {
+                trail.SetActive(false);
+            }
+        }
+        m_rAnimator.SetBool("Grounded", true);
+    }
+
     // Toggles whether the player should be sprinting
     private void ToggleSprint(bool _bSprinting) {
         if (_bSprinting) {
@@ -959,6 +982,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //transform.localScale = Vector3.one;
     }
 
+    public Animator GetAnimator()
+    {
+        return m_rAnimator;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("SlipperyObject"))
@@ -990,7 +1018,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Turn the glide scroll on / off
-    private void ToggleGlideScroll(bool _bState) {
+    public void ToggleGlideScroll(bool _bState) {
         if (m_rGlideScroll) {
             m_rGlideScroll.SetActive(_bState);
             ToggleHipScroll(!_bState);
@@ -1066,6 +1094,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (m_rSlamAttack) {
             m_rSlamAttack.SetActive(false);
         }
+        ToggleGlideScroll(false);
 
         m_bCanAttack = true;
         // Clear slam attack flag
@@ -1116,4 +1145,26 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
           return Weight;
     }
 
+    public void DisableCameraInput(bool _disable)
+    {
+        if (_disable)
+        {
+            m_rFreeLook.m_XAxis.m_InputAxisName = "";
+            m_rFreeLook.m_YAxis.m_InputAxisName = "";
+        }
+        else
+        {
+            m_rFreeLook.m_XAxis.m_InputAxisName = m_strXAxisButton;
+            m_rFreeLook.m_YAxis.m_InputAxisName = m_strYAxisButton;
+        }
+    }
+
+    public void SetCineGroundCheckTrue()
+    {
+        m_bCineGroundCheck = true;
+    }
+    public void SetCineGroundCheckFalse()
+    {
+        m_bCineGroundCheck = false;
+    }
 }
