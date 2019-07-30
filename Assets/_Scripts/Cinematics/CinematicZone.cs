@@ -49,9 +49,8 @@ public class CinematicZone : MonoBehaviour
 
             if (m_rPlayer)
             {
-                m_rPlayer.GetAnimator().SetBool("Grounded", true);
-                m_rPlayer.GetAnimator().SetTrigger("Idle");
-
+                m_rPlayer.SetCineGroundCheckTrue();
+                m_rPlayer.Invoke("SetCineGroundCheckFalse", 0.1f);
             }
         }
     }

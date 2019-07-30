@@ -167,6 +167,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
     private int Weight = 3;
+    private bool m_bCineGroundCheck = false;
     #endregion
 
     // Start is called before the first frame update
@@ -213,8 +214,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Update is called once per frame
     void Update() {
         if (!GameState.DoesPlayerHaveControl()) {
-            m_rAnimator.SetTrigger("Idle");
-
+            ClearPlayerEvents();
             return;
         }
 
@@ -456,7 +456,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_ExternalForce.y = 0.0f;
         }
 
-        if (m_rCharacterController.isGrounded) {
+        if (m_rCharacterController.isGrounded || m_bCineGroundCheck) {
             m_rAnimator.SetBool("Grounded", true);
             m_fGravityMulitplier = 1.0f;
             m_Velocity = Vector3.zero;
@@ -509,7 +509,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
         m_bIsFloating = _bState;
-        ToggleGlideScroll(_bState);
+        if(!_bState)
+        {
+            ToggleGlideScroll(_bState);
+        }
 
         if (m_bIsFloating) {
             // Level out the player's upward velocity to begin gliding
@@ -917,6 +920,23 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         return m_bIsFloating;
     }
 
+    public void ClearPlayerEvents()
+    {
+        //Set player on ground // Used when playing cinematics
+        ToggleGlideScroll(false);
+        m_rAnimator.SetBool("Glide", false);
+        m_rAnimator.SetTrigger("Idle");
+        m_rAnimator.SetFloat("JumpSpeed", 0.0f);
+        if (m_rGlideTrails[0])
+        {
+            foreach (GameObject trail in m_rGlideTrails)
+            {
+                trail.SetActive(false);
+            }
+        }
+        m_rAnimator.SetBool("Grounded", true);
+    }
+
     // Toggles whether the player should be sprinting
     private void ToggleSprint(bool _bSprinting) {
         if (_bSprinting) {
@@ -998,7 +1018,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     // Turn the glide scroll on / off
-    private void ToggleGlideScroll(bool _bState) {
+    public void ToggleGlideScroll(bool _bState) {
         if (m_rGlideScroll) {
             m_rGlideScroll.SetActive(_bState);
             ToggleHipScroll(!_bState);
@@ -1136,5 +1156,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rFreeLook.m_XAxis.m_InputAxisName = m_strXAxisButton;
             m_rFreeLook.m_YAxis.m_InputAxisName = m_strYAxisButton;
         }
+    }
+
+    public void SetCineGroundCheckTrue()
+    {
+        m_bCineGroundCheck = true;
+    }
+    public void SetCineGroundCheckFalse()
+    {
+        m_bCineGroundCheck = false;
     }
 }

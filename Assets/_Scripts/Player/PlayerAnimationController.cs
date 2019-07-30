@@ -153,4 +153,10 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlaySlamParticles() {
         m_rGroundSlamParticles.Play();
     }
+
+    public void ActivateScroll(int _activate)
+    {
+        if (m_rPlayerController)
+            m_rPlayerController.ToggleGlideScroll((_activate == 1 ? true : false));
+    }
 }
