@@ -37,9 +37,10 @@ public class SwitchTagController : MonoBehaviour
             m_bIsMoving = false;
             m_rPlayerReference.SetSwitchTarget(m_AttachedObject.gameObject);
             m_AttachedObject.GetComponent<Switchable>().Tag();
-        } else if(!other.CompareTag("Player")){
+        } else if(!other.CompareTag("Player") && !other.transform.root.CompareTag("Player")) {
             // Destroy animation? DO NOT DESTROY OBJECT
-            //DetachFromObject();
+            Debug.Log(other.name);
+            DetachFromObject();
         }
     }
 
