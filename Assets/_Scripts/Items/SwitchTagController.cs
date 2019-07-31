@@ -14,8 +14,8 @@ public class SwitchTagController : MonoBehaviour
     private PlayerController m_rPlayerReference;
     [SerializeField] private float m_ftimer;
     [SerializeField] private float m_fMaxtimer = 5;
-    private GameObject m_gTagOfGameObject;
-    private int m_Tagslot;
+    private GameObject[] m_gTagOfGameObject;
+    private int m_Tagslot=0;
 
     public void SetUp()
     {
@@ -28,11 +28,11 @@ public class SwitchTagController : MonoBehaviour
         m_ftimer = m_fMaxtimer;
     }
 
-    public void OrgialTag (GameObject _tag){
+    public void OrgialTag(GameObject[] _tag) {
         m_gTagOfGameObject = _tag;
     }
-// Update is called once per frame
-void Update(){
+    // Update is called once per frame
+    void Update() {
 
         if (m_ftimer <= 0)
         {
@@ -45,15 +45,15 @@ void Update(){
         }
         else
         {
-              // Move the tag forward if it has been thrown
+            // Move the tag forward if it has been thrown
             if (m_bIsMoving)
             {
                 transform.Translate(Vector3.forward * m_fMoveSpeed * Time.deltaTime);
             }
             m_ftimer -= Time.deltaTime;
         }
-      
-        
+
+
     }
 
     // Instructs the tag to fly forwards or not
@@ -65,13 +65,14 @@ void Update(){
     void OnTriggerEnter(Collider other) {
         if (other.GetComponent<Switchable>() && !m_AttachedObject) {
             // Attach to the object
+            m_Tagslot = m_rPlayerReference.getUsedTeleport();
             m_AttachedObject = other.transform;
             transform.position = m_AttachedObject.position + m_vecOffset;
             transform.SetParent(m_AttachedObject);
             m_bIsMoving = false;
             m_rPlayerReference.SetSwitchTarget(m_AttachedObject.gameObject);
             m_AttachedObject.GetComponent<Switchable>().Tag();
-        } else if(!other.CompareTag("Player")){
+        } else if (!other.CompareTag("Player")) {
             // Destroy animation? DO NOT DESTROY OBJECT
             //DetachFromObject();
         }
@@ -82,9 +83,9 @@ void Update(){
         transform.SetParent(null);
         if (m_AttachedObject) {
             m_AttachedObject.GetComponent<Switchable>().DeTag();
-            m_rPlayerReference.ResetSwitchTarget(m_gTagOfGameObject);
+            m_rPlayerReference.ResetSwitchTarget(m_gTagOfGameObject[m_Tagslot]);
         }
-       
+
         m_AttachedObject = null;
         gameObject.SetActive(false);
     }
@@ -93,7 +94,7 @@ void Update(){
     public IEnumerator Switch(Vector3 _vecSwitchPosition) {
         yield return new WaitForEndOfFrame();
         // VFX
-
+        m_Tagslot = m_rPlayerReference.getUsedTeleport();
         // Handle objects with navmesh
         NavMeshAgent agent = m_AttachedObject.GetComponent<NavMeshAgent>();
         if (agent) {
@@ -115,4 +116,5 @@ void Update(){
     public void SetPlayerReference(PlayerController _playerReference) {
         m_rPlayerReference = _playerReference;
     }
+    
 }

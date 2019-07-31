@@ -80,12 +80,10 @@ public class weighted : MonoBehaviour, IMessageReceiver
             }
             else
             {
-                //Debug.Log(ObjectInArea.Contains(other.gameObject));
+                Debug.Log(ObjectInArea.Contains(other.gameObject));
             }
 
-            ObjectInArea.Add(other.gameObject);
-            ObjectColor.Add(Color.None);
-            ObjectWeight.Add(other.GetComponent<PlayerController>().GetWeight());
+           
         }
         
     }

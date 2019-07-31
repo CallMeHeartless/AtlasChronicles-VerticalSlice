@@ -38,7 +38,7 @@ public class PlayerAnimationController : MonoBehaviour
     // Throws the switch tag
     public void ThrowSwitchTag() {
         // Remove from any existing objects
-       
+
         m_SwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
         // Update transform
         m_SwitchMarker.transform.position = m_HandCollider.transform.position;
@@ -49,7 +49,7 @@ public class PlayerAnimationController : MonoBehaviour
         m_SwitchMarker.GetComponent<SwitchTagController>().SetMoving(true);
         m_SwitchMarker.GetComponent<SwitchTagController>().SetUp();
     }
-    public void SetOrgialLoctation(GameObject _tag)
+    public void SetOrgialLoctation(GameObject[] _tag)
     {
         m_SwitchMarker.GetComponent<SwitchTagController>().OrgialTag(_tag);
     }
@@ -71,7 +71,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public void PlayStep() {
-        if(m_rPlayerController)
+        if (m_rPlayerController)
         {
             m_rPlayerController.HandleFootsteps();
             //m_rFootDustParticles.Play();
@@ -90,7 +90,7 @@ public class PlayerAnimationController : MonoBehaviour
         if (!m_rPlayerController.GetComponent<CharacterController>().isGrounded || m_rPlayerController.GetIsWading())
             return;
 
-        if(_leftFoot == 0)
+        if (_leftFoot == 0)
         {
             m_rLeftFootDustParticles.Play();
         }
@@ -157,4 +157,5 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlaySlamParticles() {
         m_rGroundSlamParticles.Play();
     }
+   
 }

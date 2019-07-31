@@ -614,9 +614,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {
            
             if (m_rTeleportCondiction[m_UsedTeleport] == TeleportStat.eNulled) {
-               
+                m_rAnimator.GetComponent<PlayerAnimationController>().SetOrgialLoctation(m_rTeleportLoctation);
                 m_rAnimator.SetTrigger("ThrowTag");
-                m_rAnimator.GetComponent<PlayerAnimationController>().SetOrgialLoctation(m_rTeleportLoctation[m_UsedTeleport]);
+               
                 Debug.Log(m_rTeleportCondiction[m_UsedTeleport]);
                 EffectMarker(TeleportStat.eMarkMoving);
             }
@@ -698,8 +698,19 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private void AttachMarkerToGround() {
         RaycastHit hit;
         if(Physics.Raycast(transform.position, Vector3.down, out hit)) {
-            GameObject dummy = GameObject.Find(hit.transform.name);
-            m_rTeleportLoctation[m_UsedTeleport].transform.parent= dummy.transform;
+            //hit.collider.transform = m_rTeleportLoctation[m_UsedTeleport].transform.parent;
+            if (hit.collider.CompareTag("MovingPlatforms"))
+            {
+                if (hit.collider.GetComponent<MovingPlatformAttachment>())
+                {
+                    hit.collider.GetComponent<MovingPlatformAttachment>().Attach(m_rTeleportLoctation[m_UsedTeleport]);
+                }
+
+            }
+            else
+            {
+                m_rTeleportLoctation[m_UsedTeleport].transform.parent = null;
+            }
             Debug.Log("attach");
         }
     }

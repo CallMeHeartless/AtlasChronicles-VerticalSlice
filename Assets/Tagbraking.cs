@@ -9,6 +9,11 @@ public class Tagbraking : MonoBehaviour
     private void Start()
     {
         m_fPlayerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+    }
+    private void OnBecameVisible()
+    {
+        cicle(25);
     }
     private void OnTriggerStay(Collider other)
     {
@@ -21,5 +26,20 @@ public class Tagbraking : MonoBehaviour
     }
     public void SetTag(int Tag){
         m_TagLoctation = Tag;
+    }
+    void cicle(int _radus)
+    {
+       
+        LineRenderer NewCricle = gameObject.GetComponent<LineRenderer>();
+        var points = new Vector3[361];
+
+        for (int i = 0; i < 361; i++)
+        {
+            var rad = Mathf.Deg2Rad * (i * 360f / 360);
+            points[i] = new Vector3(Mathf.Sin(rad) * _radus, 0, Mathf.Cos(rad) * _radus) +gameObject.transform.position;
+        }
+        NewCricle.positionCount = points.Length;
+        NewCricle.SetPositions(points);
+        Debug.Log(points.Length);
     }
 }
