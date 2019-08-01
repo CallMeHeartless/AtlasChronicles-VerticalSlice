@@ -78,7 +78,7 @@ Shader "S_StencilTest"
 }
 /*ASEBEGIN
 Version=16400
-1921;1;1278;970;1620.145;603.8134;1.9;True;True
+1965;52;1266;958;1606.845;590.5134;1.9;True;True
 Node;AmplifyShaderEditor.SamplerNode;1;-627.9899,-6.480563;Float;True;Property;_Diffuse;Diffuse;0;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SamplerNode;2;-623.1901,182.3194;Float;True;Property;_Normal;Normal;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;3;-163.99,60.71951;Float;False;InstancedProperty;_Metallic;Metallic;2;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
@@ -87,4 +87,4 @@ Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;2;Floa
 WireConnection;0;0;1;0
 WireConnection;0;1;2;0
 ASEEND*/
-//CHKSM=869474534665624D94A8C84E8C21A3B912D86CF7
+//CHKSM=3201A2315F6862FA20B4B6E4B056ADB0154433F2

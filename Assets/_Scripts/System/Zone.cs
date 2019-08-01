@@ -12,6 +12,7 @@ public class Zone : MonoBehaviour
     private bool m_bMapFragmentCollected = false;
     private int m_iCollectableCount = 0;
     private int m_iChestCount = 0;
+    private List<MapVisionComponent> m_MapVisionComponents = null; // A list of all objects within the zone that can be shown through map vision
 
     // Generate a list of zones for future efficiency
     private void Awake()
@@ -24,6 +25,9 @@ public class Zone : MonoBehaviour
 
         // Add this zone list
         s_Zones.Add(this);
+        if (m_MapVisionComponents == null) {
+            m_MapVisionComponents = new List<MapVisionComponent>();
+        }
     }
 
     public bool DoesIDMatchZone(int _uiID) {
@@ -63,5 +67,31 @@ public class Zone : MonoBehaviour
     public static List<Zone> GetZoneList()
     {
         return s_Zones;
+    }
+
+    // Sets the state of all map vision objects within the zone
+    public void SetMapVisionState(bool _bOn) {
+        foreach(MapVisionComponent mapVision in m_MapVisionComponents) {
+            if (mapVision) { // Check that the reference is good
+                mapVision.ToggleMapVision(_bOn); // Set the material to be on/off
+            } else {
+                // If the reference is bad, remove it
+                m_MapVisionComponents.Remove(mapVision);
+            }
+        }
+    }
+
+    // Toggles map vision for all zones with collected map fragments
+    public static void ToggleMapVision(bool _bOn) {
+        foreach(Zone zone in s_Zones) {
+            if (zone.GetIsMapFragmentCollected()) {
+                zone.SetMapVisionState(_bOn);
+            }
+        }
+    }
+
+    // Allow a map vision component to add itself to the zone's list. Children should call this at runtime
+    public void AddToMapVisionList(MapVisionComponent _rMapVisionObject) {
+        m_MapVisionComponents.Add(_rMapVisionObject);
     }
 }
