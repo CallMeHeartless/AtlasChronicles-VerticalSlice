@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strTetherBreakButton = "XBoxRightStickClick";
     private string m_strYAxisButton = "RightYAxis";
     private string m_strXAxisButton = "RightXAxis";
+    private string m_strMapVision = "YButton";
     private AxisToButton m_rSwitchButton = new AxisToButton();
 
     // Movement variables
@@ -166,7 +167,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
-    private int Weight = 3;
+    private int m_iWeight = 3;
     private bool m_bCineGroundCheck = false;
     #endregion
 
@@ -597,6 +598,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         else if (Input.GetButtonDown(m_strTetherBreakButton)) {
             CancelSwitchTag();
         }
+        // Handle map vision
+        else if (Input.GetButtonDown(m_strMapVision)) { /// Kerry
+            HandleMapVision();
+        }
         // Attack
         if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
             // Basic attack when on the ground
@@ -729,49 +734,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rAnimator.SetBool("IsAiming", m_bIsAiming);
     }
 
-    // Pickup the nearest item or drop the held item
-    private void GrabObject() {
-        // Pick up the item
-        if (!m_rHeldObject) {
-            GameObject nearestItem = GetClosestHoldableItem();
-            m_rAnimator.SetTrigger("Pickup");
-            if (!nearestItem) {
-                return;
-            }
-            m_rHeldObject = nearestItem;
-            m_rHeldObject.transform.position = m_rHeldObjectLocation.transform.position;
-            m_rHeldObject.transform.SetParent(m_rHeldObjectLocation);
-            // Disable rigibody
-            m_rHeldObject.GetComponent<Rigidbody>().isKinematic = true;
-        } else {
-            // Drop item
-            m_rHeldObject.transform.SetParent(null);
-            m_rHeldObject.GetComponent<Rigidbody>().isKinematic = false;
-            m_rHeldObject = null;
+    // Handles map vision /// Kerry
+    private void HandleMapVision() {
+        InkGauge rInkGauge = InkGauge.GetInstance();
+        if (rInkGauge) { // Ensure reference exists
+            rInkGauge.HandleMapVision(); // Send call to ink gauge
         }
     }
-
-    // Finds the closest holdable object
-    private GameObject GetClosestHoldableItem() {
-        Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, m_fPickupRadius);
-        GameObject nearest = null;
-        float fDistanceToNearest = 1000.0f;
-
-        // Iterate through and check distances
-        foreach (Collider item in nearbyObjects) {
-            if (!item.CompareTag("HoldableItem") || item.transform.position.y > transform.position.y) {
-                continue;
-            } else {
-                float fItemDistance = (item.transform.position - transform.position).sqrMagnitude;
-                if (fItemDistance < fDistanceToNearest) {
-                    fDistanceToNearest = fItemDistance;
-                    nearest = item.gameObject;
-                }
-            }
-        }
-        return nearest;
-    }
-
+    
+    // Triggers the teleport particle effects
     private void TeleportParticles() {
         if (!m_rTeleportParticles) {
             return;
@@ -1150,7 +1121,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
     public int getWeight()
     {
-          return Weight;
+          return m_iWeight;
     }
 
     public void DisableCameraInput(bool _disable)

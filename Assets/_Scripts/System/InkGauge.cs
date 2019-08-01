@@ -83,6 +83,8 @@ public class InkGauge : MonoBehaviour
         // Check for a state change
         if (m_fValue == 0.0f) {
             m_eGaugeState = EInkGaugeState.eWaiting;
+            // End any active map vision state
+            Zone.ToggleMapVision(false);
         }else if(m_fValue == m_fGaugeLimitValue) {
             m_eGaugeState = EInkGaugeState.eIdle;
         }
@@ -101,6 +103,7 @@ public class InkGauge : MonoBehaviour
     // Increments the current limit that the ink gauge can go to (based on secondary collectibles)
     public void IncrementGaugeLimit() {
         m_fGaugeLimitValue = Mathf.Lerp(0, m_fMaxValue, (float)GameStats.s_iSecondaryCollected / (float)GameStats.s_iSecondaryTotal);
+        UpdateInkGauge(); // Adjust UI
     }
 
     // Process the recovery time after an ability has been used
@@ -112,6 +115,39 @@ public class InkGauge : MonoBehaviour
             // Reset and transition to refilling state
             m_fRecoveryCounter = 0.0f;
             m_eGaugeState = EInkGaugeState.eRefilling;
+        }
+    }
+
+    // Switches map vision based on current ink values
+    public void HandleMapVision() {
+        switch (m_eGaugeState) {
+            case EInkGaugeState.eDraining: {
+                // Map vision off
+                Zone.ToggleMapVision(false);
+                m_eGaugeState = EInkGaugeState.eWaiting;
+                break;
+            }
+
+            case EInkGaugeState.eWaiting: {
+                // Do nothing
+                break;
+            }
+
+            case EInkGaugeState.eRefilling: {
+                // Do nothing
+                //Zone.ToggleMapVision(true);
+                //m_eGaugeState = EInkGaugeState.eDraining;
+                break;
+            }
+
+            case EInkGaugeState.eIdle: {
+                // Map vision on
+                Zone.ToggleMapVision(true);
+                m_eGaugeState = EInkGaugeState.eDraining;
+                break;
+            }
+
+            default: break;
         }
     }
     
