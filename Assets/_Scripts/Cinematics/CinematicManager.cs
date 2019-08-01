@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using MessageSystem;
 
-public class CinematicManager : MonoBehaviour, IMessageReceiver
+public class CinematicManager : MonoBehaviour
 {
     GameObject[] m_rChildren;
 
     private void Start()
     {
-        m_rChildren = GameObject.FindGameObjectsWithTag("Cinematic");
+        //Get all zone cinematics in child
+        var components = GetComponentsInChildren<CinematicZone>();
+        m_rChildren = new GameObject[components.Length];
+
+        for (int i = 0; i <= components.Length; ++i)
+        {
+            m_rChildren [i]= components[i].gameObject;
+        }
+
         ActivateCinematics(true);
     }
 
@@ -31,25 +39,6 @@ public class CinematicManager : MonoBehaviour, IMessageReceiver
             {
                 cinematic.SetActive(true);
             }
-        }
-    }
-
-    public void OnReceiveMessage(MessageType _message, object _source)
-    {
-        switch (_message)
-        {
-            case MessageType.eActivate:
-            {
-                    
-                break;
-            }
-            case MessageType.eReset:
-            {
-
-                break;
-            }
-            default:
-                break;
         }
     }
 }

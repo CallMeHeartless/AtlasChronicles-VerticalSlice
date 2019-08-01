@@ -77,9 +77,11 @@ public class InkGauge : MonoBehaviour
     // Set Slider Value and checks for state change
     private void UpdateInkGauge() {
         m_fValue = Mathf.Clamp(m_fValue, 0.0f, m_fGaugeLimitValue);
+
         // UI change (Change image fill amount based on values)
         m_rInkFill.fillAmount = m_fValue / m_fGaugeLimitValue;
         m_rDebugText.text = "Fill Amount: \n" + m_rInkFill.fillAmount;
+
         // Check for a state change
         if (m_fValue == 0.0f) {
             m_eGaugeState = EInkGaugeState.eWaiting;
