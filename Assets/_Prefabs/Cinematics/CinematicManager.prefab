@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 3393878542829824088}
   - component: {fileID: 3393878542829824091}
   - component: {fileID: 3393878542829824090}
+  - component: {fileID: 942922959}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -125,8 +126,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878542829824089}
-  m_LocalRotation: {x: 0.0018352963, y: 0.9975548, z: -0.06367484, w: 0.028752465}
-  m_LocalPosition: {x: 2.7938018, y: -11.568612, z: -55.552128}
+  m_LocalRotation: {x: 0.04396725, y: -0.9436055, z: 0.13973662, w: 0.2968996}
+  m_LocalPosition: {x: 2.6355786, y: 181.22733, z: -0.6283629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3393878544288104867}
@@ -207,6 +208,25 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!95 &942922959
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3393878542829824089}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3393878542844434624
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +254,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878542844434624}
   m_LocalRotation: {x: -0.039756697, y: 0.9353813, z: -0.11160611, w: -0.3332046}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 0.9999985, y: -0.000013341666, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3393878542557232423}
@@ -450,7 +470,7 @@ GameObject:
   - component: {fileID: 3393878543954624356}
   - component: {fileID: 3393878543954624361}
   m_Layer: 0
-  m_Name: CineZone1
+  m_Name: CineMapCollect
   m_TagString: Cinematic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,8 +484,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878543954624366}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -78.82, y: 32.06, z: -2.81}
-  m_LocalScale: {x: 2.2596488, y: 2.2596488, z: 2.2596488}
+  m_LocalPosition: {x: -110.34, y: 20.06, z: 7.22}
+  m_LocalScale: {x: 2.2596488, y: 0.058224373, z: 2.2596488}
   m_Children:
   - {fileID: 3393878542829824088}
   - {fileID: 3393878543259292686}
@@ -487,7 +507,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878543954624366}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -542,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbeece9664b4bd04f8a366a3e1874aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_iCinematicID: 1
+  m_iCinematicID: 0
   m_bPlayOnce: 0
   m_bEventTriggered: 0
   OnEnter:
@@ -578,19 +598,41 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 114098934824278984, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
     value: {fileID: 0}
-  - key: {fileID: 114743019770764794, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+  - key: {fileID: 114662233102501974, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114991302942904650, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114825069268202042, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114214884060246232, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114786624234244022, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114547479662241344, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114356754179470834, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References:
+    - 3e62d08defc78ba4c8c23b9e547b37bd: {fileID: 0}
+    - e5c39b55341c775408954d0977d51ba7: {fileID: 0}
+    - 01ad50c79796c3043a663afe870a8ce4: {fileID: 0}
+    - a7d76bd5488574f47b055fe77ca86548: {fileID: 0}
     - 8c7ec5910b8e63448980809eb0698027: {fileID: 3393878542844434653}
+    - 5d3c92171423cf94c952bda75339287d: {fileID: 0}
     - ace6fe98c1bc9794bbb72664dc490d99: {fileID: 0}
     - ce54ec294ecf91242804be6e535a5b99: {fileID: 0}
     - e85b1b1ec1b7d9245a645dbc6103e6a5: {fileID: 0}
+    - e6751a27df6c08f4b87ffbabad96f34a: {fileID: 0}
     - 4e9746629022b4640b150b88567cabbc: {fileID: 0}
+    - 7e4960cb5a6ee484a957c50bdd3472bb: {fileID: 0}
     - a347f6cdf16c1df44aa2bcb1afa2a1fc: {fileID: 0}
     - 13c2fec60f2a0a340a910f439a304ac3: {fileID: 0}
     - 4b45cca2496f0b540a359859f6ce773f: {fileID: 3393878542829824091}
+    - b9edc009525925240a6b7221420db649: {fileID: 3393878542829824091}
+    - 3aaf57f7fdfbfdf40865198e4e2901ef: {fileID: 0}
     - 93bbc02451c39cd4693e26d667d6e13b: {fileID: 0}
+    - 4ffcabe720bfe45409671e78ee252e76: {fileID: 0}
 --- !u!1 &3393878544288104864
 GameObject:
   m_ObjectHideFlags: 0
