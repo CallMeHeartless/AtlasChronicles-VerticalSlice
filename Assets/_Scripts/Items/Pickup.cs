@@ -57,7 +57,9 @@ public class Pickup : MonoBehaviour
             }
             if (gameObject.CompareTag("PrimaryPickup"))
             {    // Maps
-                GetComponent<AudioSource>().Play();
+
+                CinematicManager.ActivateCinematicByID(0);
+                //GetComponent<AudioSource>().Play();
                 GameStats.s_iMapsBoard[GameStats.s_iLevelIndex]++;
                 // Update map zone state
                 Zone.CollectMapFragment(m_uiID);
@@ -65,6 +67,7 @@ public class Pickup : MonoBehaviour
                 // Check for end of game
                 GameEndController.CheckMapCollection();
 
+                //Animate 2D Map pic UI
                 if (m_rMapPic)
                 {
                     m_rMapPic.GetComponent<Animator>().SetTrigger("Animate");
@@ -81,6 +84,7 @@ public class Pickup : MonoBehaviour
                     rInkGauge.IncrementGaugeLimit();
                 }
 
+                //Animate 2D collectable pic UI
                 if (m_rPickupPic)
                 {
                     m_rPickupPic.GetComponent<Animator>().SetTrigger("Animate");
@@ -96,5 +100,4 @@ public class Pickup : MonoBehaviour
             GetComponentInChildren<Animator>().SetTrigger("Collect");
         }
     }
-
 }

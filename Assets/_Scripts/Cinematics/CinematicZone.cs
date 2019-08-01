@@ -66,9 +66,17 @@ public class CinematicZone : MonoBehaviour
         //                          Also check if user wants to play the event once
         // Note: m_bEventTriggered is necessary to prevent the player colliding twice 
         //                          in a row (capsule collider + CharacterController) 
-        if (other.CompareTag("Player") && !m_bEventTriggered && !m_bExecutedOnce)
+        if (!m_bEventTriggered && !m_bExecutedOnce)
         {
-            m_rPlayer = other.GetComponent<PlayerController>();
+            PlayCinematic(other.gameObject);
+        }
+    }
+
+    public void PlayCinematic(GameObject _other)
+    {
+        if (_other.CompareTag("Player") && !m_bEventTriggered && !m_bExecutedOnce)
+        {
+            m_rPlayer = _other.GetComponent<PlayerController>();
 
             if (m_bPlayOnce)
             {
@@ -77,8 +85,9 @@ public class CinematicZone : MonoBehaviour
 
             m_bEventTriggered = true;
             // If director exists, play cinematic and set relevant variables true
-            if (m_rDirector) 
+            if (m_rDirector)
             {
+                m_rDirector.enabled = true;
                 m_rPlayer.GetAnimator().SetBool("Grounded", true);
                 m_rPlayer.GetAnimator().SetTrigger("Idle");
                 GameState.SetCinematicFlag(true);

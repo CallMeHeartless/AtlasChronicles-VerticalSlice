@@ -5,23 +5,26 @@ using MessageSystem;
 
 public class CinematicManager : MonoBehaviour
 {
-    GameObject[] m_rChildren;
+    static GameObject[] m_rChildren;
+    static private GameObject m_rPlayer;
 
     private void Start()
     {
         //Get all zone cinematics in child
-        var components = GetComponentsInChildren<CinematicZone>();
-        m_rChildren = new GameObject[components.Length];
+        m_rChildren = GameObject.FindGameObjectsWithTag("Cinematic");
+        m_rPlayer = GameObject.FindGameObjectWithTag("Player");
+        //var components = GetComponentsInChildren<CinematicZone>();
+        //m_rChildren = new GameObject[components.Length];
 
-        for (int i = 0; i <= components.Length; ++i)
-        {
-            m_rChildren [i]= components[i].gameObject;
-        }
+        //for (int i = 0; i <= components.Length; ++i)
+        //{
+        //    m_rChildren [i]= components[i].gameObject;
+        //}
 
         ActivateCinematics(true);
     }
 
-    public void ActivateCinematics(bool _activate)
+    static public void ActivateCinematics(bool _activate)
     {
         //Activate or Deactivate all cinematics in scene
         foreach (GameObject cinematic in m_rChildren)
@@ -30,15 +33,34 @@ public class CinematicManager : MonoBehaviour
         }
     }
 
-    public void ActivateCinematicByID(int _ID)
+    static public void ActivateCinematicByID(int _ID)
     {
         //Activate a cinematic by ID
         foreach (GameObject cinematic in m_rChildren)
         {
-            if(cinematic.GetComponent<CinematicZone>().GetCinematicID() == _ID)
+            if (cinematic.GetComponent<CinematicZone>().GetCinematicID() == _ID)
             {
-                cinematic.SetActive(true);
+                cinematic.gameObject.GetComponent<CinematicZone>().PlayCinematic(m_rPlayer);
             }
         }
     }
+    
+    //public void OnReceiveMessage(MessageType _message, object _source)
+    //{
+    //    switch (_message)
+    //    {
+    //        case MessageType.eActivate:
+    //        {
+
+    //            break;
+    //        }
+    //        case MessageType.eReset:
+    //        {
+
+    //            break;
+    //        }
+    //        default:
+    //            break;
+    //    }
+    //}
 }
