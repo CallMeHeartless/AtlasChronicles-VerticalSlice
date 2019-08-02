@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatformAttacher : MonoBehaviour
-{    
+{
+    private void Start()
+    {
+        gameObject.layer = LayerMask.NameToLayer("TagIgnore");
+    }
+
     private void OnTriggerStay(Collider other) {
         //Parent player to platform
         if (other.gameObject.CompareTag("Player")) {

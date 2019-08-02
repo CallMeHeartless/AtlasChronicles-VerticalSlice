@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using cakeslice;
 
 public class SwitchTagController : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class SwitchTagController : MonoBehaviour
     [SerializeField]
     private Vector3 m_vecOffset;
     private PlayerController m_rPlayerReference;
-
-  
+    [SerializeField]
+    private GameObject m_rInkSparkleTest;
 
     // Update is called once per frame
     void Update(){
@@ -31,15 +32,32 @@ public class SwitchTagController : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.GetComponent<Switchable>() && !m_AttachedObject) {
             // Attach to the object
+            //m_rInkSparkle.SetActive(true);
             m_AttachedObject = other.transform;
             transform.position = m_AttachedObject.position + m_vecOffset;
             transform.SetParent(m_AttachedObject);
             m_bIsMoving = false;
             m_rPlayerReference.SetSwitchTarget(m_AttachedObject.gameObject);
             m_AttachedObject.GetComponent<Switchable>().Tag();
-        } else if(!other.CompareTag("Player") && !other.transform.root.CompareTag("Player")) {
+
+            GameObject sparkle = Instantiate(m_rInkSparkleTest, 
+                new Vector3(transform.position.x, 
+                            transform.position.y, 
+                            transform.position.z - 5.0f), 
+                Quaternion.identity);
+
+            Destroy(sparkle, 0.5f);
+        }
+        else if (!other.CompareTag("Player") && !other.transform.root.CompareTag("Player")
+            && other.gameObject.layer != LayerMask.NameToLayer("AudioBGM")
+            && other.gameObject.layer != LayerMask.NameToLayer("Tutorial")
+            && other.gameObject.layer != LayerMask.NameToLayer("Cinematic")
+            && other.gameObject.layer != LayerMask.NameToLayer("TagIgnore")) {
             // Destroy animation? DO NOT DESTROY OBJECT
-            Debug.Log(other.name);
+            print("hOI: " + other.name);
+            GameObject sparkle = Instantiate(m_rInkSparkleTest, transform.position, Quaternion.identity);
+            Destroy(sparkle, 0.5f);
+            gameObject.SetActive(false);
             DetachFromObject();
         }
     }
@@ -52,9 +70,8 @@ public class SwitchTagController : MonoBehaviour
         }
        
         m_AttachedObject = null;
-        gameObject.SetActive(false);
     }
-
+    
     // Places the attached object at the input position, then detaches itself
     public IEnumerator Switch(Vector3 _vecSwitchPosition) {
         yield return new WaitForEndOfFrame();
