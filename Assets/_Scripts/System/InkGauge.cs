@@ -49,23 +49,27 @@ public class InkGauge : MonoBehaviour
     void Update(){
         // Determine what should happen this frame
         switch (m_eGaugeState) {
+            // The ink gauge is depleting until it is empty
             case EInkGaugeState.eDraining: {
                 m_fValue -= Time.deltaTime;
                 UpdateInkGauge();
                 break;
             }
 
+            // A cooldown period before the ink gauge starts refilling
             case EInkGaugeState.eWaiting: {
                 ProcessRecovery();
                 break;
             }
 
+            // The ink gauge refills 
             case EInkGaugeState.eRefilling: {
                 m_fValue += Time.deltaTime;
                 UpdateInkGauge();
                 break;
             }
 
+            // The ink gauge is full and not in a state of transition 
             case EInkGaugeState.eIdle: {
                 break;
             }
@@ -103,6 +107,9 @@ public class InkGauge : MonoBehaviour
     // Increments the current limit that the ink gauge can go to (based on secondary collectibles)
     public void IncrementGaugeLimit() {
         m_fGaugeLimitValue = Mathf.Lerp(0, m_fMaxValue, (float)GameStats.s_iSecondaryCollected / (float)GameStats.s_iSecondaryTotal);
+        if(m_eGaugeState == EInkGaugeState.eIdle) { // Increase level now if the gauge is resting
+            m_fValue = m_fGaugeLimitValue;
+        }
         UpdateInkGauge(); // Adjust UI
     }
 
