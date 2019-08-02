@@ -13,13 +13,6 @@ public class CinematicManager : MonoBehaviour
         //Get all zone cinematics in child
         m_rChildren = GameObject.FindGameObjectsWithTag("Cinematic");
         m_rPlayer = GameObject.FindGameObjectWithTag("Player");
-        //var components = GetComponentsInChildren<CinematicZone>();
-        //m_rChildren = new GameObject[components.Length];
-
-        //for (int i = 0; i <= components.Length; ++i)
-        //{
-        //    m_rChildren [i]= components[i].gameObject;
-        //}
 
         ActivateCinematics(true);
     }
@@ -35,16 +28,54 @@ public class CinematicManager : MonoBehaviour
 
     static public void ActivateCinematicByID(int _ID)
     {
+        CinematicZone zone = FindCinematicByID(_ID);
+
+        //Activate a cinematic by ID
+        if(zone)
+        {
+            zone.PlayCinematic(m_rPlayer);
+        }
+        else
+        {
+            Debug.Log("Zone does not exist");
+        }
+    }
+
+    static public void PauseCinematicByID(bool _pause, int _ID)
+    {
+        CinematicZone zone = FindCinematicByID(_ID);
+
+        //Pause a cinematic by ID
+        if (zone)
+        {
+            if(_pause)
+            {
+                zone.PauseCinematic(true);
+            }
+            else
+            {
+                zone.PauseCinematic(false);
+            }
+        }
+        else
+        {
+            Debug.Log("Zone does not exist");
+        }
+    }
+
+    static public CinematicZone FindCinematicByID(int _ID)
+    {
         //Activate a cinematic by ID
         foreach (GameObject cinematic in m_rChildren)
         {
             if (cinematic.GetComponent<CinematicZone>().GetCinematicID() == _ID)
             {
-                cinematic.gameObject.GetComponent<CinematicZone>().PlayCinematic(m_rPlayer);
+                return cinematic.gameObject.GetComponent<CinematicZone>();
             }
         }
+        return null;
     }
-    
+
     //public void OnReceiveMessage(MessageType _message, object _source)
     //{
     //    switch (_message)

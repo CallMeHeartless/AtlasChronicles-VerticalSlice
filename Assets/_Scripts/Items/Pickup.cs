@@ -58,7 +58,6 @@ public class Pickup : MonoBehaviour
             if (gameObject.CompareTag("PrimaryPickup"))
             {    // Maps
 
-                CinematicManager.ActivateCinematicByID(0);
                 //GetComponent<AudioSource>().Play();
                 GameStats.s_iMapsBoard[GameStats.s_iLevelIndex]++;
                 // Update map zone state
@@ -66,6 +65,7 @@ public class Pickup : MonoBehaviour
 
                 // Check for end of game
                 GameEndController.CheckMapCollection();
+                CinematicManager.ActivateCinematicByID(0);
 
                 //Animate 2D Map pic UI
                 if (m_rMapPic)

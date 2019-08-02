@@ -17,7 +17,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_rGuidePanel;      // Guide panel containing tutorial elements
     [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
     [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
+    [SerializeField] GameObject m_rPlayer;         // Player reference //For whatever future reference that is needed
 
+    ChildActivator m_rScriptActivator;
     CinemachineFreeLook m_rCineCamera;              //Reference to main camera
     //CinematicManager m_rCineManager;                //Reference to cinematics manager that holds all cinematics
 
@@ -34,7 +36,8 @@ public class PauseMenu : MonoBehaviour
 
         //Find the camera
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
-        //m_rCineManager = GameObject.FindGameObjectWithTag("CinematicManager").GetComponent<CinematicManager>();
+        //Find player
+        m_rScriptActivator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ChildActivator>();
 
         //Activate camera if component is not null
         if (m_rCineCamera != null)
@@ -62,8 +65,8 @@ public class PauseMenu : MonoBehaviour
                 m_rCineCamera.enabled = false;
 
             //Disable cinematic functionality when paused
-            //if(m_rCineManager != null)
-                CinematicManager.ActivateCinematics(false);
+            m_rScriptActivator.SetChildrenActive(false);
+            CinematicManager.ActivateCinematics(false);
 
             // Set game as paused 
             GameState.SetPauseFlag(true);
@@ -102,8 +105,9 @@ public class PauseMenu : MonoBehaviour
                 m_rCineCamera.enabled = true;
 
             //Enable cinematic functionality when resumed
-            //if (m_rCineManager != null)
-            CinematicManager.ActivateCinematics(true);
+            //CinematicManager.ActivateCinematics(true);
+
+            //NOTE: PAUSE AND RESUME CUTSCENES AFTER RESUMING
         }
     }
 

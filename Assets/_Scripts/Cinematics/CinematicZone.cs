@@ -97,4 +97,16 @@ public class CinematicZone : MonoBehaviour
             OnEnter.Invoke();
         }
     }
+
+    public void PauseCinematic(bool _pause)
+    {
+        if(_pause)
+        {
+            m_rDirector.Pause();
+        }
+        else
+        {
+            m_rDirector.Resume();
+        }
+    }
 }
