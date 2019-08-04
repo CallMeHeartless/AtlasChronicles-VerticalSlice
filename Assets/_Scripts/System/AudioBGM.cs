@@ -29,7 +29,6 @@ public class AudioBGM : MonoBehaviour
     {
         if (trackStack.Count > 1)
             trackStack.Pop();
-        //print("Popping: " + trackStack.Peek());
 
         Enqueue(trackStack.Peek());
     }
@@ -41,8 +40,8 @@ public class AudioBGM : MonoBehaviour
             {
                 //Fade audio that is currently playing
                 //print("Setting fade: " + activeAudio.name);
-
                 m_fadeAudio.Add(activeAudio);
+
                 //Set audio that has just been queued as the active audio
                 activeAudio = i;
                 //Play audio if not already playing
@@ -74,11 +73,17 @@ public class AudioBGM : MonoBehaviour
             //Set the first audio as the current active audio
             activeAudio = audioSources[0];
             //Set all audio volumes to 0
-            foreach (var i in audioSources) i.volume = 0;
+            foreach (var i in audioSources)
+            {
+                i.volume = 0;
+            }
             //Add all audio names to the stack
             trackStack.Push(audioSources[0].name);
             //Play current active audio
-            if (playOnStart) Play();
+            if (playOnStart)
+            {
+                Play();
+            }
         }
         volume = initialVolume;
     }

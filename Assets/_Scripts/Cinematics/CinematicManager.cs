@@ -7,6 +7,7 @@ public class CinematicManager : MonoBehaviour
 {
     static GameObject[] m_rChildren;
     static private GameObject m_rPlayer;
+    Stack<int> m_rCineStack = new Stack<int>();
 
     private void Start()
     {
