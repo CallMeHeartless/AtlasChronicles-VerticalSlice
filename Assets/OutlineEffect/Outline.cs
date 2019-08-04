@@ -70,5 +70,17 @@ namespace cakeslice
                 effect.RemoveOutline(this);
             }
         }
+
+        public void DisableOutline()
+        {
+            IEnumerable<OutlineEffect> effects = Camera.allCameras.AsEnumerable()
+                            .Select(c => c.GetComponent<OutlineEffect>())
+                            .Where(e => e != null);
+
+            foreach (OutlineEffect effect in effects)
+            {
+                effect.RemoveOutline(this);
+            }
+        }
     }
 }

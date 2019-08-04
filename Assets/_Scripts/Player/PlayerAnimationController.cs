@@ -41,7 +41,7 @@ public class PlayerAnimationController : MonoBehaviour
         m_SwitchMarker.GetComponent<SwitchTagController>().DetachFromObject();
         // Update transform
         m_SwitchMarker.transform.position = m_HandCollider.transform.position;
-        m_SwitchMarker.transform.rotation = transform.root.rotation;
+        m_SwitchMarker.transform.rotation = transform.rotation;
 
         // Make active
         m_SwitchMarker.SetActive(true);
@@ -58,7 +58,6 @@ public class PlayerAnimationController : MonoBehaviour
         get {
             return m_SwitchMarker;
         }
-
     }
 
     public void PlaceTeleportMarker() {
