@@ -398,6 +398,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     public void ResetJump()
     {
+        ToggleGlideScroll(false);
         m_bCoyoteAllowed = true;
         m_bInitialJumped = false;
         m_bCanDoubleJump = false;
