@@ -20,8 +20,10 @@ public class BasicChase : AIState
         if (!m_rAI.isKnockedOut){
             // Play this animation when the Goon starts chasing the player
             m_rAI.animator.SetTrigger("SpotPlayer");
+
         }
         m_rAgent.stoppingDistance = m_fAttackRange;
+        m_rAI.animator.SetBool("SeesPlayer", true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
