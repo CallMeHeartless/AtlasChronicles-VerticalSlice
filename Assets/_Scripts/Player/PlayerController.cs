@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private float m_fMaxGravityMultiplier = 2.0f;
     [SerializeField][Tooltip("The rate by which gravity is multiplied every frame, up to the maximum")]
     private float m_fGravityMultiplierRate = 1.2f;
-
     [Tooltip("The time that the player can float for")] [SerializeField]
     private float m_fFloatTime = 2.0f;
     private float m_fFloatTimer = 0.0f;
@@ -102,8 +101,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private GameObject m_rTeleportMarkerPrefab;
     [SerializeField] [Tooltip("The distance beyond which the player cannot activate their teleport abilities")]
     private float m_fTeleportTetherDistance = 50.0f;
-    [SerializeField]
-    [Tooltip("The distance at which teleport markers are removed")]
+    [SerializeField][Tooltip("The distance at which teleport markers are removed")]
     private float m_fTeleportBreakDistance = 55.0f;
     [SerializeField]
     private Vector3 m_vecTeleportMarkerOffset;
