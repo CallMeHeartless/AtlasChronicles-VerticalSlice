@@ -72,6 +72,7 @@ public class Pickup : MonoBehaviour
                 {
                     m_rMapPic.GetComponent<Animator>().SetTrigger("Animate");
                 }
+                //NOTE: Fix
                 Destroy(gameObject.transform.parent.gameObject, 6.0f);
             }
             if (gameObject.CompareTag("SecondaryPickup"))
