@@ -14,6 +14,7 @@ public class Geyser : MonoBehaviour
     public float m_fspeedOn;
     public float m_fspeedCooling;
     private float m_fNumber;
+    public int m_Damage;
     BoxCollider box;
     // Start is called before the first frame update
     void Start()
@@ -102,5 +103,18 @@ public class Geyser : MonoBehaviour
         }
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
 
+        if (other.CompareTag("Player"))
+        {
+            //damage player
+            DamageMessage message = new DamageMessage();
+            message.damage = m_Damage;
+            message.source = gameObject;
+            other.GetComponent<DamageController>().ApplyDamage(message);
+            Destroy(gameObject);
+        }
+       
+    }
 }
