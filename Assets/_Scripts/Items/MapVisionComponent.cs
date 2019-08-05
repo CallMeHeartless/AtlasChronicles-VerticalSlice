@@ -20,8 +20,16 @@ public class MapVisionComponent : MonoBehaviour
         }
     }
 
-    // Toggles the state of the 
+    // Toggles the outline component
     public void ToggleMapVision(bool _bOn) {
         m_rOutline.enabled = _bOn;
+    }
+
+    // OnDestroy is called here to ensure that there are no null references left in the parent Zone's list of map vision components
+    public void OnDestroy() {
+        Zone rParent = transform.root.GetComponent<Zone>();
+        if (rParent) { // Null reference check
+            rParent.RemoveFromMapVisionList(this);
+        }
     }
 }
