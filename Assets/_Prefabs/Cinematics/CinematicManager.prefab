@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 3393878542829824088}
   - component: {fileID: 3393878542829824091}
   - component: {fileID: 3393878542829824090}
+  - component: {fileID: 942922959}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -125,14 +126,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878542829824089}
-  m_LocalRotation: {x: -0.04396722, y: 0.9436055, z: -0.13973652, w: -0.2968996}
-  m_LocalPosition: {x: -3.7028525, y: 2.924657, z: 4.3486395}
-  m_LocalScale: {x: 0.82203037, y: 0.82203037, z: 0.82203037}
+  m_LocalRotation: {x: 0.06370125, y: 0.00095703325, z: -0.00006108831, w: 0.9979686}
+  m_LocalPosition: {x: 0.9343983, y: 160.2937, z: -5.270726}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3393878544288104867}
   m_Father: {fileID: 3393878543954624357}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.1, y: -105.06901, z: -0.09}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3393878542829824091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +208,25 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!95 &942922959
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3393878542829824089}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3393878542844434624
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,8 +253,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878542844434624}
-  m_LocalRotation: {x: 0.039756704, y: -0.93538135, z: 0.11160612, w: 0.33320463}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalRotation: {x: -0.019139735, y: 0.0076651014, z: 0.00014673921, w: 0.9997874}
+  m_LocalPosition: {x: -70.69665, y: 0.9260833, z: -146.71997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3393878542557232423}
@@ -394,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3393878543259292686
 Transform:
   m_ObjectHideFlags: 0
@@ -450,7 +470,7 @@ GameObject:
   - component: {fileID: 3393878543954624356}
   - component: {fileID: 3393878543954624361}
   m_Layer: 0
-  m_Name: CineZone1
+  m_Name: CineMapCollect
   m_TagString: Cinematic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,8 +484,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878543954624366}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2165, y: 1.2165, z: 1.2165}
+  m_LocalPosition: {x: -110.34, y: 20.06, z: 7.22}
+  m_LocalScale: {x: 2.2596488, y: 0.058224373, z: 2.2596488}
   m_Children:
   - {fileID: 3393878542829824088}
   - {fileID: 3393878543259292686}
@@ -487,7 +507,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3393878543954624366}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -542,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbeece9664b4bd04f8a366a3e1874aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_iCinematicID: 1
+  m_iCinematicID: 0
   m_bPlayOnce: 0
   m_bEventTriggered: 0
   OnEnter:
@@ -578,23 +598,46 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 114098934824278984, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
     value: {fileID: 0}
-  - key: {fileID: 114743019770764794, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+  - key: {fileID: 114662233102501974, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
     value: {fileID: 0}
-  - key: {fileID: 114331823582842058, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+  - key: {fileID: 114991302942904650, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
     value: {fileID: 0}
-  - key: {fileID: 114148567461654174, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
-    value: {fileID: 3393878542844434626}
+  - key: {fileID: 114214884060246232, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114547479662241344, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114356754179470834, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114342639448355590, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114572194526555568, guid: 11f0442f1b8b8da4a93ebd82f77586ad, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
+    - 3e62d08defc78ba4c8c23b9e547b37bd: {fileID: 0}
+    - e5c39b55341c775408954d0977d51ba7: {fileID: 0}
+    - 01ad50c79796c3043a663afe870a8ce4: {fileID: 0}
+    - 006acc7eea9ca344fa00db01fffe4585: {fileID: 0}
+    - a7d76bd5488574f47b055fe77ca86548: {fileID: 0}
     - 8c7ec5910b8e63448980809eb0698027: {fileID: 3393878542844434653}
+    - 23dcbade13f44fd4b8c64546863e634c: {fileID: 0}
+    - 5d3c92171423cf94c952bda75339287d: {fileID: 0}
+    - eeca7ae3b4a9cf94db4012a850b1b4d4: {fileID: 0}
     - ace6fe98c1bc9794bbb72664dc490d99: {fileID: 0}
+    - 1c29827f7d925914aa3870f7e3090ae4: {fileID: 0}
     - ce54ec294ecf91242804be6e535a5b99: {fileID: 0}
     - e85b1b1ec1b7d9245a645dbc6103e6a5: {fileID: 0}
+    - e6751a27df6c08f4b87ffbabad96f34a: {fileID: 0}
     - 4e9746629022b4640b150b88567cabbc: {fileID: 0}
+    - 4a890c74ec8e7474890aa883afb34788: {fileID: 0}
+    - 7e4960cb5a6ee484a957c50bdd3472bb: {fileID: 0}
     - a347f6cdf16c1df44aa2bcb1afa2a1fc: {fileID: 0}
     - 13c2fec60f2a0a340a910f439a304ac3: {fileID: 0}
     - 4b45cca2496f0b540a359859f6ce773f: {fileID: 3393878542829824091}
+    - b9edc009525925240a6b7221420db649: {fileID: 3393878542829824091}
+    - 3aaf57f7fdfbfdf40865198e4e2901ef: {fileID: 0}
     - 93bbc02451c39cd4693e26d667d6e13b: {fileID: 0}
+    - 4ffcabe720bfe45409671e78ee252e76: {fileID: 0}
 --- !u!1 &3393878544288104864
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 3.8344793, y: 2.0278454, z: 5.49012}
+  m_FollowOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1

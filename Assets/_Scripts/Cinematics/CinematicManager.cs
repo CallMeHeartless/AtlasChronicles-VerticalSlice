@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using MessageSystem;
 
-public class CinematicManager : MonoBehaviour, IMessageReceiver
+public class CinematicManager : MonoBehaviour
 {
-    GameObject[] m_rChildren;
+    static GameObject[] m_rChildren;
+    static private GameObject m_rPlayer;
+    static int m_iPausedCine = -1;
+    //Stack<int> m_rCineStack = new Stack<int>();
 
     private void Start()
     {
+        //Get all zone cinematics in child
         m_rChildren = GameObject.FindGameObjectsWithTag("Cinematic");
+        m_rPlayer = GameObject.FindGameObjectWithTag("Player");
+
         ActivateCinematics(true);
     }
 
-    public void ActivateCinematics(bool _activate)
+    static public void ActivateCinematics(bool _activate)
     {
         //Activate or Deactivate all cinematics in scene
         foreach (GameObject cinematic in m_rChildren)
@@ -22,34 +28,98 @@ public class CinematicManager : MonoBehaviour, IMessageReceiver
         }
     }
 
-    public void ActivateCinematicByID(int _ID)
+    static public void ActivateCinematicByID(int _ID)
+    {
+        CinematicZone zone = FindCinematicByID(_ID);
+
+        //Activate a cinematic by ID
+        if(zone)
+        {
+            zone.PlayCinematic(m_rPlayer);
+        }
+        else
+        {
+            Debug.Log("Zone does not exist");
+        }
+    }
+
+    static public int GetActiveCinematic()
+    {
+        foreach (GameObject cinematic in m_rChildren)
+        {
+            if(cinematic.GetComponent<CinematicZone>().GetDirector().playableGraph.IsPlaying())
+            {
+                return cinematic.GetComponent<CinematicZone>().GetCinematicID();
+            }
+        }
+        return -1;
+    }
+
+    static public void PauseCinematicByID(bool _pause, int _ID)
+    {
+        CinematicZone zone = FindCinematicByID(_ID);
+
+        //Pause a cinematic by ID
+        if (zone)
+        {
+            if(_pause)
+            {
+                zone.PauseCinematic(true);
+            }
+            else
+            {
+                zone.PauseCinematic(false);
+            }
+        }
+        else
+        {
+            Debug.Log("Zone does not exist");
+        }
+    }
+
+    static public void PauseCinematics(bool _pause)
+    {
+        if(_pause)
+        {
+            m_iPausedCine = GetActiveCinematic();
+        }
+
+        if (m_iPausedCine == -1)
+        {
+            return;
+        }
+        PauseCinematicByID(_pause, m_iPausedCine);
+    }
+
+    static public CinematicZone FindCinematicByID(int _ID)
     {
         //Activate a cinematic by ID
         foreach (GameObject cinematic in m_rChildren)
         {
-            if(cinematic.GetComponent<CinematicZone>().GetCinematicID() == _ID)
+            if (cinematic.GetComponent<CinematicZone>().GetCinematicID() == _ID)
             {
-                cinematic.SetActive(true);
+                return cinematic.gameObject.GetComponent<CinematicZone>();
             }
         }
+        return null;
     }
 
-    public void OnReceiveMessage(MessageType _message, object _source)
-    {
-        switch (_message)
-        {
-            case MessageType.eActivate:
-            {
-                    
-                break;
-            }
-            case MessageType.eReset:
-            {
+    //public void OnReceiveMessage(MessageType _message, object _source)
+    //{
+    //    switch (_message)
+    //    {
+    //        case MessageType.eActivate:
+    //        {
 
-                break;
-            }
-            default:
-                break;
-        }
-    }
+    //            break;
+    //        }
+    //        case MessageType.eReset:
+    //        {
+
+    //            break;
+    //        }
+    //        default:
+    //            break;
+    //    }
+    //}
 }
