@@ -6,7 +6,7 @@ public class Spikes : MonoBehaviour
 {
     public int m_iDamage;
     // Start is called before the first frame update
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
       
         if (other.CompareTag("Player"))
@@ -15,8 +15,8 @@ public class Spikes : MonoBehaviour
             message.damage = m_iDamage;
             message.source = gameObject;
             other.GetComponent<DamageController>().ApplyDamage(message);
-            GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().m_iHP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().m_iHP - m_iDamage;
-            GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().m_iHP);
+            //GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().m_iHP = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().m_iHP - m_iDamage;
+           // GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().NewHealth(GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>().m_iHP);
             
 
         }
