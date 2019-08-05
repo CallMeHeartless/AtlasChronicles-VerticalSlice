@@ -67,6 +67,11 @@ public class Tagbraking : MonoBehaviour
         m_fInnerRing.gameObject.SetActive(_InRange);
 
     }
+    public bool GetOfRangeInner()
+    {
+        return m_fOuterRing.gameObject.activeSelf;
+
+    }
     void cicle(int _InRadus,bool InRadus)
     {
         var points = new Vector3[361];

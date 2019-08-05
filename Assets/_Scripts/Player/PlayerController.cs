@@ -653,14 +653,20 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             if (m_UsedTeleport != 2)
             {
                 m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport, m_UsedTeleport+1);
-                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                if (!m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().GetOfRangeInner())
+                {
+                    m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                }
                 m_UsedTeleport++;
                 m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
             else
             {
                 m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport, 0);
-                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                if (!m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().GetOfRangeInner())
+                {
+                    m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                }
                 m_UsedTeleport = 0;
                 m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
@@ -670,15 +676,20 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             if (m_UsedTeleport != 0)
             {
                 m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport, m_UsedTeleport - 1);
-                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                if (!m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().GetOfRangeInner())
+                {
+                    m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                }
                 m_UsedTeleport--;
                 m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
             else
             {
 
-                m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport,2);
-                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport,2); if (!m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().GetOfRangeInner())
+                {
+                    m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                }
                 m_UsedTeleport = 2;
                 m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
@@ -997,6 +1008,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                     //Debug.Log("back in Range");
                     EffectMarker(i, TeleportStat.eMarkedInRangeGround);
                     m_rTeleportLoctation[i].GetComponent<Tagbraking>().OutOfRange(false);
+                    if (i != m_UsedTeleport)
+                    {
+                        m_rTeleportLoctation[i].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                    }
                 }
             }
 
@@ -1032,6 +1047,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 {
                     EffectMarker(i, TeleportStat.eMarkedInRangeSwitch);
                     m_rTeleportersLoctation[i].GetComponent<Tagbraking>().OutOfRange(false);
+                    if (i != m_UsedTeleport)
+                    {
+                        m_rTeleportLoctation[i].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                    }
                 }
             }
         }
