@@ -32,6 +32,13 @@ public class Dropper : MonoBehaviour
                 }
                
             }
+            if (item.GetComponent<Dart>())
+            {
+               
+               // item.GetComponentInChildren<LogsOnRiver>() = transform.gameObject;
+              
+
+            }
             m_fTimer = m_fMaxTimer;
         }
         else
