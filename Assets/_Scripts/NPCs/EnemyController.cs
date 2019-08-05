@@ -217,12 +217,14 @@ public class EnemyController : MonoBehaviour
 
     // Stops the agent from moving (used by animation keyframe events)
     public void StopAgent() {
-        m_rNavAgent.isStopped = true;
+        if(m_rNavAgent)
+            m_rNavAgent.isStopped = true;
     }
 
     // Frees the agent (used by animation events)
     public void FreeAgent() {
-        m_rNavAgent.isStopped = false;
+        if(m_rNavAgent)
+            m_rNavAgent.isStopped = false;
     }
 
     // Tells the Goon to go back to patrolling (called when they have lost sight of the player
