@@ -8,6 +8,8 @@ public class Tagbraking : MonoBehaviour
     private PlayerController m_fPlayerController;
     [SerializeField] private GameObject m_fInnerRing;
     [SerializeField] private GameObject m_fOuterRing;
+    [SerializeField]
+    private bool m_BoxTagged = false;
     private void Start()
     {
         m_fPlayerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -24,10 +26,23 @@ public class Tagbraking : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
         {
-            //something is on the tag so deactivate it
-            m_fPlayerController.SetTeleportCondiction(m_TagLoctation);
-            gameObject.SetActive(false);
+            if (other.CompareTag("TeleportBox"))
+            {
+                if (!m_BoxTagged)
+                {
+                    //something is on the tag so deactivate it
+                    m_fPlayerController.SetTeleportCondiction(m_TagLoctation);
+                    gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                //something is on the tag so deactivate it
+                m_fPlayerController.SetTeleportCondiction(m_TagLoctation);
+                gameObject.SetActive(false);
+            }
         }
+        
     }
     public void SetTag(int Tag){
         m_TagLoctation = Tag;
@@ -83,5 +98,9 @@ public class Tagbraking : MonoBehaviour
 
       
        
+    }
+    public void SetBoxTagged(bool _tag)
+    {
+        m_BoxTagged = _tag;
     }
 }

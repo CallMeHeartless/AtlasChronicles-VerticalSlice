@@ -653,16 +653,16 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             if (m_UsedTeleport != 2)
             {
                 m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport, m_UsedTeleport+1);
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
                 m_UsedTeleport++;
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
             else
             {
                 m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport, 0);
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
                 m_UsedTeleport = 0;
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
         }
         if (Input.GetKeyDown(KeyCode.P))
@@ -670,17 +670,17 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             if (m_UsedTeleport != 0)
             {
                 m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport, m_UsedTeleport - 1);
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
                 m_UsedTeleport--;
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
             else
             {
 
                 m_rTelePortUI.GetComponent<TeleportUI>().SwitchingMarkers(m_UsedTeleport,2);
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(false);
                 m_UsedTeleport = 2;
-                m_rTeleportLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().OutOfRangeInner(true);
             }
         }
     }
@@ -758,6 +758,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         ToggleTeleportScroll(true);
         StartCoroutine(TeleportToLocation(m_rTeleportLoctation[m_UsedTeleport].transform.position));
         EffectMarker(m_UsedTeleport,TeleportStat.eNulled);
+        m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().SetBoxTagged(true);
         // Disable teleport marker
         ToggleTeleportMarker(m_UsedTeleport,false);
     }
@@ -779,6 +780,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         StartCoroutine(m_rPAnimationController.GetSwitchMarker.GetComponent<SwitchTagController>().Switch(vecPlayerPosition));
 
         //reset the tag to orginal
+        m_rTeleportersLoctation[m_UsedTeleport].SetActive(false);
         m_rTeleportLoctation[m_UsedTeleport] = m_rTeleportersLoctation[m_UsedTeleport]; 
     }
 
@@ -788,6 +790,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         EffectMarker(m_UsedTeleport,TeleportStat.eMarkedInRangeSwitch);
         m_rTelePortUI.GetComponent<TeleportUI>().changeUI(m_rTeleportCondiction[m_UsedTeleport].ToString(), m_UsedTeleport);
         m_rTeleportersLoctation[m_UsedTeleport].transform.position = m_rTeleportLoctation[m_UsedTeleport].transform.position;
+        m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().SetBoxTagged(true);
         m_rTeleportersLoctation[m_UsedTeleport].SetActive(true);
     }
     public void ResetSwitchTarget(GameObject _switchTarget)
@@ -831,6 +834,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 rSwitchTag.DetachFromObject();
                 m_rTeleportLoctation[m_UsedTeleport] = null;
                 EffectMarker(m_UsedTeleport,TeleportStat.eNulled);
+                m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().SetBoxTagged(true);
+
                 // VFX / SFX feedback
             }
 
@@ -840,6 +845,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             //break ground tag
             m_rTeleportLoctation[m_UsedTeleport] = null;
             EffectMarker(m_UsedTeleport,TeleportStat.eNulled);
+            m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().SetBoxTagged(true);
+
         }
 
     }
@@ -1013,7 +1020,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 else if (fSwitchTagDistance >= m_fTeleportTetherDistance && m_rTeleportCondiction[i] == TeleportStat.eMarkedInRangeSwitch)
                 {
                     Debug.Log("Switch tag beyond use distance");
-                    m_rTeleportLoctation[i].GetComponent<Tagbraking>().OutOfRangeInner(true);
+                    m_rTeleportersLoctation[i].GetComponent<Tagbraking>().OutOfRangeInner(true);
                     EffectMarker(i, TeleportStat.eMarkedOutOfRangeSwitch);
                     m_rTagAudio.PlayAudio(1);
                     m_rTeleportersLoctation[i].GetComponent<Tagbraking>().OutOfRange(true);
@@ -1042,6 +1049,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         Debug.Log("break");
         m_rTeleportLoctation[_TeleportLoctation].transform.SetParent(null);
         EffectMarker(_TeleportLoctation, TeleportStat.eNulled);
+        m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().SetBoxTagged(true);
+
         // Play sound / VFX
         //m_rPlayerAudioController.TeleportThresholdBreak();
     }
@@ -1182,6 +1191,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             TeleportToTeleportMarker();
         }
         EffectMarker(m_UsedTeleport,TeleportStat.eNulled);
+        m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().SetBoxTagged(true);
+
     }
 
     // Force the player to Respawn
@@ -1286,6 +1297,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void SetTeleportCondiction(int _TagSlot)
     {
         EffectMarker(m_UsedTeleport,TeleportStat.eNulled);
+        m_rTeleportersLoctation[m_UsedTeleport].GetComponent<Tagbraking>().SetBoxTagged(true);
+
     }
     public int getUsedTeleport()
     {
