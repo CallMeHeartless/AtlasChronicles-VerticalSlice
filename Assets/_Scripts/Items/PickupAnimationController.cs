@@ -13,7 +13,7 @@ public class PickupAnimationController : MonoBehaviour
     }
 
     public void DestroyPickup() {
-        Invoke("Activate", 1.0f);
+        Invoke("Activate", 0.001f);
     }
 
     private void Activate()

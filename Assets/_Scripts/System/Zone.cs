@@ -71,12 +71,10 @@ public class Zone : MonoBehaviour
 
     // Sets the state of all map vision objects within the zone
     public void SetMapVisionState(bool _bOn) {
+
         foreach(MapVisionComponent mapVision in m_MapVisionComponents) {
             if (mapVision) { // Check that the reference is good
                 mapVision.ToggleMapVision(_bOn); // Set the material to be on/off
-            } else {
-                // If the reference is bad, remove it
-                m_MapVisionComponents.Remove(mapVision);
             }
         }
     }
@@ -93,5 +91,10 @@ public class Zone : MonoBehaviour
     // Allow a map vision component to add itself to the zone's list. Children should call this at runtime
     public void AddToMapVisionList(MapVisionComponent _rMapVisionObject) {
         m_MapVisionComponents.Add(_rMapVisionObject);
+    }
+
+    // Allow a map vision component to remove itself from the zone's list. Called when the child object is being destroyed.
+    public void RemoveFromMapVisionList(MapVisionComponent _rMapVisionObject) {
+        m_MapVisionComponents.Remove(_rMapVisionObject);
     }
 }

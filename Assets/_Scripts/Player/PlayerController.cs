@@ -391,6 +391,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
         else {
             //If the player lets go of the jump button, cancel glide
+            ToggleGlideScroll(false);
+
             m_bCanGlide = false;
             ToggleFloatState(false);
         }
@@ -608,7 +610,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rAnimator.SetTrigger("Attack");
         }else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
             // Slam attack when in the air
+            ToggleGlideScroll(false);
             m_rAnimator.SetTrigger("GroundSlam");
+
         }
 
     }
