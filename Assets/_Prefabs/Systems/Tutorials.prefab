@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 363671234}
   - component: {fileID: 363671233}
   - component: {fileID: 363671232}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-Run
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 730765427}
   - component: {fileID: 730765426}
   - component: {fileID: 730765425}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SwitchTelePort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_bHideSelf: 0
   m_iTimesToDisplay: 3
   m_sTutorialText: 'Place a teleport marker on the ground (L1 / Q key), walk away
-    then teleport back to it by pressing (L2 / E key) //note: the distance may be
+    then teleport back to it by pressing (R1 / E key) //note: the distance may be
     limited'
   OnTrigStay:
     m_PersistentCalls:
@@ -293,7 +293,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 744590893}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Teleport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 1177243073}
   - component: {fileID: 1177243072}
   - component: {fileID: 1177243071}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-TreasureChest (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 1337331498}
   - component: {fileID: 1337331497}
   - component: {fileID: 1337331496}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SwitchTelePort (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,8 +507,8 @@ MonoBehaviour:
   m_rGuide: {fileID: 7010834524428544018}
   m_bHideSelf: 0
   m_iTimesToDisplay: 3
-  m_sTutorialText: 'Place a teleport marker on the ground (L1 / Q key), walk off this
-    ledge, then teleport back by pressing (L2 / E key) //note: the distance may be
+  m_sTutorialText: 'Place a teleport marker on the ground (L1 / Q key), walk away
+    then teleport back to it by pressing (R1 / E key) //note: the distance may be
     limited'
   OnTrigStay:
     m_PersistentCalls:
@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 1499969750}
   - component: {fileID: 1499969749}
   - component: {fileID: 1499969748}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SwitchTagBox (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +650,8 @@ MonoBehaviour:
   m_rGuide: {fileID: 7010834524428544018}
   m_bHideSelf: 0
   m_iTimesToDisplay: 1
-  m_sTutorialText: InkTag a box by holding down (L2/Zkey) then aiming with (R3/Mouse)
+  m_sTutorialText: InkTag a box by holding down (L2/Zkey) then aiming with (Right
+    Stick/Mouse). Then press (L2/Z key) again to switch places!
   OnTrigStay:
     m_PersistentCalls:
       m_Calls:
@@ -755,7 +756,7 @@ GameObject:
   - component: {fileID: 1788211210}
   - component: {fileID: 1788211209}
   - component: {fileID: 1788211208}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SwitchTelePort (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +793,7 @@ MonoBehaviour:
   m_bHideSelf: 0
   m_iTimesToDisplay: 3
   m_sTutorialText: 'Place a teleport marker on the ground (L1 / Q key), walk away
-    then teleport back to it by pressing (L2 / E key) //note: the distance may be
+    then teleport back to it by pressing (R1 / E key) //note: the distance may be
     limited'
   OnTrigStay:
     m_PersistentCalls:
@@ -898,7 +899,7 @@ GameObject:
   - component: {fileID: 2127208591}
   - component: {fileID: 2127208590}
   - component: {fileID: 2127208589}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-Marshall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1036,7 +1037,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8237011259069073083}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Checkpoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1072,7 +1073,7 @@ GameObject:
   - component: {fileID: 4591605126646707772}
   - component: {fileID: 4591605126646707773}
   - component: {fileID: 4591605126646707714}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,7 +1214,7 @@ GameObject:
   - component: {fileID: 4591605126683469896}
   - component: {fileID: 4591605126683469897}
   - component: {fileID: 4591605126683469902}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-TreasureChest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1341,149 +1342,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &4591605126712765545
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4591605126712765544}
-  - component: {fileID: 4591605126712765540}
-  - component: {fileID: 4591605126712765541}
-  - component: {fileID: 4591605126712765546}
-  - component: {fileID: 4591605126712765547}
-  m_Layer: 0
-  m_Name: Tutorials-Goon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4591605126712765544
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4591605126712765545}
-  m_LocalRotation: {x: -0, y: 0.72727954, z: -0, w: 0.6863414}
-  m_LocalPosition: {x: -26.13, y: 1.93, z: 22.24}
-  m_LocalScale: {x: 26.613153, y: 5.11669, z: 29.31184}
-  m_Children: []
-  m_Father: {fileID: 4591605127065636090}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4591605126712765540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4591605126712765545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_rGuide: {fileID: 7010834524428544018}
-  m_bHideSelf: 0
-  m_iTimesToDisplay: 2
-  m_sTutorialText: Goons can steal your map fragments! Press Attack (Y/LeftClick)
-    in mid-air to Slam Attack them or throw an InkTag (L2/Z key) in their face to
-    stun them.
-  OnTrigStay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7010834524428544018}
-        m_MethodName: SetGuidePanelActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  timeUntilHide: 3
-  OnTrigExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7010834524428544018}
-        m_MethodName: SetGuidePanelActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!33 &4591605126712765541
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4591605126712765545}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4591605126712765546
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4591605126712765545}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!65 &4591605126712765547
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4591605126712765545}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4591605126731862553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,7 +1355,7 @@ GameObject:
   - component: {fileID: 4591605126731862549}
   - component: {fileID: 4591605126731862554}
   - component: {fileID: 4591605126731862555}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1639,7 +1497,7 @@ GameObject:
   - component: {fileID: 4591605126745227684}
   - component: {fileID: 4591605126745227685}
   - component: {fileID: 4591605126745227690}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-SwitchBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1780,7 +1638,7 @@ GameObject:
   - component: {fileID: 4591605126795871684}
   - component: {fileID: 4591605126795871685}
   - component: {fileID: 4591605126795871690}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Glide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1921,7 +1779,7 @@ GameObject:
   - component: {fileID: 4591605126807009271}
   - component: {fileID: 4591605126807009268}
   - component: {fileID: 4591605126807009269}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2063,7 +1921,7 @@ GameObject:
   - component: {fileID: 4591605126884011430}
   - component: {fileID: 4591605126884011431}
   - component: {fileID: 4591605126884011428}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-TreasureChest (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2200,7 +2058,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4591605127048587602}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Glide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2231,7 +2089,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4591605127065636090}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Goons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2246,10 +2104,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4591605127065636091}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40.1, y: 3.28, z: 180.478}
+  m_LocalPosition: {x: -45.9, y: 3.28, z: 180.478}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4591605126712765544}
   - {fileID: 547605936000503434}
   m_Father: {fileID: 4591605128129703568}
   m_RootOrder: 6
@@ -2267,7 +2124,7 @@ GameObject:
   - component: {fileID: 4591605127298112970}
   - component: {fileID: 4591605127298112971}
   - component: {fileID: 4591605127298112968}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Geyser (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2408,7 +2265,7 @@ GameObject:
   - component: {fileID: 4591605127482344304}
   - component: {fileID: 4591605127482344305}
   - component: {fileID: 4591605127482344310}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SwitchTagBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2423,7 +2280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4591605127482344308}
   m_LocalRotation: {x: -0, y: 0.72727954, z: -0, w: 0.6863414}
-  m_LocalPosition: {x: -17.02, y: 1.36, z: -3.42}
+  m_LocalPosition: {x: -32.15, y: 0.16, z: -2.54}
   m_LocalScale: {x: 24.177319, y: 4.271181, z: 13.160311}
   m_Children: []
   m_Father: {fileID: 4591605128209259004}
@@ -2444,7 +2301,8 @@ MonoBehaviour:
   m_rGuide: {fileID: 7010834524428544018}
   m_bHideSelf: 0
   m_iTimesToDisplay: 1
-  m_sTutorialText: InkTag a box by holding down (L2/Zkey) then aiming with (R3/Mouse)
+  m_sTutorialText: InkTag a box by holding down (L2/Zkey) then aiming with (Right
+    Stick/Mouse). Then press (L2/Z key) again to switch places!
   OnTrigStay:
     m_PersistentCalls:
       m_Calls:
@@ -2534,8 +2392,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.48341128, y: 1, z: 0.87950385}
+  m_Center: {x: -0.2582949, y: 0, z: 0.06024732}
 --- !u!1 &4591605127604714237
 GameObject:
   m_ObjectHideFlags: 0
@@ -2549,7 +2407,7 @@ GameObject:
   - component: {fileID: 4591605127604714233}
   - component: {fileID: 4591605127604714238}
   - component: {fileID: 4591605127604714239}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Geyser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2690,7 +2548,7 @@ GameObject:
   - component: {fileID: 4591605127627226981}
   - component: {fileID: 4591605127627226986}
   - component: {fileID: 4591605127627226987}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-DoubleJump (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2827,7 +2685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4591605127870746870}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-DoubleJumps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2863,7 +2721,7 @@ GameObject:
   - component: {fileID: 4591605127924778283}
   - component: {fileID: 4591605127924778280}
   - component: {fileID: 4591605127924778281}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorial-DoubleJump (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3001,7 +2859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4591605128129703568}
   - component: {fileID: 7010834524428544018}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3055,7 +2913,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4591605128197119288}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-TreasureChests
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3089,7 +2947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4591605128209259004}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-SwitchTags
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3125,7 +2983,7 @@ GameObject:
   - component: {fileID: 4591605128406333597}
   - component: {fileID: 4591605128406333538}
   - component: {fileID: 4591605128406333539}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-TreasureChest (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3262,7 +3120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4591605128472038489}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Geyser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3299,7 +3157,7 @@ GameObject:
   - component: {fileID: 4591605128545096671}
   - component: {fileID: 4591605128545096668}
   - component: {fileID: 4591605128545096669}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Geyser (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3440,7 +3298,7 @@ GameObject:
   - component: {fileID: 781950065843541118}
   - component: {fileID: 2838358058621746432}
   - component: {fileID: 8061207225109598627}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tutorials-Goon (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3459,7 +3317,7 @@ Transform:
   m_LocalScale: {x: 17.928217, y: 3.4469094, z: 19.746214}
   m_Children: []
   m_Father: {fileID: 4591605127065636090}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 89.94601, z: 0}
 --- !u!114 &7678051525866456034
 MonoBehaviour:
@@ -3568,5 +3426,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.401056, y: 1, z: 0.73257494}
+  m_Center: {x: -0.05847036, y: 0, z: 0.13371263}
