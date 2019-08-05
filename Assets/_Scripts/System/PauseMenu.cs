@@ -17,7 +17,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_rGuidePanel;      // Guide panel containing tutorial elements
     [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
     [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
-    [SerializeField] GameObject m_rPlayer;         // Player reference //For whatever future reference that is needed
 
     ChildActivator m_rScriptActivator;
     CinemachineFreeLook m_rCineCamera;              //Reference to main camera
@@ -67,7 +66,7 @@ public class PauseMenu : MonoBehaviour
             //Disable cinematic functionality when paused
             m_rScriptActivator.SetChildrenActive(false);
             //CinematicManager.ActivateCinematics(false);
-            CinematicManager.PauseCinematics(false);
+            CinematicManager.PauseCinematics(true);
 
             // Set game as paused 
             GameState.SetPauseFlag(true);
@@ -88,6 +87,8 @@ public class PauseMenu : MonoBehaviour
 
             //Set gamestate pause to false
             GameState.SetPauseFlag(false);
+            CinematicManager.PauseCinematics(false);
+
         }
 
         //Make sure cursor is hidden on resume
@@ -96,6 +97,7 @@ public class PauseMenu : MonoBehaviour
             //Set game as not paused
             m_bIsPaused = false;
             GameState.SetPauseFlag(false);
+            CinematicManager.PauseCinematics(false);
 
             //Lock cursor when resumed
             Cursor.lockState = CursorLockMode.Locked;
@@ -107,7 +109,6 @@ public class PauseMenu : MonoBehaviour
 
             //Enable cinematic functionality when resumed
             //CinematicManager.ActivateCinematics(true);
-            CinematicManager.PauseCinematics(true);
 
             //NOTE: PAUSE AND RESUME CUTSCENES AFTER RESUMING
         }

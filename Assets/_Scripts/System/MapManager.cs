@@ -20,8 +20,19 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        RetrieveZones();
+        //Set all map regions inactive
+        HideAllMapUIZones();
+
+        //Set a default view for the map details UI
+        MapDefaultSettings();
+    }
+
+    public void RetrieveZones()
+    {
         List<Zone> zoneList = Zone.GetZoneList();
-        if(m_rZones != null)
+
+        if (m_rMapRegions != null)
         {
             m_rZones = new Zone[zoneList.Count];
 
@@ -32,20 +43,16 @@ public class MapManager : MonoBehaviour
                 m_rZones[i - 1] = zone;
             }
         }
-        
-
-        //Set all map regions inactive
-        HideAllMapUIZones();
-
-        //Set a default view for the map details UI
-        MapDefaultSettings();
     }
 
     // Update is called once per frame
     public void OpenMap()
     {
         if (m_rZones == null)
-            return;
+        {
+            RetrieveZones();
+        }
+
         //Update collection data onto map
         m_rMapsCollected = 0;
 
@@ -58,7 +65,6 @@ public class MapManager : MonoBehaviour
                 ++m_rMapsCollected;
             }
         }
-        print("Num maps update?: " + m_rMapsCollected);
 
         //Update the UI to display details
         MapDefaultSettings();

@@ -66,7 +66,15 @@ public class Zone : MonoBehaviour
 
     public static List<Zone> GetZoneList()
     {
-        return s_Zones;
+        if(s_Zones != null)
+        {
+            return s_Zones;
+        }
+        else
+        {
+            Debug.Log("NONEXISTENT ?");
+            return null;
+        }
     }
 
     // Sets the state of all map vision objects within the zone
