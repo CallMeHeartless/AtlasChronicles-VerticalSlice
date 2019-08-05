@@ -7,6 +7,7 @@ public class Dropper : MonoBehaviour
     public float m_fTimer;
     public float m_fMaxTimer= 2;
     public GameObject m_gApple;
+    [Tooltip("Only use this is using dart")] public Vector3 Direction;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,7 @@ public class Dropper : MonoBehaviour
             if (item.GetComponent<Dart>())
             {
                
-               // item.GetComponentInChildren<LogsOnRiver>() = transform.gameObject;
+               item.GetComponentInChildren<Dart>().SetDirection(Direction);
               
 
             }

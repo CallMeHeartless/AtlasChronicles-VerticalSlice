@@ -5,15 +5,16 @@ using UnityEngine;
 public class Dart : MonoBehaviour
 {
     public int m_Damage;
-    public int m_Speed;
+    public float m_Speed;
     private Vector3 m_vec3Direction;
+   
     // Update is called once per frame
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, m_vec3Direction, m_Speed);
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
 
         if (other.CompareTag("Player"))
@@ -27,7 +28,15 @@ public class Dart : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            if (other.CompareTag("Wall"))
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+               
+               //
+            }
         }
 
     }
