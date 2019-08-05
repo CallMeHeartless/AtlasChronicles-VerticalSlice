@@ -109,4 +109,9 @@ public class CinematicZone : MonoBehaviour
             m_rDirector.Resume();
         }
     }
+
+    public PlayableDirector GetDirector()
+    {
+        return m_rDirector;
+    }
 }

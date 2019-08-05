@@ -7,7 +7,8 @@ public class CinematicManager : MonoBehaviour
 {
     static GameObject[] m_rChildren;
     static private GameObject m_rPlayer;
-    Stack<int> m_rCineStack = new Stack<int>();
+    static int m_iPausedCine = -1;
+    //Stack<int> m_rCineStack = new Stack<int>();
 
     private void Start()
     {
@@ -42,6 +43,18 @@ public class CinematicManager : MonoBehaviour
         }
     }
 
+    static public int GetActiveCinematic()
+    {
+        foreach (GameObject cinematic in m_rChildren)
+        {
+            if(cinematic.GetComponent<CinematicZone>().GetDirector().playableGraph.IsPlaying())
+            {
+                return cinematic.GetComponent<CinematicZone>().GetCinematicID();
+            }
+        }
+        return -1;
+    }
+
     static public void PauseCinematicByID(bool _pause, int _ID)
     {
         CinematicZone zone = FindCinematicByID(_ID);
@@ -62,6 +75,20 @@ public class CinematicManager : MonoBehaviour
         {
             Debug.Log("Zone does not exist");
         }
+    }
+
+    static public void PauseCinematics(bool _pause)
+    {
+        if(_pause)
+        {
+            m_iPausedCine = GetActiveCinematic();
+        }
+
+        if (m_iPausedCine == -1)
+        {
+            return;
+        }
+        PauseCinematicByID(_pause, m_iPausedCine);
     }
 
     static public CinematicZone FindCinematicByID(int _ID)

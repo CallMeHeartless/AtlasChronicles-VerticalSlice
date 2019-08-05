@@ -66,7 +66,8 @@ public class PauseMenu : MonoBehaviour
 
             //Disable cinematic functionality when paused
             m_rScriptActivator.SetChildrenActive(false);
-            CinematicManager.ActivateCinematics(false);
+            //CinematicManager.ActivateCinematics(false);
+            CinematicManager.PauseCinematics(false);
 
             // Set game as paused 
             GameState.SetPauseFlag(true);
@@ -106,6 +107,7 @@ public class PauseMenu : MonoBehaviour
 
             //Enable cinematic functionality when resumed
             //CinematicManager.ActivateCinematics(true);
+            CinematicManager.PauseCinematics(true);
 
             //NOTE: PAUSE AND RESUME CUTSCENES AFTER RESUMING
         }
