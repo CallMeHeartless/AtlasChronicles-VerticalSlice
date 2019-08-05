@@ -52,6 +52,9 @@ public class CinematicManager : MonoBehaviour
 
     static public int GetActiveCinematic()
     {
+        if(m_rChildren == null) {
+            return -1;
+        }
         foreach (CinematicZone cinematic in m_rChildren)
         {
             if(cinematic.GetDirector().playableGraph.IsValid())
@@ -103,6 +106,10 @@ public class CinematicManager : MonoBehaviour
 
     static public CinematicZone FindCinematicByID(int _ID)
     {
+        // Null reference check
+        if(m_rChildren == null) {
+            return null;
+        }
         //Activate a cinematic by ID
         foreach (CinematicZone cinematic in m_rChildren)
         {

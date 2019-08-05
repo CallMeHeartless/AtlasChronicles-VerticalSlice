@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7598492389851451278}
   - component: {fileID: 959916742188505057}
   - component: {fileID: 8631884961762741961}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: dm_MapFragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 9155770641131760263}
   - component: {fileID: 2699483808270786577}
   - component: {fileID: 973844625558569021}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Pfb_MapFragment
   m_TagString: PrimaryPickup
   m_Icon: {fileID: 0}
@@ -227,6 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rParticles: {fileID: 9056534860113516651}
   m_rHome: {fileID: 0}
+  m_uiID: 0
 --- !u!82 &973844625558569021
 AudioSource:
   m_ObjectHideFlags: 0
@@ -336,6 +337,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX_MapPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 8457486358290237593, guid: b3f6d788b9ec59b40a76b952dc064318,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 5777640907914751953, guid: b3f6d788b9ec59b40a76b952dc064318,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -405,6 +411,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2.240401
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321764222494841987, guid: b3f6d788b9ec59b40a76b952dc064318,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794736032675814507, guid: b3f6d788b9ec59b40a76b952dc064318,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3068537810493475877, guid: b3f6d788b9ec59b40a76b952dc064318,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3f6d788b9ec59b40a76b952dc064318, type: 3}
