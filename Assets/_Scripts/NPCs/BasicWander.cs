@@ -18,9 +18,10 @@ public class BasicWander : AIState
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         m_fWanderIntervalTimer += Time.deltaTime;
+        // Check if it's time to find a new wander position
         if(m_fWanderIntervalTimer >= m_rWanderProperties.m_fWanderInterval) {
-            FindNewPosition();
-            m_fWanderIntervalTimer = 0.0f;
+            FindNewPosition(); // Obtain new position
+            m_fWanderIntervalTimer = 0.0f; // Reset timer
             m_rAgent.isStopped = false;
         }
 

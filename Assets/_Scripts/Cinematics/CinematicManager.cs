@@ -5,7 +5,7 @@ using MessageSystem;
 
 public class CinematicManager : MonoBehaviour
 {
-    static GameObject[] m_rChildren;
+    static CinematicZone[] m_rChildren;
     static private GameObject m_rPlayer;
     static int m_iPausedCine = -1;
     //Stack<int> m_rCineStack = new Stack<int>();
@@ -13,7 +13,14 @@ public class CinematicManager : MonoBehaviour
     private void Start()
     {
         //Get all zone cinematics in child
-        m_rChildren = GameObject.FindGameObjectsWithTag("Cinematic");
+        GameObject[] cineZone = GameObject.FindGameObjectsWithTag("Cinematic");
+        m_rChildren = new CinematicZone[cineZone.Length];
+        for (int i = 0; i < cineZone.Length; i++)
+        {
+            m_rChildren[i] = cineZone[i].GetComponent<CinematicZone>();
+        }
+
+        GameObject.FindGameObjectsWithTag("Cinematic");
         m_rPlayer = GameObject.FindGameObjectWithTag("Player");
 
         ActivateCinematics(true);
@@ -22,9 +29,9 @@ public class CinematicManager : MonoBehaviour
     static public void ActivateCinematics(bool _activate)
     {
         //Activate or Deactivate all cinematics in scene
-        foreach (GameObject cinematic in m_rChildren)
+        foreach (CinematicZone cinematic in m_rChildren)
         {
-            cinematic.SetActive(_activate);
+            cinematic.gameObject.SetActive(_activate);
         }
     }
 
@@ -45,11 +52,14 @@ public class CinematicManager : MonoBehaviour
 
     static public int GetActiveCinematic()
     {
-        foreach (GameObject cinematic in m_rChildren)
+        foreach (CinematicZone cinematic in m_rChildren)
         {
-            if(cinematic.GetComponent<CinematicZone>().GetDirector().playableGraph.IsPlaying())
+            if(cinematic.GetDirector().playableGraph.IsValid())
             {
-                return cinematic.GetComponent<CinematicZone>().GetCinematicID();
+                if (cinematic.GetDirector().playableGraph.IsPlaying())
+                {
+                    return cinematic.GetCinematicID();
+                }
             }
         }
         return -1;
@@ -73,7 +83,7 @@ public class CinematicManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Zone does not exist");
+            Debug.Log("Cinematic Zone does not exist");
         }
     }
 
@@ -94,32 +104,13 @@ public class CinematicManager : MonoBehaviour
     static public CinematicZone FindCinematicByID(int _ID)
     {
         //Activate a cinematic by ID
-        foreach (GameObject cinematic in m_rChildren)
+        foreach (CinematicZone cinematic in m_rChildren)
         {
-            if (cinematic.GetComponent<CinematicZone>().GetCinematicID() == _ID)
+            if (cinematic.GetCinematicID() == _ID)
             {
-                return cinematic.gameObject.GetComponent<CinematicZone>();
+                return cinematic;
             }
         }
         return null;
     }
-
-    //public void OnReceiveMessage(MessageType _message, object _source)
-    //{
-    //    switch (_message)
-    //    {
-    //        case MessageType.eActivate:
-    //        {
-
-    //            break;
-    //        }
-    //        case MessageType.eReset:
-    //        {
-
-    //            break;
-    //        }
-    //        default:
-    //            break;
-    //    }
-    //}
 }

@@ -70,6 +70,7 @@ public class SwitchTagController : MonoBehaviour
         }
        
         m_AttachedObject = null;
+        gameObject.SetActive(false);
     }
     
     // Places the attached object at the input position, then detaches itself
