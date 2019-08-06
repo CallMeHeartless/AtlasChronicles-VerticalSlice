@@ -84,7 +84,7 @@ public class InkGauge : MonoBehaviour
 
         // UI change (Change image fill amount based on values)
         m_rInkFill.fillAmount = m_fValue / m_fGaugeLimitValue;
-        m_rDebugText.text = "Fill Amount: \n" + m_rInkFill.fillAmount;
+        m_rDebugText.text = "Fill Amount: \n" +(  m_rInkFill.fillAmount * m_fGaugeLimitValue);
 
         // Check for a state change
         if (m_fValue == 0.0f) {
