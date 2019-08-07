@@ -71,11 +71,11 @@ public class DamageController : MonoBehaviour
         if(m_fInvulnerabilityCounter >= m_fInvulnerabilityTime) {
             m_fInvulnerabilityCounter = 0.0f;
             m_bIsInvulnerable = false;
-            OnBecomeVulnerable.Invoke();
             // Reset material flash if needed
             if (m_rInvulernableMaterial) {
                 m_rInvulernableMaterial.SetFloat("_Lightness", 1.1f);
             }
+            OnBecomeVulnerable.Invoke();
         }
     }
 
@@ -84,6 +84,10 @@ public class DamageController : MonoBehaviour
         m_iCurrentHealth = m_iMaxHealth;
         m_bIsInvulnerable = false;
         m_fInvulnerabilityCounter = 0.0f;
+        // Reset material flash if needed
+        if (m_rInvulernableMaterial) {
+            m_rInvulernableMaterial.SetFloat("_Lightness", 1.1f);
+        }
         OnResetDamage.Invoke();
     }
 
