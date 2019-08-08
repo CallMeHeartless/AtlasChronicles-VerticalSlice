@@ -440,7 +440,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 {
                     //Player is not on a slope so do not activate slide
                     m_bIsSliding = false;
-                    print("stahppit");
                     return;
                 }
             }
