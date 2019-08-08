@@ -220,14 +220,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         // Update L2
         m_rSwitchButton.Update();
 
-        // Test map vision
-        if (Input.GetKeyDown(KeyCode.U)) {
-            Zone.ToggleMapVision(true);
-        }
-        if (Input.GetKey(KeyCode.I)) {
-            Zone.ToggleMapVision(false);
-        }
-
         // Check if the character is grounded to reset jump count
         if (m_rCharacterController.isGrounded)
             ResetJump();
