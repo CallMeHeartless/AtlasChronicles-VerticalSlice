@@ -136,12 +136,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private bool m_bIsSliding = false;
     [SerializeField] bool m_bIsOnMovingPlatform = false;
     private RaycastHit rayHit;
-    private Vector3 hitNormal; //orientation of the slope.
+    private Vector3 m_hitNormal; //orientation of the slope.
     private Vector3 m_vSlideDir;
     private float rayDistance = 0.0f;
-    private bool m_bSteepSlopeCollided = false;
+    private bool m_bSlipperySlopeCollided = false;
     private bool m_bStandingOnSlope = false; // is on a slope or not
-    private float m_fSlideSpeed = 200.0f;
+    private float m_fSlideAngle = 0.0f;
 
     //Extforce variables
     private bool m_bExtForceOccuring;
@@ -405,42 +405,76 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     //Detect if player is able to slide down a steep slope
     void SlideMethod() {
+        //Reset sliding and slide direction
         m_bIsSliding = false;
-        m_vSlideDir = Vector3.zero; //Reset slide direction
-        if (m_bSteepSlopeCollided) {  //If the player is colliding with a steep slope
-            //Check if player if standing on a slope
+        m_vSlideDir = Vector3.zero;
+        m_fSlideAngle = 0.0f;
+
+        //ONLY slide if the player has reached a peak from jumping to prevent unrealistic sliding behaviour
+        float jumpSpeed = m_rAnimator.GetFloat("JumpSpeed");
+        //Dont slide if the player is just starting to fall/ at the peak of their jump
+        if (jumpSpeed > 1.0f)
+            return;
+        //Make a bool to check whether the player is handing off a slippery object or not
+        bool hanging = false;
+
+
+        //If the player is physically colliding with a slippery object
+        if (m_bSlipperySlopeCollided) {  
+            //Check if player is standing on a slope //Checks below player
             if (Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10.0f)) {
-                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit && Vector3.Angle(rayHit.normal, Vector3.up) < 180.0f) {
+                //Set the slide angle to check later
+                m_fSlideAngle = Vector3.Angle(rayHit.normal, Vector3.up);
+
+                //Check if the slope is bigger than the character's slope limit
+                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit || Vector3.Angle(rayHit.normal, Vector3.up) > 180.0f) {
                     m_bIsSliding = true;
                 }
-                //If player is stuck on a steep slope while not on the ground, set sliding as true
-                else if (transform.position.y - rayHit.point.y >= 0.5f) {
+                else if (transform.position.y - rayHit.point.y >= 1.0f)
+                {
+                    //If player happens to be stuck on a steep slope while not on the ground, set sliding as true
+                    hanging = true;
                     m_bIsSliding = true;
+                }
+                else
+                {
+                    //Player is not on a slope so do not activate slide
+                    m_bIsSliding = false;
+                    print("stahppit");
+                    return;
                 }
             }
         }
 
-        //If player is not facing a slippery object, let player exit slide
+        //If the player is allowed to slide
         if (m_bIsSliding) {
+            //If player is not facing a slippery object, let player exit slide
             if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f)) {
                 //Check if player is trying to move while on a slope and not facing slippery object
                 bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
-                if (playerIsMoving)
+                if (playerIsMoving) {
                     m_bIsSliding = false;
+                }
             }
             else {
+                if (hanging)
+                {
+                    //If the player IS facing the slippery object WHILE hanging on a really steep slope slide. (slope cant be detected via feet)
+                    m_ExternalForce = new Vector3(m_hitNormal.x, -0.2f, m_hitNormal.z);
+                    Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
+                    m_ExternalForce *= Vector3.Angle(rayHit.normal, Vector3.up);
+                }
+                else
+                {
+                    //If the player is on a slippery object while standing on a regular slope, slide.
+                    m_ExternalForce = new Vector3(m_hitNormal.x, -m_hitNormal.y, m_hitNormal.z);
+                    Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
+                    m_ExternalForce *= m_fSlideAngle;
+                }
+
+                //Player should not be able to be able to move towards the slippery object.
                 m_MovementInput = Vector3.zero;
             }
-        }
-
-        if (!m_bIsSliding)
-            return;
-
-        //If player is able to slide, apply sliding forces
-        if (m_rCharacterController.isGrounded && m_bIsSliding) {
-            m_ExternalForce = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
-            Vector3.OrthoNormalize(ref hitNormal, ref m_ExternalForce);
-            m_ExternalForce *= m_fSlideSpeed;
         }
     }
 
@@ -454,7 +488,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
 
         //Check if the player is sliding or not
-        if(!m_bIsOnMovingPlatform)
+        if (!m_bIsOnMovingPlatform)
             SlideMethod();
 
         // Accelerate the player
@@ -876,12 +910,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit) {
-        hitNormal = hit.normal;
+        m_hitNormal = hit.normal;
     }
 
     public void SetIsOnSlipperyObject(bool _slippery)
     {
-        m_bSteepSlopeCollided = _slippery;
+        m_bSlipperySlopeCollided = _slippery;
     }
 
     public void ResetGravityMultiplier() {
