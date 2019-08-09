@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField]
     private float m_fThrowSpeed = 10.0f;
     private bool m_bWasSwitchLastTeleportCommand = false; // An internal flag to determine if the most recent teleport command was to switch or teleport to the marker
+    private bool m_bMapVisionOn = false;
 
     [Header("Scroll Objects | Effects")]
     [SerializeField]
@@ -764,10 +765,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Handles map vision /// Kerry
     private void HandleMapVision() {
-        InkGauge rInkGauge = InkGauge.GetInstance();
-        if (rInkGauge) { // Ensure reference exists
-            rInkGauge.HandleMapVision(); // Send call to ink gauge
-        }
+        //InkGauge rInkGauge = InkGauge.GetInstance();
+        //if (rInkGauge) { // Ensure reference exists
+        //    rInkGauge.HandleMapVision(); // Send call to ink gauge
+        //}
+        // Rework (Kerry)
+        m_bMapVisionOn = !m_bMapVisionOn;
+        Zone.ToggleMapVision(m_bMapVisionOn);
     }
     
     // Triggers the teleport particle effects
