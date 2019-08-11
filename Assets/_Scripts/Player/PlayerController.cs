@@ -683,7 +683,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Perform raycast check
         if(Physics.Raycast(transform.position, Vector3.down, out hit, 1.0f, layerMask, QueryTriggerInteraction.Ignore)) {
-            Debug.Log("Raycast hit: " + hit.collider.name);
             // Parent the teleport marker
             m_rTeleportMarker.transform.SetParent(hit.transform);
         }
