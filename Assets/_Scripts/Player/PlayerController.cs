@@ -688,6 +688,18 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
     }
 
+    // This function is used by other objects to prevent the teleport marker from being used in certain situations // Kerry
+    public void CancelTeleportMarker() {
+        if (!m_rTeleportMarker) {
+            return;
+        }
+
+        // Disable 
+        m_rTeleportMarker.transform.SetParent(null); // Unparent
+        m_rTeleportMarker.transform.rotation = Quaternion.identity; // Reset rotation
+        ToggleTeleportMarker(false); // Disable visuals
+    }
+
     // Parent the teleport marker to the held object
     private void TagHeldObject() {
         if (!m_rHeldObject) {
