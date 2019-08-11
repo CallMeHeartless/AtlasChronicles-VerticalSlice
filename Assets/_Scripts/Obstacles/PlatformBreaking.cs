@@ -117,6 +117,13 @@ public class PlatformBreaking : MonoBehaviour
         m_bCollapsing = true;
         collapse = false;
 
+        // Check if the Teleport marker is a child of this object // Kerry
+        Transform marker = transform.Find("TestTeleportMarker(Clone)"); // This may need updating 
+        if (marker) {
+            // The marker exists, instruct the player to disable it
+            PlayerController.instance.CancelTeleportMarker();
+        }
+
     }
 
 }

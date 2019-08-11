@@ -88,6 +88,26 @@ public class weighted : MonoBehaviour, IMessageReceiver
             //ObjectColor.Add(Color.None);
             //ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
         }
+        else if (other.CompareTag("Enemy"))
+            {
+            if (!ObjectInArea.Contains(other.gameObject))
+            { //m_gObjects.Add(new ObjectPressPad(other.gameObject,other.GetComponent<Switchable>().ObjectColor,other.GetComponent<Switchable>().Weight));
+                ObjectInArea.Add(other.gameObject);
+                ObjectColor.Add(Color.None);
+                ObjectWeight.Add(other.GetComponent<EnemyController>().GetWeight());
+                if (m_RequirmentWeight)
+                {
+                    m_Weight += ObjectWeight[ObjectWeight.Count - 1];
+                }
+                // UpdateDoor();
+            }
+            else
+            {
+                Debug.Log(ObjectInArea.Contains(other.gameObject));
+            }
+            
+                    
+        }
         
     }
     private void OnTriggerExit(Collider other)
@@ -146,6 +166,29 @@ public class weighted : MonoBehaviour, IMessageReceiver
                 Debug.Log(ObjectInArea.Contains(other.gameObject));
             }
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            if (ObjectInArea.Contains(other.gameObject))
+            {
+                int i = ObjectInArea.IndexOf(other.gameObject);
+                if (m_RequirmentWeight)
+                {
+                    m_Weight -= ObjectWeight[i];
+                }
+                ObjectInArea.RemoveAt(i);
+                ObjectColor.RemoveAt(i);
+                ObjectWeight.RemoveAt(i);
+
+                UpdateDoor();
+            }
+        }
+        if (ObjectInArea.Count == 0)
+        {
+           
+                m_Weight = 0;
+           
+        }
+        
     }
     void UpdateDoor()
     {
