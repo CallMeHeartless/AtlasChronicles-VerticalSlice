@@ -32,7 +32,7 @@ public class MapManager : MonoBehaviour
     {
         List<Zone> zoneList = Zone.GetZoneList();
 
-        if (m_rMapRegions != null)
+        if (m_rMapRegions != null && m_rZones != null)
         {
             m_rZones = new Zone[zoneList.Count];
 
