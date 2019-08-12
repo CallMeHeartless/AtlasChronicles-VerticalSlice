@@ -98,6 +98,7 @@ public class CinematicZone : MonoBehaviour
         }
     }
 
+    // Pauses or resumes the current cinematic
     public void PauseCinematic(bool _pause)
     {
         if(_pause)
@@ -110,6 +111,7 @@ public class CinematicZone : MonoBehaviour
         }
     }
 
+    // Gets the director for the cinematic of the current zone
     public PlayableDirector GetDirector()
     {
         return m_rDirector;

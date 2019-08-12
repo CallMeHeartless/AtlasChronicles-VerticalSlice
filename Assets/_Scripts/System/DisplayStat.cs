@@ -65,6 +65,7 @@ public class DisplayStat : MonoBehaviour
             + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
     }
   
+    //NIK
     public void NewHealth(int HP)
     {
         for (int i = 0; i < m_rHearts.Length; i++)
@@ -110,16 +111,16 @@ public class DisplayStat : MonoBehaviour
         }
     }
 
+    //Hides game panel after 3 seconds and marks boolean as not shown
     void HideGameUIPanel()
     {
-        //Hides game panel after 3 seconds and marks boolean as not shown
         if (!GetDirectorIsPlaying(0))
         {
             m_rDirectors[0].Play();
             m_bShown = false;
         }
     }
-
+    
     bool GetDirectorIsPlaying(int _director)
     {
         //Check if director specified is playing

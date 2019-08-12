@@ -78,10 +78,12 @@ public class Pickup : MonoBehaviour
                 Destroy(gameObject.transform.parent.gameObject, 6.0f);
             }
             if (gameObject.CompareTag("SecondaryPickup"))
-            {   // Level specific collectables
+            {   
+                // Level specific collectables
                 GetComponent<AudioSource>().Play();
                 GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex]++;
                 GameEndController.CheckMapCollection(); // Review later
+
                 // Update the ink gauge
                 InkGauge rInkGauge = InkGauge.GetInstance();
                 if (rInkGauge) {
