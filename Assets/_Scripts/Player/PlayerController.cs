@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Control References
     private string m_strJumpButton = "Jump";
     private string m_strSwitchButton = "XBoxL2";
+    private string m_strSwitchLaunchButton = "XBoxR2";
     private string m_strTeleportMarkerPlaceButton = "L1";
     private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strXAxisButton = "RightXAxis";
     private string m_strMapVision = "YButton";
     private AxisToButton m_rSwitchButton = new AxisToButton();
+    private AxisToButton m_rSwitchLaunchButton = new AxisToButton();
 
     // Movement variables
     [Header("Movement Variables")]
@@ -204,6 +206,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Initialise trigger to button
         m_rSwitchButton.m_strAxis = m_strSwitchButton;
+        m_rSwitchLaunchButton.m_strAxis = m_strSwitchLaunchButton;
 
         // Set static instance for ease of reference
         if (!m_rInstance) {
@@ -220,14 +223,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Update L2
         m_rSwitchButton.Update();
+        m_rSwitchLaunchButton.Update();
 
         // Check if the character is grounded to reset jump count
         if (m_rCharacterController.isGrounded)
             ResetJump();
 
-        if (Input.GetButton(m_strCameraLockButton)) {
-            m_rFreeLook.m_YAxis.Value = 0.5f;
-        }
+        //if (Input.GetButton(m_strCameraLockButton)) { // Removed by Kerry
+        //    m_rFreeLook.m_YAxis.Value = 0.5f;
+        //}
 
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
@@ -594,32 +598,38 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_rAnimator.ResetTrigger("Walk");
                 m_rAnimator.SetTrigger("PlaceTag");
                 PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
-            } 
+            }
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton) && m_bTeleportMarkerDown) {
             m_bWasSwitchLastTeleportCommand = false;
             //TeleportToTeleportMarker();
-            if (!m_bTeleportThresholdWarning)
-            {
+            if (!m_bTeleportThresholdWarning) {
                 m_rAnimator.SetTrigger("Teleport");
             }
 
         }
         // Throw switch tag / switch teleport
-        else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {//|| (Input.GetAxisRaw(m_strSwitchButton) == 0.0f)
-            if (m_rSwitchTarget) {
-                if (!m_bSwitchThresholdWarning)
-                {
-                    m_bWasSwitchLastTeleportCommand = true;
-                    m_rAnimator.SetTrigger("Teleport");
-                }
+        else if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {// Input.GetButtonUp("SwitchTagKeyboard") ||
+            //if (m_rSwitchTarget) {
+            //    if (!m_bSwitchThresholdWarning) {
+            //        m_bWasSwitchLastTeleportCommand = true;
+            //        m_rAnimator.SetTrigger("Teleport");
+            //    }
 
-                //SwitchWithTarget();
-            } else if (!m_rHeldObject) {
-                m_rAnimator.SetTrigger("ThrowTag");
+            //    //SwitchWithTarget();
+            //}
+            m_rAnimator.SetTrigger("ThrowTag");
+
+        }
+        // Teleport to switch tag // Kerry
+        else if (m_rSwitchLaunchButton.GetCurrentState() == AxisToButton.InputState.FirstPressed) {
+            if (m_rSwitchTarget && !m_bSwitchThresholdWarning) { // Check that there is a valid target and it is within range
+                m_bWasSwitchLastTeleportCommand = true;
+                m_rAnimator.SetTrigger("Teleport");
             }
         }
+
         // Allow the player to manually cancel their switch tag
         else if (Input.GetButtonDown(m_strTetherBreakButton)) {
             CancelSwitchTag();
@@ -750,7 +760,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             return;
         }
 
-        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed || Input.GetButton("SwitchTagKeyboard")) {//Input.GetButton(m_strSwitchButton)
+        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed ) {//|| Input.GetButton("SwitchTagKeyboard")
             ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
