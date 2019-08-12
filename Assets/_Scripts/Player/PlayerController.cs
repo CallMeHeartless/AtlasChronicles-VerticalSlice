@@ -590,15 +590,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         AimSwitchTag();
 
         // Handle placing a teleport marker
-        if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
-            // Throw a tag if there is no  held object
-            if (!m_rHeldObject && m_rCharacterController.isGrounded) {
-                // Place on ground
-                m_rAnimator.ResetTrigger("Idle");
-                m_rAnimator.ResetTrigger("Walk");
-                m_rAnimator.SetTrigger("PlaceTag");
-                PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
-            }
+        if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton) && m_rCharacterController.isGrounded) {
+            // Place on ground
+            m_rAnimator.ResetTrigger("Idle");
+            m_rAnimator.ResetTrigger("Walk");
+            m_rAnimator.SetTrigger("PlaceTag");
+            PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0)); 
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton) && m_bTeleportMarkerDown) {
@@ -609,21 +606,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             }
 
         }
-        // Throw switch tag / switch teleport
-        else if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {// Input.GetButtonUp("SwitchTagKeyboard") ||
-            //if (m_rSwitchTarget) {
-            //    if (!m_bSwitchThresholdWarning) {
-            //        m_bWasSwitchLastTeleportCommand = true;
-            //        m_rAnimator.SetTrigger("Teleport");
-            //    }
-
-            //    //SwitchWithTarget();
-            //}
+        // Throw switch tag (while aiming)
+        else if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased || Input.GetButtonUp("SwitchTagKeyboard")) {// Input.GetButtonUp("SwitchTagKeyboard") ||
             m_rAnimator.SetTrigger("ThrowTag");
 
         }
         // Teleport to switch tag // Kerry
-        else if (m_rSwitchLaunchButton.GetCurrentState() == AxisToButton.InputState.FirstPressed) {
+        else if (m_rSwitchLaunchButton.GetCurrentState() == AxisToButton.InputState.FirstPressed || Input.GetButtonDown("SwitchTagLaunchKeyboard")) {
             if (m_rSwitchTarget && !m_bSwitchThresholdWarning) { // Check that there is a valid target and it is within range
                 m_bWasSwitchLastTeleportCommand = true;
                 m_rAnimator.SetTrigger("Teleport");
@@ -756,11 +745,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Align the player with the camera and indicate where the switch tag is being aimed
     private void AimSwitchTag() {
-        if (m_rSwitchTarget) {
-            return;
-        }
+        //if (m_rSwitchTarget) {
+        //    return;
+        //}
 
-        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed ) {//|| Input.GetButton("SwitchTagKeyboard")
+        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed || Input.GetButton("SwitchTagKeyboard")) {//
             ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera
