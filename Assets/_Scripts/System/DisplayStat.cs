@@ -12,6 +12,7 @@ public class DisplayStat : MonoBehaviour
     [SerializeField] GameObject[] m_rHearts;
     [SerializeField] GameObject m_rHeart;
     [SerializeField] GameObject m_rUIGamePanel;
+    private bool m_bShown = false;
 
     private GameObject[] m_rMapReferences;
     public int m_iHP = 4;
@@ -62,19 +63,6 @@ public class DisplayStat : MonoBehaviour
         m_rMapCountText.GetComponent<TextMeshProUGUI>().text = 
             GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() 
             + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
-        
-
-            //if (m_rDirectors[1].playableGraph.IsValid())
-            //{
-            //    if (m_rDirectors[i].playableGraph.IsPlaying())
-            //    {
-            //        if (_director == i)
-            //        {
-            //            return true;
-            //        }
-            //    }
-            //}
-            print("tRYING TO SHOWWW: " + m_rDirectors[1].state);
     }
   
     public void NewHealth(int HP)
@@ -95,47 +83,46 @@ public class DisplayStat : MonoBehaviour
 
     public void UpdateHealth(int _hp)
     {
+        //Update the fill of the heart in quarter decrements
         if(m_rHeart)
             m_rHeart.GetComponent<Image>().fillAmount = _hp * 90.0f /360.0f;
     }
 
-    bool shown = false;
 
     public void HideUIGamePanel(bool _hide)
     {
-
+        //Invoke method to hide UI game panel in 3 seconds
         if (_hide)
         {
+            //Cancel all previous invokes to prevent awkward looking transitionss
             CancelInvoke();
-
-            Invoke("PlayDirector", 3.0f);
+            Invoke("HideGameUIPanel", 3.0f);
         }
         else
         {
-            if(!shown)
+            //Instantly show UI game panel if it is not already being shown
+            if (!m_bShown)
             {
-                //m_rDirectors[0].Stop();
-                print("SHOW");
-                //SHOW
-                shown = true;
+                m_bShown = true;
                 m_rDirectors[1].Play();
             }
             
         }
     }
 
-    void PlayDirector()
+    void HideGameUIPanel()
     {
+        //Hides game panel after 3 seconds and marks boolean as not shown
         if (!GetDirectorIsPlaying(0))
         {
-            //m_rDirectors[1].time = 0;
             m_rDirectors[0].Play();
-            shown = false;
+            m_bShown = false;
         }
     }
 
     bool GetDirectorIsPlaying(int _director)
     {
+        //Check if director specified is playing
         if (m_rDirectors[_director].playableGraph.IsValid())
         {
             return m_rDirectors[_director].playableGraph.IsPlaying();
