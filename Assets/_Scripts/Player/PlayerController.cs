@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField]
     private float m_fThrowSpeed = 10.0f;
     private bool m_bWasSwitchLastTeleportCommand = false; // An internal flag to determine if the most recent teleport command was to switch or teleport to the marker
+    private bool m_bMapVisionOn = false;
 
     [Header("Scroll Objects | Effects")]
     [SerializeField]
@@ -659,8 +660,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (!m_rTeleportMarker) {
             return;
         }
-        //m_Animator.SetTrigger("Tag");
-        m_rTagAudio.PlayAudio(0);
+
+        // Reset the marker to default rotation / no parent
+        m_rTeleportMarker.transform.SetParent(null);
+        m_rTeleportMarker.transform.rotation = Quaternion.identity;
+
+        m_rTagAudio.PlayAudio(0); // play audio
         m_rTeleportMarker.transform.position = _vecPlacementLocation; // Need to use an offset, perhaps with animation
         AttachMarkerToGround();
         // Enable teleport marker
@@ -669,11 +674,30 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
     }
 
+    // Attaches the teleport marker to the 'ground', allowing it to move with objects // By Kerry
     private void AttachMarkerToGround() {
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, Vector3.down, out hit)) {
+        // Determine a layermask
+        int layerMask = LayerMask.NameToLayer("Player") & LayerMask.NameToLayer("AudioBGM") & LayerMask.NameToLayer("Tutorial") & LayerMask.NameToLayer("TagIgnore");
+        layerMask = ~layerMask; // Bitwise Inverstion
+        RaycastHit hit; // Raycast information
 
+        // Perform raycast check
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, 1.0f, layerMask, QueryTriggerInteraction.Ignore)) {
+            // Parent the teleport marker
+            m_rTeleportMarker.transform.SetParent(hit.transform);
         }
+    }
+
+    // This function is used by other objects to prevent the teleport marker from being used in certain situations // Kerry
+    public void CancelTeleportMarker() {
+        if (!m_rTeleportMarker) {
+            return;
+        }
+
+        // Disable 
+        m_rTeleportMarker.transform.SetParent(null); // Unparent
+        m_rTeleportMarker.transform.rotation = Quaternion.identity; // Reset rotation
+        ToggleTeleportMarker(false); // Disable visuals
     }
 
     // Parent the teleport marker to the held object
@@ -694,6 +718,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         StartCoroutine(TeleportToLocation(m_rTeleportMarker.transform.position));
         // Disable teleport marker
         ToggleTeleportMarker(false);
+        m_rTeleportMarker.transform.SetParent(null);
     }
 
     // Trade places with the switch target, then clear the target state
@@ -763,10 +788,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Handles map vision /// Kerry
     private void HandleMapVision() {
-        InkGauge rInkGauge = InkGauge.GetInstance();
-        if (rInkGauge) { // Ensure reference exists
-            rInkGauge.HandleMapVision(); // Send call to ink gauge
-        }
+        //InkGauge rInkGauge = InkGauge.GetInstance();
+        //if (rInkGauge) { // Ensure reference exists
+        //    rInkGauge.HandleMapVision(); // Send call to ink gauge
+        //}
+        // Rework (Kerry)
+        m_bMapVisionOn = !m_bMapVisionOn;
+        Zone.ToggleMapVision(m_bMapVisionOn);
     }
     
     // Triggers the teleport particle effects
@@ -829,6 +857,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         return Mathf.SmoothDamp(_floatToReset, 0.0f, ref _currSpeed, m_fHorizontalSmoothSpeed);
     }
 
+    // Handles the visual appearing of the teleport marker // Kerry
     private void ToggleTeleportMarker(bool _bState) {
         m_rTeleportMarker.SetActive(_bState);
         m_bTeleportMarkerDown = _bState;

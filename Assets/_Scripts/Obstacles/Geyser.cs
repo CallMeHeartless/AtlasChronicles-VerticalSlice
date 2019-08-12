@@ -113,7 +113,7 @@ public class Geyser : MonoBehaviour
             message.damage = m_Damage;
             message.source = gameObject;
             other.GetComponent<DamageController>().ApplyDamage(message);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
        
     }

@@ -43,6 +43,7 @@ public class EnemyController : MonoBehaviour
     private bool m_bIsKnockedOut = false;
     public bool isKnockedOut { get { return m_bIsKnockedOut; } }
     private bool m_bIsTagged = false;
+    private int weight =5;
 
     // Start is called before the first frame update
     void Start(){
@@ -230,6 +231,11 @@ public class EnemyController : MonoBehaviour
     // Tells the Goon to go back to patrolling (called when they have lost sight of the player
     public void ReturnToWandering() {
         m_rStateMachine.SetTrigger("ReturnToWander");
+    }
+
+    public int GetWeight()
+    {
+       return weight;
     }
 
 #if UNITY_EDITOR
