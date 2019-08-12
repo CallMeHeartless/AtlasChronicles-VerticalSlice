@@ -9,6 +9,9 @@ public class Piller : MonoBehaviour, IMessageReceiver
    public GameObject[] m_gPillersPostion;
     public int currentPostion=0; 
     public float m_fSpeed = 0.01f;
+    public float m_fSpeedBoust = 0.0001f;
+    public float m_fMinSpeed = 0.01f;
+    public float m_fMaxSpeed = 0.1f;
     private bool m_bUnlocked = false;
     private bool m_bMoving = false;
     // Start is called before the first frame update
@@ -27,6 +30,10 @@ public class Piller : MonoBehaviour, IMessageReceiver
                     m_bMoving = false;
                 }
                 transform.position = Vector3.MoveTowards(gameObject.transform.position, m_gPillersPostion[currentPostion].transform.position, m_fSpeed);
+            if (m_fSpeed<= m_fMaxSpeed)
+            {
+                m_fSpeed += m_fSpeedBoust;
+            }
 
         }
     }
@@ -42,7 +49,7 @@ public class Piller : MonoBehaviour, IMessageReceiver
                    // m_bUnlocked = true;
                     m_bMoving = true;
                     currentPostion += (int)_source;
-                   
+                    m_fSpeed = m_fMinSpeed;
                     break;
                 }
             // Reset the door
@@ -50,6 +57,7 @@ public class Piller : MonoBehaviour, IMessageReceiver
                 {
                     m_bMoving = true;
                     currentPostion -= (int)_source;
+                    m_fSpeed = m_fMinSpeed;
                     break;
                 }
 

@@ -48,7 +48,7 @@ public class MapManager : MonoBehaviour
     // Update is called once per frame
     public void OpenMap()
     {
-        if (m_rZones == null)
+        if (m_rZones == null && m_rZones.Length != 0)
         {
             RetrieveZones();
         }
