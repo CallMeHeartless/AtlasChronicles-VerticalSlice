@@ -16,7 +16,6 @@ public class Dart : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Player"))
         {
             //damage player
@@ -24,6 +23,7 @@ public class Dart : MonoBehaviour
             message.damage = m_Damage;
             message.source = gameObject;
             other.GetComponent<DamageController>().ApplyDamage(message);
+
             Destroy(gameObject);
         }
         else
@@ -32,13 +32,7 @@ public class Dart : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            else
-            {
-               
-               //
-            }
         }
-
     }
     public void SetDirection(Vector3 _direction){
         m_vec3Direction = _direction;
