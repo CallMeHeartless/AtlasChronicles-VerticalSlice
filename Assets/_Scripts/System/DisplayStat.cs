@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
 
@@ -9,14 +10,18 @@ public class DisplayStat : MonoBehaviour
     [SerializeField] GameObject m_rCollectableText;
     [SerializeField] GameObject m_rMapCountText;
     [SerializeField] GameObject[] m_rHearts;
+    [SerializeField] GameObject m_rHeart;
+    [SerializeField] GameObject m_rUIGamePanel;
+
     private GameObject[] m_rMapReferences;
     public int m_iHP = 4;
+    [SerializeField] PlayableDirector[] m_rDirectors;
 
     // Start is called before the first frame update
     void Start()
     {
         NewHealth(m_iHP); // NIK //Set the player to have 4 health
-
+        HideUIGamePanel(true);
         //VIV-----
         //Find all collectables placed in the level
         GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex] = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length;
@@ -40,16 +45,14 @@ public class DisplayStat : MonoBehaviour
                 }
             }
         }
+        //Enable text for counters
+        m_rCollectableText.SetActive(true);
+        m_rMapCountText.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        //Enable text for counters
-        m_rCollectableText.SetActive(true);
-        m_rMapCountText.SetActive(true);
-
         //Update text based on how many collectables have been collected
         m_rCollectableText.GetComponent<TextMeshProUGUI>().text = 
             GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString() 
@@ -59,6 +62,19 @@ public class DisplayStat : MonoBehaviour
         m_rMapCountText.GetComponent<TextMeshProUGUI>().text = 
             GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() 
             + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
+        
+
+            //if (m_rDirectors[1].playableGraph.IsValid())
+            //{
+            //    if (m_rDirectors[i].playableGraph.IsPlaying())
+            //    {
+            //        if (_director == i)
+            //        {
+            //            return true;
+            //        }
+            //    }
+            //}
+            print("tRYING TO SHOWWW: " + m_rDirectors[1].state);
     }
   
     public void NewHealth(int HP)
@@ -74,5 +90,56 @@ public class DisplayStat : MonoBehaviour
                 m_rHearts[i].SetActive(true);
             }
         }
+        UpdateHealth(HP);
+    }
+
+    public void UpdateHealth(int _hp)
+    {
+        if(m_rHeart)
+            m_rHeart.GetComponent<Image>().fillAmount = _hp * 90.0f /360.0f;
+    }
+
+    bool shown = false;
+
+    public void HideUIGamePanel(bool _hide)
+    {
+
+        if (_hide)
+        {
+            CancelInvoke();
+
+            Invoke("PlayDirector", 3.0f);
+        }
+        else
+        {
+            if(!shown)
+            {
+                //m_rDirectors[0].Stop();
+                print("SHOW");
+                //SHOW
+                shown = true;
+                m_rDirectors[1].Play();
+            }
+            
+        }
+    }
+
+    void PlayDirector()
+    {
+        if (!GetDirectorIsPlaying(0))
+        {
+            //m_rDirectors[1].time = 0;
+            m_rDirectors[0].Play();
+            shown = false;
+        }
+    }
+
+    bool GetDirectorIsPlaying(int _director)
+    {
+        if (m_rDirectors[_director].playableGraph.IsValid())
+        {
+            return m_rDirectors[_director].playableGraph.IsPlaying();
+        }
+        return false;
     }
 }

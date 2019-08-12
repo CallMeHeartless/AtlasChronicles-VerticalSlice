@@ -8,7 +8,7 @@ public class Pickup : MonoBehaviour
     public GameObject m_rParticles;
     public GameObject m_rHome;
     private GameObject m_rPickupPic, m_rMapPic;
-    private RectTransform m_rCanvasRect;
+    private DisplayStat m_rDisplayStats;
     private Camera m_rCamera;
     float m_fCollectionSpeed = 0.4f;
     [SerializeField] private int m_uiID = 0;
@@ -20,6 +20,7 @@ public class Pickup : MonoBehaviour
             m_rParticles.SetActive(false);
         }
 
+        m_rDisplayStats = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>();
         m_rPickupPic = GameObject.FindGameObjectWithTag("PickupPicUI");
         m_rMapPic = GameObject.FindGameObjectWithTag("MapPicUI");
         //m_rCamera = GameObject.Find("Camera").GetComponent<Camera>();
@@ -48,8 +49,9 @@ public class Pickup : MonoBehaviour
     {
         if (other.CompareTag("Player") && !m_bIsCollected)
         {
-            // Flag as collected
             m_bIsCollected = true;
+            m_rDisplayStats.HideUIGamePanel(false);
+            // Flag as collected
 
             if (m_rHome != null)
             {
@@ -93,6 +95,7 @@ public class Pickup : MonoBehaviour
                 }
 
             }
+            m_rDisplayStats.HideUIGamePanel(true);
 
             // Turn on VFX
             if (m_rParticles)
@@ -102,4 +105,6 @@ public class Pickup : MonoBehaviour
             GetComponentInChildren<Animator>().SetTrigger("Collect");
         }
     }
+
+    
 }
