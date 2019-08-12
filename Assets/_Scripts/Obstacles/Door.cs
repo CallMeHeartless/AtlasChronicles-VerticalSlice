@@ -9,6 +9,7 @@ public class Door : MonoBehaviour, IMessageReceiver
     public GameObject m_gDoorOpen;
     public GameObject m_gDoorClosed;
     public float m_fSpeed = 0.01f;
+    public bool OnceOnForeverOn;
     private bool m_bUnlocked = false;
     private bool m_bMoving = false;
     // Start is called before the first frame update
@@ -48,7 +49,16 @@ public class Door : MonoBehaviour, IMessageReceiver
         }
     }
 
-    public void SwitchChanged(int Location, bool correct) {
+    public bool SwitchChanged(int Location, bool correct) {
+
+        if (OnceOnForeverOn == true)
+        {
+            if (m_bUnlocked == true)
+            {
+                return false;
+            }
+        }
+
         switch (Location)
         {
             case 0:
@@ -76,6 +86,7 @@ public class Door : MonoBehaviour, IMessageReceiver
             m_bUnlocked = newLock;
             m_bMoving = true;
         }
+        return true;
     }
     bool LockedDoor(){
 
@@ -103,6 +114,17 @@ public class Door : MonoBehaviour, IMessageReceiver
                 }
                 break;
             }
+            case MessageType.eOn:
+                {
+                    SwitchChanged((int)_source, true);
+                    break;
+                }
+            case MessageType.eOff:
+                {
+                    SwitchChanged((int)_source, false);
+                    break;
+                }
+
             // Reset the door
             case MessageType.eReset: {
                 m_bUnlocked = false;

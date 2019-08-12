@@ -364,64 +364,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1193817378183791986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7987707234609020853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_iMaxHealth: 6
-  m_fInvulnerabilityTime: 0
-  m_fHitAngle: 360
-  m_rInvulnerableFlash: {fileID: 0}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7987707234609020852}
-        m_MethodName: switching
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveHealing:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnHitWhileInvulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnBecomeVulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnResetDamage:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_OnDamageMessageReceivers: []
 --- !u!1 &1193817378446266909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,64 +1001,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1193817379291070625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7987707235323692229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_iMaxHealth: 0
-  m_fInvulnerabilityTime: 0
-  m_fHitAngle: 360
-  m_rInvulnerableFlash: {fileID: 0}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7987707235323692228}
-        m_MethodName: switching
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveHealing:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnHitWhileInvulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnBecomeVulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnResetDamage:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_OnDamageMessageReceivers: []
 --- !u!1 &1193817379302496753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,68 +1073,9 @@ Transform:
   - {fileID: 1193817377955384427}
   - {fileID: 1193817378093351205}
   - {fileID: 1193817378517673550}
-  - {fileID: 7987707234478078385}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1193817379391117270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7987707234478078399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_iMaxHealth: 0
-  m_fInvulnerabilityTime: 0
-  m_fHitAngle: 360
-  m_rInvulnerableFlash: {fileID: 0}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7987707234478078398}
-        m_MethodName: switching
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveHealing:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnHitWhileInvulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnBecomeVulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnResetDamage:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_OnDamageMessageReceivers: []
 --- !u!1 &1193817379454668008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1615,64 +1440,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1193817379713271364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7987707233725519531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_iMaxHealth: 0
-  m_fInvulnerabilityTime: 0
-  m_fHitAngle: 360
-  m_rInvulnerableFlash: {fileID: 0}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveDamage:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7987707233725519530}
-        m_MethodName: switching
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnReceiveHealing:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnHitWhileInvulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnBecomeVulnerable:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnResetDamage:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_OnDamageMessageReceivers: []
 --- !u!1 &1193817379961248950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +1713,180 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1193817379713271364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987707233725519531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iMaxHealth: 0
+  m_fInvulnerabilityTime: 0
+  m_fHitAngle: 360
+  m_rInvulnerableFlash: {fileID: 0}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7987707233725519530}
+        m_MethodName: switching
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveHealing:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnHitWhileInvulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecomeVulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnDamageMessageReceivers: []
+--- !u!114 &1193817378183791986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987707234609020853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iMaxHealth: 6
+  m_fInvulnerabilityTime: 0
+  m_fHitAngle: 360
+  m_rInvulnerableFlash: {fileID: 0}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7987707234609020852}
+        m_MethodName: switching
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveHealing:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnHitWhileInvulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecomeVulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnDamageMessageReceivers: []
+--- !u!114 &1193817379291070625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987707235323692229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2196ea5b6c9713c4c839c838a62468ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iMaxHealth: 0
+  m_fInvulnerabilityTime: 0
+  m_fHitAngle: 360
+  m_rInvulnerableFlash: {fileID: 0}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7987707235323692228}
+        m_MethodName: switching
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReceiveHealing:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnHitWhileInvulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnBecomeVulnerable:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_OnDamageMessageReceivers: []
 --- !u!1001 &1193817377908704672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2225,6 +2166,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 695d07619d41c3b41b1a6ad574a28ad2, type: 3}
+--- !u!4 &1825747894863976715 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 704556730409957485, guid: 695d07619d41c3b41b1a6ad574a28ad2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1193817378077204838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4901976003948328375 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6095089522489349329, guid: 695d07619d41c3b41b1a6ad574a28ad2,
@@ -2237,12 +2184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fdfc56db74b6348881d719b6f617b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1825747894863976715 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 704556730409957485, guid: 695d07619d41c3b41b1a6ad574a28ad2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1193817378077204838}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1193817378152863189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2875,6 +2816,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 695d07619d41c3b41b1a6ad574a28ad2, type: 3}
+--- !u!4 &1825747895499246760 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 704556730409957485, guid: 695d07619d41c3b41b1a6ad574a28ad2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1193817378439591109}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4901976003309117460 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6095089522489349329, guid: 695d07619d41c3b41b1a6ad574a28ad2,
@@ -2887,12 +2834,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fdfc56db74b6348881d719b6f617b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1825747895499246760 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 704556730409957485, guid: 695d07619d41c3b41b1a6ad574a28ad2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1193817378439591109}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1193817378601817012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2988,194 +2929,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1193817378601817012}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1193817378892839617
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1193817379302496752}
-    m_Modifications:
-    - target: {fileID: 9100442221701383038, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_Name
-      value: presserPlate (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -9.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -46.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -136.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383026, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 138b35dd321622a4d93635b532ae8b8e, type: 2}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_gEffectingObject.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_ColorListRequirment.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_PassNumber.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_gEffectingObject
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_PassNumber
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_ColorListRequirment.Array.data[0]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_WeightRequirment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_gEffectingObject.Array.data[0]
-      value: 
-      objectReference: {fileID: 4901976004490420503}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_gEffectingObject.Array.data[1]
-      value: 
-      objectReference: {fileID: 4901976004529290491}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_gEffectingObject.Array.data[2]
-      value: 
-      objectReference: {fileID: 4901976003309117460}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_gEffectingObject.Array.data[3]
-      value: 
-      objectReference: {fileID: 4901976004573190639}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_gEffectingObject.Array.data[4]
-      value: 
-      objectReference: {fileID: 4901976005089497736}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_PassNumber.Array.data[0]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_PassNumber.Array.data[1]
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_PassNumber.Array.data[2]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_PassNumber.Array.data[3]
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_PassNumber.Array.data[4]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-        type: 3}
-      propertyPath: m_RequirmentWeight
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a39accbe86f49f543a5d24217db65e4b, type: 3}
---- !u!4 &7987707234478078385 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1193817378892839617}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7987707234478078399 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9100442221701383038, guid: a39accbe86f49f543a5d24217db65e4b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1193817378892839617}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7987707234478078398 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1193817378892839617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7987707234478078399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 314999da1f2600f49a27a67b6d05e6b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1193817378969501743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4521,12 +4274,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a39accbe86f49f543a5d24217db65e4b, type: 3}
---- !u!1 &7987707235323692229 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9100442221701383038, guid: a39accbe86f49f543a5d24217db65e4b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1193817379641165755}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7987707235323692235 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9100442221701383024, guid: a39accbe86f49f543a5d24217db65e4b,
@@ -4545,6 +4292,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314999da1f2600f49a27a67b6d05e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7987707235323692229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9100442221701383038, guid: a39accbe86f49f543a5d24217db65e4b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1193817379641165755}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1193817379643343608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4741,12 +4494,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 695d07619d41c3b41b1a6ad574a28ad2, type: 3}
---- !u!4 &1825747896451469383 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 704556730409957485, guid: 695d07619d41c3b41b1a6ad574a28ad2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1193817379660507178}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4901976004529290491 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6095089522489349329, guid: 695d07619d41c3b41b1a6ad574a28ad2,
@@ -4759,6 +4506,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fdfc56db74b6348881d719b6f617b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1825747896451469383 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 704556730409957485, guid: 695d07619d41c3b41b1a6ad574a28ad2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1193817379660507178}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1193817379673271772
 PrefabInstance:
   m_ObjectHideFlags: 0
