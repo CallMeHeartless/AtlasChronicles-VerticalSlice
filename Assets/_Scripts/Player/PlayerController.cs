@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private float m_fSprintMultiplier = 1.75f;
     [SerializeField]
     private float m_fWaterSlowMultiplier = 0.5f;
+    [SerializeField]
+    private GameObject m_fWaterParticles;
     private bool m_bIsWading = false;
     private float m_fCurrentMovementSpeed;
     [SerializeField]
@@ -220,6 +222,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (!m_rInstance) {
             m_rInstance = this;
         }
+
+        m_fWaterParticles.SetActive(false);
 
         //if(GameObject.FindGameObjectWithTag("CinematicManager") == null)
         //{
@@ -1029,10 +1033,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     public void ToggleWading(bool _bIsWading) {
         if (_bIsWading) {
+            m_fWaterParticles.SetActive(true);
             m_fCurrentMovementSpeed = m_fMovementSpeed * m_fWaterSlowMultiplier;
             m_bIsWading = true;
         }
         else {
+            m_fWaterParticles.SetActive(false);
+
             m_fCurrentMovementSpeed = m_fMovementSpeed;
             m_bIsWading = false;
         }
