@@ -414,13 +414,12 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_fSlideAngle = 0.0f;
 
         //ONLY slide if the player has reached a peak from jumping to prevent unrealistic sliding behaviour
-        float jumpSpeed = m_rAnimator.GetFloat("JumpSpeed");
-        //Dont slide if the player is just starting to fall/ at the peak of their jump
-        if (jumpSpeed > 1.0f)
+        float jumpState = m_rAnimator.GetFloat("JumpSpeed");
+        //Dont slide if the player is just starting to fall/at the peak of their jump
+        if (jumpState > 1.0f)
             return;
         //Make a bool to check whether the player is handing off a slippery object or not
         bool hanging = false;
-
 
         //If the player is physically colliding with a slippery object
         if (m_bSlipperySlopeCollided) {  
@@ -430,17 +429,16 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_fSlideAngle = Vector3.Angle(rayHit.normal, Vector3.up);
 
                 //Check if the slope is bigger than the character's slope limit
-                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit || Vector3.Angle(rayHit.normal, Vector3.up) > 180.0f) {
+                if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit 
+                 || Vector3.Angle(rayHit.normal, Vector3.up) > 180.0f) {
                     m_bAllowedToSlide = true;
                 }
-                else if (transform.position.y - rayHit.point.y >= 1.0f)
-                {
+                else if (transform.position.y - rayHit.point.y >= 1.0f) {
                     //If player happens to be stuck on a steep slope while not on the ground, set sliding as true
                     hanging = true;
                     m_bAllowedToSlide = true;
                 }
-                else
-                {
+                else {
                     //Player is not on a slope so do not activate slide
                     m_bAllowedToSlide = false;
                     return;
@@ -459,16 +457,17 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 }
             }
             else {
-                if (hanging)
-                {
-                    //If the player IS facing the slippery object WHILE hanging on a really steep slope slide. (slope cant be detected via feet)
+                if (hanging) {
+                    //If the player IS facing the slippery object 
+                    //      WHILE hanging on a really steep slope slide. 
+                    //      (slope cant be detected via feet)
                     m_ExternalForce = new Vector3(m_hitNormal.x, -0.2f, m_hitNormal.z);
                 }
-                else
-                {
+                else {
                     //If the player is on a slippery object while standing on a regular slope, slide.
                     m_ExternalForce = new Vector3(m_hitNormal.x, -m_hitNormal.y, m_hitNormal.z);
                 }
+
                 //Apply external force to force player to slide
                 Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
                 m_ExternalForce *= m_fSlideAngle;
@@ -480,8 +479,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 m_MovementInput = Vector3.zero;
             }
         }
-        else
-        {
+        else {
             //Set player as not sliding
             m_bIsSliding = false;
         }

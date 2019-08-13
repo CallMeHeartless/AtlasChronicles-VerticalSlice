@@ -117,7 +117,8 @@ public class EnemyController : MonoBehaviour
         m_bHasMapFragment = _bState;
         if (!m_bHasMapFragment) {
             // Spawn the map fragment that was dropped
-            GameObject map = GameObject.Instantiate<GameObject>(m_rMapFragmentPrefab, transform);
+            GameObject map = Instantiate(m_rMapFragmentPrefab, transform);
+            map.GetComponent<PickupMap>().SetStolen(true);
             map.transform.SetParent(null);
             Debug.Log("The goon dropped a map fragment");
         } else {

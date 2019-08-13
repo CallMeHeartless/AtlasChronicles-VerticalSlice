@@ -25,34 +25,34 @@ public class Destroyed : MonoBehaviour
     
     void Update()
     {
-        if (BoxRespawns == true)
-        {
-            gameObject.tag = "Broken";
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.GetComponent<Boxes>().enabled = false;
-            gameObject.GetComponent<BoxCollider>().enabled = false;
-            gameObject.GetComponent<RespawnBox>().enabled = true;
-        }
+        //if (BoxRespawns == true)
+        //{
+        //    gameObject.tag = "Broken";
+        //    gameObject.GetComponent<MeshRenderer>().enabled = false;
+        //    gameObject.GetComponent<Boxes>().enabled = false;
+        //    gameObject.GetComponent<BoxCollider>().enabled = false;
+        //    gameObject.GetComponent<RespawnBox>().enabled = true;
+        //}
 
-        if (m_intSecondaryItem != 0)
-        {
-            int intRotationAroundCircle = 360 / m_intSecondaryItem;
+        //if (m_intSecondaryItem != 0)
+        //{
+        //    int intRotationAroundCircle = 360 / m_intSecondaryItem;
 
-            Vector3 fouce = new Vector3(m_intForceOut, m_intForceUp, 0);
-            Vector3 gap = new Vector3(0.5f, 0, 0);
+        //    Vector3 fouce = new Vector3(m_intForceOut, m_intForceUp, 0);
+        //    Vector3 gap = new Vector3(0.5f, 0, 0);
 
-            for (int i = 0; i < m_intSecondaryItem; i++)
-            {
-                GameObject gOrb = GameObject.Instantiate(m_gSecondaryItemIs, gameObject.transform.position + gap + new Vector3(0, 1, 0), Quaternion.identity);
-                gOrb.GetComponent<Rigidbody>().AddForce(fouce.x, fouce.y, fouce.z);
-                fouce = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * fouce;
-                gap = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * gap;
-                gOrb.GetComponent<Pickup>().m_rHome = gameObject;
+        //    for (int i = 0; i < m_intSecondaryItem; i++)
+        //    {
+        //        GameObject gOrb = GameObject.Instantiate(m_gSecondaryItemIs, gameObject.transform.position + gap + new Vector3(0, 1, 0), Quaternion.identity);
+        //        gOrb.GetComponent<Rigidbody>().AddForce(fouce.x, fouce.y, fouce.z);
+        //        fouce = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * fouce;
+        //        gap = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * gap;
+        //        //gOrb.GetComponent<Pickup>().m_rHome = gameObject;
 
-            }
-            //m_intSecondaryItem = 0;
-        }
-        gameObject.GetComponent<Destroyed>().enabled = false;
+        //    }
+        //    //m_intSecondaryItem = 0;
+        //}
+        //gameObject.GetComponent<Destroyed>().enabled = false;
     }
 
  public void ChestDestory()
@@ -79,7 +79,7 @@ public class Destroyed : MonoBehaviour
                 gOrb.GetComponent<Rigidbody>().AddForce(fouce.x, fouce.y, fouce.z);
                 fouce = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * fouce;
                 gap = Quaternion.AngleAxis(intRotationAroundCircle, Vector3.up) * gap;
-                gOrb.GetComponent<Pickup>().m_rHome = gameObject;
+                //gOrb.GetComponent<Pickup>().m_rHome = gameObject;
 
             }
             //m_intSecondaryItem = 0;
