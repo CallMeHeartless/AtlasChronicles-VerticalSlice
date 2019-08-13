@@ -52,9 +52,12 @@ public class CinematicManager : MonoBehaviour
 
     static public int GetActiveCinematic()
     {
+        //Return -1 to indicate there are no active children cinematics
         if(m_rChildren == null) {
             return -1;
         }
+
+        //Return an ID of a cinematic zone if it is currently beign played
         foreach (CinematicZone cinematic in m_rChildren)
         {
             if(cinematic.GetDirector().playableGraph.IsValid())
@@ -81,6 +84,7 @@ public class CinematicManager : MonoBehaviour
             }
             else
             {
+                //Resume cinematic
                 zone.PauseCinematic(false);
             }
         }
@@ -90,17 +94,21 @@ public class CinematicManager : MonoBehaviour
         }
     }
 
-    static public void PauseCinematics(bool _pause)
+    //Pauses all cinematics
+    static public void PauseAllCinematics(bool _pause)
     {
-        if(_pause)
+        if (_pause)
         {
             m_iPausedCine = GetActiveCinematic();
         }
+        
 
+        //If no cinematics are active
         if (m_iPausedCine == -1)
         {
             return;
         }
+        //m_iPausedCine = used to resume a cinematic that is currently paused
         PauseCinematicByID(_pause, m_iPausedCine);
     }
 

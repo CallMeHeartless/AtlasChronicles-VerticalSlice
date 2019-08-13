@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Control References
     private string m_strJumpButton = "Jump";
     private string m_strSwitchButton = "XBoxL2";
+    private string m_strSwitchLaunchButton = "XBoxR2";
     private string m_strTeleportMarkerPlaceButton = "L1";
     private string m_strTeleportButton = "R1";
     private string m_strAimHeldObjectButton = "XBoxR2";
@@ -41,7 +42,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strYAxisButton = "RightYAxis";
     private string m_strXAxisButton = "RightXAxis";
     private string m_strMapVision = "YButton";
+    private string m_strCheatYeet = "Zero";
     private AxisToButton m_rSwitchButton = new AxisToButton();
+    private AxisToButton m_rSwitchLaunchButton = new AxisToButton();
 
     // Movement variables
     [Header("Movement Variables")]
@@ -134,6 +137,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private GameObject m_rWeaponScroll;
 
     [Header("Slide Detection Variables")]
+    [SerializeField] private bool m_bAllowedToSlide = false;
     [SerializeField] private bool m_bIsSliding = false;
     [SerializeField] bool m_bIsOnMovingPlatform = false;
     private RaycastHit rayHit;
@@ -143,6 +147,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bSlipperySlopeCollided = false;
     private bool m_bStandingOnSlope = false; // is on a slope or not
     private float m_fSlideAngle = 0.0f;
+    private bool m_bAllowYeetSlide = false;
+    private GameObject m_rCheatSlide;
 
     //Extforce variables
     private bool m_bExtForceOccuring;
@@ -182,6 +188,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
         m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
+        m_rCheatSlide = GameObject.FindGameObjectWithTag("CheatSlide");
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -204,6 +211,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Initialise trigger to button
         m_rSwitchButton.m_strAxis = m_strSwitchButton;
+        m_rSwitchLaunchButton.m_strAxis = m_strSwitchLaunchButton;
 
         // Set static instance for ease of reference
         if (!m_rInstance) {
@@ -220,14 +228,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         // Update L2
         m_rSwitchButton.Update();
+        m_rSwitchLaunchButton.Update();
 
         // Check if the character is grounded to reset jump count
         if (m_rCharacterController.isGrounded)
             ResetJump();
 
-        if (Input.GetButton(m_strCameraLockButton)) {
-            m_rFreeLook.m_YAxis.Value = 0.5f;
-        }
+        //if (Input.GetButton(m_strCameraLockButton)) { // Removed by Kerry
+        //    m_rFreeLook.m_YAxis.Value = 0.5f;
+        //}
 
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
@@ -301,7 +310,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Performs a simple jump
     private void Jump() {
         // Handle jump input
-        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) {
+        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bAllowedToSlide) {
             //Reset glide timer
             m_fGlideTimer = 0.0f;
 
@@ -389,6 +398,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
     }
 
+    //Resets variables related to jumping
     public void ResetJump()
     {
         m_bCoyoteAllowed = true;
@@ -399,7 +409,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     //Detect if player is able to slide down a steep slope
     void SlideMethod() {
         //Reset sliding and slide direction
-        m_bIsSliding = false;
+        m_bAllowedToSlide = false;
         m_vSlideDir = Vector3.zero;
         m_fSlideAngle = 0.0f;
 
@@ -421,31 +431,31 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
                 //Check if the slope is bigger than the character's slope limit
                 if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit || Vector3.Angle(rayHit.normal, Vector3.up) > 180.0f) {
-                    m_bIsSliding = true;
+                    m_bAllowedToSlide = true;
                 }
                 else if (transform.position.y - rayHit.point.y >= 1.0f)
                 {
                     //If player happens to be stuck on a steep slope while not on the ground, set sliding as true
                     hanging = true;
-                    m_bIsSliding = true;
+                    m_bAllowedToSlide = true;
                 }
                 else
                 {
                     //Player is not on a slope so do not activate slide
-                    m_bIsSliding = false;
+                    m_bAllowedToSlide = false;
                     return;
                 }
             }
         }
 
         //If the player is allowed to slide
-        if (m_bIsSliding) {
+        if (m_bAllowedToSlide) {
             //If player is not facing a slippery object, let player exit slide
             if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f)) {
                 //Check if player is trying to move while on a slope and not facing slippery object
                 bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
                 if (playerIsMoving) {
-                    m_bIsSliding = false;
+                    m_bAllowedToSlide = false;
                 }
             }
             else {
@@ -453,30 +463,52 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 {
                     //If the player IS facing the slippery object WHILE hanging on a really steep slope slide. (slope cant be detected via feet)
                     m_ExternalForce = new Vector3(m_hitNormal.x, -0.2f, m_hitNormal.z);
-                    Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
-                    m_ExternalForce *= Vector3.Angle(rayHit.normal, Vector3.up);
                 }
                 else
                 {
                     //If the player is on a slippery object while standing on a regular slope, slide.
                     m_ExternalForce = new Vector3(m_hitNormal.x, -m_hitNormal.y, m_hitNormal.z);
-                    Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
-                    m_ExternalForce *= m_fSlideAngle;
                 }
+                //Apply external force to force player to slide
+                Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
+                m_ExternalForce *= m_fSlideAngle;
+
+                //Set player as sliding
+                m_bIsSliding = true;
 
                 //Player should not be able to be able to move towards the slippery object.
                 m_MovementInput = Vector3.zero;
             }
         }
+        else
+        {
+            //Set player as not sliding
+            m_bIsSliding = false;
+        }
     }
 
     // Updates the player's vertical velocity to consider gravity
     private void ApplyGravity() {
+        
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            m_bAllowYeetSlide = !m_bAllowYeetSlide;
+        }
+        m_rCheatSlide.SetActive(m_bAllowYeetSlide);
+
         // Check if floating
         if (m_bIsFloating) {
-            m_fTurnSpeed = 1.0f;
-            m_fGravityMulitplier = m_fFloatGravityReduction / 5.0f;
-            m_fCurrentMovementSpeed = m_fMovementSpeed - 2.0f;
+            if(m_bIsSliding && !m_bAllowYeetSlide)
+            {
+                //sliding while gliding
+                m_fGravityMulitplier = 5.0f;
+            }
+            else
+            {
+                m_fTurnSpeed = 1.0f;
+                m_fGravityMulitplier = m_fFloatGravityReduction / 5.0f;
+                m_fCurrentMovementSpeed = m_fMovementSpeed - 2.0f;
+            }
         }
 
         //Check if the player is sliding or not
@@ -586,40 +618,35 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         AimSwitchTag();
 
         // Handle placing a teleport marker
-        if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton)) {
-            // Throw a tag if there is no  held object
-            if (!m_rHeldObject && m_rCharacterController.isGrounded) {
-                // Place on ground
-                m_rAnimator.ResetTrigger("Idle");
-                m_rAnimator.ResetTrigger("Walk");
-                m_rAnimator.SetTrigger("PlaceTag");
-                PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0));
-            } 
+        if (Input.GetButtonDown(m_strTeleportMarkerPlaceButton) && m_rCharacterController.isGrounded) {
+            // Place on ground
+            m_rAnimator.ResetTrigger("Idle");
+            m_rAnimator.ResetTrigger("Walk");
+            m_rAnimator.SetTrigger("PlaceTag");
+            PlaceTeleportMarker(transform.position - new Vector3(0, 0.7f, 0)); 
         }
         // Teleporting to the marker
         else if (Input.GetButtonDown(m_strTeleportButton) && m_bTeleportMarkerDown) {
             m_bWasSwitchLastTeleportCommand = false;
             //TeleportToTeleportMarker();
-            if (!m_bTeleportThresholdWarning)
-            {
+            if (!m_bTeleportThresholdWarning) {
                 m_rAnimator.SetTrigger("Teleport");
             }
 
         }
-        // Throw switch tag / switch teleport
-        else if (Input.GetButtonUp("SwitchTagKeyboard") || m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased) {//|| (Input.GetAxisRaw(m_strSwitchButton) == 0.0f)
-            if (m_rSwitchTarget) {
-                if (!m_bSwitchThresholdWarning)
-                {
-                    m_bWasSwitchLastTeleportCommand = true;
-                    m_rAnimator.SetTrigger("Teleport");
-                }
+        // Throw switch tag (while aiming)
+        else if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.FirstReleased || Input.GetButtonUp("SwitchTagKeyboard")) {// Input.GetButtonUp("SwitchTagKeyboard") ||
+            m_rAnimator.SetTrigger("ThrowTag");
 
-                //SwitchWithTarget();
-            } else if (!m_rHeldObject) {
-                m_rAnimator.SetTrigger("ThrowTag");
+        }
+        // Teleport to switch tag // Kerry
+        else if (m_rSwitchLaunchButton.GetCurrentState() == AxisToButton.InputState.FirstPressed || Input.GetButtonDown("SwitchTagLaunchKeyboard")) {
+            if (m_rSwitchTarget && !m_bSwitchThresholdWarning) { // Check that there is a valid target and it is within range
+                m_bWasSwitchLastTeleportCommand = true;
+                m_rAnimator.SetTrigger("Teleport");
             }
         }
+
         // Allow the player to manually cancel their switch tag
         else if (Input.GetButtonDown(m_strTetherBreakButton)) {
             CancelSwitchTag();
@@ -746,11 +773,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Align the player with the camera and indicate where the switch tag is being aimed
     private void AimSwitchTag() {
-        if (m_rSwitchTarget) {
-            return;
-        }
+        //if (m_rSwitchTarget) {
+        //    return;
+        //}
 
-        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed || Input.GetButton("SwitchTagKeyboard")) {//Input.GetButton(m_strSwitchButton)
+        if (m_rSwitchButton.GetCurrentState() == AxisToButton.InputState.Pressed || Input.GetButton("SwitchTagKeyboard")) {//
             ToggleAiming(true);
             Vector3 vecCameraRotation = m_rCameraReference.transform.rotation.eulerAngles;
             // Line up with camera

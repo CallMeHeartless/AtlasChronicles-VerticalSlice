@@ -76,7 +76,7 @@ Shader "S_Cobblestone"
 			float4 temp_output_10_0 = ( ( float4( i.uv_texcoord, 0.0 , 0.0 ) * appendResult6 ) * _UVScale_Instance );
 			o.Normal = UnpackNormal( tex2D( _Normal, temp_output_10_0.xy ) );
 			float _Hue_Instance = UNITY_ACCESS_INSTANCED_PROP(_Hue_arr, _Hue);
-			float3 hsvTorgb13_g1 = RGBToHSV( tex2D( _Diffuse, temp_output_10_0.xy ).rgb );
+			float3 hsvTorgb13_g1 = RGBToHSV( tex2D( _Diffuse, temp_output_10_0.xy, float2( 0,0 ), float2( 0,0 ) ).rgb );
 			float _Saturation_Instance = UNITY_ACCESS_INSTANCED_PROP(_Saturation_arr, _Saturation);
 			float _Lightness_Instance = UNITY_ACCESS_INSTANCED_PROP(_Lightness_arr, _Lightness);
 			float3 hsvTorgb17_g1 = HSVToRGB( float3(( _Hue_Instance + hsvTorgb13_g1.x ),( _Saturation_Instance * hsvTorgb13_g1.y ),( hsvTorgb13_g1.z * _Lightness_Instance )) );
@@ -95,17 +95,17 @@ Shader "S_Cobblestone"
 }
 /*ASEBEGIN
 Version=16400
-1888;162;1266;918;2909.142;1319.695;2.038166;True;False
+1921;1;1278;970;3487.797;776.2946;1.069837;True;False
 Node;AmplifyShaderEditor.ObjectScaleNode;5;-1986.331,-174.1567;Float;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.DynamicAppendNode;6;-1805.535,-173.0617;Float;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TexCoordVertexDataNode;7;-1875.185,-293.8015;Float;False;0;2;0;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;8;-1627.185,-293.8015;Float;False;2;2;0;FLOAT2;0,0;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.RangedFloatNode;9;-1625.957,-176.981;Float;False;InstancedProperty;_UVScale;UVScale;0;0;Create;True;0;0;False;0;200;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;-1466.966,-292.6776;Float;False;2;2;0;FLOAT4;0,0,0,0;False;1;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.SamplerNode;1;-1049.203,-364.9397;Float;True;Property;_Diffuse;Diffuse;1;0;Create;True;0;0;False;0;188a05f21ca3c4a47ab9a3f471e377fb;188a05f21ca3c4a47ab9a3f471e377fb;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;12;-892.8738,-640.8968;Float;False;InstancedProperty;_Hue;Hue;2;0;Create;True;0;0;False;0;0;0;-1;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;13;-907.1698,-568.1151;Float;False;InstancedProperty;_Saturation;Saturation;3;0;Create;True;0;0;False;0;1;1;0;2;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;14;-901.9713,-491.4344;Float;False;InstancedProperty;_Lightness;Lightness;4;0;Create;True;0;0;False;0;1;1;0;5;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;1;-1049.203,-364.9397;Float;True;Property;_Diffuse;Diffuse;1;0;Create;True;0;0;False;0;188a05f21ca3c4a47ab9a3f471e377fb;188a05f21ca3c4a47ab9a3f471e377fb;True;0;False;white;Auto;False;Object;-1;Derivative;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;4;-371.3508,39.39184;Float;False;InstancedProperty;_Metallic;Metallic;7;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;3;-371.6733,119.168;Float;False;InstancedProperty;_Smoothness;Smoothness;6;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;2;-1051.146,-174.166;Float;True;Property;_Normal;Normal;5;0;Create;True;0;0;False;0;5f39954e19f5a48428a9a294690352a5;5f39954e19f5a48428a9a294690352a5;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -128,4 +128,4 @@ WireConnection;0;1;2;0
 WireConnection;0;3;4;0
 WireConnection;0;4;3;0
 ASEEND*/
-//CHKSM=FAA79DC4DB5485C73DA40869B1AFF262A650E69D
+//CHKSM=3C3480C85ADBFB5F4F2FBABD2B3F8EC1A53BDA57

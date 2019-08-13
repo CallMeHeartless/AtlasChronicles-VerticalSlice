@@ -15,10 +15,12 @@ public class ChildActivator : MonoBehaviour
         {
             item.SetActive(m_bActivateChildren);
         }
+        
     }
 
     public void SetChildrenActive(bool _activate)
     {
+        //Sets all children active
         foreach (GameObject item in m_rChildren)
         {
             item.SetActive(_activate);
