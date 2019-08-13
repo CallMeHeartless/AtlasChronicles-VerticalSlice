@@ -31,6 +31,7 @@ public class PickupMap : Pickup
         }
         else
         {
+            Destroy(gameObject, 0.1f);
             //Maps that are not stolen are basically zone specific maps that should activate a cinematic when triggered with
             CinematicManager.ActivateCinematicByID(0);
         }

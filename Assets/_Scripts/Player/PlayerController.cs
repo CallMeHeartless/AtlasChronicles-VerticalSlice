@@ -162,6 +162,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     public float m_fGlideTime = 0.5f;
     private float m_fGlideTimer = 0.0f;
+    [SerializeField] private GameObject m_rCineManagerPrefab;
 
     [Header("Audio")]
     [SerializeField] private AudioPlayer m_rJumpAudio;
@@ -217,6 +218,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (!m_rInstance) {
             m_rInstance = this;
         }
+
+        //if(GameObject.FindGameObjectWithTag("CinematicManager") == null)
+        //{
+        //    Instantiate(m_rCineManagerPrefab, Vector3.zero, Quaternion.identity);
+        //}
     }
 
     // Update is called once per frame
