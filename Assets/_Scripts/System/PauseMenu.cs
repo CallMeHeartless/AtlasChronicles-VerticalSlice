@@ -66,7 +66,7 @@ public class PauseMenu : MonoBehaviour
             //Disable cinematic functionality when paused
             m_rScriptActivator.SetChildrenActive(false);
             //CinematicManager.ActivateCinematics(false);
-            CinematicManager.PauseCinematics(true);
+            CinematicManager.PauseAllCinematics(true);
 
             // Set game as paused 
             GameState.SetPauseFlag(true);
@@ -87,7 +87,7 @@ public class PauseMenu : MonoBehaviour
 
             //Set gamestate pause to false
             GameState.SetPauseFlag(false);
-            CinematicManager.PauseCinematics(false);
+            CinematicManager.PauseAllCinematics(false);
 
         }
 
@@ -97,7 +97,7 @@ public class PauseMenu : MonoBehaviour
             //Set game as not paused
             m_bIsPaused = false;
             GameState.SetPauseFlag(false);
-            CinematicManager.PauseCinematics(false);
+            CinematicManager.PauseAllCinematics(false);
 
             //Lock cursor when resumed
             Cursor.lockState = CursorLockMode.Locked;

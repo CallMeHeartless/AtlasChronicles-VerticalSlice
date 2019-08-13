@@ -30,6 +30,7 @@ public class Zone : MonoBehaviour
         }
     }
 
+    //Checks if the zones passed through param matches this objects zone ID
     public bool DoesIDMatchZone(int _uiID) {
         return _uiID == m_iZoneID;
     }
@@ -59,11 +60,13 @@ public class Zone : MonoBehaviour
         }
     }
 
+    //Returns zone ID
     public int GetZoneID()
     {
         return m_iZoneID;
     }
 
+    //Returns a list of zones
     public static List<Zone> GetZoneList()
     {
         if(s_Zones != null)

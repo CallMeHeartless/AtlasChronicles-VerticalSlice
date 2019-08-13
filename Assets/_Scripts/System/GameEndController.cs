@@ -40,7 +40,7 @@ public class GameEndController : MonoBehaviour
     // Called when the player collects a map fragment to check if they have them all (or when they have lost one)
     public static void CheckMapCollection() {
         if (!instance) {
-            Debug.LogError("ERROR: GameEndController instance does not exist. Check that it has been added to the scene.");
+            //Debug.LogError("ERROR: GameEndController instance does not exist. Check that it has been added to the scene.");
             return;
         }
         // If MAPS_COLLECTED >= MAPS_TOTAL

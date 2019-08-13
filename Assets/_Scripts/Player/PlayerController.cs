@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private string m_strYAxisButton = "RightYAxis";
     private string m_strXAxisButton = "RightXAxis";
     private string m_strMapVision = "YButton";
+    private string m_strCheatYeet = "Zero";
     private AxisToButton m_rSwitchButton = new AxisToButton();
     private AxisToButton m_rSwitchLaunchButton = new AxisToButton();
 
@@ -136,6 +137,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private GameObject m_rWeaponScroll;
 
     [Header("Slide Detection Variables")]
+    [SerializeField] private bool m_bAllowedToSlide = false;
     [SerializeField] private bool m_bIsSliding = false;
     [SerializeField] bool m_bIsOnMovingPlatform = false;
     private RaycastHit rayHit;
@@ -145,6 +147,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private bool m_bSlipperySlopeCollided = false;
     private bool m_bStandingOnSlope = false; // is on a slope or not
     private float m_fSlideAngle = 0.0f;
+    private bool m_bAllowYeetSlide = false;
+    private GameObject m_rCheatSlide;
 
     //Extforce variables
     private bool m_bExtForceOccuring;
@@ -184,6 +188,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rCameraReference = GameObject.Find("Camera").GetComponent<Camera>();
         }
         m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
+        m_rCheatSlide = GameObject.FindGameObjectWithTag("CheatSlide");
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;
@@ -305,7 +310,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Performs a simple jump
     private void Jump() {
         // Handle jump input
-        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bIsSliding) {
+        if (Input.GetButtonDown(m_strJumpButton) && !m_bIsFloating && !m_bAllowedToSlide) {
             //Reset glide timer
             m_fGlideTimer = 0.0f;
 
@@ -393,6 +398,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
     }
 
+    //Resets variables related to jumping
     public void ResetJump()
     {
         m_bCoyoteAllowed = true;
@@ -403,7 +409,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     //Detect if player is able to slide down a steep slope
     void SlideMethod() {
         //Reset sliding and slide direction
-        m_bIsSliding = false;
+        m_bAllowedToSlide = false;
         m_vSlideDir = Vector3.zero;
         m_fSlideAngle = 0.0f;
 
@@ -425,31 +431,31 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
                 //Check if the slope is bigger than the character's slope limit
                 if (Vector3.Angle(rayHit.normal, Vector3.up) > m_rCharacterController.slopeLimit || Vector3.Angle(rayHit.normal, Vector3.up) > 180.0f) {
-                    m_bIsSliding = true;
+                    m_bAllowedToSlide = true;
                 }
                 else if (transform.position.y - rayHit.point.y >= 1.0f)
                 {
                     //If player happens to be stuck on a steep slope while not on the ground, set sliding as true
                     hanging = true;
-                    m_bIsSliding = true;
+                    m_bAllowedToSlide = true;
                 }
                 else
                 {
                     //Player is not on a slope so do not activate slide
-                    m_bIsSliding = false;
+                    m_bAllowedToSlide = false;
                     return;
                 }
             }
         }
 
         //If the player is allowed to slide
-        if (m_bIsSliding) {
+        if (m_bAllowedToSlide) {
             //If player is not facing a slippery object, let player exit slide
             if (!Physics.Raycast(transform.position, transform.forward, out rayHit, 2.0f)) {
                 //Check if player is trying to move while on a slope and not facing slippery object
                 bool playerIsMoving = Input.GetAxis("Horizontal") != 0.0f || Input.GetAxis("Vertical") != 0.0f;
                 if (playerIsMoving) {
-                    m_bIsSliding = false;
+                    m_bAllowedToSlide = false;
                 }
             }
             else {
@@ -457,30 +463,52 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 {
                     //If the player IS facing the slippery object WHILE hanging on a really steep slope slide. (slope cant be detected via feet)
                     m_ExternalForce = new Vector3(m_hitNormal.x, -0.2f, m_hitNormal.z);
-                    Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
-                    m_ExternalForce *= Vector3.Angle(rayHit.normal, Vector3.up);
                 }
                 else
                 {
                     //If the player is on a slippery object while standing on a regular slope, slide.
                     m_ExternalForce = new Vector3(m_hitNormal.x, -m_hitNormal.y, m_hitNormal.z);
-                    Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
-                    m_ExternalForce *= m_fSlideAngle;
                 }
+                //Apply external force to force player to slide
+                Vector3.OrthoNormalize(ref m_hitNormal, ref m_ExternalForce);
+                m_ExternalForce *= m_fSlideAngle;
+
+                //Set player as sliding
+                m_bIsSliding = true;
 
                 //Player should not be able to be able to move towards the slippery object.
                 m_MovementInput = Vector3.zero;
             }
         }
+        else
+        {
+            //Set player as not sliding
+            m_bIsSliding = false;
+        }
     }
 
     // Updates the player's vertical velocity to consider gravity
     private void ApplyGravity() {
+        
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            m_bAllowYeetSlide = !m_bAllowYeetSlide;
+        }
+        m_rCheatSlide.SetActive(m_bAllowYeetSlide);
+
         // Check if floating
         if (m_bIsFloating) {
-            m_fTurnSpeed = 1.0f;
-            m_fGravityMulitplier = m_fFloatGravityReduction / 5.0f;
-            m_fCurrentMovementSpeed = m_fMovementSpeed - 2.0f;
+            if(m_bIsSliding && !m_bAllowYeetSlide)
+            {
+                //sliding while gliding
+                m_fGravityMulitplier = 5.0f;
+            }
+            else
+            {
+                m_fTurnSpeed = 1.0f;
+                m_fGravityMulitplier = m_fFloatGravityReduction / 5.0f;
+                m_fCurrentMovementSpeed = m_fMovementSpeed - 2.0f;
+            }
         }
 
         //Check if the player is sliding or not
