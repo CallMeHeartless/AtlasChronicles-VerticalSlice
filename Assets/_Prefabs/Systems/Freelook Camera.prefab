@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 4385144534526207149}
   - component: {fileID: 4385144534526207148}
   - component: {fileID: 729065709471334250}
+  - component: {fileID: 4359833031872392592}
   m_Layer: 0
   m_Name: Freelook Camera
   m_TagString: MainCamera
@@ -770,6 +771,18 @@ MonoBehaviour:
   m_Damping: 8
   m_DampingWhenOccluded: 0.4
   m_OptimalTargetDistance: 5
+--- !u!114 &4359833031872392592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4385144534526207139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c2ebc2c716f0843b43d4115509516b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &906752247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -785,37 +798,37 @@ PrefabInstance:
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -63.93447
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.9638858
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -126.43216
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.097096935
+      value: -0.063456774
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0076211845
+      value: -0.087243676
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0007435286
+      value: 0.0055753626
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9952455
+      value: -0.99414825
       objectReference: {fileID: 0}
     - target: {fileID: 1280811138748419964, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
@@ -862,12 +875,6 @@ PrefabInstance:
       propertyPath: m_RenderingPath
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1280811139303559913, guid: cdabd27d67b22864abbffc0166ccb75a,
-        type: 3}
-      propertyPath: sharedProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: 5eed07e09b3a8c440bdc7afa9752b900,
-        type: 2}
     - target: {fileID: 5251682630308641397, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: outlineShaderMaterial
@@ -883,6 +890,12 @@ PrefabInstance:
       propertyPath: extraRenderTexture
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1280811139303559913, guid: cdabd27d67b22864abbffc0166ccb75a,
+        type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 5eed07e09b3a8c440bdc7afa9752b900,
+        type: 2}
     - target: {fileID: 4920261551819512774, guid: cdabd27d67b22864abbffc0166ccb75a,
         type: 3}
       propertyPath: orthographic size
