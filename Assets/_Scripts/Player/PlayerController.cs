@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private PlayerAudioController m_rPlayerAudioController;
     private DisplayStat m_rUI;
     public Vector3 m_rRespawnLocation;
+    [SerializeField]
+    private PointOfInterestController m_rPointOfInterestController;
 
     // Component references
     private CharacterController m_rCharacterController;
@@ -229,10 +231,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (m_rCharacterController.isGrounded)
             ResetJump();
 
-        //if (Input.GetButton(m_strCameraLockButton)) { // Removed by Kerry
-        //    m_rFreeLook.m_YAxis.Value = 0.5f;
-        //}
-
         // Calculate movement for the frame
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
@@ -240,12 +238,19 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private void LateUpdate() {
+        // Clear external force
         if(m_ExternalForce.y <= 0.0f) {
             m_ExternalForce = Vector3.zero;
         }
+        // Simulate horizontal friction
         if(!m_bExtForceOccuring) {
             m_Velocity.x = SmoothFloatToZero(m_Velocity.x, m_bXSmoothSpeed);
             m_Velocity.z = SmoothFloatToZero(m_Velocity.z, m_bZSmoothSpeed);
+        }
+
+        // Disable map vision if the player tried to move // Kerry - NOTE: Remove this if the mode of map vision is reverted
+        if (m_bMapVisionOn && m_MovementInput.sqrMagnitude > 0.0f) {
+            HandleMapVision();
         }
     }
 
@@ -787,13 +792,16 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Handles map vision /// Kerry
     private void HandleMapVision() {
-        //InkGauge rInkGauge = InkGauge.GetInstance();
-        //if (rInkGauge) { // Ensure reference exists
-        //    rInkGauge.HandleMapVision(); // Send call to ink gauge
-        //}
-        // Rework (Kerry)
+        // Toggle active state
         m_bMapVisionOn = !m_bMapVisionOn;
-        Zone.ToggleMapVision(m_bMapVisionOn);
+
+        /// The code below toggles map vision via zones
+        //Zone.ToggleMapVision(m_bMapVisionOn);
+
+        /// The code below uses the point of interest system
+        if (m_rPointOfInterestController) {
+            m_rPointOfInterestController.SetPointOfInterest(m_bMapVisionOn);
+        }
     }
     
     // Triggers the teleport particle effects
