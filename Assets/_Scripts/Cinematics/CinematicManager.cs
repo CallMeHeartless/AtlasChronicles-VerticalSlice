@@ -46,7 +46,7 @@ public class CinematicManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Zone does not exist");
+            Debug.Log("Cinematic Zone does not exist");
         }
     }
 
