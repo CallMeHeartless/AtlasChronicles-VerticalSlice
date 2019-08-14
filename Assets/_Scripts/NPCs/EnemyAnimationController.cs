@@ -8,6 +8,8 @@ public class EnemyAnimationController : MonoBehaviour
     private EnemyController m_rEnemyController;
     [SerializeField]
     private MeleeAttack[] m_Weapons;
+    [SerializeField]
+    private GameObject m_Exclamation;
 
 
     void Start()
@@ -52,4 +54,14 @@ public class EnemyAnimationController : MonoBehaviour
     public void FreeAgent() {
         m_rEnemyController.FreeAgent();
     }
+
+    public void ExclamationOn() {
+        m_Exclamation.SetActive(true);
+    }
+
+    public void ExclamationOff() {
+        m_Exclamation.SetActive(false);
+    }
+
+
 }
