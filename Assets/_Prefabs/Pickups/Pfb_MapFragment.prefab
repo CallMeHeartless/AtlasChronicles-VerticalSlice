@@ -122,8 +122,8 @@ GameObject:
   - component: {fileID: 9155770641131760261}
   - component: {fileID: 9155770641131760262}
   - component: {fileID: 9155770641131760263}
-  - component: {fileID: 2699483808270786577}
   - component: {fileID: 973844625558569021}
+  - component: {fileID: 5571897698735444564}
   m_Layer: 14
   m_Name: Pfb_MapFragment
   m_TagString: PrimaryPickup
@@ -213,21 +213,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2699483808270786577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9155770641131760257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 885d6cc5b717d514685c4bbb6e0a6f9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_rParticles: {fileID: 9056534860113516651}
-  m_rHome: {fileID: 0}
-  m_uiID: 0
 --- !u!82 &973844625558569021
 AudioSource:
   m_ObjectHideFlags: 0
@@ -325,6 +310,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5571897698735444564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9155770641131760257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99514655d536bbc4f838399f3688a745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_regionID: 0
+  m_rParticles: {fileID: 9056534860113516651}
 --- !u!1001 &644086699220537586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -412,17 +411,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.240401
       objectReference: {fileID: 0}
-    - target: {fileID: 7321764222494841987, guid: b3f6d788b9ec59b40a76b952dc064318,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 1794736032675814507, guid: b3f6d788b9ec59b40a76b952dc064318,
         type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3068537810493475877, guid: b3f6d788b9ec59b40a76b952dc064318,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321764222494841987, guid: b3f6d788b9ec59b40a76b952dc064318,
         type: 3}
       propertyPath: m_Layer
       value: 14

@@ -12,18 +12,21 @@ public class DisplayStat : MonoBehaviour
     [SerializeField] GameObject[] m_rHearts;
     [SerializeField] GameObject m_rHeart;
     [SerializeField] GameObject m_rUIGamePanel;
-    private bool m_bShown = false;
+    [SerializeField] PlayableDirector[] m_rDirectors;
 
     private GameObject[] m_rMapReferences;
+    private bool m_bShown = false;
     public int m_iHP = 4;
-    [SerializeField] PlayableDirector[] m_rDirectors;
 
     // Start is called before the first frame update
     void Start()
     {
-        NewHealth(m_iHP); // NIK //Set the player to have 4 health
+        // NIK //Set the player to have 4 health
+        NewHealth(m_iHP);
+
+        //viv-----
         HideUIGamePanel(true);
-        //VIV-----
+
         //Find all collectables placed in the level
         GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex] = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length;
 
@@ -52,8 +55,7 @@ public class DisplayStat : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() { // Viv
         //Update text based on how many collectables have been collected
         m_rCollectableText.GetComponent<TextMeshProUGUI>().text = 
             GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString() 
@@ -66,66 +68,66 @@ public class DisplayStat : MonoBehaviour
     }
   
     //NIK
-    public void NewHealth(int HP)
-    {
-        for (int i = 0; i < m_rHearts.Length; i++)
-        {
-            if (HP<= i)
-            {
+    public void NewHealth(int HP) {
+        for (int i = 0; i < m_rHearts.Length; i++) {
+            if (HP<= i) {
                 m_rHearts[i].SetActive(false);
             }
-            else
-            {
+            else {
                 m_rHearts[i].SetActive(true);
             }
         }
-        UpdateHealth(HP);
+        UpdateHealth(HP); // Viv // Testing quarter heart update
     }
 
-    public void UpdateHealth(int _hp)
-    {
-        //Update the fill of the heart in quarter decrements
-        if(m_rHeart)
-            m_rHeart.GetComponent<Image>().fillAmount = _hp * 90.0f /360.0f;
+    /******************************************************************
+     * UpdateHealth: Updates fill of the heart in quarter decrements
+     * Author: Vivian
+     ******************************************************************/
+    public void UpdateHealth(int _hp) {
+        if(m_rHeart) {
+            m_rHeart.GetComponent<Image>().fillAmount = _hp * 90.0f / 360.0f;
+        }
     }
 
-
-    public void HideUIGamePanel(bool _hide)
-    {
+    /******************************************************************
+     * HideUIGamePanel: Hides UI Game Panel via PlayableDirectors/Timeline animations
+     * Author: Vivian
+     ******************************************************************/
+    public void HideUIGamePanel(bool _hide) {
         //Invoke method to hide UI game panel in 3 seconds
-        if (_hide)
-        {
+        if (_hide) {
             //Cancel all previous invokes to prevent awkward looking transitionss
             CancelInvoke();
             Invoke("HideGameUIPanel", 3.0f);
         }
-        else
-        {
+        else {
             //Instantly show UI game panel if it is not already being shown
-            if (!m_bShown)
-            {
+            if (!m_bShown) {
                 m_bShown = true;
                 m_rDirectors[1].Play();
             }
-            
         }
     }
 
-    //Hides game panel after 3 seconds and marks boolean as not shown
-    void HideGameUIPanel()
-    {
-        if (!GetDirectorIsPlaying(0))
-        {
+    /******************************************************************
+     * HideGameUIPanel: Hides game panel after 3 seconds and marks boolean as not shown
+     * Author: Vivian
+     ******************************************************************/
+    void HideGameUIPanel() {
+        if (!GetDirectorIsPlaying(0)) {
             m_rDirectors[0].Play();
             m_bShown = false;
         }
     }
-    
-    bool GetDirectorIsPlaying(int _director)
-    {
+
+    /******************************************************************
+     * GetDirectorIsPlaying: Check if director specified is playing
+     * Author: Vivian
+     ******************************************************************/
+    bool GetDirectorIsPlaying(int _director) {
         //Check if director specified is playing
-        if (m_rDirectors[_director].playableGraph.IsValid())
-        {
+        if (m_rDirectors[_director].playableGraph.IsValid()) {
             return m_rDirectors[_director].playableGraph.IsPlaying();
         }
         return false;

@@ -28,8 +28,7 @@ public class MapManager : MonoBehaviour
         MapDefaultSettings();
     }
 
-    public void RetrieveZones()
-    {
+    public void RetrieveZones() {
         List<Zone> zoneList = Zone.GetZoneList();
 
         if (m_rMapRegions != null && m_rZones != null)
