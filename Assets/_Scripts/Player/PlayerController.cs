@@ -1094,7 +1094,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void UpdateHealth() {
         int iHealth = GetComponent<DamageController>().iCurrentHealth;
         if (m_rUI) {
-            m_rUI.NewHealth(iHealth);
+            m_rUI.UpdateHealth(iHealth);
         }
     }
 
