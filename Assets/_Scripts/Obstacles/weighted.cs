@@ -200,7 +200,6 @@ public class weighted : MonoBehaviour, IMessageReceiver
                 {
                     IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
                     target.OnReceiveMessage(MessageType.eOn, m_PassNumber[i]);//true
-                    Debug.Log("on");
                 }
                 pastWasFalse = false;
             }
@@ -212,7 +211,6 @@ public class weighted : MonoBehaviour, IMessageReceiver
                     {
                         IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
                         target.OnReceiveMessage(MessageType.eOff, m_PassNumber[i]);//false
-                        Debug.Log("off");
                     }
                     pastWasFalse = true;
                 }

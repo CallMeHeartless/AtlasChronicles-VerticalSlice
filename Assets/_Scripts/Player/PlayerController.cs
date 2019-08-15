@@ -839,6 +839,16 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rPointOfInterestController.SetPointOfInterest(m_bMapVisionOn);
         }
     }
+
+    // Terminates map vision only, used by external sources /// Kerry
+    public void EndMapVision() {
+        // Return if map vision is not on
+        if (!m_bMapVisionOn) {
+            return;
+        }
+        // Toggle mapvision
+        HandleMapVision();
+    }
     
     // Triggers the teleport particle effects
     private void TeleportParticles() {
