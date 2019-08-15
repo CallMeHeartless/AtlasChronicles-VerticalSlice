@@ -77,6 +77,13 @@ public class DisplayStat : MonoBehaviour
                 m_rHearts[i].SetActive(true);
             }
         }
+
+        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0)
+        {
+            HideUIGamePanel(true);
+            HideUIGamePanel(false);
+        }
+
         UpdateHealth(HP); // Viv // Testing quarter heart update
     }
 
