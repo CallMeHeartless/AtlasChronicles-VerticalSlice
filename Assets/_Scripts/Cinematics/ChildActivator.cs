@@ -6,8 +6,7 @@ public class ChildActivator : MonoBehaviour
 {
     [SerializeField] bool m_bActivateChildren = false;
     [SerializeField] GameObject[] m_rChildren;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         //Activate or deactivate children on start
@@ -18,6 +17,10 @@ public class ChildActivator : MonoBehaviour
         
     }
 
+    /******************************************************************
+     * SetChildrenActive: Sets children active/inactive depending on parameter
+     * Author: Vivian
+     ******************************************************************/
     public void SetChildrenActive(bool _activate)
     {
         //Sets all children active

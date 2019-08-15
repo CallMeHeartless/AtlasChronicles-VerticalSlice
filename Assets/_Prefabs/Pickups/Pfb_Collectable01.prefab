@@ -153,9 +153,9 @@ GameObject:
   - component: {fileID: 5540800120736492380}
   - component: {fileID: 5540800120736492383}
   - component: {fileID: 5540800120736492382}
-  - component: {fileID: 8274557033985413610}
   - component: {fileID: 1465790141833206193}
   - component: {fileID: 5680148856163161794}
+  - component: {fileID: 2802042902511503403}
   m_Layer: 14
   m_Name: Pfb_Collectable01
   m_TagString: SecondaryPickup
@@ -246,21 +246,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8274557033985413610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5540800120736492376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 885d6cc5b717d514685c4bbb6e0a6f9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_rParticles: {fileID: 8306159080667790295}
-  m_rHome: {fileID: 0}
-  m_uiID: 0
 --- !u!82 &1465790141833206193
 AudioSource:
   m_ObjectHideFlags: 0
@@ -377,6 +362,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4889926515462323004}
   m_Enabled: 1
+--- !u!114 &2802042902511503403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5540800120736492376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561da72af60400047bc1af32be2ce44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_regionID: 0
+  m_rParticles: {fileID: 8306159080667790295}
 --- !u!1001 &2989825327231402699
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class PickupAnimationController : MonoBehaviour
 {
+    Pickup m_rPickup;
     private void Start()
     {
-        //Start fruit animation at random frame
+        //Start animation at random frame
         Animator rAnim = GetComponent<Animator>();
         AnimatorStateInfo state = rAnim.GetCurrentAnimatorStateInfo(0);
         rAnim.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
+        m_rPickup = transform.parent.GetComponent<Pickup>();
     }
 
     public void DestroyPickup() {
-        Invoke("Activate", 0.001f);
-    }
-
-    private void Activate()
-    {
-        Destroy(gameObject.transform.parent.gameObject);
+        //Only destroy pickup if it is a collectable or if it is a map fragment that is stolen
+        if (m_rPickup.GetPickupType() == PickupType.ECollectable || 
+           (m_rPickup.GetPickupType() == PickupType.EMap && m_rPickup.GetIsStolen()))
+        {
+            Destroy(gameObject.transform.parent.gameObject);
+        }
     }
 }
