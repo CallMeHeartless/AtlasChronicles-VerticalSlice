@@ -21,10 +21,9 @@ public class DisplayStat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // NIK //Set the player to have 4 health
-        NewHealth(m_iHP);
-
         //viv-----
+        UpdateHealth(m_iHP);
+
         HideUIGamePanel(true);
 
         //Find all collectables placed in the level
@@ -67,25 +66,32 @@ public class DisplayStat : MonoBehaviour
             + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
     }
   
-    //NIK
-    public void NewHealth(int HP) {
-        for (int i = 0; i < m_rHearts.Length; i++) {
-            if (HP<= i) {
-                m_rHearts[i].SetActive(false);
-            }
-            else {
-                m_rHearts[i].SetActive(true);
-            }
-        }
-        UpdateHealth(HP); // Viv // Testing quarter heart update
-    }
+    ////NIK
+    //public void NewHealth(int HP) {
+    //    for (int i = 0; i < m_rHearts.Length; i++) {
+    //        if (HP<= i) {
+    //            m_rHearts[i].SetActive(false);
+    //        }
+    //        else {
+    //            m_rHearts[i].SetActive(true);
+    //        }
+    //    }
+    //    UpdateHealth(HP); // Viv // Testing quarter heart update
+    //}
 
     /******************************************************************
      * UpdateHealth: Updates fill of the heart in quarter decrements
      * Author: Vivian
      ******************************************************************/
     public void UpdateHealth(int _hp) {
-        if(m_rHeart) {
+        //Hide and Show UI Gamepanel IF maps do not exist when taking damage
+        if (GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
+            HideUIGamePanel(true);
+            HideUIGamePanel(false);
+        }
+
+        //Update health in four parts //Coded for radial fill but works for other modes too
+        if (m_rHeart) {
             m_rHeart.GetComponent<Image>().fillAmount = _hp * 90.0f / 360.0f;
         }
     }
