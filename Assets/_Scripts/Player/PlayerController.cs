@@ -224,6 +224,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
 
         m_fWaterParticles.SetActive(false);
+        m_rWeaponScroll.SetActive(false);
 
         //if(GameObject.FindGameObjectWithTag("CinematicManager") == null)
         //{
@@ -1230,6 +1231,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     // Toggles the weapon scroll
     public void ToggleWeaponScroll(bool _bState) {
         m_rWeaponScroll.SetActive(_bState);
+        m_rHipScroll.SetActive(!_bState);
     }
     public int getWeight()
     {
