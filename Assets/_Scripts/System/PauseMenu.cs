@@ -33,6 +33,10 @@ public class PauseMenu : MonoBehaviour
         m_rMapPanel.SetActive(false);
         m_rUIPanel.SetActive(true);
 
+        //Hide cursor on start
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         //Find the camera
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
         //Find player
