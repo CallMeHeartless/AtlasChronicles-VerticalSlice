@@ -13,12 +13,19 @@ public class rotate : MonoBehaviour
     [SerializeField] private List<Vector3> m_lRotationPoints;
     private Vector3 NewRoation;
     public int m_CurrentPoints;
+    public bool RotateClockrise = false;
 
     public bool RotateX, RotateY, RotateZ;
+    [SerializeField]
+    private bool Shouldmove = false;
+    [SerializeField]
+    private int ShouldmoveLoctation;
+    [SerializeField] private bool Blocked = false;
     // Start is called before the first frame update
     void Start()
     {
-
+        Checker();
+        //PlatfromNotMoving();
     }
 
     // Update is called once per frame
@@ -26,84 +33,59 @@ public class rotate : MonoBehaviour
     {
         if (m_bMoving)
         {
-            NewRoation = new Vector3 (0,0,0)    ;
-            if (RotateX)
+            if (!Blocked)
             {
-                PlatfromMovingRoundX();
+                moving();
             }
-            if (RotateY)
-            {
-                PlatfromMovingRoundY();
-            }
-            if (RotateZ)
-            {
-                PlatfromMovingRoundZ();
-            }
-          transform.localEulerAngles = NewRoation;
-
-            //check if Roation match Required Roation
-           Checker();
         }
         else
         {
             PlatfromNotMoving();
         }
-        
-    }
-    void PlatfromMovingRoundX()
-    {
-
-        if (transform.localEulerAngles.x < m_lRotationPoints[m_CurrentPoints].x)
-        {
-            NewRoation += new Vector3( transform.localEulerAngles.x + m_fSpeed, 0,0);
-        }
-        else if (transform.localEulerAngles.x > m_lRotationPoints[m_CurrentPoints].x)
-        {
-            NewRoation += new Vector3( transform.localEulerAngles.x - m_fSpeed,0, 0);
-        }
     }
 
-        //moving the platform around Y aixes
-        void PlatfromMovingRoundY()
-    {
+    void moving() {
 
-        if (transform.localEulerAngles.y < m_lRotationPoints[m_CurrentPoints].y)
+        if (RotateX)
         {
-            NewRoation += new Vector3(0, transform.localEulerAngles.y + m_fSpeed, 0);
+            transform.Rotate((RotateClockrise ? Vector3.right : Vector3.left), m_fSpeed);
         }
-        else if (transform.localEulerAngles.y > m_lRotationPoints[m_CurrentPoints].y)
+        if (RotateY)
         {
-            NewRoation += new Vector3(0, transform.localEulerAngles.y - m_fSpeed, 0);
+            transform.Rotate((RotateClockrise ? Vector3.up : Vector3.down), m_fSpeed);
         }
+        if (RotateZ)
+        {
+            transform.Rotate((RotateClockrise ? Vector3.forward : Vector3.back), m_fSpeed);
+        }
+        //check if Roation match Required Roation
+        Checker();
 
-    }
-    void PlatfromMovingRoundZ()
-    {
-
-        if (transform.localEulerAngles.z < m_lRotationPoints[m_CurrentPoints].z)
-        {
-            NewRoation += new Vector3(0,0, transform.localEulerAngles.z + m_fSpeed);
-        }
-        else if (transform.localEulerAngles.z > m_lRotationPoints[m_CurrentPoints].z)
-        {
-            NewRoation += new Vector3(0,0, transform.localEulerAngles.z - m_fSpeed);
-        }
     }
     void Checker()
     {
+        float dis;
+        if (transform.parent == null)
+        {
+            dis = Vector3.Distance(transform.eulerAngles, m_lRotationPoints[m_CurrentPoints]);
+        }
+        else
+        {
+            dis = Vector3.Distance(transform.eulerAngles - transform.parent.transform.eulerAngles, m_lRotationPoints[m_CurrentPoints]);
+        }
 
-        float dis = Vector3.Distance(transform.eulerAngles, m_lRotationPoints[m_CurrentPoints]);
-        Debug.Log(dis);
         bool inRange = dis < m_fSpeed;
 
         if (inRange)
-            {
-                m_bMoving = false;
-                m_fTimer = m_lMaxTimers[m_CurrentPoints];
-            }
+        {
+            m_bMoving = false;
+            m_fTimer = m_lMaxTimers[m_CurrentPoints];
+            
+
         }
+    }
     //Stopping object from rotating for some time
-    void PlatfromNotMoving(){
+    void PlatfromNotMoving() {
         if (!m_bMoving)
         {
             if (m_fTimer <= 0)
@@ -111,18 +93,37 @@ public class rotate : MonoBehaviour
                 if (m_CurrentPoints == m_lMaxTimers.Count - 1)
                 {
                     m_CurrentPoints = 0;
-                    transform.localEulerAngles = new Vector3(0, 0, 0);
+                    
                 }
                 else
                 {
                     m_CurrentPoints++;
                 }
                 m_bMoving = true;
+                if (Shouldmove)
+                {
+                    if (ShouldmoveLoctation == m_CurrentPoints)
+                    {
+                        Debug.Log(true);
+                        Blocked = true;
+                    }
+                }
             }
             else
             {
                 m_fTimer -= Time.deltaTime;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+           
+                Debug.Log(false);
+                Blocked =false;
+          
         }
     }
 }
