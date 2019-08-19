@@ -10,9 +10,12 @@ public class Zone : MonoBehaviour
     [SerializeField][Tooltip("This ID is used to differentiate zones and must be unique. It should match the map fragment assigned to it.")]
     private int m_iZoneID = 0;
     private bool m_bMapFragmentCollected = false;
-    private int m_iCollectableCount = 0;
-    private int m_iChestCount = 0;
+    private int m_iTotalCollectableCount = 0;
+    private int m_iTotalChestCount = 0;
     private List<MapVisionComponent> m_MapVisionComponents = null; // A list of all objects within the zone that can be shown through map vision
+    private List<GameObject> m_Chests = null; // A list of map fragments in zone
+    private List<GameObject> m_Collectables = null; // A list of crystals in zone
+
 
     // Generate a list of zones for future efficiency
     private void Awake()
@@ -28,6 +31,34 @@ public class Zone : MonoBehaviour
         if (m_MapVisionComponents == null) {
             m_MapVisionComponents = new List<MapVisionComponent>();
         }
+        if (m_Chests == null)
+        {
+            m_Chests = new List<GameObject>();
+        }
+        if (m_Collectables == null)
+        {
+            m_Collectables = new List<GameObject>();
+        }
+    }
+
+    private void Start()
+    {
+        m_iTotalCollectableCount = m_Collectables.Count;
+        m_iTotalChestCount = m_Chests.Count;
+
+        //GameObject[] chests = GetComponentsInChildren<BreakableObject>();
+
+        //for (int i = 0; i < chests.Length; ++i)
+        //{
+        //    GameObject[] prizes = GetComponentsInChildren<BreakableObject>().GetPrizes();
+        //    for (int j = 0; j < prizes.Length; ++j)
+        //    {
+        //        if (prizes[j].CompareTag("SecondaryPickup"))
+        //        {
+        //            ++GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
+        //        }
+        //    }
+        //}
     }
 
     //Checks if the zones passed through param matches this objects zone ID
@@ -75,7 +106,7 @@ public class Zone : MonoBehaviour
         }
         else
         {
-            Debug.Log("NONEXISTENT ?");
+            Debug.Log("NONEXISTENT ZONE?");
             return null;
         }
     }
@@ -100,12 +131,64 @@ public class Zone : MonoBehaviour
     }
 
     // Allow a map vision component to add itself to the zone's list. Children should call this at runtime
-    public void AddToMapVisionList(MapVisionComponent _rMapVisionObject) {
-        m_MapVisionComponents.Add(_rMapVisionObject);
+    public void AddToMapVisionList(GameObject _rMapVisionObject) {
+        switch (_rMapVisionObject.tag)
+        {
+            case "Box":
+            {
+                m_Chests.Add(_rMapVisionObject);
+                break;
+            }
+            case "SecondaryPickup":
+            {
+                m_Collectables.Add(_rMapVisionObject);
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
 
     // Allow a map vision component to remove itself from the zone's list. Called when the child object is being destroyed.
-    public void RemoveFromMapVisionList(MapVisionComponent _rMapVisionObject) {
-        m_MapVisionComponents.Remove(_rMapVisionObject);
+    public void RemoveFromMapVisionList(GameObject _rMapVisionObject) {
+        switch (_rMapVisionObject.tag)
+        {
+            case "Box":
+            {
+                m_Chests.Remove(_rMapVisionObject);
+                break;
+            }
+            case "SecondaryPickup":
+            {
+                m_Collectables.Remove(_rMapVisionObject);
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    public int GetTotalChestCount()
+    {
+        return m_iTotalChestCount;
+    }
+
+    public int GetTotalCollectableCount()
+    {
+        return m_iTotalCollectableCount;
+    }
+
+    public int GetCurrentCollectableCount()
+    {
+        return m_iTotalCollectableCount - m_Collectables.Count;
+    }
+
+    public int GetCurrentChestCount()
+    {
+        return m_iTotalChestCount - m_Chests.Count;
     }
 }

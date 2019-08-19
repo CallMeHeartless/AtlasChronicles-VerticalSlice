@@ -20,6 +20,7 @@ public class PickupAnimationController : MonoBehaviour
            (m_rPickup.GetPickupType() == PickupType.EMap && m_rPickup.GetIsStolen()))
         {
             Destroy(gameObject.transform.parent.gameObject);
+            //gameObject.SetActive(false);
         }
     }
 }

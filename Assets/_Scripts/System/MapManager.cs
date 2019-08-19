@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
@@ -15,7 +13,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] GameObject m_rMapDetailCollectableCount;   // The gameobject containing the image UI and text to display a collectable count
 
     private Zone[] m_rZones;    //Zone array from the Zone script.
-    private int m_rMapsCollected = 0;
+    private int m_rMapsCollected = 0;    
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +29,7 @@ public class MapManager : MonoBehaviour
     public void RetrieveZones() {
         List<Zone> zoneList = Zone.GetZoneList();
 
-        if (m_rMapRegions != null && m_rZones != null)
+        if (m_rMapRegions != null && m_rZones == null)
         {
             m_rZones = new Zone[zoneList.Count];
 
@@ -39,6 +37,10 @@ public class MapManager : MonoBehaviour
             foreach (Zone zone in zoneList)
             {
                 int i = zone.GetZoneID();
+                if(i > zoneList.Count)
+                {
+                    print("ZONE ERROR: A Zone GameObject is missing Zone script.");
+                }
                 m_rZones[i - 1] = zone;
             }
         }
@@ -47,7 +49,7 @@ public class MapManager : MonoBehaviour
     // Update is called once per frame
     public void OpenMap()
     {
-        if (m_rZones == null && m_rZones.Length != 0)
+        if (m_rZones == null)
         {
             RetrieveZones();
         }
@@ -92,6 +94,7 @@ public class MapManager : MonoBehaviour
         m_rMapDetailCollectableCount.SetActive(false);
     }
 
+    //Called everytime a map region button is clicked
     public void ActivateDetails()
     {
         //Counter of how many regions have been 
@@ -105,7 +108,14 @@ public class MapManager : MonoBehaviour
 
     public void SetRegionSelected(int _num)
     {
+        int currentRegion = _num - 1;
+
         //Change title text to 'region #'
-        m_rMapDetailTitle.text = "REGION " + _num; 
+        m_rMapDetailTitle.text = "REGION " + _num;
+
+        m_rMapDetailChestCount.GetComponentInChildren<TextMeshProUGUI>().text = 
+            m_rZones[currentRegion].GetCurrentChestCount() + "/" + m_rZones[currentRegion].GetTotalChestCount();
+        m_rMapDetailCollectableCount.GetComponentInChildren<TextMeshProUGUI>().text = 
+            m_rZones[currentRegion].GetCurrentCollectableCount() + "/" + m_rZones[currentRegion].GetTotalCollectableCount();
     }
 }

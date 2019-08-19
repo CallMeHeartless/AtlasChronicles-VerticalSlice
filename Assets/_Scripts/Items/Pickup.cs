@@ -85,4 +85,9 @@ public class Pickup : MonoBehaviour
     {
         m_bStolen = _stolen;
     }
+
+    public bool GetCollected()
+    {
+        return m_bIsCollected;
+    }
 }
