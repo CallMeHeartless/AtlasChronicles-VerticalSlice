@@ -9,6 +9,9 @@ public class PendulumJointController : MonoBehaviour
     private HingeJoint m_rJoint;
     private float m_fTargetSpeed;
     private float m_fForce;
+    [SerializeField]
+    private bool m_bDamages = true;
+    private bool m_bDamageReady = true;
 
     // Start is called before the first frame update
     void Start(){
@@ -37,10 +40,32 @@ public class PendulumJointController : MonoBehaviour
             motor.targetVelocity = -m_fTargetSpeed;
             m_rJoint.motor = motor;
         }
+
+        // Reset the ability for the pendulum to damage
+        if(m_bDamages && !m_bDamageReady) {
+            m_bDamageReady = true;
+        }
     }
 
+    // Handle collision events
     private void OnCollisionEnter(Collision collision) {
-        if(!collision.gameObject.CompareTag("Player") && !collision.gameObject.CompareTag("Tag")) {
+        // The pendulum should damage the player
+        if (collision.gameObject.CompareTag("Player") && m_bDamages && m_bDamageReady) {
+            // Create damage message
+            DamageMessage damage = new DamageMessage();
+            damage.damage = 1;
+            damage.source = gameObject;
+            //damage.direction
+
+            // Apply damage
+            collision.gameObject.GetComponent<DamageController>().ApplyDamage(damage);
+            // Prevent consequtive damage
+            m_bDamageReady = false;
+
+        }
+
+        // Handle collision with an object preventing the pendulum from reaching the end of its arc - force it to change direction
+        else if(!collision.gameObject.CompareTag("Tag")) {
             ToggleDirection();
         }
     }
