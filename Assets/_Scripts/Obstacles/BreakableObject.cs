@@ -14,6 +14,7 @@ public class BreakableObject : MonoBehaviour
     [SerializeField] float m_fSpeedOfArc = 2.0f;
     [SerializeField] float m_fRadius = 2.0f;
     private Zone m_rParent;
+    private int m_iZoneID = 0;
 
     Vector3[] m_rPrizeDestinations;
     float m_fCollectableHeight = 0.0f;
@@ -41,6 +42,7 @@ public class BreakableObject : MonoBehaviour
         {
             m_rParent.AddToZone(gameObject);
             m_rParent.IncreaseCollectableCount(m_rPrizes.Length);
+            m_iZoneID = m_rParent.GetZoneID();
         }
     }
 
@@ -85,7 +87,7 @@ public class BreakableObject : MonoBehaviour
                 m_fCollectableHeight = 1.0f;
 
             // Instantiate each prize in the chests position
-            m_rPrizes[i] = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity);
+            m_rPrizes[i] = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity, m_rParent.transform);
 
             //Calculate the destinations of the prizes (to be spread out around the chest)
             float angle = 0.0f;

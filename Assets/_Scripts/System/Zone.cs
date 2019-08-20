@@ -214,6 +214,7 @@ public class Zone : MonoBehaviour
     /// <author>Vivian</author>
     public void IncreaseCollectableCount(int _num) {
         m_iTotalCollectableCount += _num;
+    }
     /// <summary>
     /// Registers a leyline with the zone
     /// </summary>
