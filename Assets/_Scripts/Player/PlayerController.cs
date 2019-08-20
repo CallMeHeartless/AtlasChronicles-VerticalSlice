@@ -194,6 +194,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         }
         m_rFreeLook = m_rCameraReference.gameObject.GetComponentInParent<CinemachineFreeLook>();
         m_rCheatSlide = GameObject.FindGameObjectWithTag("CheatSlide");
+        m_rPointOfInterestController = m_rFreeLook.GetComponent<PointOfInterestController>();
 
         // Initialise variables
         m_MovementDirection = Vector3.zero;

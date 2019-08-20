@@ -459,7 +459,7 @@ MonoBehaviour:
   m_rChildren:
   - {fileID: 8925971626017369452}
   - {fileID: 4235605956009726179}
-  - {fileID: 395130737}
+  - {fileID: 0}
 --- !u!1 &4235605956009726179
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,10 +504,7 @@ GameObject:
   - component: {fileID: 5558103067245170022}
   - component: {fileID: 5558103067245170023}
   - component: {fileID: 4588683341240477661}
-  - component: {fileID: 9187016438731437492}
-  - component: {fileID: 6163287408544149843}
   - component: {fileID: 5558103067245170016}
-  - component: {fileID: 966708228}
   m_Layer: 14
   m_Name: Pfb_MapFragment
   m_TagString: PrimaryPickup
@@ -694,32 +691,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &9187016438731437492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5558103067245170017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99514655d536bbc4f838399f3688a745, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_regionID: 0
-  m_rParticles: {fileID: 5729365778247040907}
---- !u!114 &6163287408544149843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5558103067245170017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23e5f208c1ebe8a47becc172e516d131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &5558103067245170016
 Animator:
   serializedVersion: 3
@@ -739,18 +710,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &966708228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5558103067245170017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d04f68144775b11488ed8e38ff9c2658, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6583920951040931502
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +722,7 @@ GameObject:
   - component: {fileID: 6583920951043828398}
   - component: {fileID: 6583920951042861166}
   - component: {fileID: 4575589712335155201}
+  - component: {fileID: 142377623115639810}
   m_Layer: 14
   m_Name: dm_MapFragment
   m_TagString: Untagged
@@ -848,6 +808,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &142377623115639810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583920951040931502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04f68144775b11488ed8e38ff9c2658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8925971626017369452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,12 +978,6 @@ PrefabInstance:
 --- !u!4 &7706645305867737283 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5777640907914751953, guid: b3f6d788b9ec59b40a76b952dc064318,
-    type: 3}
-  m_PrefabInstance: {fileID: 4241771659086509842}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5729365778247040907 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8457486358290237593, guid: b3f6d788b9ec59b40a76b952dc064318,
     type: 3}
   m_PrefabInstance: {fileID: 4241771659086509842}
   m_PrefabAsset: {fileID: 0}

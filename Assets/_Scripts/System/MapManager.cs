@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] m_rMapRegions;    // Array of map region buttons
+    [SerializeField] private GameObject[] m_rMapRegions;    // Array of map region buttons
 
     [SerializeField] TextMeshProUGUI m_rMapDetailTitle;     // The details title text
     [SerializeField] GameObject m_rMapDetailRegionCount;    // The region count that is only displayed in default mode (when no region is selected)
@@ -15,9 +15,7 @@ public class MapManager : MonoBehaviour
     private Zone[] m_rZones;    //Zone array from the Zone script.
     private int m_rMapsCollected = 0;    
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         RetrieveZones();
         //Set all map regions inactive
         HideAllMapUIZones();
@@ -26,31 +24,35 @@ public class MapManager : MonoBehaviour
         MapDefaultSettings();
     }
 
+    /// <summary>
+    /// Retrieve zones/update zone list from the static Zone class
+    /// </summary>
     public void RetrieveZones() {
+        //Get zones from the static Zone class
         List<Zone> zoneList = Zone.GetZoneList();
 
-        if (m_rMapRegions != null && m_rZones == null)
-        {
+        //If map regions exist AND zones exist in the world
+        if (m_rMapRegions != null && zoneList != null) {
             m_rZones = new Zone[zoneList.Count];
 
             //Populate arrays with values from zone
-            foreach (Zone zone in zoneList)
-            {
+            foreach (Zone zone in zoneList) {
                 int i = zone.GetZoneID();
-                if(i > zoneList.Count)
-                {
+                if(i > zoneList.Count) {
                     print("ZONE ERROR: A Zone GameObject is missing Zone script.");
                 }
-                m_rZones[i - 1] = zone;
+                else {
+                    m_rZones[i - 1] = zone;
+                }
             }
         }
     }
 
-    // Update is called once per frame
-    public void OpenMap()
-    {
-        if (m_rZones == null)
-        {
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>    
+    public void OpenMap() {
+        if (m_rZones == null) {
             RetrieveZones();
         }
 
@@ -58,10 +60,8 @@ public class MapManager : MonoBehaviour
         m_rMapsCollected = 0;
 
         //For each zone, check if the map has been collected.
-        for (int i = 0; i < m_rZones.Length; ++i)
-        {
-            if(m_rZones[i].GetIsMapFragmentCollected())
-            {
+        for (int i = 0; i < m_rZones.Length; ++i) {
+            if(m_rZones[i].GetIsMapFragmentCollected()) {
                 m_rMapRegions[i].SetActive(true);
                 ++m_rMapsCollected;
             }
@@ -70,21 +70,23 @@ public class MapManager : MonoBehaviour
         //Update the UI to display details
         MapDefaultSettings();
     }
-
-    public void HideAllMapUIZones()
-    {
+    
+    /// <summary>
+    /// Hide all the UI zone buttons from the map
+    /// </summary>
+    public void HideAllMapUIZones() {
         //Hide all button sections of the map
-        m_rMapsCollected = 0;
-        for (int i = 0; i < m_rMapRegions.Length; ++i)
-        {
+        for (int i = 0; i < m_rMapRegions.Length; ++i) {
             m_rMapRegions[i].SetActive(false);
         }
     }
 
-    public void MapDefaultSettings()
-    {
+    /// <summary>
+    /// Set the map to only display the number of maps collected
+    /// </summary>
+    public void MapDefaultSettings() {
         // Set the default details panel to show the amount of regions that have currently been mapped.
-        m_rMapDetailTitle.text = "REGIONS MAPPED";  //Change title text to 'regions mapped' instead of 'region #'
+        m_rMapDetailTitle.text = "Regions Mapped";  //Change title text to 'regions mapped' instead of 'region #'
         m_rMapDetailRegionCount.SetActive(true);    //Counter of how many regions have been 
         m_rMapDetailRegionCount.GetComponentInChildren<TextMeshProUGUI>().text = m_rMapsCollected + " / 5";
 
@@ -94,9 +96,12 @@ public class MapManager : MonoBehaviour
         m_rMapDetailCollectableCount.SetActive(false);
     }
 
-    //Called everytime a map region button is clicked
-    public void ActivateDetails()
-    {
+    /// <summary>
+    /// Activates the gameobjects in the details panel 
+    /// </summary>
+    public void ActivateDetails() {
+        //Called everytime a map region button is clicked
+
         //Counter of how many regions have been 
         m_rMapDetailRegionCount.SetActive(false);    
 
@@ -106,13 +111,19 @@ public class MapManager : MonoBehaviour
         m_rMapDetailCollectableCount.SetActive(true);
     }
 
-    public void SetRegionSelected(int _num)
-    {
-        int currentRegion = _num - 1;
-
+    /// <summary>
+    /// Activates and updates the details of the zone that was clicked
+    /// </summary>
+    /// <param name="_num">The region number to set details of</param>
+    public void SetRegionSelected(int _num) {
         //Change title text to 'region #'
-        m_rMapDetailTitle.text = "REGION " + _num;
+        m_rMapDetailTitle.text = "Region " + _num;
 
+        int currentRegion = _num - 1; //To account for array counting
+
+        //Set Zone details into UI text
+        m_rMapDetailMapCount.GetComponentInChildren<TextMeshProUGUI>().text =
+            (m_rZones[currentRegion].GetIsMapFragmentCollected() ? "1" : "0") + "/1";
         m_rMapDetailChestCount.GetComponentInChildren<TextMeshProUGUI>().text = 
             m_rZones[currentRegion].GetCurrentChestCount() + "/" + m_rZones[currentRegion].GetTotalChestCount();
         m_rMapDetailCollectableCount.GetComponentInChildren<TextMeshProUGUI>().text = 

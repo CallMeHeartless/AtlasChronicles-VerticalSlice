@@ -11,7 +11,6 @@ public class Zone : MonoBehaviour
     private int m_iZoneID = 0;
     private bool m_bMapFragmentCollected = false;
     private int m_iTotalCollectableCount = 0;
-    private int m_iTotalChestCount = 0;
     private List<MapVisionComponent> m_MapVisionComponents = null; // A list of all objects within the zone that can be shown through map vision
     private List<GameObject> m_Chests = null; // A list of map fragments in zone
     private List<GameObject> m_Collectables = null; // A list of crystals in zone
@@ -21,44 +20,25 @@ public class Zone : MonoBehaviour
     private void Awake()
     {
         // Create new list if it does not exist
-        if (s_Zones == null)
-        {
+        if (s_Zones == null) {
             s_Zones = new List<Zone>();
         }
 
         // Add this zone list
         s_Zones.Add(this);
+
+        //Create list for components/gameobjects that will exist in a zone.
         if (m_MapVisionComponents == null) {
             m_MapVisionComponents = new List<MapVisionComponent>();
         }
-        if (m_Chests == null)
-        {
+
+        if (m_Chests == null) {
             m_Chests = new List<GameObject>();
         }
-        if (m_Collectables == null)
-        {
+
+        if (m_Collectables == null) {
             m_Collectables = new List<GameObject>();
         }
-    }
-
-    private void Start()
-    {
-        m_iTotalCollectableCount = m_Collectables.Count;
-        m_iTotalChestCount = m_Chests.Count;
-
-        //GameObject[] chests = GetComponentsInChildren<BreakableObject>();
-
-        //for (int i = 0; i < chests.Length; ++i)
-        //{
-        //    GameObject[] prizes = GetComponentsInChildren<BreakableObject>().GetPrizes();
-        //    for (int j = 0; j < prizes.Length; ++j)
-        //    {
-        //        if (prizes[j].CompareTag("SecondaryPickup"))
-        //        {
-        //            ++GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
-        //        }
-        //    }
-        //}
     }
 
     //Checks if the zones passed through param matches this objects zone ID
@@ -92,8 +72,7 @@ public class Zone : MonoBehaviour
     }
 
     //Returns zone ID
-    public int GetZoneID()
-    {
+    public int GetZoneID() {
         return m_iZoneID;
     }
 
@@ -130,39 +109,34 @@ public class Zone : MonoBehaviour
         }
     }
 
-    // Allow a map vision component to add itself to the zone's list. Children should call this at runtime
-    public void AddToMapVisionList(GameObject _rMapVisionObject) {
-        switch (_rMapVisionObject.tag)
-        {
-            case "Box":
-            {
-                m_Chests.Add(_rMapVisionObject);
-                break;
-            }
-            case "SecondaryPickup":
-            {
-                m_Collectables.Add(_rMapVisionObject);
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
+    // Add a map vision component to the zones list
+    public void AddToMapVisionList(MapVisionComponent _rMapVisionObject)
+    {
+        m_MapVisionComponents.Add(_rMapVisionObject);
     }
 
     // Allow a map vision component to remove itself from the zone's list. Called when the child object is being destroyed.
-    public void RemoveFromMapVisionList(GameObject _rMapVisionObject) {
-        switch (_rMapVisionObject.tag)
+    public void RemoveFromMapVisionList(MapVisionComponent _rMapVisionObject) {
+        m_MapVisionComponents.Remove(_rMapVisionObject);
+    }
+
+    // Allow a map vision component to add itself to the zone's list. Children should call this at runtime
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_rZoneObject"></param>
+    public void AddToZone(GameObject _rZoneObject)
+    {
+        switch (_rZoneObject.tag)
         {
             case "Box":
             {
-                m_Chests.Remove(_rMapVisionObject);
+                m_Chests.Add(_rZoneObject);
                 break;
             }
             case "SecondaryPickup":
             {
-                m_Collectables.Remove(_rMapVisionObject);
+                m_Collectables.Add(_rZoneObject);
                 break;
             }
             default:
@@ -172,23 +146,62 @@ public class Zone : MonoBehaviour
         }
     }
 
-    public int GetTotalChestCount()
-    {
-        return m_iTotalChestCount;
+    /// <summary>
+    /// Get the total number of chests from the zone
+    /// </summary>
+    /// <returns>Total num chests</returns>
+    /// <author>Vivian</author>
+    public int GetTotalChestCount() {
+        return m_Chests.Count;
     }
 
-    public int GetTotalCollectableCount()
-    {
-        return m_iTotalCollectableCount;
+    /// <summary>
+    /// Get the total number of collectables from the zone
+    /// </summary>
+    /// <returns>Total collectables</returns>
+    /// <author>Vivian</author>
+    public int GetTotalCollectableCount() {
+        return m_Collectables.Count;
     }
 
-    public int GetCurrentCollectableCount()
-    {
-        return m_iTotalCollectableCount - m_Collectables.Count;
+    /// <summary>
+    /// Get the current amount of collected collectables from the zone
+    /// </summary>
+    /// <returns>Current num collectables</returns>
+    /// <author>Vivian</author>
+    public int GetCurrentCollectableCount() {
+        int collectableCount = 0;
+        foreach (GameObject item in m_Collectables) {
+            if (item.GetComponent<Pickup>().GetCollected()) {
+                ++collectableCount;
+            }
+        }
+        return collectableCount;
     }
 
-    public int GetCurrentChestCount()
-    {
-        return m_iTotalChestCount - m_Chests.Count;
+    /// <summary>
+    /// Get the current amount of chests found from the zone
+    /// </summary>
+    /// <returns>Current num chests</returns>
+    /// <author>Vivian</author>
+    public int GetCurrentChestCount() {
+        int chestCount = 0;
+        foreach (GameObject item in m_Chests) {
+            if(item.GetComponent<BreakableObject>().GetIsBroken()) {
+                ++chestCount;
+            }
+        }
+        return chestCount;
+    }
+
+    /// <summary>
+    /// Increase the total amount of collectables in a zone.
+    /// Function used by BreakableObject (Chest script) as crystals 
+    ///     are not initialised when they havent yet spawn from a chest yet
+    /// </summary>
+    /// <param name="_num">Number of collectables to inc the total by</param>
+    /// <author>Vivian</author>
+    public void IncreaseCollectableCount(int _num) {
+        m_iTotalCollectableCount += _num;
     }
 }
