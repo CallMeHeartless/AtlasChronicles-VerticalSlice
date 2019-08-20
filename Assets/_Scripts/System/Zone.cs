@@ -49,11 +49,10 @@ public class Zone : MonoBehaviour
     // Set whether the zone's map fragment has been collected or not (will almost always be set to true, but you never know)
     public void SetMapFragmentStatus(bool _bState) {
         m_bMapFragmentCollected = _bState;
-        Debug.Log("Map fragment status updated");
+
         // Enable all leylines
         foreach(LeylineController leyline in m_LeylineComponents) {
             leyline.gameObject.SetActive(true);
-            Debug.Log(leyline.name);
         }
     }
 
