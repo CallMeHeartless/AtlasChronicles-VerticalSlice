@@ -6,6 +6,8 @@ public class CheckpointController : MonoBehaviour
 {
     public bool m_bPoint = false;
 
+    public bool m_bIsPowered = true;
+
     [Header("Materials")]
     [SerializeField]
     private Material m_rInactive;
@@ -19,11 +21,17 @@ public class CheckpointController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")){
+        // Do nothing if the checkpoint is not powered.
+        if (!m_bIsPowered) {
+            return;
+        }
 
-            // Update the most recent checkpoint
+        // Handle the player entering the field
+        if (other.CompareTag("Player")){
+            // Get a reference to the player
             PlayerController player = other.GetComponent<PlayerController>();
-            //Debug.Log("here");
+
+            // If found, update their most recent respawn position
             if (player) {
                 if (m_bPoint)
                 {
@@ -33,7 +41,11 @@ public class CheckpointController : MonoBehaviour
                 {
                     player.m_rRespawnLocation = transform.position;
                 }
+
+                // Toggle the materials of all checkpoints
                 UpdateAllMaterials();
+
+                // Heal the player
                 other.gameObject.GetComponent<DamageController>().ResetDamage();
             }
             else {

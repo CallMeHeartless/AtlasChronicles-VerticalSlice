@@ -13,6 +13,7 @@ public class Zone : MonoBehaviour
     private int m_iCollectableCount = 0;
     private int m_iChestCount = 0;
     private List<MapVisionComponent> m_MapVisionComponents = null; // A list of all objects within the zone that can be shown through map vision
+    private List<LeylineController> m_LeylineComponents = null;    // A list of all leylines in the zone
 
     // Generate a list of zones for future efficiency
     private void Awake()
@@ -25,8 +26,13 @@ public class Zone : MonoBehaviour
 
         // Add this zone list
         s_Zones.Add(this);
+
+        // Ensure component lists exist
         if (m_MapVisionComponents == null) {
             m_MapVisionComponents = new List<MapVisionComponent>();
+        }
+        if(m_LeylineComponents == null) {
+            m_LeylineComponents = new List<LeylineController>();
         }
     }
 
@@ -43,6 +49,12 @@ public class Zone : MonoBehaviour
     // Set whether the zone's map fragment has been collected or not (will almost always be set to true, but you never know)
     public void SetMapFragmentStatus(bool _bState) {
         m_bMapFragmentCollected = _bState;
+        Debug.Log("Map fragment status updated");
+        // Enable all leylines
+        foreach(LeylineController leyline in m_LeylineComponents) {
+            leyline.gameObject.SetActive(true);
+            Debug.Log(leyline.name);
+        }
     }
 
     // Static function tick off a zone when its map fragment is collected
@@ -107,5 +119,13 @@ public class Zone : MonoBehaviour
     // Allow a map vision component to remove itself from the zone's list. Called when the child object is being destroyed.
     public void RemoveFromMapVisionList(MapVisionComponent _rMapVisionObject) {
         m_MapVisionComponents.Remove(_rMapVisionObject);
+    }
+
+    /// <summary>
+    /// Registers a leyline with the zone
+    /// </summary>
+    /// <param name="_leyline"></param>
+    public void AddToLeylineList(LeylineController _leyline) {
+        m_LeylineComponents.Add(_leyline);
     }
 }

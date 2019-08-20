@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MessageSystem;
 
-public class LeylineController : MonoBehaviour
+public class LeylineController : MonoBehaviour, IMessageReceiver
 {
     private bool m_bIsActive = false;
     private List<LeyNodeController> m_rConnectedNodes = null;
@@ -14,6 +15,17 @@ public class LeylineController : MonoBehaviour
         Zone parent = transform.root.GetComponent<Zone>();
         if (parent) {
             // Register component
+            parent.AddToLeylineList(this);
+
+            // Deactivate self
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void Update() {
+        // DEBUG
+        if (Input.GetKeyDown(KeyCode.T)) {
+            ActivateLeyline(true);
         }
     }
 
@@ -43,7 +55,7 @@ public class LeylineController : MonoBehaviour
     /// Sets the active state of the leyline
     /// </summary>
     /// <param name="_bOn"></param>
-    public void SetActive(bool _bOn) {
+    public void ActivateLeyline(bool _bOn) {
         // Prevent repetition
         if(m_bIsActive == _bOn) {
             return;
@@ -58,4 +70,26 @@ public class LeylineController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Handle message events
+    /// </summary>
+    /// <param name="_messageType"></param>
+    /// <param name="_message"></param>
+    public void OnReceiveMessage(MessageSystem.MessageType _messageType, object _message) {
+        switch (_messageType) {
+            // Handle an activation message
+            case MessageType.eActivate: {
+                ActivateLeyline(true);
+                break;
+            }
+
+            // Handle disable messages
+            case MessageType.eReset: {
+                ActivateLeyline(false);
+                break;
+            }
+
+            default:break;
+        }
+    }
 }
