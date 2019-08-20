@@ -15,6 +15,7 @@ public class Zone : MonoBehaviour
     private List<GameObject> m_Chests = null; // A list of map fragments in zone
     private List<GameObject> m_Collectables = null; // A list of crystals in zone
 
+    private List<LeylineController> m_LeylineComponents = null;    // A list of all leylines in the zone
 
     // Generate a list of zones for future efficiency
     private void Awake()
@@ -27,7 +28,7 @@ public class Zone : MonoBehaviour
         // Add this zone list
         s_Zones.Add(this);
 
-        //Create list for components/gameobjects that will exist in a zone.
+        // Ensure component/gameobject lists exist
         if (m_MapVisionComponents == null) {
             m_MapVisionComponents = new List<MapVisionComponent>();
         }
@@ -38,6 +39,10 @@ public class Zone : MonoBehaviour
 
         if (m_Collectables == null) {
             m_Collectables = new List<GameObject>();
+		}
+		
+        if(m_LeylineComponents == null) {
+            m_LeylineComponents = new List<LeylineController>();
         }
     }
 
@@ -54,6 +59,12 @@ public class Zone : MonoBehaviour
     // Set whether the zone's map fragment has been collected or not (will almost always be set to true, but you never know)
     public void SetMapFragmentStatus(bool _bState) {
         m_bMapFragmentCollected = _bState;
+        Debug.Log("Map fragment status updated");
+        // Enable all leylines
+        foreach(LeylineController leyline in m_LeylineComponents) {
+            leyline.gameObject.SetActive(true);
+            Debug.Log(leyline.name);
+        }
     }
 
     // Static function tick off a zone when its map fragment is collected
@@ -203,5 +214,11 @@ public class Zone : MonoBehaviour
     /// <author>Vivian</author>
     public void IncreaseCollectableCount(int _num) {
         m_iTotalCollectableCount += _num;
+    /// <summary>
+    /// Registers a leyline with the zone
+    /// </summary>
+    /// <param name="_leyline"></param>
+    public void AddToLeylineList(LeylineController _leyline) {
+        m_LeylineComponents.Add(_leyline);
     }
 }
