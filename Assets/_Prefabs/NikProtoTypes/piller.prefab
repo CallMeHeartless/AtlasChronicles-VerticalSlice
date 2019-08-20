@@ -17,6 +17,9 @@ MonoBehaviour:
   - {fileID: 704556730548387188}
   currentPostion: 0
   m_fSpeed: 0.03
+  m_fSpeedBoust: 0.0001
+  m_fMinSpeed: 0.01
+  m_fMaxSpeed: 0.1
 --- !u!1001 &6430988137203385283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28,6 +31,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: piller
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834522436689755055, guid: f215b13100ced694189832c55f253857,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 5834522436689755055, guid: f215b13100ced694189832c55f253857,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5834522436689755054, guid: f215b13100ced694189832c55f253857,
         type: 3}
@@ -102,7 +116,12 @@ PrefabInstance:
     - target: {fileID: 5834522437251253296, guid: f215b13100ced694189832c55f253857,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 20
+      value: 0.42072
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834522437251253296, guid: f215b13100ced694189832c55f253857,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 5834522436614324399, guid: f215b13100ced694189832c55f253857,
         type: 3}
