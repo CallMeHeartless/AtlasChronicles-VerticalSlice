@@ -9,7 +9,7 @@ public class MapVisionComponent : MonoBehaviour
     private Outline m_rOutline;
 
     private void Start() {
-        // Obtain reference to outline component
+        //Obtain reference to outline component
         m_rOutline = GetComponent<Outline>();
         m_rOutline.enabled = false; // Start as disabled
 

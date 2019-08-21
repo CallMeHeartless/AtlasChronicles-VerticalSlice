@@ -9,13 +9,16 @@ public class PickupMap : Pickup
         base.Start();
         m_eType = PickupType.EMap;
         m_rPickupPic = GameObject.FindGameObjectWithTag("MapPicUI");
+        if(m_iZoneID == 0)
+        {
+            print("ERROR: UNASSIGNED MAP ZONE : " + name);
+        }
     }
-
-
-    /******************************************************************
-     * Collect: Executes map collection which has two modes: stolen and cinematic
-     * Author: Vivian
-     ******************************************************************/
+    
+    /// <summary>
+    /// Executes map collection which has two modes: stolen and cinematic
+    /// </summary>
+    /// <author>Vivian</author>
     protected override void Collect()
     {
         //Stolen maps will not activate a cinematic and will be collected like normal collectables
@@ -40,7 +43,7 @@ public class PickupMap : Pickup
         GameStats.s_iMapsBoard[GameStats.s_iLevelIndex]++;
 
         // Update map zone state
-        Zone.CollectMapFragment(m_regionID);
+        Zone.CollectMapFragment(m_iZoneID);
         // Check for end of game
         GameEndController.CheckMapCollection();
     }

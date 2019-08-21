@@ -29,7 +29,7 @@ public class Piller : MonoBehaviour, IMessageReceiver
                 {
                     m_bMoving = false;
                 }
-                transform.position = Vector3.MoveTowards(gameObject.transform.position, m_gPillersPostion[currentPostion].transform.position, m_fSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, m_gPillersPostion[currentPostion].transform.position, m_fSpeed);
             if (m_fSpeed<= m_fMaxSpeed)
             {
                 m_fSpeed += m_fSpeedBoust;

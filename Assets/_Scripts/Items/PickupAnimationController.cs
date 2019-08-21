@@ -15,11 +15,8 @@ public class PickupAnimationController : MonoBehaviour
     }
 
     public void DestroyPickup() {
-        //Only destroy pickup if it is a collectable or if it is a map fragment that is stolen
-        if (m_rPickup.GetPickupType() == PickupType.ECollectable || 
-           (m_rPickup.GetPickupType() == PickupType.EMap && m_rPickup.GetIsStolen()))
-        {
-            Destroy(gameObject.transform.parent.gameObject);
-        }
+        //Deactivate pickups when picked up
+        transform.parent.gameObject.SetActive(false);
+
     }
 }
