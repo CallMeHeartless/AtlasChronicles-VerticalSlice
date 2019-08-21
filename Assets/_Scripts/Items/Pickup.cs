@@ -9,7 +9,7 @@ public enum PickupType
 
 public class Pickup : MonoBehaviour
 {
-    [SerializeField] protected int m_regionID = 0;
+    [SerializeField] protected int m_iZoneID = 0;
     [SerializeField] GameObject m_rParticles;
 
     protected bool m_bIsCollected = false;
@@ -19,7 +19,8 @@ public class Pickup : MonoBehaviour
     protected DisplayStat m_rDisplayStats;
     protected AudioSource m_rAudio;
     protected PickupType m_eType = PickupType.ECollectable;
-
+    private Zone m_rParent;
+    
     protected virtual void Start()
     {
         if (m_rParticles != null)
@@ -29,18 +30,34 @@ public class Pickup : MonoBehaviour
 
         m_rDisplayStats = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>();
         m_rAudio = GetComponent<AudioSource>();
+
+        m_rParent = transform.root.GetComponent<Zone>();
+        if (m_rParent) {
+            m_iZoneID = m_rParent.GetZoneID();
+            m_rParent.AddToZone(gameObject);
+        }
     }
 
+    /// <summary>
+    /// Virtual collect function.
+    /// </summary>
+    /// <author>Vivian</author>
     protected virtual void Collect() {}
+
+    /// <summary>
+    /// Gets which type the current pickup object is
+    /// </summary>
+    /// <returns>PickupType : EMap, ECollectable</returns>
+    /// <author>Vivian</author>
     public PickupType GetPickupType()
     {
         return m_eType;
     }
 
-    /******************************************************************
-     * OnTriggerEnter: Activates collection if collided with player
-     * Author: Vivian
-     ******************************************************************/
+    /// <summary>
+    /// Activates collection if collided with player
+    /// </summary>
+    /// <author>Vivian</author>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !m_bIsCollected)
@@ -65,24 +82,38 @@ public class Pickup : MonoBehaviour
             {
                 m_rParticles.SetActive(true);
             }
-
+            print("Pickup Zone: " + m_iZoneID);
             //Activate pickup animation
             GetComponentInChildren<Animator>().SetTrigger("Collect");
         }
     }
-
-
-    /******************************************************************
-     * GetIsStolen: Activates collection if collided with player
-     * Author: Vivian
-     ******************************************************************/
+    
+    /// <summary>
+    /// Checks if Pickup has been Goon
+    /// </summary>
+    /// <author>Vivian</author>
     public bool GetIsStolen()
     {
         return m_bStolen;
     }
 
+    /// <summary>
+    /// Setter to set if pickup has been stolen by a Goon
+    /// </summary>
+    /// <param name="_stolen">Has pickup been stolen by Goon</param>
+    /// <author>Vivian</author>
     public void SetStolen(bool _stolen)
     {
         m_bStolen = _stolen;
+    }
+
+    /// <summary>
+    /// Checks if map has been collected
+    /// </summary>
+    /// <returns>true if collected</returns>
+    /// <author>Vivian</author>
+    public bool GetCollected()
+    {
+        return m_bIsCollected;
     }
 }

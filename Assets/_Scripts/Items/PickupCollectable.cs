@@ -12,8 +12,10 @@ public class PickupCollectable : Pickup
         m_rPickupPic = GameObject.FindGameObjectWithTag("PickupPicUI");
     }
 
-    // Update is called once per frame
-
+    /// <summary>
+    /// Executes Pickup collection
+    /// </summary>
+    /// <author>Vivian</author>
     protected override void Collect()
     {
         m_rAudio.Play();

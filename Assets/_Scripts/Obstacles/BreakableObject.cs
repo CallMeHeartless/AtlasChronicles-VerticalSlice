@@ -13,12 +13,16 @@ public class BreakableObject : MonoBehaviour
     [SerializeField] AnimationCurve m_yCurve;
     [SerializeField] float m_fSpeedOfArc = 2.0f;
     [SerializeField] float m_fRadius = 2.0f;
+    private Zone m_rParent;
+    private int m_iZoneID = 0;
 
     Vector3[] m_rPrizeDestinations;
     float m_fCollectableHeight = 0.0f;
+    bool m_bBroken;
 
     private void Start()
     {
+        m_bBroken = false;
         m_rBreakingAudio = GetComponent<AudioSource>();
         if(m_rBreakingAudio)
             m_rBreakingAudio.Stop();
@@ -32,12 +36,26 @@ public class BreakableObject : MonoBehaviour
         {
             m_rPrizeDestinations[i] = m_rPrizes[i].transform.position;
         }
+
+        m_rParent = transform.root.GetComponent<Zone>();
+        if (m_rParent)
+        {
+            m_rParent.AddToZone(gameObject);
+            m_rParent.IncreaseCollectableCount(m_rPrizes.Length);
+            m_iZoneID = m_rParent.GetZoneID();
+        }
     }
 
+    /// <summary>
+    /// Switches the normal box to the broken one
+    /// </summary>
+    /// <author>Vivian</author>
     public void SwitchToBroken()
     {
         if(m_rOriginalObject && m_rBrokenObject)
         {
+            m_bBroken = true;
+
             if (m_rBreakingAudio)
                 m_rBreakingAudio.Play();
             //Activate the broken box
@@ -52,6 +70,10 @@ public class BreakableObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Calculates the location of each prizes destination and throws them there
+    /// </summary>
+    /// <author>Vivian</author>
     private void SpawnPrizesInCircle()
     {
         //Calculate positions to spawn based on the number of prizes that exist
@@ -65,7 +87,7 @@ public class BreakableObject : MonoBehaviour
                 m_fCollectableHeight = 1.0f;
 
             // Instantiate each prize in the chests position
-            m_rPrizes[i] = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity);
+            m_rPrizes[i] = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity, m_rParent.transform);
 
             //Calculate the destinations of the prizes (to be spread out around the chest)
             float angle = 0.0f;
@@ -90,6 +112,10 @@ public class BreakableObject : MonoBehaviour
         StartCoroutine(Spread());
     }
 
+    /// <summary>
+    /// The arc 'animation' (coded) to make the pickups fly out of the chest
+    /// </summary>
+    /// <author>Vivian</author>
     IEnumerator Spread()
     {
         float timeElapsed = 0.0f;
@@ -123,7 +149,11 @@ public class BreakableObject : MonoBehaviour
         }
         yield return null;
     }
-    
+
+    /// <summary>
+    /// Hides the chest //Executed after a few seconds
+    /// </summary>
+    /// <author>Vivian</author>
     void Disappear()
     {
         //Note: Didnt destroy this current object holder as the prizes do not complete 
@@ -131,8 +161,21 @@ public class BreakableObject : MonoBehaviour
         Destroy(m_rBrokenObject);
     }
 
+    /// <summary>
+    /// Gets the array of prizes that the chest contains
+    /// </summary>
+    /// <author>Vivian</author>
     public GameObject[] GetPrizes()
     {
         return m_rPrizes;
+    }
+
+    /// <summary>
+    /// Checks if the current chest has been broken or not
+    /// </summary>
+    /// <author>Vivian</author>
+    public bool GetIsBroken()
+    {
+        return m_bBroken;
     }
 }
