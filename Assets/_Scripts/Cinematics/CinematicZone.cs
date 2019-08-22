@@ -24,13 +24,7 @@ public class CinematicZone : MonoBehaviour
     {
         m_rDirector = GetComponent<PlayableDirector>();
     }
-
-    public void Test()
-    {
-        // Function called and used to test if sections of code are working
-        print("Test");
-    }
-
+    
     private void Update()
     {
         //If there is no event happening or the director does not exist, return.
