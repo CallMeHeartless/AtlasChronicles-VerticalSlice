@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4033438621215181494}
   - component: {fileID: 4033438621214050422}
   - component: {fileID: 6430608992780020794}
+  - component: {fileID: 1115746246614842264}
   m_Layer: 0
-  m_Name: sm_Platform_FullLargeWall
+  m_Name: pfb_Platform_FullLargeWall
   m_TagString: SlipperyObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,11 +90,24 @@ MeshCollider:
   m_GameObject: {fileID: 4033438621216052918}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: cc1bbc2c21793aa41861d3c4449e88b9, type: 3}
+--- !u!65 &1115746246614842264
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033438621216052918}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0023417, y: 4.112654, z: 0.6763915}
+  m_Center: {x: -1.9996353, y: 2.017585, z: -0.02658768}
 --- !u!1 &7803514102996146833
 GameObject:
   m_ObjectHideFlags: 0
