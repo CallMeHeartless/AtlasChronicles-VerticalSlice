@@ -150,9 +150,12 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deactivate all pointers
+    /// </summary>
+    /// <param name="_activate"></param>
     public void SetAllPointersActive(bool _activate)
     {
-        //Deactivate all pointers
         foreach (Image item in m_rZonePointers)
         {
             item.enabled = _activate;
