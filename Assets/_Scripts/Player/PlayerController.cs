@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private AudioPlayer m_rGliderAudio;
     [SerializeField] private AudioPlayer m_rSlamAttackAudio;
     [SerializeField] private AudioPlayer m_rTagAudio;
+    [SerializeField] private AudioPlayer m_rDamagedAudio;
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
@@ -1210,6 +1211,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 EnemyController goon = message.source.GetComponentInParent<EnemyController>();
                 if (goon) {
                     // If so, reward the goon with a map fragment
+                    m_rDamagedAudio.PlayAudio();
                     StealMapFragment(goon);
                 }
                 break;

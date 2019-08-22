@@ -7,14 +7,16 @@ public class MapManager : MonoBehaviour
 {
     [SerializeField] private Button[] m_rMapRegions;    // Array of map region buttons
     [SerializeField] private Button[] m_rMapNumRegions; // Array of map number buttons
+    [SerializeField] private GameObject[] m_rFlavourTexts; // Array of flavour texts
+    [SerializeField] private Image[] m_rZonePointers; // Array of flavour texts
 
-    [SerializeField] TextMeshProUGUI m_rMapDetailTitle;     // The details title text
-    [SerializeField] TextMeshProUGUI m_rMapDetailMapCount;       // The gameobject containing the image UI and text to display a map count
-    [SerializeField] TextMeshProUGUI m_rMapDetailChestCount;     // The gameobject containing the image UI and text to display a chest count
-    [SerializeField] TextMeshProUGUI m_rMapDetailCollectableCount;   // The gameobject containing the image UI and text to display a collectable count
-    [SerializeField] GameObject m_rMapDetailContainer;       // The gameobject for the container holding all map details
-    [SerializeField] GameObject m_rMapContainer;            // The gameobject for the container holding all maps
-    private bool[] m_bRegionCollected;
+    [SerializeField] TextMeshProUGUI m_rMapDetailTitle;         // The details title text
+    [SerializeField] TextMeshProUGUI m_rMapDetailMapCount;      // The textObject containing the image UI and text to display a map count
+    [SerializeField] TextMeshProUGUI m_rMapDetailChestCount;    // The textObject containing the image UI and text to display a chest count
+    [SerializeField] TextMeshProUGUI m_rMapDetailCollectableCount;   // The textObject containing the image UI and text to display a collectable count
+    [SerializeField] GameObject m_rMapName;                     // The gameObject containing the name of the map/island
+    [SerializeField] GameObject m_rMapDetailContainer;          // The gameobject for the container holding all map details
+    [SerializeField] GameObject m_rMapContainer;                // The gameobject for the container holding all maps
 
     private Zone[] m_rZones;    //Zone array from the Zone script.
     private int m_rMapsCollected = 0;
@@ -28,12 +30,12 @@ public class MapManager : MonoBehaviour
         RetrieveZones();
         m_vecDefaultMapPos = m_rMapDefaultPosition.position;
         m_vecDestinationMapPos = m_rMapDestinationPosition.position;
-        //Set a default view for the map details UI
-        //Reveal all map images
-        HideAllMapUIZones(false);
 
-        //Disable all zones
+        //Zones should not be interactable until collected
         DisableAllZones();
+
+        //Apply default settings to the map
+        MapDefaultSettings();
     }
 
     /// <summary>
@@ -62,7 +64,6 @@ public class MapManager : MonoBehaviour
         //If map regions exist AND zones exist in the world
         if (m_rMapRegions != null && zoneList != null) {
             m_rZones = new Zone[zoneList.Count];
-            m_bRegionCollected = new bool[zoneList.Count];
 
             //Populate arrays with values from zone
             foreach (Zone zone in zoneList) {
@@ -88,36 +89,17 @@ public class MapManager : MonoBehaviour
         //Update collection data onto map
         m_rMapsCollected = 0;
 
-        //Reveal all map images
-        HideAllMapUIZones(false);
+        MapDefaultSettings();
 
         //For each zone, check if the map has been collected.
         for (int i = 0; i < m_rZones.Length; ++i) {
             if (m_rZones[i].GetIsMapFragmentCollected())
             {
-                //m_bRegionCollected[i] = true;
                 //Check if regions are interactable/collected
                 m_rMapRegions[i].interactable = true;
                 m_rMapNumRegions[i].interactable = true;
 
                 ++m_rMapsCollected;
-            }
-            else
-            {
-                m_bRegionCollected[i] = false;
-            }
-        }
-        MapDefaultSettings();
-    }
-
-    public void SortEnabledMapRegions()
-    {
-        for (int i = 0; i < m_rMapRegions.Length; ++i)
-        {
-            if(m_bRegionCollected[i])
-            {
-                m_rMapRegions[i].interactable = true;
-                m_rMapNumRegions[i].interactable = true;
             }
         }
     }
@@ -142,32 +124,39 @@ public class MapManager : MonoBehaviour
         m_rMapContainer.GetComponent<RectTransform>().transform.position = m_vecDefaultMapPos;
         m_rMapDetailContainer.SetActive(false);
 
-        // Set the default details panel to show the amount of regions that have currently been mapped.
-        //m_rMapDetailRegionCount.SetActive(true);    //Counter of how many regions have been 
-        //m_rMapDetailRegionCount.GetComponentInChildren<TextMeshProUGUI>().text = m_rMapsCollected + " / 5";
+        //Deactivate all flavour texts and activate the map name
+        SetAllFlavourTextsActive(false);
+        m_rMapName.SetActive(true);
 
-        //Hide all region details
-        //m_rMapDetailMapCount.SetActive(false);
-        //m_rMapDetailChestCount.SetActive(false);
-        //m_rMapDetailCollectableCount.SetActive(false);
+        //Deactivate details panel
+        m_rMapDetailContainer.SetActive(false);
+
+        //Deactivate all pointers
+        SetAllPointersActive(false);
+
+        //Leave All button pointer active
+        m_rZonePointers[0].enabled = true;
     }
 
     /// <summary>
-    /// Activates the gameobjects in the details panel 
+    /// Activate or deactivate all flavour texts
     /// </summary>
-    public void ActivateDetails() {
-        //Called everytime a map region button is clicked
-        m_rMapContainer.GetComponent<RectTransform>().transform.position = m_vecDestinationMapPos;
+    /// <param name="_activate">Bool to activate/deactivate all flavour texts</param>
+    public void SetAllFlavourTextsActive(bool _activate)
+    {
+        foreach (GameObject item in m_rFlavourTexts)
+        {
+            item.SetActive(_activate);
+        }
+    }
 
-        m_rMapDetailContainer.SetActive(true);
-
-        //Counter of how many regions have been 
-        //m_rMapDetailRegionCount.SetActive(false);    
-
-        //Turn on all region details
-        //m_rMapDetailMapCount.SetActive(true);
-        //m_rMapDetailChestCount.SetActive(true);
-        //m_rMapDetailCollectableCount.SetActive(true);
+    public void SetAllPointersActive(bool _activate)
+    {
+        //Deactivate all pointers
+        foreach (Image item in m_rZonePointers)
+        {
+            item.enabled = _activate;
+        }
     }
 
     /// <summary>
@@ -175,6 +164,13 @@ public class MapManager : MonoBehaviour
     /// </summary>
     /// <param name="_num">The region number to set details of</param>
     public void SetRegionSelected(int _num) {
+        //Deactivate all flavour texts and activate the map name
+        SetAllFlavourTextsActive(false);
+
+        //Called everytime a map region button is clicked
+        m_rMapContainer.GetComponent<RectTransform>().transform.position = m_vecDestinationMapPos;
+        m_rMapDetailContainer.SetActive(true);
+
         //Change title text to 'region #'
         m_rMapDetailTitle.text = "Region " + _num;
 
@@ -187,28 +183,16 @@ public class MapManager : MonoBehaviour
             m_rZones[currentRegion].GetCurrentChestCount() + "/" + m_rZones[currentRegion].GetTotalChestCount();
         m_rMapDetailCollectableCount.GetComponentInChildren<TextMeshProUGUI>().text = 
             m_rZones[currentRegion].GetCurrentCollectableCount() + "/" + m_rZones[currentRegion].GetTotalCollectableCount();
+        
+        //Activate Flavour text for specified zone
+        m_rFlavourTexts[currentRegion].SetActive(true);
+        m_rMapName.SetActive(false);
+
+        //Deactivate all pointers
+        SetAllPointersActive(false);
+
+        //Set selected zone pointer on. 
+        //Using _num instead of currentRegion as the ALL pointer is included in the m_rZonePointers array
+        m_rZonePointers[_num].enabled = true;
     }
 }
-
-
-/***
- * Case - no maps collected
- *  - All maps are disabled.
- *  - All map nums are disabled
- *  - back to exit
- *  
- *  Case - 1 map collected
- *  - All maps except collected is disabled
- *  - Enable
- *      - if zone == collected, set enabled, else disable
- *  
- *  Case - Zone clicked
- *  - If zone clicked, Set mode to viewing map
- *  - Shift map left, display details right
- *  - If back clicked and in viewing mode, return to all mode
- *  
- *  Case - All mode clicked
- *  - Set to not viewing map
- *  - If back clicked, return to menu
- *  
- * */
