@@ -120,6 +120,16 @@ public class MapManager : MonoBehaviour
         //Reveal all map images
         HideAllMapUIZones(false);
 
+        //For each zone, check if the map has been collected.
+        for (int i = 0; i < m_rZones.Length; ++i)
+        {
+            if (m_rZones[i].GetIsMapFragmentCollected())
+            {
+                //Check if regions are interactable/collected
+                m_rMapRegions[i].interactable = true;
+            }
+        }
+
         //reset map position
         m_rMapContainer.GetComponent<RectTransform>().transform.position = m_vecDefaultMapPos;
         m_rMapDetailContainer.SetActive(false);
@@ -186,7 +196,17 @@ public class MapManager : MonoBehaviour
             m_rZones[currentRegion].GetCurrentChestCount() + "/" + m_rZones[currentRegion].GetTotalChestCount();
         m_rMapDetailCollectableCount.GetComponentInChildren<TextMeshProUGUI>().text = 
             m_rZones[currentRegion].GetCurrentCollectableCount() + "/" + m_rZones[currentRegion].GetTotalCollectableCount();
-        
+
+
+        //Deactivate all regions except for the currently selected region
+        for (int i = 0; i < m_rMapRegions.Length; ++i)
+        {
+            m_rMapRegions[i].interactable = false;
+        }
+
+        m_rMapRegions[currentRegion].interactable = true;
+
+
         //Activate Flavour text for specified zone
         m_rFlavourTexts[currentRegion].SetActive(true);
         m_rMapName.SetActive(false);

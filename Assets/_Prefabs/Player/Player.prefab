@@ -2291,9 +2291,19 @@ PrefabInstance:
       propertyPath: m_rChildren.Array.data[2]
       value: 
       objectReference: {fileID: 3226857373529079008}
+    - target: {fileID: 3226857374109921280, guid: c568a68792ad5a74ca0f30fb14abf135,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 1.477813e-26
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226857374109921280, guid: c568a68792ad5a74ca0f30fb14abf135,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -1.1119402e-25
+      objectReference: {fileID: 0}
     - target: {fileID: 985713656, guid: c568a68792ad5a74ca0f30fb14abf135, type: 3}
       propertyPath: m_Volume
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 985713656, guid: c568a68792ad5a74ca0f30fb14abf135, type: 3}
       propertyPath: BypassEffects
@@ -2368,6 +2378,12 @@ Animator:
 --- !u!1 &3226857373529079008 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 395130737, guid: c568a68792ad5a74ca0f30fb14abf135,
+    type: 3}
+  m_PrefabInstance: {fileID: 3226857373855501201}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &3226857374287462505 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 985713656, guid: c568a68792ad5a74ca0f30fb14abf135,
     type: 3}
   m_PrefabInstance: {fileID: 3226857373855501201}
   m_PrefabAsset: {fileID: 0}
@@ -2642,10 +2658,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624357, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -70.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624357, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 129.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624357, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -134.46
+      objectReference: {fileID: 0}
     - target: {fileID: 3393878543954624361, guid: fac403b28993c344bb98df0affd6443a,
         type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3393878543954624361, guid: fac403b28993c344bb98df0affd6443a,
         type: 3}
@@ -2689,17 +2720,6 @@ PrefabInstance:
       objectReference: {fileID: 1589766830203657074}
     - target: {fileID: 3393878543954624361, guid: fac403b28993c344bb98df0affd6443a,
         type: 3}
-      propertyPath: m_SceneBindings.Array.data[9].key
-      value: 
-      objectReference: {fileID: 114603518357179590, guid: 11f0442f1b8b8da4a93ebd82f77586ad,
-        type: 2}
-    - target: {fileID: 3393878543954624361, guid: fac403b28993c344bb98df0affd6443a,
-        type: 3}
-      propertyPath: m_SceneBindings.Array.data[9].value
-      value: 
-      objectReference: {fileID: 3226857373529079008}
-    - target: {fileID: 3393878543954624361, guid: fac403b28993c344bb98df0affd6443a,
-        type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[10].second
       value: 
       objectReference: {fileID: 824851347}
@@ -2716,7 +2736,57 @@ PrefabInstance:
     - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
         type: 3}
       propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3226857373529079008}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3226857374287462505}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393878543954624356, guid: fac403b28993c344bb98df0affd6443a,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fac403b28993c344bb98df0affd6443a, type: 3}
