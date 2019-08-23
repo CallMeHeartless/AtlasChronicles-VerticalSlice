@@ -82,7 +82,7 @@ public class Pickup : MonoBehaviour
             {
                 m_rParticles.SetActive(true);
             }
-            print("Pickup Zone: " + m_iZoneID);
+            //print("Pickup Zone: " + m_iZoneID);
             //Activate pickup animation
             GetComponentInChildren<Animator>().SetTrigger("Collect");
         }
