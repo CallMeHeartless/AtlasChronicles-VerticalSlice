@@ -117,6 +117,11 @@ public class MapManager : MonoBehaviour
     /// Set the map to only display the number of maps collected
     /// </summary>
     public void MapDefaultSettings() {
+        if (m_rZones == null)
+        {
+            RetrieveZones();
+        }
+
         //Reveal all map images
         HideAllMapUIZones(false);
 

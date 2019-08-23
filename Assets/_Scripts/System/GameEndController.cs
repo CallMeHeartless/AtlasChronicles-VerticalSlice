@@ -23,6 +23,11 @@ public class GameEndController : MonoBehaviour
     private TutorialCollider m_rNPCCompleteMsg = null; 
     private bool m_bIsActive = false;
 
+    static float m_fMinimumCrystals = 100;
+    static float m_fMinimumMaps = 5;
+
+
+
     void Awake()
     {
         if (!m_sInstance) {
@@ -44,8 +49,8 @@ public class GameEndController : MonoBehaviour
             return;
         }
         // If MAPS_COLLECTED >= MAPS_TOTAL
-        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= 5 
-            && GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex] >= 100) {
+        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= m_fMinimumMaps
+            && GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex] >= m_fMinimumCrystals) {
             instance.TogglePortal(true);
         } else {
             instance.TogglePortal(false);
@@ -65,6 +70,7 @@ public class GameEndController : MonoBehaviour
             if(m_rNPCCompleteMsg)
             {
                 m_rNPCCompleteMsg.SetText("Congrats Kid! Enter the portal to leave the world or stay behind and adventure some more. (Wait.. those Pechapples are for me.. right?)");
+                Invoke("HideMessage", 5.0f);
             }
         }
         // Display text
@@ -74,6 +80,11 @@ public class GameEndController : MonoBehaviour
         } else {
             m_rText.SetText("");
         }
+    }
+
+    public void HideMessage()
+    {
+        m_rNPCCompleteMsg.transform.parent.gameObject.SetActive(false);
     }
 
     // Return the player to the main menu upon completion
