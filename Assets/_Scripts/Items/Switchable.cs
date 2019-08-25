@@ -23,13 +23,25 @@ public class Switchable : MonoBehaviour
     [SerializeField]
     private float m_fReturnTime = 3.0f;
     private float m_fReturnCount = 0.0f;
-   
+    Material material;
 
-    private void Start() {
+
+    private void Start()
+    {
         //m_Material = GetComponent<MeshRenderer>().material;
         m_OriginalTransform = transform;
         m_StartPosition = transform.position;
         m_Enemy = GetComponent<EnemyController>();
+        if (transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>())
+        {
+        material = transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>().material;
+        material.EnableKeyword("_EMISSION");
+        }
+        else
+        {
+            material = null;
+        }
+       // material.EnableKeyword("_EMISSION");
     }
 
     private void Update() {
@@ -40,6 +52,10 @@ public class Switchable : MonoBehaviour
                 m_fReturnCount = 0.0f;
                 m_bHasMoved = false;
                 ReturnToStartPosition();
+                if (material != null)
+                {
+                    material.SetInt("_EmissionIntensity", 500);
+                }
             }
         }
     }
