@@ -37,6 +37,7 @@ public class PauseMenu : MonoBehaviour
         //Hide cursor on start
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        GameState.SetPauseFlag(false);
 
         //Find the camera
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
@@ -134,6 +135,8 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         //Loads the main menu after playing the click audio
+        Zone.ClearZones();
+
         SceneManager.LoadScene("Menu_Main");
     }
 
