@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
     [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
 
+    DisplayStat m_rDisplayStat;
     ChildActivator m_rScriptActivator;
     CinemachineFreeLook m_rCineCamera;              //Reference to main camera
     //CinematicManager m_rCineManager;                //Reference to cinematics manager that holds all cinematics
@@ -36,11 +37,14 @@ public class PauseMenu : MonoBehaviour
         //Hide cursor on start
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        GameState.SetPauseFlag(false);
 
         //Find the camera
         m_rCineCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineFreeLook>();
         //Find player
         m_rScriptActivator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<ChildActivator>();
+        //Find display stat class
+        m_rDisplayStat = GetComponent<DisplayStat>();
 
         //Activate camera if component is not null
         if (m_rCineCamera != null)
@@ -75,6 +79,8 @@ public class PauseMenu : MonoBehaviour
             // Set game as paused 
             GameState.SetPauseFlag(true);
             m_bIsPaused = true;
+
+            m_rDisplayStat.HideUIGamePanel(false);
         }
         // Resume gameplay
         else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") || (Input.GetButtonDown("BButton")))
@@ -111,6 +117,8 @@ public class PauseMenu : MonoBehaviour
             if (m_rCineCamera != null)
                 m_rCineCamera.enabled = true;
 
+            m_rDisplayStat.HideUIGamePanel(true);
+
             //Enable cinematic functionality when resumed
             //CinematicManager.ActivateCinematics(true);
 
@@ -127,6 +135,8 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         //Loads the main menu after playing the click audio
+        Zone.ClearZones();
+
         SceneManager.LoadScene("Menu_Main");
     }
 

@@ -1,27 +1,57 @@
 ﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] m_rMapRegions;    // Array of map region buttons
+    [SerializeField] private Button[] m_rMapRegions;    // Array of map region buttons
+    [SerializeField] private Button[] m_rMapNumRegions; // Array of map number buttons
+    [SerializeField] private GameObject[] m_rFlavourTexts; // Array of flavour texts
+    [SerializeField] private Image[] m_rZonePointers; // Array of flavour texts
 
-    [SerializeField] TextMeshProUGUI m_rMapDetailTitle;     // The details title text
-    [SerializeField] GameObject m_rMapDetailRegionCount;    // The region count that is only displayed in default mode (when no region is selected)
-    [SerializeField] GameObject m_rMapDetailMapCount;       // The gameobject containing the image UI and text to display a map count
-    [SerializeField] GameObject m_rMapDetailChestCount;     // The gameobject containing the image UI and text to display a chest count
-    [SerializeField] GameObject m_rMapDetailCollectableCount;   // The gameobject containing the image UI and text to display a collectable count
+    [SerializeField] TextMeshProUGUI m_rMapDetailTitle;         // The details title text
+    [SerializeField] TextMeshProUGUI m_rMapDetailMapCount;      // The textObject containing the image UI and text to display a map count
+    [SerializeField] TextMeshProUGUI m_rMapDetailChestCount;    // The textObject containing the image UI and text to display a chest count
+    [SerializeField] TextMeshProUGUI m_rMapDetailCollectableCount;   // The textObject containing the image UI and text to display a collectable count
+    [SerializeField] GameObject m_rMapName;                     // The gameObject containing the name of the map/island
+    [SerializeField] GameObject m_rMapDetailContainer;          // The gameobject for the container holding all map details
+    [SerializeField] GameObject m_rMapContainer;                // The gameobject for the container holding all maps
 
     private Zone[] m_rZones;    //Zone array from the Zone script.
-    private int m_rMapsCollected = 0;    
+    private int m_rMapsCollected = 0;
+
+    [SerializeField] RectTransform m_rMapDefaultPosition;
+    [SerializeField] RectTransform m_rMapDestinationPosition;
+    private Vector3 m_vecDefaultMapPos = Vector3.zero;
+    private Vector3 m_vecDestinationMapPos = Vector3.zero;
 
     void Start() {
         RetrieveZones();
-        //Set all map regions inactive
-        HideAllMapUIZones();
+        m_vecDefaultMapPos = m_rMapDefaultPosition.position;
+        m_vecDestinationMapPos = m_rMapDestinationPosition.position;
 
-        //Set a default view for the map details UI
+        //Zones should not be interactable until collected
+        DisableAllZones();
+
+        //Apply default settings to the map
         MapDefaultSettings();
+    }
+
+    /// <summary>
+    /// Disable both map buttons and mapnumber buttons on start
+    /// </summary>
+    public void DisableAllZones()
+    {
+        foreach (Button item in m_rMapRegions)
+        {
+            item.interactable = false;
+        }
+
+        foreach (Button item in m_rMapNumRegions)
+        {
+            item.interactable = false;
+        }
     }
 
     /// <summary>
@@ -59,25 +89,27 @@ public class MapManager : MonoBehaviour
         //Update collection data onto map
         m_rMapsCollected = 0;
 
+        MapDefaultSettings();
+
         //For each zone, check if the map has been collected.
         for (int i = 0; i < m_rZones.Length; ++i) {
-            if(m_rZones[i].GetIsMapFragmentCollected()) {
-                m_rMapRegions[i].SetActive(true);
+            if (m_rZones[i].GetIsMapFragmentCollected())
+            {
+                //Check if regions are interactable/collected
+                m_rMapRegions[i].interactable = true;
+                m_rMapNumRegions[i].interactable = true;
+
                 ++m_rMapsCollected;
             }
         }
-
-        //Update the UI to display details
-        MapDefaultSettings();
     }
     
     /// <summary>
-    /// Hide all the UI zone buttons from the map
+    /// Hide/dont hide all the UI zone buttons from the map
     /// </summary>
-    public void HideAllMapUIZones() {
-        //Hide all button sections of the map
+    public void HideAllMapUIZones(bool _hide) {
         for (int i = 0; i < m_rMapRegions.Length; ++i) {
-            m_rMapRegions[i].SetActive(false);
+            m_rMapRegions[i].gameObject.SetActive(!_hide);
         }
     }
 
@@ -85,30 +117,64 @@ public class MapManager : MonoBehaviour
     /// Set the map to only display the number of maps collected
     /// </summary>
     public void MapDefaultSettings() {
-        // Set the default details panel to show the amount of regions that have currently been mapped.
-        m_rMapDetailTitle.text = "Regions Mapped";  //Change title text to 'regions mapped' instead of 'region #'
-        m_rMapDetailRegionCount.SetActive(true);    //Counter of how many regions have been 
-        m_rMapDetailRegionCount.GetComponentInChildren<TextMeshProUGUI>().text = m_rMapsCollected + " / 5";
+        if (m_rZones == null)
+        {
+            RetrieveZones();
+        }
 
-        //Hide all region details
-        m_rMapDetailMapCount.SetActive(false);
-        m_rMapDetailChestCount.SetActive(false);
-        m_rMapDetailCollectableCount.SetActive(false);
+        //Reveal all map images
+        HideAllMapUIZones(false);
+
+        //For each zone, check if the map has been collected.
+        for (int i = 0; i < m_rZones.Length; ++i)
+        {
+            if (m_rZones[i].GetIsMapFragmentCollected())
+            {
+                //Check if regions are interactable/collected
+                m_rMapRegions[i].interactable = true;
+            }
+        }
+
+        //reset map position
+        m_rMapContainer.GetComponent<RectTransform>().transform.position = m_vecDefaultMapPos;
+        m_rMapDetailContainer.SetActive(false);
+
+        //Deactivate all flavour texts and activate the map name
+        SetAllFlavourTextsActive(false);
+        m_rMapName.SetActive(true);
+
+        //Deactivate details panel
+        m_rMapDetailContainer.SetActive(false);
+
+        //Deactivate all pointers
+        SetAllPointersActive(false);
+
+        //Leave All button pointer active
+        m_rZonePointers[0].enabled = true;
     }
 
     /// <summary>
-    /// Activates the gameobjects in the details panel 
+    /// Activate or deactivate all flavour texts
     /// </summary>
-    public void ActivateDetails() {
-        //Called everytime a map region button is clicked
+    /// <param name="_activate">Bool to activate/deactivate all flavour texts</param>
+    public void SetAllFlavourTextsActive(bool _activate)
+    {
+        foreach (GameObject item in m_rFlavourTexts)
+        {
+            item.SetActive(_activate);
+        }
+    }
 
-        //Counter of how many regions have been 
-        m_rMapDetailRegionCount.SetActive(false);    
-
-        //Turn on all region details
-        m_rMapDetailMapCount.SetActive(true);
-        m_rMapDetailChestCount.SetActive(true);
-        m_rMapDetailCollectableCount.SetActive(true);
+    /// <summary>
+    /// Deactivate all pointers
+    /// </summary>
+    /// <param name="_activate"></param>
+    public void SetAllPointersActive(bool _activate)
+    {
+        foreach (Image item in m_rZonePointers)
+        {
+            item.enabled = _activate;
+        }
     }
 
     /// <summary>
@@ -116,6 +182,13 @@ public class MapManager : MonoBehaviour
     /// </summary>
     /// <param name="_num">The region number to set details of</param>
     public void SetRegionSelected(int _num) {
+        //Deactivate all flavour texts and activate the map name
+        SetAllFlavourTextsActive(false);
+
+        //Called everytime a map region button is clicked
+        m_rMapContainer.GetComponent<RectTransform>().transform.position = m_vecDestinationMapPos;
+        m_rMapDetailContainer.SetActive(true);
+
         //Change title text to 'region #'
         m_rMapDetailTitle.text = "Region " + _num;
 
@@ -128,5 +201,26 @@ public class MapManager : MonoBehaviour
             m_rZones[currentRegion].GetCurrentChestCount() + "/" + m_rZones[currentRegion].GetTotalChestCount();
         m_rMapDetailCollectableCount.GetComponentInChildren<TextMeshProUGUI>().text = 
             m_rZones[currentRegion].GetCurrentCollectableCount() + "/" + m_rZones[currentRegion].GetTotalCollectableCount();
+
+
+        //Deactivate all regions except for the currently selected region
+        for (int i = 0; i < m_rMapRegions.Length; ++i)
+        {
+            m_rMapRegions[i].interactable = false;
+        }
+
+        m_rMapRegions[currentRegion].interactable = true;
+
+
+        //Activate Flavour text for specified zone
+        m_rFlavourTexts[currentRegion].SetActive(true);
+        m_rMapName.SetActive(false);
+
+        //Deactivate all pointers
+        SetAllPointersActive(false);
+
+        //Set selected zone pointer on. 
+        //Using _num instead of currentRegion as the ALL pointer is included in the m_rZonePointers array
+        m_rZonePointers[_num].enabled = true;
     }
 }
