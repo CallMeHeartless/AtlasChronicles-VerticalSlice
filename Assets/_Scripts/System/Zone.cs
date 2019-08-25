@@ -221,4 +221,9 @@ public class Zone : MonoBehaviour
     public void AddToLeylineList(LeylineController _leyline) {
         m_LeylineComponents.Add(_leyline);
     }
+
+    public static void ClearZones()
+    {
+        s_Zones = new List<Zone>();
+    }
 }
