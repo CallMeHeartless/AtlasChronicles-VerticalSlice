@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4198243330629954565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -46.4, z: 0}
   m_LocalScale: {x: 0.021705378, y: 0.02170536, z: 0.021705378}
   m_Children:
   - {fileID: 6257746481755036466}
@@ -48,7 +48,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 99.99992, y: 100.000015, z: 100.000015}
-  m_Center: {x: 0.00018310547, y: 3.26, z: -0.00024414062}
+  m_Center: {x: 0.00018310547, y: 50, z: -0.00024414062}
 --- !u!114 &4198243330629954567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +82,7 @@ NavMeshObstacle:
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 3.26, z: 0}
+  m_Center: {x: 0, y: 50, z: 0}
   m_TimeToStationary: 0.5
 --- !u!54 &2132084220
 Rigidbody:
@@ -184,21 +184,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4198243330629954564}
     m_Modifications:
-    - target: {fileID: 100002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
-      propertyPath: m_Name
-      value: SM_TeleportBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -46.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -247,6 +239,14 @@ PrefabInstance:
     - target: {fileID: 400002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.01023011
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
+      propertyPath: m_Name
+      value: SM_TeleportBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 5aa21bde16621fb48983bba29a4e96b8, type: 3}
       propertyPath: m_Materials.Array.data[0]

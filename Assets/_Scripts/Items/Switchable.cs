@@ -23,7 +23,8 @@ public class Switchable : MonoBehaviour
     [SerializeField]
     private float m_fReturnTime = 3.0f;
     private float m_fReturnCount = 0.0f;
-    Material material;
+    private float m_fSpeed = 0.1f;
+   // Material material;
 
 
     private void Start()
@@ -32,15 +33,15 @@ public class Switchable : MonoBehaviour
         m_OriginalTransform = transform;
         m_StartPosition = transform.position;
         m_Enemy = GetComponent<EnemyController>();
-        if (transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>())
-        {
-        material = transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>().material;
-        material.EnableKeyword("_EMISSION");
-        }
-        else
-        {
-            material = null;
-        }
+        //if (transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>())
+        //{
+        //material = transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>().material;
+        //material.EnableKeyword("_EMISSION");
+        //}
+        //else
+        //{
+        //    material = null;
+        //}
        // material.EnableKeyword("_EMISSION");
     }
 
@@ -48,15 +49,28 @@ public class Switchable : MonoBehaviour
         // Process moving the object back to its start position (if relevent)
         if (m_bReturnAfterDelay && m_bHasMoved) {
             m_fReturnCount += Time.deltaTime;
-            if(m_fReturnCount >= m_fReturnTime) {
+            if (m_fReturnCount >= m_fReturnTime)
+            {
                 m_fReturnCount = 0.0f;
                 m_bHasMoved = false;
                 ReturnToStartPosition();
-                if (material != null)
-                {
-                    material.SetInt("_EmissionIntensity", 500);
-                }
+                //if (material != null)
+                //{
+                //    material.SetInt("_EmissionIntensity", 500);
+                //}
+                m_fSpeed = 0.1f;
+                transform.GetChild(1).localPosition = new Vector3(0, 0, 0);
             }
+            else
+            {
+                //shaking the box which becomes bigger 
+                Vector3 m_vec3Offset = Random.insideUnitCircle;
+                m_vec3Offset.z = m_vec3Offset.y;
+                m_vec3Offset.y = 0;
+                transform.GetChild(1).localPosition = m_vec3Offset * m_fSpeed;
+                m_fSpeed += 0.1f;
+            }
+
         }
     }
 
