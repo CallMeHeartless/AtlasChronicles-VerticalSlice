@@ -1,5 +1,85 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2646190890116362724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700316764871886328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e4fd610604f1d479b0447e474e1f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bDoorLocks: 0000
+  m_gDoorOpen: {fileID: 9090115003132318953}
+  m_gDoorClosed: {fileID: 3952369737649395496}
+  m_fSpeed: 0.1
+  OnceOnForeverOn: 0
+--- !u!1001 &700316764871918428
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8165702967449623881}
+    m_Modifications:
+    - target: {fileID: 100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_Name
+      value: sm_Gateway
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+--- !u!1 &700316764871886328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: e258064a1434c9042a103acbad03b371,
+    type: 3}
+  m_PrefabInstance: {fileID: 700316764871918428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2323679481913296730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82,11 +162,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 5.9999995
       objectReference: {fileID: 0}
-    - target: {fileID: 996863248740182585, guid: 699a3742610862348b03de236a3b32bd,
+    - target: {fileID: 6732256866385749846, guid: 699a3742610862348b03de236a3b32bd,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: c8ef1aea4514218408ad4785a26cc48a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 996863248740182587, guid: 699a3742610862348b03de236a3b32bd,
         type: 3}
       propertyPath: PassNumber
@@ -97,6 +177,11 @@ PrefabInstance:
       propertyPath: m_colCurrentColor
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 996863248740182585, guid: 699a3742610862348b03de236a3b32bd,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c8ef1aea4514218408ad4785a26cc48a, type: 2}
     - target: {fileID: 581570165148737665, guid: 699a3742610862348b03de236a3b32bd,
         type: 3}
       propertyPath: m_bDoorLocks.Array.size
@@ -116,6 +201,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2323679481913296730}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3952369737649395496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1650285007779319922, guid: 699a3742610862348b03de236a3b32bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2323679481913296730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9090115003132318953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6780676399388218291, guid: 699a3742610862348b03de236a3b32bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2323679481913296730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2650988691508803597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,16 +220,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8165702967449623881}
     m_Modifications:
-    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
-        type: 3}
-      propertyPath: m_Name
-      value: ColorStop (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
-        type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
     - target: {fileID: 1864228747659894412, guid: ec010fa41e292f840997596aa61d6d20,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -168,20 +255,15 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 1907690576386471535, guid: ec010fa41e292f840997596aa61d6d20,
+    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
         type: 3}
-      propertyPath: m_iMaxHealth
-      value: 5
+      propertyPath: m_Name
+      value: ColorStop (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 1907690576386471535, guid: ec010fa41e292f840997596aa61d6d20,
+    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
         type: 3}
-      propertyPath: OnReceiveDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: changeColor
-      objectReference: {fileID: 0}
-    - target: {fileID: 1907690576386471535, guid: ec010fa41e292f840997596aa61d6d20,
-        type: 3}
-      propertyPath: OnReceiveDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1864228747659894408, guid: ec010fa41e292f840997596aa61d6d20,
         type: 3}
@@ -218,5 +300,20 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c8ef1aea4514218408ad4785a26cc48a, type: 2}
+    - target: {fileID: 1907690576386471535, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: m_iMaxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907690576386471535, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: OnReceiveDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: changeColor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907690576386471535, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: OnReceiveDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec010fa41e292f840997596aa61d6d20, type: 3}
