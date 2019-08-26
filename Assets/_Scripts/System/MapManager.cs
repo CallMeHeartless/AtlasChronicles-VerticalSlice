@@ -20,6 +20,7 @@ public class MapManager : MonoBehaviour
 
     private Zone[] m_rZones;    //Zone array from the Zone script.
     private int m_rMapsCollected = 0;
+    private bool m_rDisableZones = false;
 
     [SerializeField] RectTransform m_rMapDefaultPosition;
     [SerializeField] RectTransform m_rMapDestinationPosition;
@@ -60,6 +61,10 @@ public class MapManager : MonoBehaviour
     public void RetrieveZones() {
         //Get zones from the static Zone class
         List<Zone> zoneList = Zone.GetZoneList();
+        m_rDisableZones = ((zoneList == null) ? true : false);
+
+        if (m_rDisableZones)
+            return;
 
         //If map regions exist AND zones exist in the world
         if (m_rMapRegions != null && zoneList != null) {
@@ -82,8 +87,12 @@ public class MapManager : MonoBehaviour
     /// Update is called once per frame
     /// </summary>    
     public void OpenMap() {
-        if (m_rZones == null) {
+        if (m_rZones == null && !m_rDisableZones) {
             RetrieveZones();
+        }
+        else
+        {
+            return;
         }
 
         //Update collection data onto map
@@ -117,9 +126,13 @@ public class MapManager : MonoBehaviour
     /// Set the map to only display the number of maps collected
     /// </summary>
     public void MapDefaultSettings() {
-        if (m_rZones == null)
+        if (m_rZones == null && !m_rDisableZones)
         {
             RetrieveZones();
+        }
+        else
+        {
+            return;
         }
 
         //Reveal all map images
