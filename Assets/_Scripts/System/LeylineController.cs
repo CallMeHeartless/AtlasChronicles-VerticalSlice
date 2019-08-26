@@ -9,6 +9,7 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
     private bool m_bIsActive = false;
     private List<LeyNodeController> m_rConnectedNodes = null;
     private SplineMeshTiling m_rSplineMesh;
+    private MeshRenderer m_rMeshRenderer;
     [SerializeField]
     private Material m_InactiveMaterial;
     [SerializeField]
@@ -31,6 +32,10 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
 
         // Get spline mesh component
         m_rSplineMesh = GetComponent<SplineMeshTiling>();
+        m_rMeshRenderer = GetComponentInChildren<MeshRenderer>();
+        if (!m_rMeshRenderer) {
+            Debug.Log("No mesh renderer");
+        }
     }
 
     private void Update() {
@@ -77,10 +82,12 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
 
         // Change material
         if(_bOn && m_ActiveMaterial) { // Set active material
-            m_rSplineMesh.material = m_ActiveMaterial;
+            //m_rSplineMesh.material = m_ActiveMaterial;
+            m_rMeshRenderer.material = m_ActiveMaterial;
         }
         else if(!_bOn && m_InactiveMaterial) { // Set inactive material
-            m_rSplineMesh.material = m_InactiveMaterial;
+            //m_rSplineMesh.material = m_InactiveMaterial;
+            m_rMeshRenderer.material = m_InactiveMaterial;
         }
 
         // Notify any registered nodes of the status change

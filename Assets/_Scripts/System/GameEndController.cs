@@ -71,7 +71,7 @@ public class GameEndController : MonoBehaviour
     }
 
     // Activates / deactivates the portal
-    private void SetPortalState(bool _bState) {
+    public void SetPortalState(bool _bState) {
         // Avoid repeated activation
         if (_bState == m_bIsActive) return;
 
@@ -133,7 +133,5 @@ public class GameEndController : MonoBehaviour
         foreach(CrystalDepoController depo in depos) {
             depo.iNeededCrystals = iNeededCrystals;
         }
-
-        Debug.Log("Depos ready");
     }
 }

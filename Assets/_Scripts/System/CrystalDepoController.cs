@@ -53,11 +53,10 @@ public class CrystalDepoController : MonoBehaviour
             if (Input.GetButton(m_strFillButton)) {
                 // Update crystal count
                 UpdateCrystalCount();
-
-                // Update visuals
-                //UpdateStatus();
+            } else {
+                m_fCurrentFillTime = m_fDefaultFillTime;
             }
-        }
+        } 
     }
 
     // Handle the player becoming in range of the depo
@@ -93,13 +92,7 @@ public class CrystalDepoController : MonoBehaviour
     /// Update the material of the depo, and turn the leyline on if needed
     /// </summary>
     private void UpdateStatus() {
-        // Don't update beyond what is possible
-        //if(m_iCurrentCrystals >= m_iNeededCrystals) {
-        //    return;
-        //}
-
         // Update material
-        //m_FillMaterial.color = 1
         m_FillMaterial.SetFloat("_Metallic", (float)m_iCurrentCrystals / (float)m_iNeededCrystals);
 
         // Activate leyline if filled
@@ -127,11 +120,13 @@ public class CrystalDepoController : MonoBehaviour
             m_fFillTimer = 0.0f;
 
             // Reduce overall time it takes
-            float fInterpolation = ((float)m_iCurrentCrystals / (float)m_iNeededCrystals);
+            float fInterpolation = ((float)m_iCurrentCrystals * 4.0f / (float)m_iNeededCrystals);
+            fInterpolation = Mathf.Clamp(fInterpolation, 0.0f, 1.0f);
             m_fCurrentFillTime = Mathf.Lerp(m_fDefaultFillTime, m_fMinimumFillTime, fInterpolation);
 
             // Take a crystal from the player and add it to the depo
             --GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex];
+            --GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
             ++m_iCurrentCrystals;
 
             // Animate / VFX
