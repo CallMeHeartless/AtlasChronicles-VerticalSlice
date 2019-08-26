@@ -29,7 +29,7 @@ public class PlantControler : MonoBehaviour
             var look = transform.position - Player.position;
 
             var rotation = Quaternion.LookRotation(look);
-            //rotation = rotation * Quaternion.AngleAxis(XtraMovement.x, Vector3.left);
+            rotation = rotation * Quaternion.AngleAxis(XtraMovement.x, Vector3.left);
             rotation = rotation * Quaternion.AngleAxis(XtraMovement.y, Vector3.up);
             rotation = rotation * Quaternion.AngleAxis(XtraMovement.z, Vector3.forward);
 
@@ -48,18 +48,18 @@ public class PlantControler : MonoBehaviour
 
             //transform.LookAt(Player);
             //transform.eulerAngles += XtraMovement;
-            Debug.Log(transform.localRotation.y*Mathf.Rad2Deg);
-            if (transform.rotation.y > 90)
+            Debug.Log(transform.localEulerAngles.y);
+            if (transform.localRotation.y < 90)
             {
                 Debug.Log("dummy");
-                transform.eulerAngles= new Vector3(transform.localRotation.x, 180, transform.localRotation.z);
+                //transform.eulerAngles= new Vector3(transform.localRotation.x, 180, transform.localRotation.z);
                 // transform.Rotate(Vector3.up, Time.deltaTime * 10, Space.World);
             }
 
-            if (transform.rotation.y < -90)
+            if (transform.localRotation.y > -90)
             {
                 Debug.Log("ymmud");
-                transform.eulerAngles = new Vector3(transform.localRotation.x, -180, transform.localRotation.z);
+                //transform.eulerAngles = new Vector3(transform.localRotation.x, -180, transform.localRotation.z);
                 // transform.Rotate(Vector3.down, Time.deltaTime * 10, Space.World);
             }
 
