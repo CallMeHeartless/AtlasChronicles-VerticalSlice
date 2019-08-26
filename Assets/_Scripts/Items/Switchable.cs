@@ -29,20 +29,9 @@ public class Switchable : MonoBehaviour
 
     private void Start()
     {
-        //m_Material = GetComponent<MeshRenderer>().material;
         m_OriginalTransform = transform;
         m_StartPosition = transform.position;
         m_Enemy = GetComponent<EnemyController>();
-        //if (transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>())
-        //{
-        //material = transform.GetChild(1).transform.GetChild(0).GetComponent<Renderer>().material;
-        //material.EnableKeyword("_EMISSION");
-        //}
-        //else
-        //{
-        //    material = null;
-        //}
-       // material.EnableKeyword("_EMISSION");
     }
 
     private void Update() {
@@ -54,10 +43,6 @@ public class Switchable : MonoBehaviour
                 m_fReturnCount = 0.0f;
                 m_bHasMoved = false;
                 ReturnToStartPosition();
-                //if (material != null)
-                //{
-                //    material.SetInt("_EmissionIntensity", 500);
-                //}
                 m_fSpeed = 0.1f;
                 transform.GetChild(1).localPosition = new Vector3(0, 0, 0);
             }
@@ -76,9 +61,9 @@ public class Switchable : MonoBehaviour
 
     // Called to indicated the switchable object has been tagged
     public void Tag() {
-        if (m_bChangeMaterialOnTag) {
-            GetComponentInChildren<MeshRenderer>().material = m_AlternateMaterial;
-        }
+        //if (m_bChangeMaterialOnTag) {
+        //    GetComponentInChildren<MeshRenderer>().material = m_AlternateMaterial;
+        //}
         // Check if this is an enemy
         if (m_Enemy) {
             m_Enemy.SetTag(true);
@@ -87,9 +72,9 @@ public class Switchable : MonoBehaviour
 
     // Called to indicate that the switchable object has had a tag removed
     public void DeTag() {
-        if (m_bChangeMaterialOnTag) {
-            GetComponentInChildren<MeshRenderer>().material = m_Material;
-        }
+        //if (m_bChangeMaterialOnTag) {
+        //    GetComponentInChildren<MeshRenderer>().material = m_Material;
+        //}
         if (m_Enemy) {
             m_Enemy.SetTag(false);
         }
