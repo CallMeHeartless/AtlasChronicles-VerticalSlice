@@ -1,5 +1,319 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &104935689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 104935690}
+  - component: {fileID: 104935694}
+  - component: {fileID: 104935693}
+  - component: {fileID: 104935692}
+  - component: {fileID: 104935691}
+  m_Layer: 12
+  m_Name: Tutorials-Leylines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &104935690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104935689}
+  m_LocalRotation: {x: -0, y: -0.31786412, z: -0, w: 0.94813627}
+  m_LocalPosition: {x: -14.24, y: 4.8800006, z: 30.42}
+  m_LocalScale: {x: 4.0077004, y: 5.2209883, z: 4.6977377}
+  m_Children: []
+  m_Father: {fileID: 639920280}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -37.068, z: 0}
+--- !u!114 &104935694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104935689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rGuide: {fileID: 7691959484056845491}
+  m_bHideSelf: 0
+  m_iTimesToDisplay: 2
+  m_sTutorialText: Map fragments activate leylines in the world that can be powered
+    by crystals to open up a portal.
+  OnTrigStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timeUntilHide: 1
+  OnTrigExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!33 &104935693
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104935689}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &104935692
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104935689}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &104935691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104935689}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &639920279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 639920280}
+  m_Layer: 12
+  m_Name: Tutorials-Leylines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &639920280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639920279}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -64, y: 6.9, z: -132.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 104935690}
+  m_Father: {fileID: 3768527958113024561}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &642685080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 642685081}
+  - component: {fileID: 642685085}
+  - component: {fileID: 642685084}
+  - component: {fileID: 642685083}
+  - component: {fileID: 642685082}
+  m_Layer: 12
+  m_Name: Tutorial-DoubleJump (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &642685081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642685080}
+  m_LocalRotation: {x: -0, y: 0.21941309, z: -0, w: 0.97563213}
+  m_LocalPosition: {x: 6.21, y: -5.03, z: 22.93}
+  m_LocalScale: {x: 12.115932, y: 3.6063206, z: 9.996508}
+  m_Children: []
+  m_Father: {fileID: 3768527958388835415}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 25.349, z: 0}
+--- !u!114 &642685085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642685080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rGuide: {fileID: 7691959484056845491}
+  m_bHideSelf: 0
+  m_iTimesToDisplay: 1
+  m_sTutorialText: Press (A) to jump and twice to double jump
+  OnTrigStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timeUntilHide: 1
+  OnTrigExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!33 &642685084
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642685080}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &642685083
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642685080}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &642685082
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642685080}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &861358229550445610
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,11 +342,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861358229550445610}
   m_LocalRotation: {x: -0, y: -0.06552172, z: -0, w: 0.9978512}
-  m_LocalPosition: {x: -70.89, y: 3.95, z: -115.76}
+  m_LocalPosition: {x: -71.08, y: 3.95, z: -118.21}
   m_LocalScale: {x: 15.901962, y: 6.9638233, z: 18.502779}
   m_Children: []
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: -7.5140004, z: 0}
 --- !u!114 &861358229550445617
 MonoBehaviour:
@@ -50,7 +364,7 @@ MonoBehaviour:
   m_bHideSelf: 1
   m_iTimesToDisplay: 50
   m_sTutorialText: Hey kid! Collect at least 5 Map Fragments and 100 Ink Crystals
-    and I'll personally open a portal right where you started! (Oh man I miss Pechapples.....)
+    and activate the Ley monoliths to power the portal where you started from!
   OnTrigStay:
     m_PersistentCalls:
       m_Calls:
@@ -738,7 +1052,7 @@ Transform:
   - {fileID: 861358230980431057}
   - {fileID: 861358230373800838}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &861358230980431054
 GameObject:
@@ -912,7 +1226,7 @@ Transform:
   - {fileID: 3768527959481062666}
   - {fileID: 861358229961475535}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &861358231347345951
 GameObject:
@@ -946,7 +1260,7 @@ Transform:
   m_LocalScale: {x: 42.02651, y: 2.678709, z: 29.074863}
   m_Children: []
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &861358231347346018
 MonoBehaviour:
@@ -1197,6 +1511,148 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.48341128, y: 1, z: 0.87950385}
   m_Center: {x: -0.2582949, y: 0, z: 0.06024732}
+--- !u!1 &3059760961081675734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8357934709422662573}
+  - component: {fileID: 1893494062844655984}
+  - component: {fileID: 8179780241977026972}
+  - component: {fileID: 972547954326107856}
+  - component: {fileID: 7107551249224551861}
+  m_Layer: 12
+  m_Name: Tutorial-Monolith
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8357934709422662573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059760961081675734}
+  m_LocalRotation: {x: -0, y: -0.42485014, z: -0, w: 0.9052638}
+  m_LocalPosition: {x: -55.92, y: 10.28, z: -129.83}
+  m_LocalScale: {x: 5.700918, y: 11.303073, z: 4.0830526}
+  m_Children: []
+  m_Father: {fileID: 455277000187298550}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -50.282, z: 0}
+--- !u!114 &1893494062844655984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059760961081675734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rGuide: {fileID: 7691959484056845491}
+  m_bHideSelf: 0
+  m_iTimesToDisplay: 1000
+  m_sTutorialText: Hold (B) to feed crystals and power up the Ley Monolith. (Must
+    activate leylines first by collecting map)
+  OnTrigStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timeUntilHide: 1
+  OnTrigExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!33 &8179780241977026972
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059760961081675734}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &972547954326107856
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059760961081675734}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &7107551249224551861
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059760961081675734}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3668676146356633071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,7 +1966,7 @@ Transform:
   - {fileID: 3768527957714716419}
   - {fileID: 3768527958944991592}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3768527957853301952
 GameObject:
@@ -1685,7 +2141,7 @@ Transform:
   - {fileID: 3768527959341971716}
   - {fileID: 861358230483720479}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3768527958050491740
 GameObject:
@@ -1718,7 +2174,7 @@ Transform:
   - {fileID: 861358230194596978}
   - {fileID: 861358231533452132}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3768527958113024560
 GameObject:
@@ -1748,7 +2204,6 @@ Transform:
   m_LocalPosition: {x: -64.587, y: 7.661476, z: -132.67209}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3768527959579665054}
   - {fileID: 8771770340113682970}
   - {fileID: 3768527958388835415}
   - {fileID: 3768527958045690265}
@@ -1762,6 +2217,8 @@ Transform:
   - {fileID: 861358231347345950}
   - {fileID: 507099650477685923}
   - {fileID: 3016872094150308328}
+  - {fileID: 639920280}
+  - {fileID: 455277000187298550}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1826,7 +2283,7 @@ MonoBehaviour:
   m_rGuide: {fileID: 7691959484056845491}
   m_bHideSelf: 0
   m_iTimesToDisplay: 1
-  m_sTutorialText: Press (A) twice to double jump
+  m_sTutorialText: Press (A) to jump and twice to double jump
   OnTrigStay:
     m_PersistentCalls:
       m_Calls:
@@ -1947,8 +2404,9 @@ Transform:
   m_Children:
   - {fileID: 3768527958301315471}
   - {fileID: 3768527958615600073}
+  - {fileID: 642685081}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3768527958615600072
 GameObject:
@@ -1999,7 +2457,7 @@ MonoBehaviour:
   m_rGuide: {fileID: 7691959484056845491}
   m_bHideSelf: 0
   m_iTimesToDisplay: 1
-  m_sTutorialText: Press (A) twice to double jump
+  m_sTutorialText: Press (A) to jump and twice to double jump
   OnTrigStay:
     m_PersistentCalls:
       m_Calls:
@@ -2544,7 +3002,7 @@ Transform:
   m_Children:
   - {fileID: 3768527959464071530}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3768527959193819226
 GameObject:
@@ -2575,7 +3033,7 @@ Transform:
   m_Children:
   - {fileID: 895464319792749099}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3768527959341971723
 GameObject:
@@ -2745,13 +3203,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3768527959464071529}
-  m_LocalRotation: {x: -0, y: -0.47147408, z: -0, w: 0.88188}
-  m_LocalPosition: {x: -9.38, y: 4.88, z: 34.81}
-  m_LocalScale: {x: 21.223522, y: 5.2209883, z: 12.756578}
+  m_LocalRotation: {x: -0, y: -0.3994419, z: -0, w: 0.91675854}
+  m_LocalPosition: {x: -9.64, y: 4.8800006, z: 26.84}
+  m_LocalScale: {x: 13.889522, y: 5.2209883, z: 6.481706}
   m_Children: []
   m_Father: {fileID: 3768527959177821683}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -56.260002, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -47.087, z: 0}
 --- !u!114 &3768527959464071526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3283,147 +3741,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &3768527959579665057
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3768527959579665054}
-  - component: {fileID: 3768527959579665058}
-  - component: {fileID: 3768527959579665053}
-  - component: {fileID: 3768527959579665052}
-  - component: {fileID: 3768527959579665059}
-  m_Layer: 12
-  m_Name: Tutorial-Jump
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3768527959579665054
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3768527959579665057}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -61.065002, y: 5.26, z: -133.88}
-  m_LocalScale: {x: 21.576744, y: 11.303073, z: 10.270539}
-  m_Children: []
-  m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3768527959579665058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3768527959579665057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_rGuide: {fileID: 7691959484056845491}
-  m_bHideSelf: 1
-  m_iTimesToDisplay: 2
-  m_sTutorialText: Press (A) to jump
-  OnTrigStay:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7691959484056845491}
-        m_MethodName: SetGuidePanelActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  timeUntilHide: 2
-  OnTrigExit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7691959484056845491}
-        m_MethodName: SetGuidePanelActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!33 &3768527959579665053
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3768527959579665057}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3768527959579665052
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3768527959579665057}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!65 &3768527959579665059
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3768527959579665057}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3804451066763119473
 GameObject:
   m_ObjectHideFlags: 0
@@ -3453,7 +3770,7 @@ Transform:
   m_Children:
   - {fileID: 3768527959527982777}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4017071326729117895
 GameObject:
@@ -3487,7 +3804,7 @@ Transform:
   m_LocalScale: {x: 15.872648, y: 4.271181, z: 21.195353}
   m_Children: []
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1161269770609411125
 MonoBehaviour:
@@ -3597,6 +3914,148 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7437098, y: 1, z: 0.5}
   m_Center: {x: -0.062356893, y: 0, z: 0}
+--- !u!1 &4994896685064957538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3638300862176486042}
+  - component: {fileID: 4763052386850051447}
+  - component: {fileID: 2368263090089551368}
+  - component: {fileID: 1726700603269692200}
+  - component: {fileID: 1536135267883782887}
+  m_Layer: 12
+  m_Name: Tutorial-Monolith (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3638300862176486042
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994896685064957538}
+  m_LocalRotation: {x: -0, y: 0.34037462, z: -0, w: 0.9402899}
+  m_LocalPosition: {x: -67.64, y: 8.82, z: -130.62}
+  m_LocalScale: {x: 5.700918, y: 11.303073, z: 4.0830526}
+  m_Children: []
+  m_Father: {fileID: 455277000187298550}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 39.799004, z: 0}
+--- !u!114 &4763052386850051447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994896685064957538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rGuide: {fileID: 7691959484056845491}
+  m_bHideSelf: 0
+  m_iTimesToDisplay: 1000
+  m_sTutorialText: Hold (B) to feed crystals and power up the Ley Monolith. (Must
+    activate leylines first by collecting map)
+  OnTrigStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timeUntilHide: 1
+  OnTrigExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!33 &2368263090089551368
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994896685064957538}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1726700603269692200
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994896685064957538}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &1536135267883782887
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994896685064957538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6247420353812013586
 GameObject:
   m_ObjectHideFlags: 0
@@ -3739,6 +4198,290 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.401056, y: 1, z: 0.73257494}
   m_Center: {x: -0.05847036, y: 0, z: 0.13371263}
+--- !u!1 &7482547291933132844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2822135193887521686}
+  - component: {fileID: 8505496877979943837}
+  - component: {fileID: 4901221444935038578}
+  - component: {fileID: 869392291143099674}
+  - component: {fileID: 6737098818989528277}
+  m_Layer: 12
+  m_Name: Tutorial-Monolith (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2822135193887521686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7482547291933132844}
+  m_LocalRotation: {x: -0, y: 0.34037462, z: -0, w: 0.9402899}
+  m_LocalPosition: {x: -56.27, y: 8.82, z: -140.09}
+  m_LocalScale: {x: 5.700918, y: 11.303073, z: 4.0830526}
+  m_Children: []
+  m_Father: {fileID: 455277000187298550}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 39.799004, z: 0}
+--- !u!114 &8505496877979943837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7482547291933132844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rGuide: {fileID: 7691959484056845491}
+  m_bHideSelf: 0
+  m_iTimesToDisplay: 1000
+  m_sTutorialText: Hold (B) to feed crystals and power up the Ley Monolith. (Must
+    activate leylines first by collecting map)
+  OnTrigStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timeUntilHide: 1
+  OnTrigExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!33 &4901221444935038578
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7482547291933132844}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &869392291143099674
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7482547291933132844}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &6737098818989528277
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7482547291933132844}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7716732052614056551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2046803152378277498}
+  - component: {fileID: 4024393167303777645}
+  - component: {fileID: 6108037827977028374}
+  - component: {fileID: 628351854773072673}
+  - component: {fileID: 4423804018648036984}
+  m_Layer: 12
+  m_Name: Tutorial-Monolith (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2046803152378277498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716732052614056551}
+  m_LocalRotation: {x: -0, y: -0.42485014, z: -0, w: 0.9052638}
+  m_LocalPosition: {x: -66.09, y: 10.28, z: -141.03}
+  m_LocalScale: {x: 5.700918, y: 11.303073, z: 4.0830526}
+  m_Children: []
+  m_Father: {fileID: 455277000187298550}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: -50.282, z: 0}
+--- !u!114 &4024393167303777645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716732052614056551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a35dc14a94dc3b4ca6db6229ae161ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rGuide: {fileID: 7691959484056845491}
+  m_bHideSelf: 0
+  m_iTimesToDisplay: 1000
+  m_sTutorialText: Hold (B) to feed crystals and power up the Ley Monolith. (Must
+    activate leylines first by collecting map)
+  OnTrigStay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timeUntilHide: 1
+  OnTrigExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7691959484056845491}
+        m_MethodName: SetGuidePanelActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!33 &6108037827977028374
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716732052614056551}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &628351854773072673
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716732052614056551}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d38cb401eaad692488c8eec8f8c557f1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &4423804018648036984
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7716732052614056551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9102455971053635468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3768,5 +4511,39 @@ Transform:
   m_Children:
   - {fileID: 375036143237594496}
   m_Father: {fileID: 3768527958113024561}
-  m_RootOrder: 13
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9161837729433623876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 455277000187298550}
+  m_Layer: 12
+  m_Name: Tutorials-Monoliths
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &455277000187298550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9161837729433623876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8357934709422662573}
+  - {fileID: 2822135193887521686}
+  - {fileID: 2046803152378277498}
+  - {fileID: 3638300862176486042}
+  m_Father: {fileID: 3768527958113024561}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
