@@ -8,7 +8,7 @@ public struct Line
 {
     public CharacterScriptable m_character;
     [TextArea(2, 5)]
-    public string text;
+    public string m_strText;
 }
 
 [CreateAssetMenu(fileName = "New Conversation", menuName = "Conversation")]

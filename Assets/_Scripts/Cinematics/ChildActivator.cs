@@ -6,7 +6,7 @@ public class ChildActivator : MonoBehaviour
 {
     [SerializeField] bool m_bActivateChildren = false;
     [SerializeField] GameObject[] m_rChildren;
-    
+    bool hi = false;
     void Start()
     {
         //Activate or deactivate children on start
@@ -14,7 +14,6 @@ public class ChildActivator : MonoBehaviour
         {
             item.SetActive(m_bActivateChildren);
         }
-        
     }
 
     /******************************************************************
