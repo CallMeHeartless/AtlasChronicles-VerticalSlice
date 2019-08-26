@@ -1212,6 +1212,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
                 if (goon) {
                     // If so, reward the goon with a map fragment
                     m_rDamagedAudio.PlayAudio();
+                    //StartCoroutine(JuiceManager.Shake(m_rCameraReference.transform, 1.0f, 2.0f));
                     StealMapFragment(goon);
                 }
                 break;
