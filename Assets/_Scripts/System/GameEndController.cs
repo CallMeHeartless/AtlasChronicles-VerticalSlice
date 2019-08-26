@@ -111,6 +111,7 @@ public class GameEndController : MonoBehaviour
     // Return the player to the main menu upon completion
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
+            Zone.ClearZones();
             SceneManager.LoadScene(0);
         }
     }

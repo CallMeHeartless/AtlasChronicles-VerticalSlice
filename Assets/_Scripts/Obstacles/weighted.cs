@@ -27,7 +27,23 @@ public class weighted : MonoBehaviour, IMessageReceiver
     public bool m_RequirmentWeight = true;
     public bool m_RequirmentColor = false;
 
+    public float m_fSpeed;
+    GameObject WeightedLoaction;
+    GameObject m_Topplate;
     // Start is called before the first frame update
+
+    private void Start()
+    {
+        m_Topplate = transform.GetChild(0).transform.GetChild(1).gameObject;
+        WeightedLoaction = transform.GetChild(0).transform.GetChild(2).gameObject; 
+    }
+    private void Update()
+    {
+        if (m_Topplate.transform.position != WeightedLoaction.transform.position)
+        {
+            m_Topplate.transform.position = Vector3.MoveTowards(m_Topplate.transform.position, WeightedLoaction.transform.position, m_fSpeed);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -108,7 +124,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
             
                     
         }
-        
+        Weighdown();
     }
     private void OnTriggerExit(Collider other)
     {
@@ -182,6 +198,11 @@ public class weighted : MonoBehaviour, IMessageReceiver
                 UpdateDoor();
             }
         }
+
+        Debug.Log("gems");
+        Weighdown();
+        Debug.Log("gems collected");
+
         if (ObjectInArea.Count == 0)
         {
            
@@ -280,4 +301,24 @@ public class weighted : MonoBehaviour, IMessageReceiver
         m_rDamageController.ResetDamage();
         Debug.Log("hit");
 }
+    void Weighdown()
+    {
+        //based on weight deteraned how far the top piller goes to said height
+        if (m_Weight == 0)
+        {
+            WeightedLoaction = transform.GetChild(0).transform.GetChild(2).gameObject;
+        }
+        else if (m_Weight< m_WeightRequirment)
+        {
+            WeightedLoaction = transform.GetChild(0).transform.GetChild(3).gameObject;
+        }
+        else if (m_Weight == m_WeightRequirment)
+        {
+            WeightedLoaction = transform.GetChild(0).transform.GetChild(4).gameObject;
+        }
+        else if(m_Weight> m_WeightRequirment)
+        {
+            WeightedLoaction = transform.GetChild(0).transform.GetChild(5).gameObject;
+        }
+    }
 }
