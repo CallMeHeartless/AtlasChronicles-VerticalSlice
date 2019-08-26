@@ -7,6 +7,8 @@ public class PlayerAnimationController : MonoBehaviour
     // External References
     [SerializeField]
     private GameObject m_SwitchMarkerPrefab;
+    [SerializeField]
+    private TeleportTetherController m_rTeleportTetherController;
     private GameObject m_SwitchMarker;
 
     private GameObject m_AttackCollider;
@@ -29,7 +31,11 @@ public class PlayerAnimationController : MonoBehaviour
         if (m_SwitchMarkerPrefab) {
             m_SwitchMarker = GameObject.Instantiate(m_SwitchMarkerPrefab);
             m_SwitchMarker.SetActive(false);
-            m_SwitchMarker.GetComponent<SwitchTagController>().SetPlayerReference(transform.root.GetComponent<PlayerController>());
+            SwitchTagController switchTag = m_SwitchMarker.GetComponent<SwitchTagController>();
+            switchTag.SetPlayerReference(transform.root.GetComponent<PlayerController>());
+            if (m_rTeleportTetherController) {
+                switchTag.teleportTether = m_rTeleportTetherController;
+            }
         } else {
             Debug.LogError("ERROR: PlayerAnimationController - Switch Marker Prefab not set. Null reference exception");
         }
