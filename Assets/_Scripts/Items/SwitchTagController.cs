@@ -15,6 +15,9 @@ public class SwitchTagController : MonoBehaviour
     private PlayerController m_rPlayerReference;
     [SerializeField]
     private GameObject m_rInkSparkleTest;
+    [SerializeField]
+    private TeleportTetherController m_rTeleportTether;
+    public TeleportTetherController teleportTether { set { m_rTeleportTether = value; } }
 
     // Update is called once per frame
     void Update(){
@@ -39,6 +42,11 @@ public class SwitchTagController : MonoBehaviour
             m_bIsMoving = false;
             m_rPlayerReference.SetSwitchTarget(m_AttachedObject.gameObject);
             m_AttachedObject.GetComponent<Switchable>().Tag();
+
+            // Line renderer
+            if (m_rTeleportTether) {
+                m_rTeleportTether.SetTetherEnd(m_AttachedObject.position);
+            }
 
             GameObject sparkle = Instantiate(m_rInkSparkleTest, 
                 new Vector3(transform.position.x, 
