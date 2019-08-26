@@ -23,7 +23,7 @@ public class Switchable : MonoBehaviour
     [SerializeField]
     private float m_fReturnTime = 3.0f;
     private float m_fReturnCount = 0.0f;
-    private float m_fSpeed = 0.1f;
+    private float m_fSpeed = 0.01f;
    // Material material;
 
 
@@ -43,8 +43,8 @@ public class Switchable : MonoBehaviour
                 m_fReturnCount = 0.0f;
                 m_bHasMoved = false;
                 ReturnToStartPosition();
-                m_fSpeed = 0.1f;
-                transform.GetChild(1).localPosition = new Vector3(0, 0, 0);
+                m_fSpeed = 0.01f;
+                transform.GetChild(0).localPosition = new Vector3(0, 0, 0);
             }
             else
             {
@@ -52,8 +52,8 @@ public class Switchable : MonoBehaviour
                 Vector3 m_vec3Offset = Random.insideUnitCircle;
                 m_vec3Offset.z = m_vec3Offset.y;
                 m_vec3Offset.y = 0;
-                transform.GetChild(1).localPosition = m_vec3Offset * m_fSpeed;
-                m_fSpeed += 0.1f;
+                transform.GetChild(0).localPosition = m_vec3Offset * m_fSpeed;
+                m_fSpeed += 0.006f;
             }
 
         }
