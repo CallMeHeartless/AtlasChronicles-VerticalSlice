@@ -80,7 +80,7 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
         // Update status
         m_bIsActive = _bOn;
 
-        // Change material
+        // Change material // NEEDS better VFX
         if(_bOn && m_ActiveMaterial) { // Set active material
             //m_rSplineMesh.material = m_ActiveMaterial;
             m_rMeshRenderer.material = m_ActiveMaterial;

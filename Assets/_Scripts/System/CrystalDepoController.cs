@@ -41,7 +41,7 @@ public class CrystalDepoController : MonoBehaviour
         }
 
         // DEBUG
-        m_FillMaterial = GetComponent<MeshRenderer>().material;
+        m_FillMaterial = GetComponentInChildren<MeshRenderer>().materials[1];
     }
 
     // Update is called once per frame
@@ -93,7 +93,7 @@ public class CrystalDepoController : MonoBehaviour
     /// </summary>
     private void UpdateStatus() {
         // Update material
-        m_FillMaterial.SetFloat("_Metallic", (float)m_iCurrentCrystals / (float)m_iNeededCrystals);
+        m_FillMaterial.SetFloat("_Height", (float)m_iCurrentCrystals / (float)m_iNeededCrystals);
 
         // Activate leyline if filled
         if (m_iCurrentCrystals >= m_iNeededCrystals && m_rLeyLine) {
@@ -106,8 +106,8 @@ public class CrystalDepoController : MonoBehaviour
     /// Removes crystals from the player's collection and adds them to the depo (if possible)
     /// </summary>
     private void UpdateCrystalCount() {
-        // Stop if the player does not have any crystals
-        if(GameStats.s_iSecondaryCollected == 0) {
+        // Stop if the player does not have any crystals or if the leyline isn't visible
+        if(GameStats.s_iSecondaryCollected == 0 || !m_rLeyLine.gameObject.activeSelf) {
             return;
         }
 
