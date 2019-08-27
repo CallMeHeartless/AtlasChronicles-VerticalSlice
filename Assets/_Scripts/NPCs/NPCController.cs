@@ -60,7 +60,7 @@ public class NPCController : MonoBehaviour
             //If X button pressed
             if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting)
             {
-                Debug.Log("YEETS");
+                //Debug.Log("YEETS");
                 m_bInteracting = true;
                 m_rAnimator.SetTrigger("PopOut");
                 m_rInfoBubble.gameObject.SetActive(false);
@@ -81,7 +81,7 @@ public class NPCController : MonoBehaviour
                 m_rAnimator.ResetTrigger("PopIn");
                 m_rAnimator.SetTrigger("PopIn");
 
-                print("CurrentState: " + GetCurrentClipName());
+                //print("CurrentState: " + GetCurrentClipName());
                 m_bExited = true;
                 m_bFirstEntry = true;
                 m_bInteracting = false;
