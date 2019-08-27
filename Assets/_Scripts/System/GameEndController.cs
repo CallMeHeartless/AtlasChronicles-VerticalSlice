@@ -50,6 +50,11 @@ public class GameEndController : MonoBehaviour
             Debug.LogError("ERROR: Could not find guide panel (GameEndController reference). Check that it has been added to the scene.");
         }
 
+        if(m_rInfo)
+        {
+            m_rInfo.SetActive(false);
+        }
+
         // Initialise crystal depo children
         InitialiseCrystalDepos();
     }

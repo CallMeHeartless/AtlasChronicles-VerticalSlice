@@ -87,12 +87,9 @@ public class MapManager : MonoBehaviour
     /// Update is called once per frame
     /// </summary>    
     public void OpenMap() {
-        if (m_rZones == null && !m_rDisableZones) {
-            RetrieveZones();
-        }
-        else
+        if (m_rZones == null && !m_rDisableZones)
         {
-            return;
+            RetrieveZones();
         }
 
         //Update collection data onto map
@@ -129,10 +126,6 @@ public class MapManager : MonoBehaviour
         if (m_rZones == null && !m_rDisableZones)
         {
             RetrieveZones();
-        }
-        else
-        {
-            return;
         }
 
         //Reveal all map images
