@@ -22,6 +22,6 @@ public class TeleportTetherController : MonoBehaviour
     /// </summary>
     /// <param name="_position"></param>
     public void SetTetherEnd(Vector3 _position) {
-        m_LineRenderer.SetPosition(1, _position);
+        //m_LineRenderer.SetPosition(1, _position);
     }
 }
