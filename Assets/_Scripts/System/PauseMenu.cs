@@ -83,8 +83,8 @@ public class PauseMenu : MonoBehaviour
             m_rDisplayStat.HideUIGamePanel(false);
         }
         // Resume gameplay
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart") || (Input.GetButtonDown("BButton")))
-            && (m_rPausePanel.activeSelf || m_rSettingsPanel.activeSelf || m_rMapPanel.activeSelf))
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart"))
+            && (m_rPausePanel.activeSelf || m_rMapPanel.activeSelf || m_rSettingsPanel.activeSelf))
         {
             m_rButtonClick.Play();              // Play a clicking sound to resume gameplay
             m_rSettingsPanel.SetActive(false);  // Hide settings if it is not already hidden
@@ -98,7 +98,6 @@ public class PauseMenu : MonoBehaviour
             //Set gamestate pause to false
             GameState.SetPauseFlag(false);
             CinematicManager.PauseAllCinematics(false);
-
         }
 
         //Make sure cursor is hidden on resume

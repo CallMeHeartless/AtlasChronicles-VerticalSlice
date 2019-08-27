@@ -36,6 +36,7 @@ public class SelectOnInput : MonoBehaviour {
 
         if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && !bButtonSelected)
         {
+            eventSystem.SetSelectedGameObject(null);
             eventSystem.SetSelectedGameObject(selectedObject);
             bButtonSelected = true;
 

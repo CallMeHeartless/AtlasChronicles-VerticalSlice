@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class MapManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] GameObject m_rMapName;                     // The gameObject containing the name of the map/island
     [SerializeField] GameObject m_rMapDetailContainer;          // The gameobject for the container holding all map details
     [SerializeField] GameObject m_rMapContainer;                // The gameobject for the container holding all maps
+    [SerializeField] GameObject m_rMapGameObject;
 
     private Zone[] m_rZones;    //Zone array from the Zone script.
     private int m_rMapsCollected = 0;
@@ -26,6 +28,9 @@ public class MapManager : MonoBehaviour
     [SerializeField] RectTransform m_rMapDestinationPosition;
     private Vector3 m_vecDefaultMapPos = Vector3.zero;
     private Vector3 m_vecDestinationMapPos = Vector3.zero;
+
+
+    public UnityEvent OnBPressed;
 
     void Start() {
         RetrieveZones();
@@ -37,6 +42,19 @@ public class MapManager : MonoBehaviour
 
         //Apply default settings to the map
         MapDefaultSettings();
+    }
+
+    private void Update()
+    {
+        if (!m_rMapGameObject.activeSelf)
+            return;
+
+        if (Input.GetButtonDown("BButton")) //Back button
+        {
+            print("mapBackPRESSED");
+
+            OnBPressed.Invoke(); //Back
+        }
     }
 
     /// <summary>

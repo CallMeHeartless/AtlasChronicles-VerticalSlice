@@ -118,6 +118,7 @@ public class SettingsScript : MonoBehaviour
         else if (Input.GetButtonDown("BButton")) //Back button
         {
             //REMEMBER: BUTTON MAPPING
+            print("settingsPRESSED");
             OnBPressed.Invoke(); //Back
         }
     }
