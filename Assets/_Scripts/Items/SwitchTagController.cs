@@ -36,18 +36,31 @@ public class SwitchTagController : MonoBehaviour
         if (other.GetComponent<Switchable>() && !m_AttachedObject) {
             // Attach to the object
             //m_rInkSparkle.SetActive(true);
+
+            // Set reference to attached object
             m_AttachedObject = other.transform;
+
+            // Attach the tag to be offset on the object
             transform.position = m_AttachedObject.position + m_vecOffset;
+
+            // Parent the tag to the object
             transform.SetParent(m_AttachedObject);
+
+            // Stop movement
             m_bIsMoving = false;
+
+            // Set the player controller reference 
             m_rPlayerReference.SetSwitchTarget(m_AttachedObject.gameObject);
+
+            // Instruct the switchable that we are now attached to them
             m_AttachedObject.GetComponent<Switchable>().Tag();
 
-            // Line renderer
+            // Display the line renderer teleport tether
             if (m_rTeleportTether) {
                 m_rTeleportTether.SetTetherEnd(m_AttachedObject.position);
             }
 
+            // Create a sparkle effect
             GameObject sparkle = Instantiate(m_rInkSparkleTest, 
                 new Vector3(transform.position.x, 
                             transform.position.y, 
@@ -77,6 +90,9 @@ public class SwitchTagController : MonoBehaviour
         }
         if (m_AttachedObject) {
             m_AttachedObject.GetComponent<Switchable>().DeTag();
+        }
+        if (m_rTeleportTether) {
+            m_rTeleportTether.BreakTether();
         }
        
         m_AttachedObject = null;
