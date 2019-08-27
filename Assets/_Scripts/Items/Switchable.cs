@@ -24,6 +24,7 @@ public class Switchable : MonoBehaviour
     private float m_fReturnTime = 3.0f;
     private float m_fReturnCount = 0.0f;
     private float m_fSpeed = 0.01f;
+    private MeshRenderer m_rMeshRenderer;
    // Material material;
 
 
@@ -32,6 +33,13 @@ public class Switchable : MonoBehaviour
         m_OriginalTransform = transform;
         m_StartPosition = transform.position;
         m_Enemy = GetComponent<EnemyController>();
+        m_rMeshRenderer = GetComponentInChildren<MeshRenderer>();
+        if (!m_rMeshRenderer)
+        {
+            Debug.LogError("ERROR: No mesh renderer found on " + name);
+        }
+       //  Cube = transform.GetChild(0).GetComponent<Material>();
+       // Cube.material.shader = Shader.Find("Specular");
     }
 
     private void Update() {
@@ -45,6 +53,11 @@ public class Switchable : MonoBehaviour
                 ReturnToStartPosition();
                 m_fSpeed = 0.01f;
                 transform.GetChild(0).localPosition = new Vector3(0, 0, 0);
+                if (m_rMeshRenderer)
+                {
+                    m_rMeshRenderer.material.SetFloat("_VisualTimer", 1.0f);
+                }
+                //Cube.SetFloat("_VisualTimer", 1.0f);
             }
             else
             {
@@ -54,6 +67,11 @@ public class Switchable : MonoBehaviour
                 m_vec3Offset.y = 0;
                 transform.GetChild(0).localPosition = m_vec3Offset * m_fSpeed;
                 m_fSpeed += 0.006f;
+                //Cube.SetFloat("_VisualTimer", (m_fReturnTime-m_fReturnCount+.5f) / m_fReturnTime);
+                if (m_rMeshRenderer)
+                {
+                    m_rMeshRenderer.material.SetFloat("_VisualTimer", (m_fReturnTime - m_fReturnCount - .5f)/m_fReturnTime);
+                }
             }
 
         }
@@ -65,6 +83,10 @@ public class Switchable : MonoBehaviour
         //    GetComponentInChildren<MeshRenderer>().material = m_AlternateMaterial;
         //}
         // Check if this is an enemy
+        if (m_rMeshRenderer)
+        {
+            m_rMeshRenderer.material.SetFloat("_Marked", 1.0f);
+        }
         if (m_Enemy) {
             m_Enemy.SetTag(true);
         }
@@ -75,6 +97,10 @@ public class Switchable : MonoBehaviour
         //if (m_bChangeMaterialOnTag) {
         //    GetComponentInChildren<MeshRenderer>().material = m_Material;
         //}
+        if (m_rMeshRenderer)
+        {
+            m_rMeshRenderer.material.SetFloat("_Marked", 0.0f);
+        }
         if (m_Enemy) {
             m_Enemy.SetTag(false);
         }
