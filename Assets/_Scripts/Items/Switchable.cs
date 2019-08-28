@@ -24,6 +24,7 @@ public class Switchable : MonoBehaviour
     private float m_fReturnTime = 3.0f;
     private float m_fReturnCount = 0.0f;
     private float m_fSpeed = 0.01f;
+    private float m_fMaxSpeed = 0.5f;
     private MeshRenderer m_rMeshRenderer;
    // Material material;
 
@@ -66,7 +67,11 @@ public class Switchable : MonoBehaviour
                 m_vec3Offset.z = m_vec3Offset.y;
                 m_vec3Offset.y = 0;
                 transform.GetChild(0).localPosition = m_vec3Offset * m_fSpeed;
-                m_fSpeed += 0.006f;
+                if (m_fMaxSpeed >= m_fSpeed)
+                {
+                    m_fSpeed += 0.005f;
+                }
+               
                 //Cube.SetFloat("_VisualTimer", (m_fReturnTime-m_fReturnCount+.5f) / m_fReturnTime);
                 if (m_rMeshRenderer)
                 {
