@@ -104,6 +104,11 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
     public void OnReceiveMessage(MessageSystem.MessageType _messageType, object _message) {
         switch (_messageType) {
             // Handle an activation message
+
+            case MessageType.eOn: {
+                ActivateLeyline(true);
+                break;
+            }
             case MessageType.eActivate: {
                 ActivateLeyline(true);
                 break;
@@ -111,6 +116,11 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
 
             // Handle disable messages
             case MessageType.eReset: {
+                ActivateLeyline(false);
+                break;
+            }
+
+            case MessageType.eOff: {
                 ActivateLeyline(false);
                 break;
             }

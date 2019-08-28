@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7900288336012917167}
+  - component: {fileID: 2733159369643042368}
   - component: {fileID: 7900288336012917165}
   - component: {fileID: 7900288336012917164}
-  - component: {fileID: 2733159369643042368}
   m_Layer: 0
   m_Name: Leyline With Pressure Pad
   m_TagString: Untagged
@@ -35,6 +35,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2733159369643042368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7900288336012917166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ccae18492076f4cb992632a2da01a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InactiveMaterial: {fileID: 2100000, guid: c83e7f8994f9e3b42b86fa3691fc742b, type: 2}
+  m_ActiveMaterial: {fileID: 2100000, guid: e2d3a4d723cf1dc4eab1d919f3324dbc, type: 2}
 --- !u!114 &7900288336012917165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,20 +119,6 @@ MonoBehaviour:
   updateInPlayMode: 0
   curveSpace: 1
   mode: 2
---- !u!114 &2733159369643042368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7900288336012917166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6ccae18492076f4cb992632a2da01a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_InactiveMaterial: {fileID: 2100000, guid: c83e7f8994f9e3b42b86fa3691fc742b, type: 2}
-  m_ActiveMaterial: {fileID: 2100000, guid: e2d3a4d723cf1dc4eab1d919f3324dbc, type: 2}
 --- !u!1 &7900288336228389985
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,6 +322,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
+        type: 3}
+      propertyPath: ObjectInArea.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100442221701383039, guid: a39accbe86f49f543a5d24217db65e4b,
+        type: 3}
+      propertyPath: ObjectInArea.Array.data[0]
+      value: 
+      objectReference: {fileID: 7900288336012917166}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a39accbe86f49f543a5d24217db65e4b, type: 3}
 --- !u!4 &9170868198693000803 stripped
