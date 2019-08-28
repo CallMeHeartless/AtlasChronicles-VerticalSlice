@@ -73,7 +73,7 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
     /// <param name="_bOn"></param>
     public void ActivateLeyline(bool _bOn) {
         // Prevent repetition
-        if(m_bIsActive == _bOn) {
+        if(m_bIsActive == _bOn || !gameObject.activeSelf) {
             return;
         }
 
