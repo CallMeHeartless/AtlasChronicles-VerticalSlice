@@ -63,6 +63,7 @@ public class Zone : MonoBehaviour
         // Enable all leylines
         foreach(LeylineController leyline in m_LeylineComponents) {
             leyline.gameObject.SetActive(true);
+            leyline.CheckForAutoActivation();
         }
     }
 
