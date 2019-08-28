@@ -75,4 +75,8 @@ public class CheckpointController : MonoBehaviour
             m_rRenderer.material = m_rInactive;
         }
     }
+
+    public void PowerOn() {
+        m_bIsPowered = true;
+    }
 }

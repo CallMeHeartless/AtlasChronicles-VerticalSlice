@@ -85,7 +85,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
            
             if (!ObjectInArea.Contains(other.gameObject))
             {
-                Debug.Log("durug");
+                //Debug.Log("durug");
                 ObjectInArea.Add(other.gameObject);
                 ObjectColor.Add(Color.None);
                 ObjectWeight.Add(other.GetComponent<PlayerController>().getWeight());
@@ -199,9 +199,9 @@ public class weighted : MonoBehaviour, IMessageReceiver
             }
         }
 
-        Debug.Log("gems");
+        //Debug.Log("gems");
         Weighdown();
-        Debug.Log("gems collected");
+        //Debug.Log("gems collected");
 
         if (ObjectInArea.Count == 0)
         {
@@ -215,7 +215,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
     {
         if (m_RequirmentWeight)
         {
-            if (m_Weight == m_WeightRequirment)
+            if (m_Weight >= m_WeightRequirment)
             {
                 for (int i = 0; i < m_gEffectingObject.Count; ++i)
                 {
