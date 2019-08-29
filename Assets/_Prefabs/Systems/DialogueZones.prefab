@@ -1,0 +1,1703 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &44843661930241814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 44843661930241817}
+  - component: {fileID: 44843661930241815}
+  m_Layer: 0
+  m_Name: DialogueZones
+  m_TagString: DialogueManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &44843661930241817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44843661930241814}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1912301412611570199}
+  - {fileID: 1912301412052341523}
+  - {fileID: 1912301413271221827}
+  - {fileID: 1912301412043097257}
+  - {fileID: 1912301412389233263}
+  - {fileID: 1912301412053336606}
+  - {fileID: 1912301413267007928}
+  - {fileID: 1912301413571468941}
+  - {fileID: 1912301411756885865}
+  - {fileID: 5330361895593501991}
+  - {fileID: 5330361896451883133}
+  - {fileID: 5330361896383557517}
+  - {fileID: 5330361897261065426}
+  - {fileID: 5330361895648516312}
+  - {fileID: 6279313965660620965}
+  - {fileID: 5206998710529933598}
+  - {fileID: 1644913376313170321}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &44843661930241815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44843661930241814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5632ca34c78b4e143a1147834aab55ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speakAudio: {fileID: 5804009015856931257}
+--- !u!1 &51792018884839476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6279313965660620965}
+  - component: {fileID: 1451837171601316335}
+  - component: {fileID: 6197011762093937624}
+  - component: {fileID: 8622423175693250890}
+  m_Layer: 0
+  m_Name: OpenDetailsDialogue (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6279313965660620965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51792018884839476}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -68.57, y: 34.93, z: -0.07}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1451837171601316335
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51792018884839476}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &6197011762093937624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51792018884839476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Progress
+    m_sentences:
+    - Hey you collected another map!
+    - To check your progress and zone breakdowns, access the Map settings through
+      the Pause Menu (START/ESC)
+--- !u!114 &8622423175693250890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51792018884839476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &952473402924718062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5206998710529933598}
+  - component: {fileID: 8387347071376983164}
+  - component: {fileID: 8216289182707496213}
+  - component: {fileID: 83573701001672939}
+  m_Layer: 0
+  m_Name: ObjectiveDialogue (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5206998710529933598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952473402924718062}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -51.47, y: 13.42, z: -10.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8387347071376983164
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952473402924718062}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &8216289182707496213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952473402924718062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Objective
+    m_sentences:
+    - Not sure where to go next?
+    - Try pressing the Y button to check out the next objective!
+--- !u!114 &83573701001672939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952473402924718062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301411756885864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301411756885865}
+  - component: {fileID: 1912301411756885860}
+  - component: {fileID: 1912301411756885863}
+  - component: {fileID: 1912301411756885862}
+  m_Layer: 0
+  m_Name: ChestsDialogue (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301411756885865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301411756885864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -33.34, y: 8.33, z: -67.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301411756885860
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301411756885864}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &1912301411756885863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301411756885864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Chests
+    m_sentences:
+    - These chests can't be destroyed by a mere whack.
+    - Lets try Jumping (A) and pressing Attack (X) immediately afterwards.
+--- !u!114 &1912301411756885862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301411756885864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301412043097256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301412043097257}
+  - component: {fileID: 1912301412043097255}
+  - component: {fileID: 1912301412043097254}
+  - component: {fileID: 1912301412043097252}
+  m_Layer: 0
+  m_Name: FirstMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301412043097257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412043097256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -76.79, y: 11.77, z: -103.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301412043097255
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412043097256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0.5, y: -1.5, z: 0}
+--- !u!114 &1912301412043097254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412043097256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Run
+    m_sentences:
+    - Hey!
+    - The Monoliths seem interactable now..
+    - Try feeding some crystals into them
+    - They could open us up a portal outta here!
+--- !u!114 &1912301412043097252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412043097256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301412052341522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301412052341523}
+  - component: {fileID: 1912301412052341521}
+  - component: {fileID: 1912301412052341520}
+  - component: {fileID: 1912301412052341518}
+  m_Layer: 0
+  m_Name: RunDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301412052341523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412052341522}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -92.42, y: 2.95, z: -110.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301412052341521
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412052341522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0.5, y: -1.5, z: 0}
+--- !u!114 &1912301412052341520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412052341522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Run
+    m_sentences:
+    - WHOOSHHHH
+    - Try running with the B button
+--- !u!114 &1912301412052341518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412052341522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301412053336609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301412053336606}
+  - component: {fileID: 1912301412053336605}
+  - component: {fileID: 1912301412053336604}
+  - component: {fileID: 1912301412053336607}
+  m_Layer: 0
+  m_Name: FeedMonolithDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301412053336606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412053336609}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -54.76, y: 6.785, z: -134.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301412053336605
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412053336609}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4.1607933
+  m_Center: {x: 1.3392067, y: -1.5, z: 0}
+--- !u!114 &1912301412053336604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412053336609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Monolith
+    m_sentences:
+    - Have the leylines activated yet?
+    - Hold B for a bit while standing infront of a monolith to feed it with crystals
+--- !u!114 &1912301412053336607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412053336609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301412389233262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301412389233263}
+  - component: {fileID: 1912301412389233258}
+  - component: {fileID: 1912301412389233260}
+  - component: {fileID: 1912301412389233261}
+  m_Layer: 0
+  m_Name: WelcomeDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301412389233263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412389233262}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -62.93, y: 6.785, z: -130.47}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1912301411934123670}
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301412389233258
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412389233262}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0.5, y: -1.5, z: 0}
+--- !u!114 &1912301412389233260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412389233262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Welcome
+    m_sentences:
+    - Hey!
+    - Hey you!
+    - You're Widogast's apprentice right?
+    - Uhh... Atlas! Was it?
+    - November Lonesome. Here atchyour service.
+    - '...'
+    - So yeah the story of this world is still a work in progress- AHEM- HM.
+    - It'll be here soon enough !
+    - Collect Map Fragments and Ink Crystals to activate and Fill up the Ley-Monolith
+      Guages that are surrounding you currently.
+    - I'll be around to give advice so keep an eye out for me would'ya
+    - Off you go now, wooptie doo.
+--- !u!114 &1912301412389233261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412389233262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301412611570198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301412611570199}
+  - component: {fileID: 1912301412611570197}
+  - component: {fileID: 1912301412611570196}
+  - component: {fileID: 1912301412611570194}
+  m_Layer: 0
+  m_Name: JumpDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301412611570199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412611570198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -61.28, y: 2.95, z: -114.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301412611570197
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412611570198}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0.5, y: -1.5, z: 0}
+--- !u!114 &1912301412611570196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412611570198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Jump
+    m_sentences:
+    - Do you know who loves bouncin?
+    - 'oohoOOHOOOHOOOO- '
+    - MEEEEE
+    - Press A to Jump and twice to Double Jump
+--- !u!114 &1912301412611570194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301412611570198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301413267007931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301413267007928}
+  - component: {fileID: 1912301413267007927}
+  - component: {fileID: 1912301413267007926}
+  - component: {fileID: 1912301413267007929}
+  m_Layer: 0
+  m_Name: FeedMonolithDialogue (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301413267007928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413267007931}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -69.72, y: 6.785, z: -136.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301413267007927
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413267007931}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4.6148033
+  m_Center: {x: 0.114803314, y: -1.5, z: 0}
+--- !u!114 &1912301413267007926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413267007931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Monolith
+    m_sentences:
+    - Have the leylines activated yet?
+    - Hold B for a bit while standing infront of a monolith to feed it with crystals
+--- !u!114 &1912301413267007929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413267007931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301413271221826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301413271221827}
+  - component: {fileID: 1912301413271221825}
+  - component: {fileID: 1912301413271221824}
+  - component: {fileID: 1912301413271221694}
+  m_Layer: 0
+  m_Name: GlideDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301413271221827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413271221826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -100.83, y: 8.33, z: -91.399}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301413271221825
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413271221826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &1912301413271221824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413271221826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Glide
+    m_sentences:
+    - Is that the infamous Master Widogast's Magic Scroll?
+    - I heard rumors that holding your jump activates a gliding spell.....
+--- !u!114 &1912301413271221694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413271221826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1912301413571468940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1912301413571468941}
+  - component: {fileID: 1912301413571468936}
+  - component: {fileID: 1912301413571468939}
+  - component: {fileID: 1912301413571468938}
+  m_Layer: 0
+  m_Name: CheckPointDialogue (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1912301413571468941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413571468940}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -69.08, y: 8.33, z: -57.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1912301413571468936
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413571468940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &1912301413571468939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413571468940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Checkpoint
+    m_sentences:
+    - Hey! its a Checkpoint!
+    - Activate one by collecting a map fragment
+    - If you aren't sure where your next goal is, press Y.
+--- !u!114 &1912301413571468938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912301413571468940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5330361895593501990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5330361895593501991}
+  - component: {fileID: 5330361895593501986}
+  - component: {fileID: 5330361895593501989}
+  - component: {fileID: 5330361895593501988}
+  m_Layer: 0
+  m_Name: ChestsDialogue (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5330361895593501991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895593501990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -103.83, y: 10.39, z: -47.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5330361895593501986
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895593501990}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &5330361895593501989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895593501990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Chests
+    m_sentences:
+    - These chests can't be destroyed by a mere whack.
+    - Lets try Jumping (A) and pressing Attack (X) immediately afterwards.
+--- !u!114 &5330361895593501988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895593501990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5330361895648516315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5330361895648516312}
+  - component: {fileID: 5330361895648516311}
+  - component: {fileID: 5330361895648516310}
+  - component: {fileID: 5330361895648516313}
+  m_Layer: 0
+  m_Name: SwitchBoxes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5330361895648516312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895648516315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -172.86, y: 16.2, z: 89.68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5330361895648516311
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895648516315}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &5330361895648516310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895648516315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Switch
+    m_sentences:
+    - Oh hey! This is a much better place to practice the SwitchTag technique!
+    - Hold the Left Trigger when at eye level with a Glowing Box to Tag it.
+    - You can then Press the Right Trigger to teleport with the box from up to 10metres
+      away!
+    - You gotta be hasty with these boxes as they are timed to reset after a certain
+      amount of time....
+    - Now that you know how the different ways of teleporting, try utilising both
+      at the same time to solve different puzzles!
+--- !u!114 &5330361895648516313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361895648516315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5330361896383557516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5330361896383557517}
+  - component: {fileID: 5330361896383557512}
+  - component: {fileID: 5330361896383557515}
+  - component: {fileID: 5330361896383557514}
+  m_Layer: 0
+  m_Name: GoonsDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5330361896383557517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896383557516}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.036, y: 16.72, z: 59.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5330361896383557512
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896383557516}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &5330361896383557515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896383557516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: TeleportTag
+    m_sentences:
+    - Tsk.
+    - Goons.........
+    - Lord Kino's nasty bunch of minions that scattered the crystals all over the
+      world.
+    - Remember to press X to attack and also Jump+Attack to JumpSlam.
+    - You can also try a switch-tag technique.......
+    - Nevermind... Its too dangerous. Goons are capable of stealing maps!
+    - I can teach you when you get out of the temple.
+--- !u!114 &5330361896383557514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896383557516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5330361896451883132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5330361896451883133}
+  - component: {fileID: 5330361896451883128}
+  - component: {fileID: 5330361896451883131}
+  - component: {fileID: 5330361896451883130}
+  m_Layer: 0
+  m_Name: CheckPointDialogue (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5330361896451883133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896451883132}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -69.08, y: 5.44, z: -43.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5330361896451883128
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896451883132}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &5330361896451883131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896451883132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: TeleportTag
+    m_sentences:
+    - 'Whats that? '
+    - You can't swim?
+    - Well rest assured you will be fine if you use this special spell.
+    - Press LB to place a Teleport Marker and then press RB when you are up to 10
+      metres away!
+    - You will teleport back to where you initially started!
+--- !u!114 &5330361896451883130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361896451883132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5330361897261065429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5330361897261065426}
+  - component: {fileID: 5330361897261065425}
+  - component: {fileID: 5330361897261065424}
+  - component: {fileID: 5330361897261065427}
+  m_Layer: 0
+  m_Name: GlideDialogue (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5330361897261065426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361897261065429}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -70.75, y: 11.34, z: -27.76}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &5330361897261065425
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361897261065429}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &5330361897261065424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361897261065429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Glide
+    m_sentences:
+    - You haven't forgotten how to Glide have you?
+    - Hold the jump button to glide.
+--- !u!114 &5330361897261065427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330361897261065429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6556072580744465809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1644913376313170321}
+  - component: {fileID: 3304098497578093436}
+  - component: {fileID: 7678968273532175335}
+  - component: {fileID: 4675495920078115087}
+  m_Layer: 0
+  m_Name: WindDialogue (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644913376313170321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556072580744465809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -103, y: 22.93, z: 27.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44843661930241817}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3304098497578093436
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556072580744465809}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6.0609493
+  m_Center: {x: -0.20810509, y: -1.5, z: -1.7690544}
+--- !u!114 &7678968273532175335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556072580744465809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_conversation:
+    m_strName: Wind
+    m_sentences:
+    - 'Hey! '
+    - I bet you can ride n glide those gusts of wind!
+--- !u!114 &4675495920078115087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556072580744465809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &7345416339285473628
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1912301412389233263}
+    m_Modifications:
+    - target: {fileID: 9185642564718055365, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_Name
+      value: NovemberLonesome
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750281, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750291, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000007629394
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750283, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 89.99995
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750303, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 89.98021
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750303, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.000027320735
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750301, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 20.258533
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750301, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -85.214035
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750301, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -70.07382
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750299, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 20.897846
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750299, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -94.08006
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750299, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -107.65345
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750295, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 19.030972
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750295, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -96.35091
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750295, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -108.84627
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750287, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 21.021828
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750287, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -82.415184
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750287, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -66.945366
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750279, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 3.10772e-18
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750279, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 6.2154263e-19
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750279, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 101.309906
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750277, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.382947
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750277, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 9.053216
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750277, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 24.163057
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750285, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.4033418e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750293, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.4033418e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750297, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.4033418e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750289, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -1.4033418e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750275, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -3.3002543
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750275, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 10.026987
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750275, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -2.9015474
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750333, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 9.919594
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750333, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -11.697499
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750333, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -115.168236
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750335, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 5.88316
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750335, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -19.792892
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750335, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -35.513893
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750273, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -17.991234
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750273, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 2.6044855
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564454750273, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -24.212286
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb15d038b73a5be4abbf8909e583be6d, type: 3}
+--- !u!114 &5804009015856931257 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3853905133245356261, guid: eb15d038b73a5be4abbf8909e583be6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7345416339285473628}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a0a283402578a4c8d92d2bd0c680e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1912301411934123670 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7345416339285473628}
+  m_PrefabAsset: {fileID: 0}
