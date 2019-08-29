@@ -8,7 +8,7 @@ public class GameState : MonoBehaviour
     private static bool s_bIsPaused = false;
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
-
+    private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
         s_bIsPaused = _bState;
@@ -31,5 +31,8 @@ public class GameState : MonoBehaviour
     public static bool DoesPlayerHaveControl() {
         return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting); // Add here accordingly
     }
-
+    public static void SetSpeedRunning(bool _bState)
+    {
+        SpeedRunning = _bState;
+    }
 }
