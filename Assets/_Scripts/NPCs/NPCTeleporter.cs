@@ -23,11 +23,8 @@ public class NPCTeleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("inside");
         if (other.CompareTag("Player") && !CheckNPCIsChild())
         {
-            print("hECKIN inside");
-
             m_rNPC.TeleportToDestination(this.transform);
         }
     }

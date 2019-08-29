@@ -127,7 +127,7 @@ public class DialogueManager : MonoBehaviour
             //  In coordination with queueCount
         //if (m_strCurrentDialogue == "Welcome")
         //{
-            StartCoroutine(TypeSentence(m_strCurrentSentence, m_rDialogueText));
+        StartCoroutine(TypeSentence(m_strCurrentSentence, m_rDialogueText));
         //}
     }
 
@@ -162,7 +162,7 @@ public class DialogueManager : MonoBehaviour
             m_rDialogueText.text = m_strCurrentSentence;
             m_bTyping = false;
         }
-        else
+        else if(m_bConversing && m_rContainerAnimator.GetCurrentAnimatorStateInfo(0).IsName("IdleContainer"))
         {
             DisplayNextSentence();
         }
@@ -196,9 +196,9 @@ public class DialogueManager : MonoBehaviour
         if (_begin)
         {
             StopAllCoroutines();
-            m_rContinueButton.gameObject.SetActive(true);
             m_rContainerAnimator.SetBool("Activate", true);
             m_bConversing = true;
+
             StartCoroutine(ActivateDialogue(true));
         }
         else

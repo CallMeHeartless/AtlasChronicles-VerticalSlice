@@ -97,7 +97,8 @@ public class NPCController : MonoBehaviour
 
 
             //If X button pressed
-            if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting && GameState.DoesPlayerHaveControl())
+            if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting && GameState.DoesPlayerHaveControl()
+                && (m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden") || m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle")))
             {
                 m_bInteracting = true;
                 m_rAnimator.SetTrigger("PopOut");
@@ -105,8 +106,8 @@ public class NPCController : MonoBehaviour
                 m_rDialogueZone.TriggerDialogue();
                 GameState.SetCinematicFlag(true);
                 m_rUIGamePanel.SetActive(false);
-                //Rotate both player and novlonesome towards each other
 
+                //Rotate both player and novlonesome towards each other
                 RotateTowardsPos(this.transform, m_rPlayer.transform);
                 RotateTowardsPos(m_rPlayer.transform, this.transform);
                 m_rNLModel.transform.localRotation = Quaternion.Euler(m_vecNLRotation);

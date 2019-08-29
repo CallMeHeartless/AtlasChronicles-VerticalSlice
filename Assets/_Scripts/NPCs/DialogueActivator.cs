@@ -19,7 +19,7 @@ public class DialogueActivator : MonoBehaviour
 
     public void TriggerDialogue()
     {
-        Debug.Log("Dialogue activated: " + m_conversation.m_strName);
+        //Debug.Log("Dialogue activated: " + m_conversation.m_strName);
         m_manager.StartDialogue(m_conversation);
     }
 
