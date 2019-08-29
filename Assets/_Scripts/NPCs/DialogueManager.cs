@@ -42,6 +42,7 @@ public class DialogueManager : MonoBehaviour
 
         m_rContinueButton = m_rDialoguePanel.GetComponentInChildren<Button>(true);
         m_rDialogueText = m_rDialoguePanel.GetComponentInChildren<TextMeshProUGUI>(true);
+        m_rDialogueText.gameObject.SetActive(false);
         m_rContainerAnimator = m_rDialoguePanel.GetComponentInChildren<Animator>(true);
         m_rContainerPanel = m_rContainerAnimator.gameObject;
         m_rContainerPanel.gameObject.SetActive(true);

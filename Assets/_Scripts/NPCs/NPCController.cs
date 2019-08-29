@@ -97,7 +97,7 @@ public class NPCController : MonoBehaviour
 
 
             //If X button pressed
-            if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting)
+            if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting && GameState.DoesPlayerHaveControl())
             {
                 m_bInteracting = true;
                 m_rAnimator.SetTrigger("PopOut");
@@ -109,8 +109,6 @@ public class NPCController : MonoBehaviour
 
                 RotateTowardsPos(this.transform, m_rPlayer.transform);
                 RotateTowardsPos(m_rPlayer.transform, this.transform);
-
-                //m_rNLModel.transform.rotation = Quaternion.Euler(m_vecNLRotation);
                 m_rNLModel.transform.localRotation = Quaternion.Euler(m_vecNLRotation);
             }
         }
@@ -129,6 +127,7 @@ public class NPCController : MonoBehaviour
             m_bExited = true;
             m_bFirstEntry = true;
             m_bInteracting = false;
+            
         }
     }
 
@@ -161,9 +160,9 @@ public class NPCController : MonoBehaviour
     public void TeleportToDestination(Transform _location)
     {
         this.transform.parent = _location;
+
         //Reassign dialogue zone
         m_rDialogueZone = transform.parent.GetComponent<DialogueActivator>();
-        //this.transform.position = Vector3.zero;
         this.transform.localPosition = Vector3.zero;
 
         m_rAnimator.SetTrigger("Teleport");
@@ -185,41 +184,4 @@ public class NPCController : MonoBehaviour
             m_rAnimator.SetTrigger("Rustle");
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.CompareTag("Player"))
-    //    {
-    //        m_bExited = false;
-    //        m_rAnimator.ResetTrigger("PopIn");
-    //        m_rAnimator.ResetTrigger("PopOut");
-    //        m_rAnimator.ResetTrigger("Rustle");
-
-    //        m_rAnimator.SetTrigger("Rustle");
-    //        //Show interaction button
-    //        m_rInfoBubble.gameObject.SetActive(true);
-    //        m_bWithinRadius = true;
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if(!m_bExited)
-    //    {
-    //        print("wot");
-    //        if (!m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden")
-    //         && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("PopIn")
-    //         && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle"))
-    //        {
-    //            m_rAnimator.ResetTrigger("Rustle");
-    //            m_rAnimator.ResetTrigger("PopIn");
-    //            m_rAnimator.ResetTrigger("PopOut");
-
-    //            m_rAnimator.SetTrigger("PopIn");
-    //        }
-    //        m_rInfoBubble.gameObject.SetActive(false);
-    //        m_bExited = true;
-    //        m_bWithinRadius = false;
-    //    }
-    //}
 }
