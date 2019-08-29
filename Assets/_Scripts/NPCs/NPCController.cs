@@ -5,6 +5,10 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     [SerializeField] private Animator m_rAnimator;
+
+    //Temp. must incorporate more
+    DialogueActivator m_rWelcomeDialogue;
+
     private QuadLookAt m_rInfoBubble;
     private GameObject m_rPlayer;
     float m_fRustleCounter = 0.0f;
@@ -12,6 +16,7 @@ public class NPCController : MonoBehaviour
     bool m_bExited = false;
     bool m_bWithinRadius = false;
     bool m_bFirstEntry = true;
+
     private AnimatorClipInfo[] clipInfo;
 
     // Start is called before the first frame update
@@ -20,6 +25,8 @@ public class NPCController : MonoBehaviour
         m_rPlayer = GameObject.FindGameObjectWithTag("Player");
         m_rInfoBubble = GetComponentInChildren<QuadLookAt>();
         m_rInfoBubble.gameObject.SetActive(false);
+        m_rWelcomeDialogue = GetComponentInChildren<DialogueActivator>();
+
 
         m_bInteracting = false;
         m_bExited = true;
@@ -64,6 +71,7 @@ public class NPCController : MonoBehaviour
                 m_bInteracting = true;
                 m_rAnimator.SetTrigger("PopOut");
                 m_rInfoBubble.gameObject.SetActive(false);
+                m_rWelcomeDialogue.TriggerDialogue();
                 //SmoothDampAngle
                 //transform.LookAt(m_rPlayer.transform.position);
                 //Activate dialogue

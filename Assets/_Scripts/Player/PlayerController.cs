@@ -510,7 +510,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         {
             m_bAllowYeetSlide = !m_bAllowYeetSlide;
         }
-        m_rCheatSlide.SetActive(m_bAllowYeetSlide);
+        m_rCheatSlide?.SetActive(m_bAllowYeetSlide);
 
         // Check if floating
         if (m_bIsFloating) {
