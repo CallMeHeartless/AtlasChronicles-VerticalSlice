@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class TimerUpdate : MonoBehaviour
 {
-    public bool TimerOn;
+    bool TimerOn=false;
     float Seconds = 0;
     int Minutes = 0;
     int Hours = 0;
@@ -13,6 +13,14 @@ public class TimerUpdate : MonoBehaviour
     void Start()
     {
         UI = GetComponent<Text>();
+        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Expore)
+        {
+            transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            TimerOn = true;
+        }
     }
 
     // Update is called once per frame
