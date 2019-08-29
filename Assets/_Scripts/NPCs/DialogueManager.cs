@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
     private bool m_skipDialogue = false;
     private string m_strCurrentDialogue = "";
     private string m_strCurrentSentence = "";
-    private string m_strNext = "XBoxXButton";
+    private string m_strNext = "Jump";
     //private string m_strComplete = "Jump";
 
     private bool m_bTyping = false;

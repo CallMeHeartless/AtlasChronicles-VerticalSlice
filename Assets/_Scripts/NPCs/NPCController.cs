@@ -17,6 +17,7 @@ public class NPCController : MonoBehaviour
     bool m_bWithinRadius = false;
     bool m_bFirstEntry = true;
     bool m_bTalking = false;
+    bool m_bMoving = false;
 
     private AnimatorClipInfo[] clipInfo;
 
@@ -38,10 +39,9 @@ public class NPCController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (m_bInteracting)
         {
-            if(!m_bTalking && m_rWelcomeDialogue.GetIsTalking())
+            if (!m_bTalking && m_rWelcomeDialogue.GetIsTalking())
             {
                 m_rAnimator.SetTrigger("Talk");
                 m_bTalking = true;
