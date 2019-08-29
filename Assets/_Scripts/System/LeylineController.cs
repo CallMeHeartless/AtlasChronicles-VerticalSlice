@@ -7,6 +7,8 @@ using SplineMesh;
 public class LeylineController : MonoBehaviour, IMessageReceiver
 {
     private bool m_bIsActive = false;
+    [SerializeField][Tooltip("If True, this leyline will automatically activate when the map fragment is found")]
+    private bool m_bAutoActivate = false;
     private List<LeyNodeController> m_rConnectedNodes = null;
     private SplineMeshTiling m_rSplineMesh;
     private MeshRenderer m_rMeshRenderer;
@@ -91,8 +93,20 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
         }
 
         // Notify any registered nodes of the status change
-        foreach(LeyNodeController node in m_rConnectedNodes) {
-            node.CheckLeylineStatus();
+        if(m_rConnectedNodes != null) {
+            foreach (LeyNodeController node in m_rConnectedNodes) {
+                node.CheckLeylineStatus();
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Checks if the leyline should be activated automatically, called when the map is collected
+    /// </summary>
+    public void CheckForAutoActivation() {
+        if (m_bAutoActivate) {
+            ActivateLeyline(true);
         }
     }
     
