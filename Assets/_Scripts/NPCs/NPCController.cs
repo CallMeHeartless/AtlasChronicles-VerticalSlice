@@ -16,6 +16,7 @@ public class NPCController : MonoBehaviour
     bool m_bExited = false;
     bool m_bWithinRadius = false;
     bool m_bFirstEntry = true;
+    bool m_bTalking = false;
 
     private AnimatorClipInfo[] clipInfo;
 
@@ -27,7 +28,7 @@ public class NPCController : MonoBehaviour
         m_rInfoBubble.gameObject.SetActive(false);
         m_rWelcomeDialogue = GetComponentInChildren<DialogueActivator>();
 
-
+        m_bTalking = false;
         m_bInteracting = false;
         m_bExited = true;
         m_bWithinRadius = false;
@@ -37,89 +38,106 @@ public class NPCController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (m_bInteracting)
+        {
+            if(!m_bTalking && m_rWelcomeDialogue.GetIsTalking())
+            {
+                m_rAnimator.SetTrigger("Talk");
+                m_bTalking = true;
+            }
+            else if (m_bTalking && !m_rWelcomeDialogue.GetIsTalking())
+            {
+                m_rAnimator.SetTrigger("Idle");
+                m_bTalking = false;
+            }
+
+            if (!m_rWelcomeDialogue.GetIsConversing())
+            {
+                HideNovLonesome();
+                GameState.SetCinematicFlag(false);
+                m_bInteracting = false;
+            }
+            return;
+        }
+
         if (Vector3.Distance(transform.position, m_rPlayer.transform.position) <= 5.0f)
         {
             m_bWithinRadius = true;
-            if (!m_bInteracting)
+            if (m_bFirstEntry)
             {
-                if (m_bFirstEntry)
-                {
-                    m_bExited = false;
-                    m_rAnimator.ResetTrigger("PopIn");
-                    m_rAnimator.SetTrigger("Rustle");
-                    //Show interaction button
-                    m_rInfoBubble.gameObject.SetActive(true);
-                    m_bWithinRadius = true;
-                    m_bFirstEntry = false;
-                }
-
-                if (m_fRustleCounter >= 8.0f)
-                {
-                    m_fRustleCounter = 0.0f;
-                    m_rAnimator.SetTrigger("Rustle");
-                }
-                else
-                {
-                    m_fRustleCounter += Time.deltaTime;
-                }
+                m_bExited = false;
+                m_rAnimator.ResetTrigger("PopIn");
+                m_rAnimator.SetTrigger("Rustle");
+                //Show interaction button
+                m_rInfoBubble.gameObject.SetActive(true);
+                m_bWithinRadius = true;
+                m_bFirstEntry = false;
             }
+
+            if (m_fRustleCounter >= 5.0f)
+            {
+                m_fRustleCounter = 0.0f;
+                m_rAnimator.SetTrigger("Rustle");
+            }
+            else
+            {
+                m_fRustleCounter += Time.deltaTime;
+            }
+
 
             //If X button pressed
             if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting)
             {
-                //Debug.Log("YEETS");
                 m_bInteracting = true;
                 m_rAnimator.SetTrigger("PopOut");
                 m_rInfoBubble.gameObject.SetActive(false);
                 m_rWelcomeDialogue.TriggerDialogue();
-                //SmoothDampAngle
-                //transform.LookAt(m_rPlayer.transform.position);
-                //Activate dialogue
+                GameState.SetCinematicFlag(true);
+
+                //Rotate both player and novlonesome towards each other
+                RotateTowardsPos(this.transform, m_rPlayer.transform);
+                RotateTowardsPos(m_rPlayer.transform, this.transform);
             }
         }
         else
         {
-            m_bWithinRadius = false;
-
             if (!m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden")
-                && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("PopIn")
-                && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle"))
+            && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("PopIn")
+            && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle"))
             {
-                m_rAnimator.ResetTrigger("Rustle");
-                m_rAnimator.ResetTrigger("PopIn");
-                m_rAnimator.SetTrigger("PopIn");
-
-                //print("CurrentState: " + GetCurrentClipName());
-                m_bExited = true;
-                m_bFirstEntry = true;
-                m_bInteracting = false;
+                HideNovLonesome();
             }
-
-
-            if (m_rInfoBubble.gameObject.activeSelf)
-            {
-                m_rInfoBubble.gameObject.SetActive(false);
-            }
-
+            m_rInfoBubble.gameObject.SetActive(false);
             m_bExited = true;
             m_bFirstEntry = true;
             m_bInteracting = false;
-            //if (!m_bExited)
-            //{
-            //    if (!m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden")
-            //    && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("PopIn"))
-            //    {
-            //        m_rAnimator.SetTrigger("PopIn");
-            //    }
-            //    m_rInfoBubble.gameObject.SetActive(false);
-            //    m_bExited = true;
-            //    m_bFirstEntry = true;
-            //    m_bInteracting = false;
-
-            //    m_rAnimator.ResetTrigger("ResetTrigger");
-
-            //}
         }
+    }
+
+    public void HideNovLonesome()
+    {
+        m_bWithinRadius = false;
+
+        m_rAnimator.ResetTrigger("Rustle");
+        m_rAnimator.ResetTrigger("Talk");
+        m_rAnimator.ResetTrigger("PopIn");
+        m_rAnimator.SetTrigger("PopIn");
+
+        m_bExited = true;
+        m_bFirstEntry = true;
+        m_bInteracting = false;
+    }
+
+    void RotateTowardsPos(Transform _toRotate, Transform _target)
+    {
+        Vector3 targetRotation = new Vector3(
+            _target.transform.position.x,
+            _toRotate.transform.position.y,
+            _target.transform.position.z
+        );
+
+        _toRotate.transform.LookAt(targetRotation);
     }
 
     public string GetCurrentClipName()
