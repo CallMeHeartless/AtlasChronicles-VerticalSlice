@@ -67,5 +67,6 @@ public class TimerUpdate : MonoBehaviour
     public void StopTimer()
     {
         TimerOn = false;
+        UI.fontSize = 50;
     }
 }

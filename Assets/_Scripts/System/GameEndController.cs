@@ -89,10 +89,24 @@ public class GameEndController : MonoBehaviour
     // Return the player to the main menu upon completion
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
-            Zone.ClearZones();
-            SceneManager.LoadScene(0);
+
+            GameState.SetSpeedRunning(GameState.SpeedRunMode.Finished);
+            GameObject.FindGameObjectWithTag("UI").GetComponent<TimerUpdate>().StopTimer();
+
+            StartCoroutine("ExitLevel");
+
+            
+
         }
     }
+    IEnumerator ExitLevel()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        Zone.ClearZones();
+        SceneManager.LoadScene(0);
+    }
+
 
     /// <summary>
     /// Used upon initialisation to set how many crystals each depo needs.
