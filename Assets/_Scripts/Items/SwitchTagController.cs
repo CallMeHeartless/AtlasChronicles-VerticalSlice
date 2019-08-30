@@ -74,8 +74,10 @@ public class SwitchTagController : MonoBehaviour
             && other.gameObject.layer != LayerMask.NameToLayer("Tutorial")
             && other.gameObject.layer != LayerMask.NameToLayer("Cinematic")
             && other.gameObject.layer != LayerMask.NameToLayer("TagIgnore")) {
+            print("Object: " + other.name);
+
             // Destroy animation? DO NOT DESTROY OBJECT
-            GameObject sparkle = Instantiate(m_rInkSparkleTest, transform.position, Quaternion.identity);
+            GameObject sparkle = Instantiate(m_rInkSparkleTest, transform.localPosition, Quaternion.identity);
             Destroy(sparkle, 0.5f);
             gameObject.SetActive(false);
             DetachFromObject();
