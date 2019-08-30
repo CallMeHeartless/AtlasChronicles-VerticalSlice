@@ -14,7 +14,6 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_rPauseSection;    //Pause menu UI
     [SerializeField] GameObject m_rSettingsPanel;   //Settings panel
     [SerializeField] GameObject m_rMapPanel;        // Map panel containing map elements
-    [SerializeField] GameObject m_rGuidePanel;      // Guide panel containing tutorial elements
     [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
     [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
 
@@ -61,7 +60,6 @@ public class PauseMenu : MonoBehaviour
             m_rButtonClick.Play();          // Play a click sound when player accesses the pause menu
             m_rPausePanel.SetActive(true);  //Activate the pause menu
             m_rPauseSection.SetActive(true);//Activate the pause section
-            m_rGuidePanel.SetActive(false); // Disable the guide panel when paused
 
             //Unlock cursor so player can use the mouse when the game is paused
             Cursor.lockState = CursorLockMode.None;

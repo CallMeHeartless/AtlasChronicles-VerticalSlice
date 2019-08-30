@@ -7,9 +7,11 @@ using SplineMesh;
 public class LeylineController : MonoBehaviour, IMessageReceiver
 {
     private bool m_bIsActive = false;
+    [SerializeField][Tooltip("If True, this leyline will automatically activate when the map fragment is found")]
+    private bool m_bAutoActivate = false;
     private List<LeyNodeController> m_rConnectedNodes = null;
     private SplineMeshTiling m_rSplineMesh;
-    private MeshRenderer m_rMeshRenderer;
+    private MeshRenderer[] m_rMeshRenderer;
     [SerializeField]
     private Material m_InactiveMaterial;
     [SerializeField]
@@ -32,8 +34,8 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
 
         // Get spline mesh component
         m_rSplineMesh = GetComponent<SplineMeshTiling>();
-        m_rMeshRenderer = GetComponentInChildren<MeshRenderer>();
-        if (!m_rMeshRenderer) {
+        m_rMeshRenderer = GetComponentsInChildren<MeshRenderer>();
+        if (m_rMeshRenderer.Length == 0) {
             Debug.Log("No mesh renderer");
         }
     }
@@ -82,17 +84,34 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
 
         // Change material // NEEDS better VFX
         if(_bOn && m_ActiveMaterial) { // Set active material
-            //m_rSplineMesh.material = m_ActiveMaterial;
-            m_rMeshRenderer.material = m_ActiveMaterial;
+            //m_rMeshRenderer.material = m_ActiveMaterial;
+            foreach(MeshRenderer mesh in m_rMeshRenderer) {
+                mesh.material = m_ActiveMaterial;
+            }
         }
         else if(!_bOn && m_InactiveMaterial) { // Set inactive material
             //m_rSplineMesh.material = m_InactiveMaterial;
-            m_rMeshRenderer.material = m_InactiveMaterial;
+            //m_rMeshRenderer.material = m_InactiveMaterial;
+            foreach (MeshRenderer mesh in m_rMeshRenderer) {
+                mesh.material = m_InactiveMaterial;
+            }
         }
 
         // Notify any registered nodes of the status change
-        foreach(LeyNodeController node in m_rConnectedNodes) {
-            node.CheckLeylineStatus();
+        if(m_rConnectedNodes != null) {
+            foreach (LeyNodeController node in m_rConnectedNodes) {
+                node.CheckLeylineStatus();
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Checks if the leyline should be activated automatically, called when the map is collected
+    /// </summary>
+    public void CheckForAutoActivation() {
+        if (m_bAutoActivate) {
+            ActivateLeyline(true);
         }
     }
     

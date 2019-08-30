@@ -20,7 +20,14 @@ public class PlantLookAt : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //Plant.Lookat(true);
+            Plant.Lookat(true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Plant.Lookat(false);
         }
     }
 }

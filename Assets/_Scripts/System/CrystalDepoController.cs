@@ -121,7 +121,7 @@ public class CrystalDepoController : MonoBehaviour
 
             // Reduce overall time it takes
             float fInterpolation = ((float)m_iCurrentCrystals * 4.0f / (float)m_iNeededCrystals);
-            fInterpolation = Mathf.Clamp(fInterpolation, 0.0f, 1.0f);
+            fInterpolation = Mathf.Clamp(fInterpolation, 0.2f, 1.0f);
             m_fCurrentFillTime = Mathf.Lerp(m_fDefaultFillTime, m_fMinimumFillTime, fInterpolation);
 
             // Take a crystal from the player and add it to the depo

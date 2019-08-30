@@ -10,6 +10,7 @@ public class PlantControler : MonoBehaviour
     public Transform Player;
     public Quaternion currentPostion;
     public Vector3 XtraMovement;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,8 @@ public class PlantControler : MonoBehaviour
 
 
             //looking around
+
+            //set roation to look at player with adding the offsets
             var look = transform.position - Player.position;
 
             var rotation = Quaternion.LookRotation(look);
@@ -48,7 +51,11 @@ public class PlantControler : MonoBehaviour
 
             //transform.LookAt(Player);
             //transform.eulerAngles += XtraMovement;
-            Debug.Log(transform.localEulerAngles.y);
+
+
+
+            //Debug.Log(transform.localEulerAngles.y);
+            //to far left
             if (transform.localRotation.y < 90)
             {
                 Debug.Log("dummy");
@@ -56,6 +63,7 @@ public class PlantControler : MonoBehaviour
                 // transform.Rotate(Vector3.up, Time.deltaTime * 10, Space.World);
             }
 
+            //to far right
             if (transform.localRotation.y > -90)
             {
                 Debug.Log("ymmud");
@@ -65,14 +73,18 @@ public class PlantControler : MonoBehaviour
 
 
         }
+        else
+        {
+
+        }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-       // GetComponent<Animator>().SetTrigger("Attack");
+     transform.parent.transform.parent.GetComponent<Animator>().SetTrigger("Attack");
     }
     public void Lookat(bool _Range)
     {
-        //_Range ? LookAtRange = true : LookAtRange = true;
+       //player in range for plant to find player
         if (_Range)
         {
             LookAtRange = true;

@@ -45,6 +45,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1591680259512628813}
   - component: {fileID: 1399479487}
+  - component: {fileID: 2143846972}
   m_Layer: 0
   m_Name: Vine01
   m_TagString: Untagged
@@ -79,10 +80,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc0f93fa8065b4dbbdaaf77eb192de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookAtRange: 1
+  LookAtRange: 0
   Player: {fileID: 0}
   currentPostion: {x: 0, y: 0, z: 0, w: 0}
   XtraMovement: {x: 95.2, y: 13.53, z: 184.68}
+--- !u!135 &2143846972
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591680259513117229}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1591680259513117231
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +106,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1591680259512628815}
+  - component: {fileID: 569631172}
+  - component: {fileID: 569631173}
   m_Layer: 0
   m_Name: Vine02
   m_TagString: Untagged
@@ -114,6 +130,31 @@ Transform:
   m_Father: {fileID: 1591680259512628813}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &569631172
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591680259513117231}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &569631173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591680259513117231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74ab05783ba6454c9333c6bd68fd29d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1591680259513117249
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +225,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1591680259512628837}
+  - component: {fileID: 1871899174}
+  - component: {fileID: 1871899175}
   m_Layer: 0
   m_Name: Head03
   m_TagString: Untagged
@@ -205,6 +248,32 @@ Transform:
   m_Father: {fileID: 1591680259512628843}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1871899174
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591680259513117253}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.26, y: -0.15, z: 0}
+--- !u!114 &1871899175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591680259513117253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3907c1bafc5867249adf05c81b78d473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iDamage: 1
 --- !u!1 &1591680259513117255
 GameObject:
   m_ObjectHideFlags: 0
