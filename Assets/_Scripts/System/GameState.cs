@@ -13,7 +13,8 @@ public class GameState : MonoBehaviour
     public enum SpeedRunMode
     {
         Expore,
-        SpeedRun
+        SpeedRun,
+        Finished
     }
 
     private static SpeedRunMode SpeedRunning = SpeedRunMode.Expore;
