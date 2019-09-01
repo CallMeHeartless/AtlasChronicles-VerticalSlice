@@ -12,9 +12,9 @@ public class GameState : MonoBehaviour
 
     public enum SpeedRunMode
     {
-        Expore,
-        SpeedRun,
-        Finished
+        Expore,//standend amount of crysials and map
+        SpeedRun,//standend amount of crysials and map with a count up timer 
+        Finished//this is used when the speed on is over and all mode should be place above this
     }
 
     private static SpeedRunMode SpeedRunning = SpeedRunMode.Expore;

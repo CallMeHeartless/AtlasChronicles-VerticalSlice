@@ -27,6 +27,10 @@ public class GameEndController : MonoBehaviour
     [SerializeField]
     private bool m_bIsActive = false;
 
+    public int[] s_iMinimumCrystalsModes;
+    public int[] s_iMinimumMapsModes;
+    
+
     public static int s_iMinimumCrystals = 100;
     public static int s_iMinimumMaps = 5;
     public static bool s_bHasEnoughMaps = false;
@@ -37,11 +41,15 @@ public class GameEndController : MonoBehaviour
         if (!m_sInstance) {
             m_sInstance = this;
             // Initialise static variables
-            s_iMinimumCrystals = m_iCrystalsNeeded;
-            s_iMinimumMaps = m_iMapsNeeded;
+           
         }
 
-        if(m_rInfo)
+        //set crysal and maps to so that they are for the right speed run mode
+        s_iMinimumCrystals = s_iMinimumCrystalsModes[(int)GameState.GetSpeedRunning()];
+        s_iMinimumMaps = s_iMinimumMapsModes[(int)GameState.GetSpeedRunning()];
+        Debug.Log((int)GameState.GetSpeedRunning());
+
+        if (m_rInfo)
         {
             m_rInfo.SetActive(false);
         }
@@ -90,12 +98,12 @@ public class GameEndController : MonoBehaviour
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
 
-            GameState.SetSpeedRunning(GameState.SpeedRunMode.Finished);
-            GameObject.FindGameObjectWithTag("UI").GetComponent<TimerUpdate>().StopTimer();
-
+            if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Expore)
+            {
+                GameState.SetSpeedRunning(GameState.SpeedRunMode.Finished);
+                GameObject.FindGameObjectWithTag("UI").GetComponent<TimerUpdate>().StopTimer();
+            }
             StartCoroutine("ExitLevel");
-
-            
 
         }
     }
