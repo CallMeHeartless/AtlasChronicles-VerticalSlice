@@ -70,8 +70,9 @@ MonoBehaviour:
     world or continue exploring.
   m_rPortalParticles: {fileID: 1486986140174253015}
   m_rInfo: {fileID: 0}
-  m_rNPCCompleteMsg: {fileID: 1449907188, guid: 9283416357a434c4e80ee0de6ef47ddb,
-    type: 3}
+  m_bIsActive: 0
+  s_iMinimumCrystalsModes: c800000005000000
+  s_iMinimumMapsModes: c800000005000000
 --- !u!1 &2939479463787522722
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ccae18492076f4cb992632a2da01a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bAutoActivate: 0
   m_InactiveMaterial: {fileID: 2100000, guid: c83e7f8994f9e3b42b86fa3691fc742b, type: 2}
   m_ActiveMaterial: {fileID: 2100000, guid: e2d3a4d723cf1dc4eab1d919f3324dbc, type: 2}
 --- !u!1 &3594204855398429863
@@ -652,6 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ccae18492076f4cb992632a2da01a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bAutoActivate: 0
   m_InactiveMaterial: {fileID: 2100000, guid: c83e7f8994f9e3b42b86fa3691fc742b, type: 2}
   m_ActiveMaterial: {fileID: 2100000, guid: e2d3a4d723cf1dc4eab1d919f3324dbc, type: 2}
 --- !u!1 &6647972927943737211
@@ -770,6 +773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ccae18492076f4cb992632a2da01a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bAutoActivate: 0
   m_InactiveMaterial: {fileID: 2100000, guid: c83e7f8994f9e3b42b86fa3691fc742b, type: 2}
   m_ActiveMaterial: {fileID: 2100000, guid: e2d3a4d723cf1dc4eab1d919f3324dbc, type: 2}
 --- !u!1 &6647972928487103039
@@ -5752,6 +5756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ccae18492076f4cb992632a2da01a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bAutoActivate: 0
   m_InactiveMaterial: {fileID: 2100000, guid: c83e7f8994f9e3b42b86fa3691fc742b, type: 2}
   m_ActiveMaterial: {fileID: 2100000, guid: e2d3a4d723cf1dc4eab1d919f3324dbc, type: 2}
 --- !u!1 &8817480560984946421
@@ -5977,6 +5982,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2216185426755426649}
     m_Modifications:
+    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_Name
+      value: VFX_EndPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6030,16 +6045,6 @@ PrefabInstance:
     - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
-        type: 3}
-      propertyPath: m_Name
-      value: VFX_EndPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
