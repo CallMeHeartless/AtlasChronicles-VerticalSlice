@@ -9,6 +9,16 @@ public class GameState : MonoBehaviour
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
 
+
+    public enum SpeedRunMode
+    {
+        Expore,
+        SpeedRun,
+        Finished
+    }
+
+    private static SpeedRunMode SpeedRunning = SpeedRunMode.Expore;
+  // private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
         s_bIsPaused = _bState;
@@ -31,5 +41,12 @@ public class GameState : MonoBehaviour
     public static bool DoesPlayerHaveControl() {
         return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting); // Add here accordingly
     }
-
+    public static void SetSpeedRunning(SpeedRunMode _SpeedRunState)
+    {
+        SpeedRunning = _SpeedRunState;
+    }
+    public static SpeedRunMode GetSpeedRunning()
+    {
+       return SpeedRunning;
+    }
 }

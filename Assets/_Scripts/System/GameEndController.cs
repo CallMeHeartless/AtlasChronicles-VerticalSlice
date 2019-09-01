@@ -18,15 +18,13 @@ public class GameEndController : MonoBehaviour
 
     // Properties / references
     [Header("References")]
-    public string m_strEndText = "Congrats! You obtained all seven map fragments. Return with them to the start to leave the world.";
-    private GameObject m_rGuidePanel;
+    public string m_strEndText = "Congrats! You obtained all 6 map fragments. Return with them to the start to leave the world.";
     private TextMeshProUGUI m_rText;
     [SerializeField]
     private GameObject m_rPortalParticles = null;
     [SerializeField]
     private GameObject m_rInfo = null; //Just ui telling player the portal is open
     [SerializeField]
-    private TutorialCollider m_rNPCCompleteMsg = null; 
     private bool m_bIsActive = false;
 
     public static int s_iMinimumCrystals = 100;
@@ -41,13 +39,6 @@ public class GameEndController : MonoBehaviour
             // Initialise static variables
             s_iMinimumCrystals = m_iCrystalsNeeded;
             s_iMinimumMaps = m_iMapsNeeded;
-        }
-        m_rGuidePanel = GameObject.FindWithTag("Guide");
-        if (m_rGuidePanel) {
-            m_rText = m_rGuidePanel.GetComponentInChildren<TextMeshProUGUI>();
-        }
-        else {
-            Debug.LogError("ERROR: Could not find guide panel (GameEndController reference). Check that it has been added to the scene.");
         }
 
         if(m_rInfo)
@@ -92,34 +83,30 @@ public class GameEndController : MonoBehaviour
             {
                 m_rInfo.SetActive(true);
             }
-            if(m_rNPCCompleteMsg)
-            {
-                m_rNPCCompleteMsg.SetText("Congrats Kid! Enter the portal to leave the world or stay behind and adventure some more. (Wait.. those Pechapples are for me.. right?)");
-                Invoke("HideMessage", 5.0f);
-            }
         }
-
-        // Display text
-        m_rGuidePanel.SetActive(_bState);
-        if (_bState) {
-            m_rText.SetText(m_strEndText);
-        } else {
-            m_rText.SetText("");
-        }
-    }
-
-    public void HideMessage()
-    {
-        m_rNPCCompleteMsg.transform.parent.gameObject.SetActive(false);
     }
 
     // Return the player to the main menu upon completion
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
-            Zone.ClearZones();
-            SceneManager.LoadScene(0);
+
+            GameState.SetSpeedRunning(GameState.SpeedRunMode.Finished);
+            GameObject.FindGameObjectWithTag("UI").GetComponent<TimerUpdate>().StopTimer();
+
+            StartCoroutine("ExitLevel");
+
+            
+
         }
     }
+    IEnumerator ExitLevel()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        Zone.ClearZones();
+        SceneManager.LoadScene(0);
+    }
+
 
     /// <summary>
     /// Used upon initialisation to set how many crystals each depo needs.
