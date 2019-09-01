@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_TeleportBox
-  m_Shader: {fileID: 4800000, guid: 476f0c9c64b369d44a56d0aa80e2ad80, type: 3}
-  m_ShaderKeywords: _MARKED_ON
-  m_LightmapFlags: 0
+  m_Name: M_TeleportBox_Main
+  m_Shader: {fileID: 4800000, guid: d6de878c1e566604190d56c23153afd1, type: 3}
+  m_ShaderKeywords: _MARKED_ON _USEFLATMETALLIC_ON
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
@@ -37,6 +37,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Diff:
         m_Texture: {fileID: 2800000, guid: be24eaed98181a44199a87e73afd0831, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Diffuse:
+        m_Texture: {fileID: 2800000, guid: 1f25a648747866944bd7f47de5aec951, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emi:
@@ -67,8 +71,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 2800000, guid: 9606229fe12782247a1c6a76d00639a7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: 36446398236765046a5d2bbf0f9dfc3e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Occlusion:
+        m_Texture: {fileID: 2800000, guid: c86324b80fe70c547b786eadaabbc692, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -77,6 +93,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Smoothness:
+        m_Texture: {fileID: 2800000, guid: 2238ca504f41d0b49a53c32b9c8a4db9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
@@ -116,6 +136,7 @@ Material:
     - _SrcBlend: 1
     - _Timer: 0
     - _UVSec: 0
+    - _UseFlatMetallic: 1
     - _VisualTimer: 1
     - _ZWrite: 1
     - __dirty: 0
