@@ -56,7 +56,7 @@ public class Switchable : MonoBehaviour
                 transform.GetChild(0).localPosition = new Vector3(0, 0, 0);
                 if (m_rMeshRenderer)
                 {
-                    m_rMeshRenderer.material.SetFloat("_VisualTimer", 1.0f);
+                    m_rMeshRenderer.material.SetFloat("_VisualTimer", 0.0f);
                 }
                 //Cube.SetFloat("_VisualTimer", 1.0f);
             }
@@ -75,6 +75,7 @@ public class Switchable : MonoBehaviour
                 //Cube.SetFloat("_VisualTimer", (m_fReturnTime-m_fReturnCount+.5f) / m_fReturnTime);
                 if (m_rMeshRenderer)
                 {
+                    //Debug.Log("ERROR: No mesh renderer found on " + name);
                     m_rMeshRenderer.material.SetFloat("_VisualTimer", (m_fReturnTime - m_fReturnCount - .5f)/m_fReturnTime);
                 }
             }
@@ -90,7 +91,7 @@ public class Switchable : MonoBehaviour
         // Check if this is an enemy
         if (m_rMeshRenderer)
         {
-            m_rMeshRenderer.material.SetFloat("_Marked", 1.0f);
+            m_rMeshRenderer.material.SetFloat("_VisualTimer", 1.0f);
         }
         if (m_Enemy) {
             m_Enemy.SetTag(true);
@@ -104,7 +105,7 @@ public class Switchable : MonoBehaviour
         //}
         if (m_rMeshRenderer)
         {
-            m_rMeshRenderer.material.SetFloat("_Marked", 0.0f);
+            m_rMeshRenderer.material.SetFloat("_VisualTimer", 0.0f);
         }
         if (m_Enemy) {
             m_Enemy.SetTag(false);
