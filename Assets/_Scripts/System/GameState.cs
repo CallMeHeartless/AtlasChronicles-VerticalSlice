@@ -14,6 +14,7 @@ public class GameState : MonoBehaviour
     {
         Expore,//standend amount of crysials and map
         SpeedRun,//standend amount of crysials and map with a count up timer 
+        EveryThing,//all maps and cystals required
         Finished//this is used when the speed on is over and all mode should be place above this
     }
 
