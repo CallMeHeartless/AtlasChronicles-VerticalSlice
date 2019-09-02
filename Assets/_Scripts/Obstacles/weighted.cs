@@ -27,6 +27,8 @@ public class weighted : MonoBehaviour, IMessageReceiver
     public bool m_RequirmentWeight = true;
     public bool m_RequirmentColor = false;
 
+    public bool m_IsOn = false;
+
     public float m_fSpeed;
     GameObject WeightedLoaction;
     GameObject m_Topplate;
@@ -217,23 +219,31 @@ public class weighted : MonoBehaviour, IMessageReceiver
         {
             if (m_Weight >= m_WeightRequirment)
             {
-                for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                if (!m_IsOn)
                 {
-                    IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
-                    target.OnReceiveMessage(MessageType.eOn, m_PassNumber[i]);//true
+                    for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                    {
+                        IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                        target.OnReceiveMessage(MessageType.eOn, m_PassNumber[i]);//true
+                    }
+                    pastWasFalse = false;
+                    m_IsOn = true;
                 }
-                pastWasFalse = false;
             }
             else
             {
                 if (pastWasFalse == false)
                 {
-                    for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                    if (m_IsOn)
                     {
-                        IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
-                        target.OnReceiveMessage(MessageType.eOff, m_PassNumber[i]);//false
+                        for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                        {
+                            IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                            target.OnReceiveMessage(MessageType.eOff, m_PassNumber[i]);//false
+                        }
+                        pastWasFalse = true;
                     }
-                    pastWasFalse = true;
+                    m_IsOn = false;
                 }
 
             }
