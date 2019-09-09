@@ -47,7 +47,7 @@ public class GameEndController : MonoBehaviour
         //set crysal and maps to so that they are for the right speed run mode
         s_iMinimumCrystals = s_iMinimumCrystalsModes[(int)GameState.GetSpeedRunning()];
         s_iMinimumMaps = s_iMinimumMapsModes[(int)GameState.GetSpeedRunning()];
-        Debug.Log((int)GameState.GetSpeedRunning());
+        //Debug.Log((int)GameState.GetSpeedRunning());
 
         if (m_rInfo)
         {

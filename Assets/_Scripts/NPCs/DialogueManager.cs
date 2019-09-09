@@ -175,11 +175,29 @@ public class DialogueManager : MonoBehaviour
     /// <param name="_textBox">Current text box to write to (useful if multiple text boxes are required)</param>
     IEnumerator TypeSentence(string _sentence, TextMeshProUGUI _textBox)
     {
+        bool spriteEncountered = false;
         _textBox.text = "";
         m_bTyping = true;
         foreach (char letter in _sentence.ToCharArray())
         {
+            if(letter == '<')
+            {
+                //Skip typing effect when a sprite is encountered by continuing the forloop and 
+                //  completing the sprite before displaying it in the text box
+                spriteEncountered = true;
+            }
+            if(letter == '>')
+            {
+                //Begin typing effect again when the end of the sprite call has been encountered.
+                spriteEncountered = false;
+            }
+
             _textBox.text += letter;
+
+            //Skip the char interation if a sprite is encountered.
+            if(spriteEncountered)
+                continue;
+
             //Play a speaking sound while each letter is spoken
             m_speakAudio.PlayAudio();   
             yield return null;
