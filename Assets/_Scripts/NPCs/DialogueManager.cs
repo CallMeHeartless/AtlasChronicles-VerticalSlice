@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
 
     private bool m_bTyping = false;
     private bool m_bConversing = false;
+    public static bool s_bInputController = true;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +62,13 @@ public class DialogueManager : MonoBehaviour
         {
             InteractSentence();
         }
+
+        if (Input.anyKey) {
+            DialogueManager.s_bInputController = false;
+        }else if (Input.GetKey(KeyCode.JoystickButton0 | KeyCode.JoystickButton1)) {
+            DialogueManager.s_bInputController = true;
+        }
+        
     }
 
     /// <summary>
