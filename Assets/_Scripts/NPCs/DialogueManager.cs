@@ -63,12 +63,29 @@ public class DialogueManager : MonoBehaviour
             InteractSentence();
         }
 
-        if (Input.anyKey) {
-            DialogueManager.s_bInputController = false;
-        }else if (Input.GetKey(KeyCode.JoystickButton0)) {
-            DialogueManager.s_bInputController = true;
+        if (Input.anyKeyDown) {
+            s_bInputController = false;
+        }
+        else if (Input.GetAxis("XBoxLT") > 0    || Input.GetAxis("XBoxRT") > 0
+              || Input.GetAxis("XBoxHor") != 0  || Input.GetAxis("XBoxVert") != 0
+              || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0
+              || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
+        {
+            //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
+            //buttons are pressed on controller
+            s_bInputController = true;
         }
         
+        //If any joystick keys are pressed on the xbox controller
+        for (int i = 0; i < 20; i++)
+        {
+            if (Input.GetKeyDown("joystick 1 button " + i))
+            {
+                s_bInputController = true;
+
+            }
+        }
+        //print((s_bInputController ? "Controller" : "Key"));
     }
 
     /// <summary>
