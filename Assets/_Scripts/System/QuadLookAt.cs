@@ -7,6 +7,8 @@ public class QuadLookAt : MonoBehaviour
     private Camera m_rCameraReference;
     private SpriteRenderer m_rBubble;
     private Animator m_rAnimator;
+    [SerializeField] Sprite m_rControllerBubble;
+    [SerializeField] Sprite m_rKeyBubble;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,9 @@ public class QuadLookAt : MonoBehaviour
         //Only look at cam if enabled
         if(m_rBubble.enabled)
         {
+            //Set bubble sprite according to last sprite used
+            m_rBubble.sprite = ((DialogueManager.s_bInputController) ? m_rControllerBubble : m_rKeyBubble);
+
             transform.LookAt(transform.position + m_rCameraReference.transform.rotation * Vector3.forward,
                                 m_rCameraReference.transform.rotation * Vector3.up);
         }
