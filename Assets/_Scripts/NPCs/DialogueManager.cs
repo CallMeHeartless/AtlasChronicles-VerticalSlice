@@ -65,7 +65,7 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.anyKey) {
             DialogueManager.s_bInputController = false;
-        }else if (Input.GetKey(KeyCode.JoystickButton0 | KeyCode.JoystickButton1)) {
+        }else if (Input.GetKey(KeyCode.JoystickButton0)) {
             DialogueManager.s_bInputController = true;
         }
         
