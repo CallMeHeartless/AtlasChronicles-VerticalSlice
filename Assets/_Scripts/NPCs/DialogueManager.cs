@@ -1,8 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
+public enum SprController
+{
+    eCtrlX = 0,     // Attack
+    eCtrlY = 1,     // Next Goal
+    eCtrlA = 2,     // Jump
+    eCtrlB = 3,     // Run
+    eCtrlAxisL = 4, // Move
+    eCtrlLB = 6,    // Teleport Marker
+    eCtrlRB = 7,    // Teleport to marker
+    eCtrlStart = 8, // Start
+    eCtrlLT = 9,   // Switch Tag
+    eCtrlRT = 10,   // Teleport to switch tag
+
+    //eCtrlAxisR = 5, // Camera
+}
+
+public enum SprKeyboard
+{
+    eKeyLMouse = 11, // Attack
+    eKeyF = 12,       // Next Goal
+    eKeySpace = 13,   // Jump
+    eKeyRMouse = 14, // Run
+    eKeyAxisL = 15,   // Move
+    eKeyQ = 16,       // Teleport Marker
+    eKeyE = 17,       // Teleport to marker
+    eKeyEsc = 18,     // Start
+    eKeyCtrl = 19,    // Switch Tag
+    eKeyC = 20,      // Teleport to switch tag
+}
 
 /// <summary>
 /// Vivian
@@ -17,8 +47,10 @@ public class DialogueManager : MonoBehaviour
     private GameObject m_rDialoguePanel;
     private GameObject m_rContainerPanel;
     private NPCController m_rNPCReference;
-
+    
     private Queue<string> m_sentences;
+    private System.Array m_eKeySprites;
+
 
     private int queueCount = 0;
     private bool m_skipDialogue = false;
@@ -48,6 +80,8 @@ public class DialogueManager : MonoBehaviour
         m_rContainerPanel = m_rContainerAnimator.gameObject;
         m_rContainerPanel.gameObject.SetActive(true);
         m_rContinueButton.onClick.AddListener(InteractSentence);
+
+        m_eKeySprites = System.Enum.GetValues(typeof(SprKeyboard));
     }
 
     public void Update()
@@ -63,13 +97,15 @@ public class DialogueManager : MonoBehaviour
             InteractSentence();
         }
 
-        if (Input.anyKeyDown) {
+        if (Input.anyKeyDown)
+        {
             s_bInputController = false;
         }
-        else if (Input.GetAxis("XBoxLT") > 0    || Input.GetAxis("XBoxRT") > 0
+
+        if (Input.GetAxis("XBoxLT") > 0    || Input.GetAxis("XBoxRT") > 0
               || Input.GetAxis("XBoxHor") != 0  || Input.GetAxis("XBoxVert") != 0
-              || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0
-              || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
+              || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0)
+              //  || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
         {
             //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
             //buttons are pressed on controller
@@ -85,7 +121,9 @@ public class DialogueManager : MonoBehaviour
 
             }
         }
-        //print((s_bInputController ? "Controller" : "Key"));
+
+
+        print((s_bInputController ? "Controller" : "Key"));
     }
 
     /// <summary>
@@ -142,6 +180,11 @@ public class DialogueManager : MonoBehaviour
 
         //Retrieve first sentence of the queue while removing it at the same time
         m_strCurrentSentence = m_sentences.Dequeue();
+
+        if(!s_bInputController)
+        {
+            ReplaceWithKeySprite(ref m_strCurrentSentence);
+        }
 
         //Stop all active coroutines that happen to be running at the same time
         //Note: StopAllCoroutines only stops coroutines occuring on the same script
@@ -205,13 +248,14 @@ public class DialogueManager : MonoBehaviour
         m_bTyping = true;
         foreach (char letter in _sentence.ToCharArray())
         {
-            if(letter == '<')
+            if (letter == '<')
             {
                 //Skip typing effect when a sprite is encountered by continuing the forloop and 
                 //  completing the sprite before displaying it in the text box
                 spriteEncountered = true;
             }
-            if(letter == '>')
+
+            if (letter == '>')
             {
                 //Begin typing effect again when the end of the sprite call has been encountered.
                 spriteEncountered = false;
@@ -220,14 +264,87 @@ public class DialogueManager : MonoBehaviour
             _textBox.text += letter;
 
             //Skip the char interation if a sprite is encountered.
-            if(spriteEncountered)
+            if (spriteEncountered)
                 continue;
 
             //Play a speaking sound while each letter is spoken
-            m_speakAudio.PlayAudio();   
+            m_speakAudio.PlayAudio();
             yield return null;
         }
         m_bTyping = false;
+    }
+
+    string ControllerSpriteToKey(SprController _spr)
+    {
+        int index = System.Array.IndexOf(System.Enum.GetValues(_spr.GetType()), _spr);
+
+        for (int i = 0; i <= m_eKeySprites.Length; ++i)
+        {
+            if (index == i)
+            {
+                SprKeyboard key = (SprKeyboard)(m_eKeySprites.GetValue(i));
+                return ((int)key).ToString();
+            }
+        }
+        return "";
+    }
+
+    void ReplaceWithKeySprite(ref string _line)
+    {
+        //Check static  s_bInputController before this method
+        string newFullString = "";
+
+        if (_line.Contains("<sprite="))
+        {
+            bool numberReached = false;
+            bool numberGathered = false;
+            string replacementString = "";
+
+            foreach (char letter in _line.ToCharArray())
+            {
+                if (letter == '>')
+                {
+                    //Begin typing effect again when the end of the sprite call has been encountered.
+                    numberReached = false;
+                }
+
+                if (numberReached)
+                {
+                    replacementString += letter;
+                    numberGathered = true;
+                }
+
+
+                if (!numberReached && !numberGathered)
+                {
+                    newFullString += letter;
+                }
+
+                if (letter == '=')
+                {
+                    numberReached = true;
+                }
+
+                //ready to replace sprite
+                if (numberGathered && !numberReached)
+                {
+                    replacementString = ControllerSpriteToKey((SprController)StringToInt(replacementString));
+                    newFullString += replacementString + ">";
+                    replacementString = "";
+                    numberGathered = false;
+                }
+
+
+
+            }
+            _line = newFullString;
+        }
+    }
+
+    int StringToInt(string _str)
+    {
+        int.TryParse(_str, out int intToReturn);
+        return intToReturn;
     }
 
     /// <summary>
