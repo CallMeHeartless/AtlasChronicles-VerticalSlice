@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4449980467026120747}
   - component: {fileID: 945151165424751307}
   - component: {fileID: 712607185795485503}
+  - component: {fileID: 1130124631}
   m_Layer: 0
   m_Name: SM_Tower 1
   m_TagString: SlipperyObject
@@ -59,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ebb53d4fd871b74a80fe4cc5965c065, type: 2}
+  - {fileID: 2100000, guid: d4f5ce3c3f7a3cd4799e61398d0487f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,6 +108,19 @@ CapsuleCollider:
   m_Height: 368.9365
   m_Direction: 1
   m_Center: {x: -0.000030517574, y: 183.22844, z: 0}
+--- !u!114 &1130124631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449980467028315881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fa698560b688845bf08bafe6dc1b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AdditionalVertexStreamMesh: {fileID: 0}
 --- !u!1 &4449980467028315883
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,9 +144,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4449980467028315883}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.009999994}
   m_Children:
   - {fileID: 4449980467028021961}
   - {fileID: 4449980467028021967}
@@ -198,7 +212,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f942510cf4677094bb358cdd93c5e54b, type: 2}
+  - {fileID: 2100000, guid: 54b29030f7d7ffe4b84f2f215dede5ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,6 +257,7 @@ GameObject:
   - component: {fileID: 4449980467028021967}
   - component: {fileID: 4449980467027219177}
   - component: {fileID: 4449980467026120745}
+  - component: {fileID: 9051818}
   m_Layer: 0
   m_Name: SM_TowerMiddle
   m_TagString: Untagged
@@ -289,7 +304,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7ebb53d4fd871b74a80fe4cc5965c065, type: 2}
+  - {fileID: 2100000, guid: d4f5ce3c3f7a3cd4799e61398d0487f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -309,3 +324,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &9051818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449980467028315887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fa698560b688845bf08bafe6dc1b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AdditionalVertexStreamMesh: {fileID: 0}
