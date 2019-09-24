@@ -49,6 +49,9 @@ public class PendulumJointController : MonoBehaviour
 
     // Handle collision events
     private void OnCollisionEnter(Collision collision) {
+        if (collision.collider.isTrigger) {
+            return;
+        }
         // The pendulum should damage the player
         if (collision.gameObject.CompareTag("Player") && m_bDamages && m_bDamageReady) {
             // Create damage message
