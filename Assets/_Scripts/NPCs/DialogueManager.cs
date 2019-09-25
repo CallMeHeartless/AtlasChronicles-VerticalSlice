@@ -50,7 +50,7 @@ public class DialogueManager : MonoBehaviour
     
     private Queue<string> m_sentences;
     private System.Array m_eKeySprites;
-
+    private System.Array m_eControllerSprites;
 
     private int queueCount = 0;
     private bool m_skipDialogue = false;
@@ -81,11 +81,14 @@ public class DialogueManager : MonoBehaviour
         m_rContainerPanel.gameObject.SetActive(true);
         m_rContinueButton.onClick.AddListener(InteractSentence);
 
+        //Put keyboard sprites into an array so it is easier to correspond the controller sprites to it
         m_eKeySprites = System.Enum.GetValues(typeof(SprKeyboard));
+        m_eControllerSprites = System.Enum.GetValues(typeof(SprController));
     }
 
     public void Update()
     {
+        InputChecker();
         //Dont process input if game is paused
         if (GameState.GetPauseFlag())
         {
@@ -96,22 +99,25 @@ public class DialogueManager : MonoBehaviour
         {
             InteractSentence();
         }
+    }
 
+    void InputChecker()
+    {
         if (Input.anyKeyDown)
         {
             s_bInputController = false;
         }
 
-        if (Input.GetAxis("XBoxLT") > 0    || Input.GetAxis("XBoxRT") > 0
-              || Input.GetAxis("XBoxHor") != 0  || Input.GetAxis("XBoxVert") != 0
+        if (Input.GetAxis("XBoxLT") > 0 || Input.GetAxis("XBoxRT") > 0
+              || Input.GetAxis("XBoxHor") != 0 || Input.GetAxis("XBoxVert") != 0
               || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0)
-              //  || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
+        //  || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
         {
             //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
             //buttons are pressed on controller
             s_bInputController = true;
         }
-        
+
         //If any joystick keys are pressed on the xbox controller
         for (int i = 0; i < 20; i++)
         {
@@ -121,9 +127,7 @@ public class DialogueManager : MonoBehaviour
 
             }
         }
-
-
-        print((s_bInputController ? "Controller" : "Key"));
+        //print((s_bInputController ? "Controller" : "Key"));
     }
 
     /// <summary>
@@ -189,14 +193,9 @@ public class DialogueManager : MonoBehaviour
         //Stop all active coroutines that happen to be running at the same time
         //Note: StopAllCoroutines only stops coroutines occuring on the same script
         StopAllCoroutines();
-
-        //Check for the type of conversation and start typing the sentence
-            //Dif types of convos might have different functionalities 
-            //  In coordination with queueCount
-        //if (m_strCurrentDialogue == "Welcome")
-        //{
+        
+        //Begin typing sentence one at a time
         StartCoroutine(TypeSentence(m_strCurrentSentence, m_rDialogueText));
-        //}
     }
 
     /// <summary>
@@ -237,7 +236,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Coroutine that types each letter/character of the sentence individually
+    /// Coroutine that types each letter/character of the sentence individually.
+    /// Sprite codes encountered will not be printed individually but all together at once so a sprite will display immediately
     /// </summary>
     /// <param name="_sentence">Current sentence to type</param>
     /// <param name="_textBox">Current text box to write to (useful if multiple text boxes are required)</param>
@@ -261,38 +261,59 @@ public class DialogueManager : MonoBehaviour
                 spriteEncountered = false;
             }
 
+            //Add a letter to the text box
             _textBox.text += letter;
 
-            //Skip the char interation if a sprite is encountered.
+            //Skip the char iteration if a sprite is encountered.
             if (spriteEncountered)
                 continue;
 
-            //Play a speaking sound while each letter is spoken
+            //Play a speaking sound while each letter is spoken and then execute/push char into text box
             m_speakAudio.PlayAudio();
             yield return null;
         }
         m_bTyping = false;
     }
 
+    /// <summary>
+    /// Converts a Controller sprite to a Keyboard/mouse sprite based on the index of the enums
+    /// </summary>
+    /// <param name="_spr">The SprCotnroller sprite to be converted to a key sprite</param>
+    /// <returns>Returns the string of a keyboard sprite that is equivalent to that of the controller sprite</returns>
     string ControllerSpriteToKey(SprController _spr)
     {
-        int index = System.Array.IndexOf(System.Enum.GetValues(_spr.GetType()), _spr);
+        //Get the index of the given sprite in the list of controller sprites
+        int index = System.Array.IndexOf(m_eControllerSprites, _spr);
 
+        //Find the equivalent index of the sprite in SprKeyboard
         for (int i = 0; i <= m_eKeySprites.Length; ++i)
         {
             if (index == i)
             {
+                //Get the enum of the key based on the index found.
                 SprKeyboard key = (SprKeyboard)(m_eKeySprites.GetValue(i));
+                //Return the integer value (not the index) of the SprKeyboard sprite as a string
                 return ((int)key).ToString();
             }
         }
         return "";
     }
 
+    /// <summary>
+    /// Replace all Controller sprite codes with Key sprites within a single sentence
+    /// </summary>
+    /// <param name="_line">The reference to the line to be replaced</param>
     void ReplaceWithKeySprite(ref string _line)
     {
         //Check static  s_bInputController before this method
         string newFullString = "";
+
+        //If sentence contains both the keyboard and controller sprites, do not replace sprites.
+        if (_line.Contains("(Both)"))
+        {
+            _line.Replace("(Both)", "");
+            return;
+        }
 
         if (_line.Contains("<sprite="))
         {
@@ -314,7 +335,6 @@ public class DialogueManager : MonoBehaviour
                     numberGathered = true;
                 }
 
-
                 if (!numberReached && !numberGathered)
                 {
                     newFullString += letter;
@@ -333,14 +353,16 @@ public class DialogueManager : MonoBehaviour
                     replacementString = "";
                     numberGathered = false;
                 }
-
-
-
             }
             _line = newFullString;
         }
     }
 
+    /// <summary>
+    /// Converts string to int
+    /// </summary>
+    /// <param name="_str">The string to convert to an int</param>
+    /// <returns>the integer version of a string</returns>
     int StringToInt(string _str)
     {
         int.TryParse(_str, out int intToReturn);
