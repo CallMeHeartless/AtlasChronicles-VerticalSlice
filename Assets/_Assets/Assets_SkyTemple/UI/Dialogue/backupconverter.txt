@@ -1,0 +1,73 @@
+    /// <summary>
+    /// Coroutine that types each letter/character of the sentence individually
+    /// </summary>
+    /// <param name="_sentence">Current sentence to type</param>
+    /// <param name="_textBox">Current text box to write to (useful if multiple text boxes are required)</param>
+    IEnumerator TypeSentence(string _sentence, TextMeshProUGUI _textBox)
+    {
+        bool spriteEncountered = false;
+        bool idEncountered = false;
+        bool spriteReplaced = false;
+
+        string spriteID = "";
+
+        _textBox.text = "";
+        m_bTyping = true;
+        foreach (char letter in _sentence.ToCharArray())
+        {
+
+            if (letter == '>')
+            {
+                //Begin typing effect again when the end of the sprite call has been encountered.
+                spriteEncountered = false;
+            }
+
+            if (spriteEncountered && idEncountered)
+            {
+                //If the sprite code has been encountered and the char array is up to the sprite id, 
+                //Add the number string into 'spriteID'
+                spriteID += letter;
+                spriteReplaced = true;
+            }
+
+            if (letter == '<')
+            {
+                //Skip typing effect when a sprite is encountered by continuing the forloop and 
+                //  completing the sprite before displaying it in the text box
+                spriteEncountered = true;
+            }
+
+            if(letter == '=')
+            {
+                //if the char array is up to the actual sprite ID char, tick idEncountered
+                idEncountered = true;
+            }
+               
+
+            //Skip the char interation if a sprite is encountered.
+            if(spriteEncountered)
+                continue;
+            
+            if(spriteReplaced)
+            {
+                if(s_bInputController && s_bInputController)
+                {
+                    spriteID = ControllerSpriteToKey((SprController)StringToInt(spriteID));
+                }
+                _textBox.text += "<sprite=" + spriteID + ">";
+                spriteReplaced = false;
+                idEncountered = false;
+            }
+            else
+            {
+                _textBox.text += letter;
+            }
+
+            //letter; rather than letter, parse digits found
+
+            //Play a speaking sound while each letter is spoken
+            m_speakAudio.PlayAudio();   
+            yield return null;
+        }
+        m_bTyping = false;
+    }

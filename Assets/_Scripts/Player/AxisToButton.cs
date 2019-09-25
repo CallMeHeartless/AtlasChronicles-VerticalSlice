@@ -14,8 +14,6 @@ public class AxisToButton
     private float m_fPrevious = 0.0f;
     private float m_fCurrent = 0.0f;
 
-    
-
     // Update is called once per frame
     public void Update()
     {

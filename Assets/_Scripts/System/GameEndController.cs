@@ -27,13 +27,13 @@ public class GameEndController : MonoBehaviour
     [SerializeField]
     private bool m_bIsActive = false;
 
-    public int[] s_iMinimumCrystalsModes;
-    public int[] s_iMinimumMapsModes;
+    public int[] m_iMinimumCrystalsModes;
+    public int[] m_iMinimumMapsModes;
     
 
-    public static int s_iMinimumCrystals = 100;
-    public static int s_iMinimumMaps = 5;
-    public static bool s_bHasEnoughMaps = false;
+    public static int m_iMinimumCrystals = 100;
+    public static int m_iMinimumMaps = 5;
+    public static bool m_bHasEnoughMaps = false;
        
     void Awake()
     {
@@ -45,8 +45,17 @@ public class GameEndController : MonoBehaviour
         }
 
         //set crysal and maps to so that they are for the right speed run mode
-        s_iMinimumCrystals = s_iMinimumCrystalsModes[(int)GameState.GetSpeedRunning()];
-        s_iMinimumMaps = s_iMinimumMapsModes[(int)GameState.GetSpeedRunning()];
+        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.EveryThing)
+        {
+            m_iCrystalsNeeded = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length + (GameObject.FindGameObjectsWithTag("Box").Length*5);
+            Debug.Log("number is: " + m_iCrystalsNeeded);
+        }
+        else
+        {
+            m_iCrystalsNeeded = m_iMinimumCrystalsModes[(int)GameState.GetSpeedRunning()];
+        }
+       
+        m_iMapsNeeded = m_iMinimumMapsModes[(int)GameState.GetSpeedRunning()];
         //Debug.Log((int)GameState.GetSpeedRunning());
 
         if (m_rInfo)
@@ -65,12 +74,12 @@ public class GameEndController : MonoBehaviour
             return;
         }
         // If MAPS_COLLECTED >= MAPS_TOTAL
-        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= s_iMinimumMaps) { //&& GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex] >= s_iMinimumCrystals
+        if(GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] >= m_iMinimumMaps) { //&& GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex] >= s_iMinimumCrystals
             //instance.TogglePortal(true);
-            s_bHasEnoughMaps = true;
+            m_bHasEnoughMaps = true;
         } else {
             // instance.TogglePortal(false);
-            s_bHasEnoughMaps = false;
+            m_bHasEnoughMaps = false;
         }
     }
 
@@ -101,7 +110,7 @@ public class GameEndController : MonoBehaviour
             if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Expore)
             {
                 GameState.SetSpeedRunning(GameState.SpeedRunMode.Finished);
-                GameObject.FindGameObjectWithTag("UI").GetComponent<TimerUpdate>().StopTimer();
+                GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().StopTimer();
             }
             StartCoroutine("ExitLevel");
 

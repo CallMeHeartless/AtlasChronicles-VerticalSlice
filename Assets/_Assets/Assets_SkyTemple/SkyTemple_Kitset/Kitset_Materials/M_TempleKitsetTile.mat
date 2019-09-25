@@ -8,9 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_TempleKitsetTile
-  m_Shader: {fileID: 4800000, guid: 5ff7306d14ede25439da07e06968a173, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_Shader: {fileID: 4800000, guid: d6de878c1e566604190d56c23153afd1, type: 3}
+  m_ShaderKeywords: _USEFLATEMISSIVE_ON _USEFLATMETALLIC_ON _USEFLATSMOOTHNESS_ON
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -39,7 +39,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: 370cce0a48b551f4bb92e8263900d9e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Diffuse:
+        m_Texture: {fileID: 2800000, guid: 370cce0a48b551f4bb92e8263900d9e0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emissive:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -59,6 +67,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -71,7 +83,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: cec58600938ff8544a17418de401c9a7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: cec58600938ff8544a17418de401c9a7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Occ:
+        m_Texture: {fileID: 2800000, guid: 50c16348f03e36e489e90cd741e1f2fa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Occlusion:
         m_Texture: {fileID: 2800000, guid: 50c16348f03e36e489e90cd741e1f2fa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -84,6 +104,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Smo:
+        m_Texture: {fileID: 2800000, guid: 4d2a1177cc0aa944588a85c7aaf3b0c5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Smoothness:
         m_Texture: {fileID: 2800000, guid: 4d2a1177cc0aa944588a85c7aaf3b0c5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -100,7 +124,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _FlatMet: 0
+    - _FlatMetallic: 0
     - _FlatSmo: 0
+    - _FlatSmoothness: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -118,6 +144,9 @@ Material:
     - _SrcBlend: 1
     - _UVScale: 0
     - _UVSec: 0
+    - _UseFlatEmissive: 1
+    - _UseFlatMetallic: 1
+    - _UseFlatSmoothness: 1
     - _UseMet: 0
     - _UseSmo: 0
     - _ZWrite: 1
@@ -125,3 +154,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FlatEmissive: {r: 0, g: 0, b: 0, a: 0}

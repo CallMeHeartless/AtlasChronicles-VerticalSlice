@@ -1,8 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
+public enum SprController
+{
+    eCtrlX = 0,     // Attack
+    eCtrlY = 1,     // Next Goal
+    eCtrlA = 2,     // Jump
+    eCtrlB = 3,     // Run
+    eCtrlAxisL = 4, // Move
+    eCtrlLB = 6,    // Teleport Marker
+    eCtrlRB = 7,    // Teleport to marker
+    eCtrlStart = 8, // Start
+    eCtrlLT = 9,   // Switch Tag
+    eCtrlRT = 10,   // Teleport to switch tag
+
+    //eCtrlAxisR = 5, // Camera
+}
+
+public enum SprKeyboard
+{
+    eKeyLMouse = 11, // Attack
+    eKeyF = 12,       // Next Goal
+    eKeySpace = 13,   // Jump
+    eKeyRMouse = 14, // Run
+    eKeyAxisL = 15,   // Move
+    eKeyQ = 16,       // Teleport Marker
+    eKeyE = 17,       // Teleport to marker
+    eKeyEsc = 18,     // Start
+    eKeyCtrl = 19,    // Switch Tag
+    eKeyC = 20,      // Teleport to switch tag
+}
 
 /// <summary>
 /// Vivian
@@ -17,8 +47,10 @@ public class DialogueManager : MonoBehaviour
     private GameObject m_rDialoguePanel;
     private GameObject m_rContainerPanel;
     private NPCController m_rNPCReference;
-
+    
     private Queue<string> m_sentences;
+    private System.Array m_eKeySprites;
+    private System.Array m_eControllerSprites;
 
     private int queueCount = 0;
     private bool m_skipDialogue = false;
@@ -31,6 +63,7 @@ public class DialogueManager : MonoBehaviour
 
     private bool m_bTyping = false;
     private bool m_bConversing = false;
+    public static bool s_bInputController = true;
 
     // Start is called before the first frame update
     void Start()
@@ -47,10 +80,15 @@ public class DialogueManager : MonoBehaviour
         m_rContainerPanel = m_rContainerAnimator.gameObject;
         m_rContainerPanel.gameObject.SetActive(true);
         m_rContinueButton.onClick.AddListener(InteractSentence);
+
+        //Put keyboard sprites into an array so it is easier to correspond the controller sprites to it
+        m_eKeySprites = System.Enum.GetValues(typeof(SprKeyboard));
+        m_eControllerSprites = System.Enum.GetValues(typeof(SprController));
     }
 
     public void Update()
     {
+        InputChecker();
         //Dont process input if game is paused
         if (GameState.GetPauseFlag())
         {
@@ -61,6 +99,35 @@ public class DialogueManager : MonoBehaviour
         {
             InteractSentence();
         }
+    }
+
+    void InputChecker()
+    {
+        if (Input.anyKeyDown)
+        {
+            s_bInputController = false;
+        }
+
+        if (Input.GetAxis("XBoxLT") > 0 || Input.GetAxis("XBoxRT") > 0
+              || Input.GetAxis("XBoxHor") != 0 || Input.GetAxis("XBoxVert") != 0
+              || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0)
+        //  || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
+        {
+            //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
+            //buttons are pressed on controller
+            s_bInputController = true;
+        }
+
+        //If any joystick keys are pressed on the xbox controller
+        for (int i = 0; i < 20; i++)
+        {
+            if (Input.GetKeyDown("joystick 1 button " + i))
+            {
+                s_bInputController = true;
+
+            }
+        }
+        //print((s_bInputController ? "Controller" : "Key"));
     }
 
     /// <summary>
@@ -118,17 +185,17 @@ public class DialogueManager : MonoBehaviour
         //Retrieve first sentence of the queue while removing it at the same time
         m_strCurrentSentence = m_sentences.Dequeue();
 
+        if(!s_bInputController)
+        {
+            ReplaceWithKeySprite(ref m_strCurrentSentence);
+        }
+
         //Stop all active coroutines that happen to be running at the same time
         //Note: StopAllCoroutines only stops coroutines occuring on the same script
         StopAllCoroutines();
-
-        //Check for the type of conversation and start typing the sentence
-            //Dif types of convos might have different functionalities 
-            //  In coordination with queueCount
-        //if (m_strCurrentDialogue == "Welcome")
-        //{
+        
+        //Begin typing sentence one at a time
         StartCoroutine(TypeSentence(m_strCurrentSentence, m_rDialogueText));
-        //}
     }
 
     /// <summary>
@@ -169,7 +236,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Coroutine that types each letter/character of the sentence individually
+    /// Coroutine that types each letter/character of the sentence individually.
+    /// Sprite codes encountered will not be printed individually but all together at once so a sprite will display immediately
     /// </summary>
     /// <param name="_sentence">Current sentence to type</param>
     /// <param name="_textBox">Current text box to write to (useful if multiple text boxes are required)</param>
@@ -180,29 +248,125 @@ public class DialogueManager : MonoBehaviour
         m_bTyping = true;
         foreach (char letter in _sentence.ToCharArray())
         {
-            if(letter == '<')
+            if (letter == '<')
             {
                 //Skip typing effect when a sprite is encountered by continuing the forloop and 
                 //  completing the sprite before displaying it in the text box
                 spriteEncountered = true;
             }
-            if(letter == '>')
+
+            if (letter == '>')
             {
                 //Begin typing effect again when the end of the sprite call has been encountered.
                 spriteEncountered = false;
             }
 
+            //Add a letter to the text box
             _textBox.text += letter;
 
-            //Skip the char interation if a sprite is encountered.
-            if(spriteEncountered)
+            //Skip the char iteration if a sprite is encountered.
+            if (spriteEncountered)
                 continue;
 
-            //Play a speaking sound while each letter is spoken
-            m_speakAudio.PlayAudio();   
+            //Play a speaking sound while each letter is spoken and then execute/push char into text box
+            m_speakAudio.PlayAudio();
             yield return null;
         }
         m_bTyping = false;
+    }
+
+    /// <summary>
+    /// Converts a Controller sprite to a Keyboard/mouse sprite based on the index of the enums
+    /// </summary>
+    /// <param name="_spr">The SprCotnroller sprite to be converted to a key sprite</param>
+    /// <returns>Returns the string of a keyboard sprite that is equivalent to that of the controller sprite</returns>
+    string ControllerSpriteToKey(SprController _spr)
+    {
+        //Get the index of the given sprite in the list of controller sprites
+        int index = System.Array.IndexOf(m_eControllerSprites, _spr);
+
+        //Find the equivalent index of the sprite in SprKeyboard
+        for (int i = 0; i <= m_eKeySprites.Length; ++i)
+        {
+            if (index == i)
+            {
+                //Get the enum of the key based on the index found.
+                SprKeyboard key = (SprKeyboard)(m_eKeySprites.GetValue(i));
+                //Return the integer value (not the index) of the SprKeyboard sprite as a string
+                return ((int)key).ToString();
+            }
+        }
+        return "";
+    }
+
+    /// <summary>
+    /// Replace all Controller sprite codes with Key sprites within a single sentence
+    /// </summary>
+    /// <param name="_line">The reference to the line to be replaced</param>
+    void ReplaceWithKeySprite(ref string _line)
+    {
+        //Check static  s_bInputController before this method
+        string newFullString = "";
+
+        //If sentence contains both the keyboard and controller sprites, do not replace sprites.
+        if (_line.Contains("(Both)"))
+        {
+            _line.Replace("(Both)", "");
+            return;
+        }
+
+        if (_line.Contains("<sprite="))
+        {
+            bool numberReached = false;
+            bool numberGathered = false;
+            string replacementString = "";
+
+            foreach (char letter in _line.ToCharArray())
+            {
+                if (letter == '>')
+                {
+                    //Begin typing effect again when the end of the sprite call has been encountered.
+                    numberReached = false;
+                }
+
+                if (numberReached)
+                {
+                    replacementString += letter;
+                    numberGathered = true;
+                }
+
+                if (!numberReached && !numberGathered)
+                {
+                    newFullString += letter;
+                }
+
+                if (letter == '=')
+                {
+                    numberReached = true;
+                }
+
+                //ready to replace sprite
+                if (numberGathered && !numberReached)
+                {
+                    replacementString = ControllerSpriteToKey((SprController)StringToInt(replacementString));
+                    newFullString += replacementString + ">";
+                    replacementString = "";
+                    numberGathered = false;
+                }
+            }
+            _line = newFullString;
+        }
+    }
+
+    /// <summary>
+    /// Converts string to int
+    /// </summary>
+    /// <param name="_str">The string to convert to an int</param>
+    /// <returns>the integer version of a string</returns>
+    int StringToInt(string _str)
+    {
+        int.TryParse(_str, out int intToReturn);
+        return intToReturn;
     }
 
     /// <summary>

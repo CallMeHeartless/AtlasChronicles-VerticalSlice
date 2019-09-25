@@ -137,7 +137,7 @@ MonoBehaviour:
     m_sentences:
     - Oh geez this is high up!
     - I think you might have all the maps!
-    - If you are missing some, check out your map in the pause menu.
+    - If you are missing some, check out your map in the pause menu with <sprite=8>.
     - Lets go back to the beginning and fuel those monoliths!!!
 --- !u!114 &2098776186
 MonoBehaviour:
@@ -280,7 +280,7 @@ MonoBehaviour:
     m_sentences:
     - Hey you collected another map!
     - To check your progress and zone breakdowns, access the Map settings through
-      the Pause Menu by pressing <sprite=9>/<sprite=17>
+      the Pause Menu by pressing <sprite=8> / <sprite=18> (Both)
 --- !u!114 &8622423175693250890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1429,8 +1429,8 @@ MonoBehaviour:
     m_strName: Switch
     m_sentences:
     - Oh hey! This is a much better place to practice the SwitchTag technique!
-    - Hold <sprite=10> when at eye level with a Glowing Box to Tag it.
-    - You can then Press the <sprite=11> to teleport with the box from up to 10metres
+    - Hold <sprite=9> when at eye level with a Glowing Box to Tag it.
+    - You can then press <sprite=10> to switch places with the box from up to 10metres
       away!
     - You gotta be hasty with these boxes as they are timed to reset after a certain
       amount of time....
@@ -1513,7 +1513,8 @@ MonoBehaviour:
     - Goons.........
     - Lord Kino's nasty bunch of minions that scattered the crystals all over the
       world.
-    - Remember to press <sprite=0> to attack and also <sprite=2>+<sprite=0> to JumpSlam.
+    - Remember to press <sprite=0> to attack and also <sprite=2> + <sprite=0> to Jump
+      Slam.
     - You can also try a switch-tag technique.......
     - Nevermind... Its too dangerous. Goons are capable of stealing maps!
     - I can teach you when you get out of the temple.
@@ -1765,11 +1766,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1912301412389233263}
     m_Modifications:
-    - target: {fileID: 9185642564718055365, guid: eb15d038b73a5be4abbf8909e583be6d,
-        type: 3}
-      propertyPath: m_Name
-      value: NovemberLonesome
-      objectReference: {fileID: 0}
     - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1824,6 +1820,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9185642564718055365, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_Name
+      value: NovemberLonesome
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb15d038b73a5be4abbf8909e583be6d, type: 3}
