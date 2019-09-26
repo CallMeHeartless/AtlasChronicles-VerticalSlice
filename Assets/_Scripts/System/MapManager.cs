@@ -51,8 +51,6 @@ public class MapManager : MonoBehaviour
 
         if (Input.GetButtonDown("BButton")) //Back button
         {
-            print("mapBackPRESSED");
-
             OnBPressed.Invoke(); //Back
         }
     }

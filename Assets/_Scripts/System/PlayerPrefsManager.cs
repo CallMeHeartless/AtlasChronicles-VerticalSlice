@@ -4,30 +4,6 @@ using UnityEngine;
 
 public class PlayerPrefsManager
 {
-    //public static PlayerPrefsManager s_rInstance = null;
-
-    //private void Awake()
-    //{
-    //    if (s_rInstance == null)
-    //    {
-    //        s_rInstance = this;
-    //    }
-    //    else if (s_rInstance != this)
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //    DontDestroyOnLoad(gameObject);
-    //}
-
-    //static public PlayerPrefsManager GetInstance()
-    //{
-    //    if(s_rInstance == null) {
-    //        s_rInstance = new PlayerPrefsManager();
-    //    }
-
-    //    return s_rInstance;
-    //}
-    
     //PlayerPref Setters
     static public void StoreCamX(bool _camX)
     {
@@ -46,6 +22,11 @@ public class PlayerPrefsManager
         PlayerPrefs.SetFloat("AudioVFXVal", _vfxVal);
     }
 
+    static public void StoreAudioDialogue(float _dialogueVal)
+    {
+        PlayerPrefs.SetFloat("AudioDialogueVal", _dialogueVal);
+    }
+
     //PlayerPref Getters
     static public bool RetrieveCamX()
     {
@@ -62,5 +43,10 @@ public class PlayerPrefsManager
     static public float RetrieveAudioVFX()
     {
         return PlayerPrefs.GetFloat("AudioVFXVal", 0.38f);
+    }
+
+    static public float RetrieveAudioDialogue()
+    {
+        return PlayerPrefs.GetFloat("AudioDialogueVal", 0.38f);
     }
 }

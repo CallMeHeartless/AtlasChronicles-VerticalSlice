@@ -19,12 +19,12 @@ public class SelectOnInput : MonoBehaviour {
         eventSystem = FindObjectOfType<EventSystem>();
 
         OnEnable();
-
-        //eventSystem.SetSelectedGameObject(null);
-        //eventSystem.SetSelectedGameObject(selectedObject);
+        
         bButtonSelected = true;
 
         m_Next = GetComponent<AudioSource>();
+        SelectUIComponent();
+
     }
 
     // Update is called once per frame
@@ -51,17 +51,7 @@ public class SelectOnInput : MonoBehaviour {
         {
             eventSystem.SetSelectedGameObject(null);
             eventSystem.SetSelectedGameObject(selectedObject);
-            selectedObject.GetComponent<Button>().Select();
-        }
-        print("Selected object = " + selectedObject.name);
-
-
-        if (Input.GetKeyDown("joystick 1 button 1"))
-        {
-            print("X PRESSED DLKFHJDKLSFJKSDJGHKLJDGKLJHDFGJKHDFGKJHDFKLJGKLJH");
-            eventSystem.SetSelectedGameObject(null);
-            eventSystem.SetSelectedGameObject(selectedObject);
-            selectedObject.GetComponent<Button>().Select();
+            SelectUIComponent();
         }
     }
 
@@ -77,7 +67,22 @@ public class SelectOnInput : MonoBehaviour {
         }
         eventSystem.SetSelectedGameObject(null);
         eventSystem.SetSelectedGameObject(selectedObject);
-        selectedObject.GetComponent<Button>().Select();
+        SelectUIComponent();
         bButtonSelected = true;
+    }
+
+    private void SelectUIComponent()
+    {
+        if (selectedObject == null)
+            return;
+
+        if (selectedObject.GetComponent<Button>() != null)
+        {
+            selectedObject.GetComponent<Button>().Select();
+        }
+        else if (selectedObject.GetComponent<Slider>() != null)
+        {
+            selectedObject.GetComponent<Slider>().Select();
+        }
     }
 }
