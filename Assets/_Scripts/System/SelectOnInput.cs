@@ -51,6 +51,7 @@ public class SelectOnInput : MonoBehaviour {
         {
             eventSystem.SetSelectedGameObject(null);
             eventSystem.SetSelectedGameObject(selectedObject);
+            selectedObject.GetComponent<Button>().Select();
         }
         print("Selected object = " + selectedObject.name);
 
@@ -76,7 +77,7 @@ public class SelectOnInput : MonoBehaviour {
         }
         eventSystem.SetSelectedGameObject(null);
         eventSystem.SetSelectedGameObject(selectedObject);
+        selectedObject.GetComponent<Button>().Select();
         bButtonSelected = true;
-
     }
 }
