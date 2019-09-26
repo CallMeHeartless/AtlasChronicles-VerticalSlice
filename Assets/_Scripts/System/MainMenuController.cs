@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 #endif
 
-
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private Button m_playButton;

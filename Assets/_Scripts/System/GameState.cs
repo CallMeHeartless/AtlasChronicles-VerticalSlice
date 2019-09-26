@@ -9,7 +9,6 @@ public class GameState : MonoBehaviour
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
 
-
     public enum SpeedRunMode
     {
         Expore,//standend amount of crysials and map
