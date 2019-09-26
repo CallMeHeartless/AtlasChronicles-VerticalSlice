@@ -44,7 +44,7 @@ public class SelectOnInput : MonoBehaviour {
                 m_Next.Play();
         }
 
-        if (Input.GetMouseButtonDown(0) && eventSystem.currentSelectedGameObject == null)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) && eventSystem.currentSelectedGameObject == null)
         {
             eventSystem.SetSelectedGameObject(selectedObject);
         }
