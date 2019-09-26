@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer m_rMixer;
     private Slider m_rSlider;
 
-    public enum AudioType { eNONE, eBGM, eSFX };
+    public enum AudioType { eNONE, eBGM, eSFX , eDialogue};
     public AudioType m_rType = AudioType.eNONE;
 
     // Start is called before the first frame update
@@ -35,6 +35,14 @@ public class AudioManager : MonoBehaviour
             //Set the current SFX Volume on the AudioMixer
             SetVol(PlayerPrefsManager.RetrieveAudioVFX());
         }
+        else if (m_rType == AudioType.eDialogue)
+        {
+            //Set slider value and volume to whatever value is stored in player prefs
+            m_rSlider.value = PlayerPrefsManager.RetrieveAudioDialogue();
+
+            //Set the current SFX Volume on the AudioMixer
+            SetVol(PlayerPrefsManager.RetrieveAudioDialogue());
+        }
     }
 
     public void SetVol(float _sliderVal)
@@ -54,6 +62,13 @@ public class AudioManager : MonoBehaviour
             m_rMixer.SetFloat("SFXVol", audioVal);
             //Store the un-converted slider value in player prefs
             PlayerPrefsManager.StoreAudioVFX(_sliderVal);
+        }
+        else if (m_rType == AudioType.eDialogue)
+        {
+            //Set the SFX volume value to whatever the player has selected
+            m_rMixer.SetFloat("DialogueVol", audioVal);
+            //Store the un-converted slider value in player prefs
+            PlayerPrefsManager.StoreAudioDialogue(_sliderVal);
         }
     }
 }

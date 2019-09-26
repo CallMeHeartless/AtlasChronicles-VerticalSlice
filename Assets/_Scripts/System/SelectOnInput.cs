@@ -23,6 +23,8 @@ public class SelectOnInput : MonoBehaviour {
         bButtonSelected = true;
 
         m_Next = GetComponent<AudioSource>();
+        SelectUIComponent();
+
     }
 
     // Update is called once per frame
@@ -49,7 +51,7 @@ public class SelectOnInput : MonoBehaviour {
         {
             eventSystem.SetSelectedGameObject(null);
             eventSystem.SetSelectedGameObject(selectedObject);
-            selectedObject.GetComponent<Button>().Select();
+            SelectUIComponent();
         }
     }
 
@@ -65,7 +67,22 @@ public class SelectOnInput : MonoBehaviour {
         }
         eventSystem.SetSelectedGameObject(null);
         eventSystem.SetSelectedGameObject(selectedObject);
-        selectedObject.GetComponent<Button>().Select();
+        SelectUIComponent();
         bButtonSelected = true;
+    }
+
+    private void SelectUIComponent()
+    {
+        if (selectedObject == null)
+            return;
+
+        if (selectedObject.GetComponent<Button>() != null)
+        {
+            selectedObject.GetComponent<Button>().Select();
+        }
+        else if (selectedObject.GetComponent<Slider>() != null)
+        {
+            selectedObject.GetComponent<Slider>().Select();
+        }
     }
 }

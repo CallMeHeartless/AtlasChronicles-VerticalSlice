@@ -118,7 +118,6 @@ public class SettingsScript : MonoBehaviour
         else if (Input.GetButtonDown("BButton")) //Back button
         {
             //REMEMBER: BUTTON MAPPING
-            print("settingsPRESSED");
             OnBPressed.Invoke(); //Back
         }
     }
@@ -173,6 +172,23 @@ public class SettingsScript : MonoBehaviour
             }
         }
         m_rButtonMove.Play();
+    }
+
+    public void SetCurrentGroup(int _i)
+    {
+        m_currentGroup = _i;
+        m_rTabs[_i].color = m_highlightedColour;
+        m_rGroups[_i].SetActive(true);
+    }
+
+    public void HideInactiveGroups()
+    {
+        for (int i = 0; i < m_rTabs.Length; ++i)
+        {
+            //Hide current group
+            m_rTabs[i].color = m_inactiveColour;
+            m_rGroups[i].SetActive(false);
+        }
     }
 
     public void ToggleCameraX(bool _invert)
