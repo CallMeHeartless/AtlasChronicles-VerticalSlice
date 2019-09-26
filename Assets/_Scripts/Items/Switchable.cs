@@ -62,7 +62,7 @@ public class Switchable : MonoBehaviour
             }
             else
             {
-                //shaking the box which becomes bigger 
+                //shaking the box which becomes increase over time 
                 Vector3 m_vec3Offset = Random.insideUnitCircle;
                 m_vec3Offset.z = m_vec3Offset.y;
                 m_vec3Offset.y = 0;

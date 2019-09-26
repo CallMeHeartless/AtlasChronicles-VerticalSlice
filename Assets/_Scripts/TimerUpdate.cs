@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class TimerUpdate : MonoBehaviour
 {
-    bool m_bTimerOn=false;
+    bool m_EndTimer = true;
     float m_Seconds = 0;
     int m_Minutes = 0;
     int m_Hours = 0;
@@ -14,6 +14,7 @@ public class TimerUpdate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //set UI to for the speed run
         m_TextUI = GetComponent<Text>();
         m_Trophy = transform.parent.GetChild(1).gameObject.GetComponent<Trophies>();
         m_TypeUI = transform.parent.GetChild(2).gameObject.GetComponent<Text>();
@@ -39,67 +40,65 @@ public class TimerUpdate : MonoBehaviour
       
         if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Expore)
         {
+            //this is not going to be a speed run
             transform.parent.gameObject.SetActive(false);
-        }
-        else
-        {
-            m_bTimerOn = true;
-        }
+        } 
     }
     /*___________________________________________________
-  * Job: Timer which looks like a speedrunners
+  * Job: Timer which looks like a speedrunners Timer
   * Ceratior: Nicholas
   ______________________________________________________*/
-    // Update is called once per frame
     void Update()
     {
-        if (m_bTimerOn)
+        
+        if (GameState.GetPauseFlag()==false)//pause the game
         {
-            m_Seconds += Time.deltaTime;
-            if (m_Seconds >= 60)
+            if (m_EndTimer)
             {
-                m_Minutes++;
-                m_Seconds -= 60;
-                if (m_Minutes >= 60)
+                m_Seconds += Time.deltaTime;
+                if (m_Seconds >= 60)
                 {
-                    m_Hours++;
-                    m_Minutes -= 60;
+                    m_Minutes++;
+                    m_Seconds -= 60;
+                    if (m_Minutes >= 60)
+                    {
+                        m_Hours++;
+                        m_Minutes -= 60;
+                    }
+                }
+                m_TextUI.text = null;
+
+                if (m_Hours >= 1)
+                {
+                    m_TextUI.text += m_Hours.ToString("0") + ":";
+                }
+
+                if (m_Minutes >= 1)
+                {
+                    m_TextUI.text += m_Minutes.ToString("0") + ":";
+                }
+
+                if (m_Seconds < 10)
+                {
+                    m_TextUI.text += "0";
+                }
+                m_TextUI.text += m_Seconds.ToString("F2");
+
+                //check to see if troiphy need to be changed
+                if (Records.check((m_Minutes * 100) + (int)m_Seconds, GameState.GetSpeedRunning()))
+                {
+                    Debug.Log("call");
+                    m_Trophy.DecreaseTrophie();
                 }
             }
-            // UI.text = Hours.ToString("000") + " : " + Minutes.ToString("00") + " : ";
-
-            m_TextUI.text = null;
-
-            if (m_Hours >= 1)
-            {
-                m_TextUI.text += m_Hours.ToString("0") + ":";
-            }
-
-            if (m_Minutes >= 1)
-            {
-                m_TextUI.text += m_Minutes.ToString("0") + ":";
-            }
-
-            if (m_Seconds < 10)
-            {
-                m_TextUI.text += "0";
-            }
-            m_TextUI.text += m_Seconds.ToString("F2");
-
-            //check to see if troiphy need to be changed
-           if( Records.check((m_Minutes * 100)+ (int)m_Seconds, GameState.GetSpeedRunning())){
-                Debug.Log("call");
-                m_Trophy.DecreaseTrophie();
-            }
         }
-
     }
     public void StartTimer(){
-        m_bTimerOn = true;
+        m_EndTimer = true;
     }
     public void StopTimer()
     {
-        m_bTimerOn = false;
+        m_EndTimer = false;
         m_TextUI.fontSize = 50;
     }
 }
