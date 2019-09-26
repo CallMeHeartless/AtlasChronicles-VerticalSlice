@@ -6,7 +6,6 @@ public class NPCController : MonoBehaviour
 {
     [SerializeField] private Animator m_rAnimator;
 
-    //Temp. must incorporate more
     DialogueActivator m_rDialogueZone;
 
     private QuadLookAt m_rInfoBubble;
@@ -29,6 +28,7 @@ public class NPCController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Get all references
         m_rPlayer = GameObject.FindGameObjectWithTag("Player");
         m_rInfoBubble = GetComponentInChildren<QuadLookAt>();
         m_rInfoBubble.gameObject.SetActive(false);
@@ -36,6 +36,7 @@ public class NPCController : MonoBehaviour
         m_rUIGamePanel = GameObject.FindGameObjectWithTag("UIGamePanel");
         m_rNLModel = m_rAnimator.gameObject;
 
+        //Set up initial values
         m_bTalking = false;
         m_bInteracting = false;
         m_bExited = true;
@@ -48,19 +49,24 @@ public class NPCController : MonoBehaviour
     {
         if (m_bInteracting)
         {
+            m_rUIGamePanel.SetActive(false);
+
             if (!m_bTalking && m_rDialogueZone.GetIsTalking())
             {
+                //If interacting and npc has yet to start animating the talk animation, talk
                 m_rAnimator.SetTrigger("Talk");
                 m_bTalking = true;
             }
             else if (m_bTalking && !m_rDialogueZone.GetIsTalking())
             {
+                //If the animation is talking but dialogue has ended, set anim to idle
                 m_rAnimator.SetTrigger("Idle");
                 m_bTalking = false;
             }
 
             if (!m_rDialogueZone.GetIsConversing())
             {
+                //If conversation has ended, 'hide' npc and switch game mode back to playable state
                 HideNovLonesome();
                 GameState.SetCinematicFlag(false);
                 m_rUIGamePanel.SetActive(true);
@@ -69,12 +75,15 @@ public class NPCController : MonoBehaviour
             return;
         }
 
+        //Handle when to pop up the NPC from the ground if it does not yet exist at that position
         if (Vector3.Distance(transform.position, m_rPlayer.transform.position) <= 5.0f 
             && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("TeleportArrive"))
         {
             m_bWithinRadius = true;
+
             if (m_bFirstEntry)
             {
+                //When npc first appears, activate animation and interaction bubble
                 m_bExited = false;
                 m_rAnimator.ResetTrigger("PopIn");
                 m_rAnimator.SetTrigger("Rustle");
@@ -87,6 +96,7 @@ public class NPCController : MonoBehaviour
 
             if (m_fRustleCounter >= 5.0f)
             {
+                //Activates a rustling animation 
                 m_fRustleCounter = 0.0f;
                 m_rAnimator.SetTrigger("Rustle");
             }
@@ -96,7 +106,7 @@ public class NPCController : MonoBehaviour
             }
 
 
-            //If X button pressed
+            //If X button pressed, activate dialogue
             if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting && GameState.DoesPlayerHaveControl()
                 && (m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden") || m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle")))
             {
@@ -118,6 +128,7 @@ public class NPCController : MonoBehaviour
             if (m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("TeleportArrive"))
                 return;
 
+            //If the npc is out of it's bush, allow hiding animation
             if (!m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden")
             && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("PopIn")
             && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle"))
@@ -128,12 +139,15 @@ public class NPCController : MonoBehaviour
             m_bExited = true;
             m_bFirstEntry = true;
             m_bInteracting = false;
-            
         }
     }
 
+    /// <summary>
+    /// Hides the NPC character and resets all necessary variables
+    /// </summary>
     public void HideNovLonesome()
     {
+        //Hide the npc
         m_bWithinRadius = false;
 
         m_rAnimator.ResetTrigger("Rustle");
@@ -146,9 +160,14 @@ public class NPCController : MonoBehaviour
         m_bInteracting = false;
     }
 
+    /// <summary>
+    /// Rotates npc towards player
+    /// </summary>
+    /// <param name="_toRotate">Game object to rotate</param>
+    /// <param name="_target">Target to rotate towards</param>
     void RotateTowardsPos(Transform _toRotate, Transform _target)
     {
-
+        //Rotate the npc to face towards the player
         Vector3 targetRotation = new Vector3(
             _target.transform.position.x,
             _toRotate.transform.position.y,
@@ -158,8 +177,13 @@ public class NPCController : MonoBehaviour
         _toRotate.transform.LookAt(targetRotation);
     }
 
+    /// <summary>
+    /// Teleport npc to given destination
+    /// </summary>
+    /// <param name="_location">Destination to teleport to</param>
     public void TeleportToDestination(Transform _location)
     {
+        //Teleport the npc to the nearest dialogue location the player has entered
         this.transform.parent = _location;
 
         //Reassign dialogue zone
@@ -167,7 +191,6 @@ public class NPCController : MonoBehaviour
         this.transform.localPosition = Vector3.zero;
 
         m_rAnimator.SetTrigger("Teleport");
-
     }
 
     public string GetCurrentClipName()
@@ -176,8 +199,12 @@ public class NPCController : MonoBehaviour
         return clipInfo[0].clip.name;
     }
 
+    /// <summary>
+    /// Randomly rustles an idle november lonesome
+    /// </summary>
     void RandomRustle()
     {
+        //Activates a rustle randomly
         int rand = Random.Range(0, 1);
         
         if(rand == 1)
