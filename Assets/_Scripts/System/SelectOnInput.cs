@@ -19,9 +19,7 @@ public class SelectOnInput : MonoBehaviour {
         eventSystem = FindObjectOfType<EventSystem>();
 
         OnEnable();
-
-        //eventSystem.SetSelectedGameObject(null);
-        //eventSystem.SetSelectedGameObject(selectedObject);
+        
         bButtonSelected = true;
 
         m_Next = GetComponent<AudioSource>();
@@ -49,16 +47,6 @@ public class SelectOnInput : MonoBehaviour {
           || Input.GetMouseButtonDown(2)) 
           && eventSystem.currentSelectedGameObject == null)
         {
-            eventSystem.SetSelectedGameObject(null);
-            eventSystem.SetSelectedGameObject(selectedObject);
-            selectedObject.GetComponent<Button>().Select();
-        }
-        print("Selected object = " + selectedObject.name);
-
-
-        if (Input.GetKeyDown("joystick 1 button 1"))
-        {
-            print("X PRESSED DLKFHJDKLSFJKSDJGHKLJDGKLJHDFGJKHDFGKJHDFKLJGKLJH");
             eventSystem.SetSelectedGameObject(null);
             eventSystem.SetSelectedGameObject(selectedObject);
             selectedObject.GetComponent<Button>().Select();
