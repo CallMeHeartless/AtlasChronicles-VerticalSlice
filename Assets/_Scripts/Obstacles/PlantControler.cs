@@ -27,18 +27,32 @@ public class PlantControler : MonoBehaviour
 
 
             //looking around
-
+            Vector3 looingk = new Vector3(0 ,transform.position.y - m_Player.position.y,0);
             //set roation to look at m_Player with adding the offsets
             var look = transform.position - m_Player.position;
 
-            var rotation = Quaternion.LookRotation(look);
-            rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.x, Vector3.left);
-            rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.y, Vector3.up);
-            rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.z, Vector3.forward);
+            var rotation = Quaternion.LookRotation(looingk);
+            //rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.x, Vector3.left);
+            //rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.y, Vector3.up);
+            //rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.z, Vector3.forward);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3);
 
+            Vector3 targetDir = m_Player.position - transform.position;
+            float angle = Vector3.Angle(targetDir, transform.up);
 
+            bool right; if (Vector3.Angle(transform.right, targetDir) > 90f) right = false; else right = true;
+
+            
+            //Debug.Log(right);
+            if (right)
+            {
+                angle = angle - 360;
+            }
+            Debug.Log(angle);
+
+            
+            transform.Rotate(0,0, transform .rotation.z- (angle-360));
 
             // rotation
             //transform.rotation = Quaternion.Slerp(WorldToLocal transform.rotation, rotation, Time.deltaTime*3);
@@ -54,9 +68,11 @@ public class PlantControler : MonoBehaviour
 
 
 
-            Debug.Log(transform.localEulerAngles.y);
+            // Debug.Log(transform.rotation.eulerAngles.y);
             //to far left
-            if (transform.localRotation.y < 90)
+            // Vector3 ForwardLoking = Vector3.
+
+            if (transform.rotation.eulerAngles.y > 90)
             {
                 Debug.Log("dummy");
                 //transform.eulerAngles= new Vector3(transform.localRotation.x, 180, transform.localRotation.z);
@@ -64,7 +80,7 @@ public class PlantControler : MonoBehaviour
             }
 
             //to far right
-            if (transform.localRotation.y > -90)
+            if (transform.rotation.eulerAngles.y < -90)
             {
                 Debug.Log("ymmud");
                 //transform.eulerAngles = new Vector3(transform.localRotation.x, -180, transform.localRotation.z);

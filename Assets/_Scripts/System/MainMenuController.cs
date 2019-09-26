@@ -31,7 +31,7 @@ public class MainMenuController : MonoBehaviour
     public void PlayGame() {
         m_rButtonClick.Play();
         //this line changes the speed mode, currenly set to no speed run
-        GameState.SetSpeedRunning(GameState.SpeedRunMode.EveryThing);
+        GameState.SetSpeedRunning(GameState.SpeedRunMode.SpeedRun);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

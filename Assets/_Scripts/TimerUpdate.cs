@@ -51,7 +51,7 @@ public class TimerUpdate : MonoBehaviour
     void Update()
     {
         
-        if (GameState.GetPauseFlag()==false)//pause the game
+        if ((!GameState.GetPauseFlag()) &&(!GameState.GetCinematicFlag()))//pause the game
         {
             if (m_EndTimer)
             {
@@ -85,7 +85,7 @@ public class TimerUpdate : MonoBehaviour
                 m_TextUI.text += m_Seconds.ToString("F2");
 
                 //check to see if troiphy need to be changed
-                if (Records.check((m_Minutes * 100) + (int)m_Seconds, GameState.GetSpeedRunning()))
+                if (Records.check((m_Hours*10000)+(m_Minutes * 100) + (int)m_Seconds, GameState.GetSpeedRunning()))
                 {
                     Debug.Log("call");
                     m_Trophy.DecreaseTrophie();
@@ -100,5 +100,10 @@ public class TimerUpdate : MonoBehaviour
     {
         m_EndTimer = false;
         m_TextUI.fontSize = 50;
+    }
+
+    public float GetFinalTime()
+    {
+        return (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds;
     }
 }

@@ -30,8 +30,11 @@ public class GameState : MonoBehaviour
     {
         return s_bIsPaused;
     }
-
-        // Toggles the cinematic flag
+    public static bool GetCinematicFlag()
+    {
+        return s_bInCinematic;
+    }
+    // Toggles the cinematic flag
     public static void SetCinematicFlag(bool _bState) {
         s_bInCinematic = _bState;
     }

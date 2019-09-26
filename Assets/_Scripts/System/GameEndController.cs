@@ -109,8 +109,20 @@ public class GameEndController : MonoBehaviour
 
             if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Expore)
             {
-                GameState.SetSpeedRunning(GameState.SpeedRunMode.Finished);
+              
                 GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().StopTimer();
+
+
+                GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
+                if (Object.GetComponent<DontDestoryRecords>())
+                {
+
+                    Debug.Log("we got her"+ (int)GameState.GetSpeedRunning());
+                    Object.GetComponent<DontDestoryRecords>().SetNewSpeedMod((int)GameState.GetSpeedRunning(),
+                        GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().GetFinalTime(),
+                        Records.m_CurrentPlace);
+                    Debug.Log("we got pushed");
+                }
             }
             StartCoroutine("ExitLevel");
 
