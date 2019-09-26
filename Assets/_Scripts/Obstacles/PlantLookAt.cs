@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class PlantLookAt : MonoBehaviour
 {
-    private PlantControler Plant;
+    private PlantControler m_Plant;
     // Start is called before the first frame update
     void Start()
     {
-        Plant = transform.parent.GetComponent<PlantControler>();
+        m_Plant = transform.parent.GetComponent<PlantControler>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Plant.Lookat(true);
+            m_Plant.Lookat(true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Plant.Lookat(false);
+            m_Plant.Lookat(false);
         }
     }
 }

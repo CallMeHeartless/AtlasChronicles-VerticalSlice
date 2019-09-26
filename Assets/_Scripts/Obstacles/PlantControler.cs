@@ -6,35 +6,35 @@ using UnityEngine;
 public class PlantControler : MonoBehaviour
 {
     //public bool BieRange;
-    public bool LookAtRange;
-    public Transform Player;
-    public Quaternion currentPostion;
-    public Vector3 XtraMovement;
+    public bool m_bLookAtRange;
+    public Transform m_Player;
+    public Quaternion m_currentPostion;
+    public Vector3 m_v3XtraMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        m_Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (LookAtRange)
+        if (m_bLookAtRange)
         {
 
-            //transform.LookAt(Player,Vector3.up);
+            //transform.LookAt(m_Player,Vector3.up);
 
 
             //looking around
 
-            //set roation to look at player with adding the offsets
-            var look = transform.position - Player.position;
+            //set roation to look at m_Player with adding the offsets
+            var look = transform.position - m_Player.position;
 
             var rotation = Quaternion.LookRotation(look);
-            rotation = rotation * Quaternion.AngleAxis(XtraMovement.x, Vector3.left);
-            rotation = rotation * Quaternion.AngleAxis(XtraMovement.y, Vector3.up);
-            rotation = rotation * Quaternion.AngleAxis(XtraMovement.z, Vector3.forward);
+            rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.x, Vector3.left);
+            rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.y, Vector3.up);
+            rotation = rotation * Quaternion.AngleAxis(m_v3XtraMovement.z, Vector3.forward);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3);
 
@@ -42,19 +42,19 @@ public class PlantControler : MonoBehaviour
 
             // rotation
             //transform.rotation = Quaternion.Slerp(WorldToLocal transform.rotation, rotation, Time.deltaTime*3);
-            // Debug.Log(look);
+            //Debug.Log(look);
             //rotation.t
-            //currentPostion = transform.localRotation;
+            //m_currentPostion = transform.localRotation;
 
 
             //
 
-            //transform.LookAt(Player);
-            //transform.eulerAngles += XtraMovement;
+            //transform.LookAt(m_Player);
+            //transform.eulerAngles += m_v3XtraMovement;
 
 
 
-            //Debug.Log(transform.localEulerAngles.y);
+            Debug.Log(transform.localEulerAngles.y);
             //to far left
             if (transform.localRotation.y < 90)
             {
@@ -78,21 +78,23 @@ public class PlantControler : MonoBehaviour
 
         }
     }
+    //inrange to attack
     private void OnTriggerStay(Collider other)
     {
      transform.parent.transform.parent.GetComponent<Animator>().SetTrigger("Attack");
     }
+    //inrange to notiche the m_Player
     public void Lookat(bool _Range)
     {
-       //player in range for plant to find player
+       //m_Player in range for plant to find m_Player
         if (_Range)
         {
-            LookAtRange = true;
+            m_bLookAtRange = true;
            
         }
         else
         {
-            LookAtRange = false;
+            m_bLookAtRange = false;
           
         }
     }

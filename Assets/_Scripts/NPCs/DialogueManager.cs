@@ -70,9 +70,9 @@ public class DialogueManager : MonoBehaviour
     {
         m_sentences = new Queue<string>();
 
+        //Assign all references required
         m_rNPCReference = FindObjectOfType<NPCController>();
         m_rDialoguePanel = GameObject.FindGameObjectWithTag("DialoguePanel");
-
         m_rContinueButton = m_rDialoguePanel.GetComponentInChildren<Button>(true);
         m_rDialogueText = m_rDialoguePanel.GetComponentInChildren<TextMeshProUGUI>(true);
         m_rDialogueText.gameObject.SetActive(false);
@@ -88,6 +88,7 @@ public class DialogueManager : MonoBehaviour
 
     public void Update()
     {
+        //Check whether the keyboard or controller was last pressed
         InputChecker();
         //Dont process input if game is paused
         if (GameState.GetPauseFlag())
@@ -101,6 +102,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks whether the last input pressed was from the keyboard or controller and
+    ///         sets the static variable of s_bInputController to true or false
+    /// </summary>
     void InputChecker()
     {
         if (Input.anyKeyDown)
@@ -108,13 +113,14 @@ public class DialogueManager : MonoBehaviour
             s_bInputController = false;
         }
 
+        //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
+        //buttons are pressed on controller
         if (Input.GetAxis("XBoxLT") > 0 || Input.GetAxis("XBoxRT") > 0
               || Input.GetAxis("XBoxHor") != 0 || Input.GetAxis("XBoxVert") != 0
-              || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0)
-        //  || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
+              || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0
+          || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
         {
-            //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
-            //buttons are pressed on controller
+            
             s_bInputController = true;
         }
 
@@ -124,7 +130,6 @@ public class DialogueManager : MonoBehaviour
             if (Input.GetKeyDown("joystick 1 button " + i))
             {
                 s_bInputController = true;
-
             }
         }
         //print((s_bInputController ? "Controller" : "Key"));
@@ -331,17 +336,20 @@ public class DialogueManager : MonoBehaviour
 
                 if (numberReached)
                 {
+                    //Once the number in the sprite code is reached, start appending chars
                     replacementString += letter;
                     numberGathered = true;
                 }
 
                 if (!numberReached && !numberGathered)
                 {
+                    //Continue appending the string as normal
                     newFullString += letter;
                 }
 
                 if (letter == '=')
                 {
+                    //The number char is next after the loop ends
                     numberReached = true;
                 }
 
@@ -377,6 +385,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (_begin)
         {
+            //Starts up the dialogue functionality
             StopAllCoroutines();
             m_rContainerAnimator.SetBool("Activate", true);
             m_bConversing = true;
@@ -385,6 +394,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            //Ends the dialogue functionality
             StopAllCoroutines();
             m_rContinueButton.gameObject.SetActive(false);
             m_rContainerAnimator.SetBool("Activate", false);
@@ -392,10 +402,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Begins the dialogue sequence or ends it
+    /// </summary>
+    /// <param name="_activate">decides whether to activate or deativate dialogue sequence</param>
+    /// <returns>coroutine</returns>
     IEnumerator ActivateDialogue(bool _activate)
     {
         if (_activate)
         {
+            //Activates next line in dialogue
             while (!m_rContainerAnimator.GetCurrentAnimatorStateInfo(0).IsName("IdleContainer"))
             {
                 yield return null;
@@ -404,6 +420,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            //Ends dialogue segment
             while (!m_rContainerAnimator.GetCurrentAnimatorStateInfo(0).IsName("DeactivateContainer"))
             {
                 yield return null;
@@ -413,17 +430,4 @@ public class DialogueManager : MonoBehaviour
 
         yield return null;
     }
-
-    public void SkipDialogue()
-    {
-
-    } 
-
-    void SwitchOffMusic()
-    {
-        //turn off all audio
-        //m_speakAudio.Stop();
-    }
-
-
 }
