@@ -30,9 +30,8 @@ public class TimerUpdate : MonoBehaviour
             case GameState.SpeedRunMode.EveryThing:
                 m_TypeUI.text = "Get All";
                 break;
-            case GameState.SpeedRunMode.Finished:
-               
-                break;
+           
+              
             default:
                 break;
         }

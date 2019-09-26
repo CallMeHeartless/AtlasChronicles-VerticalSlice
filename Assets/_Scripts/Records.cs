@@ -45,8 +45,7 @@ public class Records : MonoBehaviour
                     return true;
                 }
                 break;
-            case GameState.SpeedRunMode.Finished:
-                break;
+         
             default:
                 break;
         }
