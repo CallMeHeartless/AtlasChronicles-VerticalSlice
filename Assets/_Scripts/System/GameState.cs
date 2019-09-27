@@ -8,6 +8,7 @@ public class GameState : MonoBehaviour
     private static bool s_bIsPaused = false;
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
+    private static bool s_bTimerTings = false;
 
     public enum SpeedRunMode
     {
@@ -44,7 +45,7 @@ public class GameState : MonoBehaviour
     }
 
     public static bool DoesPlayerHaveControl() {
-        return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting); // Add here accordingly
+        return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting||s_bTimerTings); // Add here accordingly
     }
     public static void SetSpeedRunning(SpeedRunMode _SpeedRunState)
     {
@@ -53,5 +54,14 @@ public class GameState : MonoBehaviour
     public static SpeedRunMode GetSpeedRunning()
     {
        return SpeedRunning;
+    }
+
+    public static void SetTimerFlag(bool _Timer)
+    {
+        s_bTimerTings = _Timer;
+    }
+    public static bool GetTimer()
+    {
+        return s_bTimerTings;
     }
 }
