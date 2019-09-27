@@ -11,6 +11,7 @@ public class TimerUpdate : MonoBehaviour
     private Text m_TextUI;
     private Text m_TypeUI;
     private Trophies m_Trophy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,25 +20,21 @@ public class TimerUpdate : MonoBehaviour
         m_Trophy = transform.parent.GetChild(1).gameObject.GetComponent<Trophies>();
         m_TypeUI = transform.parent.GetChild(2).gameObject.GetComponent<Text>();
 
-
         switch (GameState.GetSpeedRunning())
         {
-            case GameState.SpeedRunMode.Expore:
+            case GameState.SpeedRunMode.Explore:
                 break;
             case GameState.SpeedRunMode.SpeedRun:
                 m_TypeUI.text = "200 gems, 5 map and out";
                 break;
-            case GameState.SpeedRunMode.EveryThing:
+            case GameState.SpeedRunMode.Everything:
                 m_TypeUI.text = "Get All";
                 break;
-           
-              
             default:
                 break;
         }
 
-      
-        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Expore)
+        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Explore)
         {
             //this is not going to be a speed run
             transform.parent.gameObject.SetActive(false);

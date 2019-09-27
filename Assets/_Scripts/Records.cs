@@ -24,7 +24,7 @@ public class Records : MonoBehaviour
        // Debug.Log(mode);
         switch (mode)
         {
-            case GameState.SpeedRunMode.Expore:
+            case GameState.SpeedRunMode.Explore:
                 break;
             case GameState.SpeedRunMode.SpeedRun:
 
@@ -35,7 +35,7 @@ public class Records : MonoBehaviour
                     return true;
                 }
                 break;
-            case GameState.SpeedRunMode.EveryThing:
+            case GameState.SpeedRunMode.Everything:
  
                 if (CurrentTime == m_SpeedRunRecords_AllItems[m_CurrentPlace-1])
                 {
