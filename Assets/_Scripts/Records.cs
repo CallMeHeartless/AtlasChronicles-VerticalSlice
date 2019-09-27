@@ -8,7 +8,7 @@ public class Records : MonoBehaviour
     static private int[] m_SpeedRunRecords_SpeedRun = new int[3] { 2500, 1700, 1000 };// min min,second second
     static private int[] m_SpeedRunRecords_AllItems = new int[3] { 2500, 1700, 1000 };// min min,second second
     static private int[] m_SpeedRunRecords_other = new int[3] { 2500, 1700, 1000 };// min min,second second
-    static public int m_CurrentPlace =2;
+    static public int m_CurrentPlace =3;
 
     /*___________________________________________________
   * Job: degrade the current rank trophie
@@ -17,7 +17,7 @@ public class Records : MonoBehaviour
     static public bool check(int CurrentTime,GameState.SpeedRunMode mode)
     {
        
-        if ((CurrentTime<= 0)||( m_CurrentPlace < 0))
+        if ((CurrentTime<= 0)||( m_CurrentPlace < 1))
         {
             return false;
         }
@@ -28,7 +28,7 @@ public class Records : MonoBehaviour
                 break;
             case GameState.SpeedRunMode.SpeedRun:
 
-                if (CurrentTime == m_SpeedRunRecords_SpeedRun[m_CurrentPlace])
+                if (CurrentTime == m_SpeedRunRecords_SpeedRun[m_CurrentPlace-1])
                 {
 
                     m_CurrentPlace--;
@@ -37,7 +37,7 @@ public class Records : MonoBehaviour
                 break;
             case GameState.SpeedRunMode.EveryThing:
  
-                if (CurrentTime == m_SpeedRunRecords_AllItems[m_CurrentPlace])
+                if (CurrentTime == m_SpeedRunRecords_AllItems[m_CurrentPlace-1])
                 {
                    
                     m_CurrentPlace--;

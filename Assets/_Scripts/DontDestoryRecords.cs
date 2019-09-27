@@ -48,12 +48,12 @@ public class DontDestoryRecords : MonoBehaviour
         _trophie = gamemodeBesttrophie[_mode];
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Debug.Log("best speed: "+gamemodeBestSpeed[1]);
-            Debug.Log("best trophie: " + gamemodeBesttrophie[1]);
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.H))
+    //    {
+    //        Debug.Log("best speed: "+gamemodeBestSpeed[1]);
+    //        Debug.Log("best trophie: " + gamemodeBesttrophie[1]);
+    //    }
+    //}
 }
