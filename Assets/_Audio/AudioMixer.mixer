@@ -19,6 +19,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: e0c5d2fb831b048489671eb55af886ab
     name: BGMVol
+  - guid: 66bccaa067277a64e9c6e2cf8e7a356b
+    name: DialogueVol
   - guid: 190e47e93dee2a44386eb04ccde1aff0
     name: SFXVol
   m_AudioMixerGroupViews:
@@ -51,6 +53,7 @@ AudioMixerController:
   - guids:
     - c27277f2e472f0d40b5e835562538884
     - 5879b1b95eea13843b207f73792cc89f
+    - 6612d7f093a07bb478a8c9d8c42cce1d
     name: BGMUI
   m_CurrentViewIndex: 2
   m_TargetSnapshot: {fileID: 245340168479156266}
@@ -66,6 +69,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: 243339017942984832}
   - {fileID: 243556441277748768}
+  - {fileID: 243862262320142608}
   m_Volume: 73c395f10670ebc418fb493417594a90
   m_Pitch: c2b5b20087dff044997ef5748e7e765b
   m_Effects:
@@ -311,6 +315,24 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &243862262320142608
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Dialogue
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 6612d7f093a07bb478a8c9d8c42cce1d
+  m_Children: []
+  m_Volume: 66bccaa067277a64e9c6e2cf8e7a356b
+  m_Pitch: 61bfa27ff961c384b94585af36a59a3a
+  m_Effects:
+  - {fileID: 244027326809077424}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &244007701818814158
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -321,6 +343,20 @@ AudioMixerEffectController:
   m_EffectID: 32c34b4cff1f9aa49854f712004f9c69
   m_EffectName: Attenuation
   m_MixLevel: 9b608f9a6ffe45a4b88e31e4b9fc18a6
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &244027326809077424
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 415735a3979e174448538b7719622615
+  m_EffectName: Attenuation
+  m_MixLevel: 4e2f3d070f802de47a95b6eb6824c642
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
