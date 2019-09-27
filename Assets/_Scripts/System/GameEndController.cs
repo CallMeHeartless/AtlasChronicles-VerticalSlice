@@ -124,13 +124,14 @@ public class GameEndController : MonoBehaviour
                     Debug.Log("we got pushed");
                 }
             }
+            GameState.SetTimerFlag(true);
             StartCoroutine("ExitLevel");
 
         }
     }
     IEnumerator ExitLevel()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(5f);
 
         Zone.ClearZones();
         SceneManager.LoadScene(0);
