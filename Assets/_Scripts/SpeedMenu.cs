@@ -11,7 +11,7 @@ public class SpeedMenu : MonoBehaviour
     private int m_Trophie;
     // Start is called before the first frame update
 
-
+        //call this when you are change which which mode you highlighted 
 //change the time and trophie so they are of the new mode
     public void UpdateMenu(int _HighlightedMode)
     {
@@ -64,6 +64,7 @@ public class SpeedMenu : MonoBehaviour
         }
         transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = Nest;
     }
+    //pressing xboxA should trigger this
     //start with the current mode
     public void StartGame()
     {
