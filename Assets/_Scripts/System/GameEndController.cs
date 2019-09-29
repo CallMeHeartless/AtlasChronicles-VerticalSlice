@@ -45,7 +45,7 @@ public class GameEndController : MonoBehaviour
         }
 
         //set crysal and maps to so that they are for the right speed run mode
-        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.EveryThing)
+        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Everything)
         {
             m_iCrystalsNeeded = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length + (GameObject.FindGameObjectsWithTag("Box").Length*5);
             Debug.Log("number is: " + m_iCrystalsNeeded);
@@ -107,18 +107,31 @@ public class GameEndController : MonoBehaviour
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
 
-            if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Expore)
+            if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Adventure)
             {
-                GameState.SetSpeedRunning(GameState.SpeedRunMode.Finished);
+              
                 GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().StopTimer();
+
+
+                GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
+                if (Object.GetComponent<DontDestoryRecords>())
+                {
+
+                    Debug.Log("we got her"+ (int)GameState.GetSpeedRunning());
+                    Object.GetComponent<DontDestoryRecords>().SetNewSpeedMod((int)GameState.GetSpeedRunning(),
+                        GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().GetFinalTime(),
+                        Records.m_CurrentPlace);
+                    Debug.Log("we got pushed");
+                }
             }
+            GameState.SetTimerFlag(true);
             StartCoroutine("ExitLevel");
 
         }
     }
     IEnumerator ExitLevel()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(5f);
 
         Zone.ClearZones();
         SceneManager.LoadScene(0);

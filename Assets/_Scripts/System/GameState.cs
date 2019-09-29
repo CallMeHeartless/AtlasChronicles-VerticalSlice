@@ -8,17 +8,19 @@ public class GameState : MonoBehaviour
     private static bool s_bIsPaused = false;
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
-
+    private static bool s_bTimerTings = false;
 
     public enum SpeedRunMode
     {
-        Expore,//standend amount of crysials and map
+        Adventure,//standend amount of crysials and map
         SpeedRun,//standend amount of crysials and map with a count up timer 
-        EveryThing,//all maps and cystals required
-        Finished//this is used when the speed on is over and all mode should be place above this
+        Everything,//all maps and cystals required
+        Finished,//this is used when the speed on is over and all mode should be place above this
+        ForTheMaps, //all maps low gems and out
+        ToTheTop// get to the top of the temple
     }
 
-    private static SpeedRunMode SpeedRunning = SpeedRunMode.Expore;
+    private static SpeedRunMode SpeedRunning = SpeedRunMode.Adventure;
   // private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
@@ -28,8 +30,11 @@ public class GameState : MonoBehaviour
     {
         return s_bIsPaused;
     }
-
-        // Toggles the cinematic flag
+    public static bool GetCinematicFlag()
+    {
+        return s_bInCinematic;
+    }
+    // Toggles the cinematic flag
     public static void SetCinematicFlag(bool _bState) {
         s_bInCinematic = _bState;
     }
@@ -40,7 +45,7 @@ public class GameState : MonoBehaviour
     }
 
     public static bool DoesPlayerHaveControl() {
-        return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting); // Add here accordingly
+        return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting||s_bTimerTings); // Add here accordingly
     }
     public static void SetSpeedRunning(SpeedRunMode _SpeedRunState)
     {
@@ -49,5 +54,14 @@ public class GameState : MonoBehaviour
     public static SpeedRunMode GetSpeedRunning()
     {
        return SpeedRunning;
+    }
+
+    public static void SetTimerFlag(bool _Timer)
+    {
+        s_bTimerTings = _Timer;
+    }
+    public static bool GetTimer()
+    {
+        return s_bTimerTings;
     }
 }

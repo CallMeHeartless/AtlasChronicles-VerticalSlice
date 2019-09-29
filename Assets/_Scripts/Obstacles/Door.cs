@@ -27,7 +27,9 @@ public class Door : MonoBehaviour, IMessageReceiver
             
             if (m_bUnlocked == true)
             {
-                if (Vector3.Distance(transform.position, m_gDoorOpen.transform.position) < .1f)
+            
+            Debug.Log("move");
+            if (Vector3.Distance(transform.position, m_gDoorOpen.transform.position) < .1f)
                 {
                     m_bMoving = false;
                 }
@@ -99,6 +101,7 @@ public class Door : MonoBehaviour, IMessageReceiver
                 return false;
             }
         }
+        Debug.Log("open");
         return true;
     }
 

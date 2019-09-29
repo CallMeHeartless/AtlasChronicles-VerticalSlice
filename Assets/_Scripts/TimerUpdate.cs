@@ -2,104 +2,103 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 public class TimerUpdate : MonoBehaviour
 {
-    bool m_bTimerOn=false;
+    bool m_EndTimer = true;
     float m_Seconds = 0;
     int m_Minutes = 0;
     int m_Hours = 0;
-    private Text m_TextUI;
-    private Text m_TypeUI;
-    private Trophies m_Trophy;
+    [SerializeField] private TextMeshProUGUI m_TextUI;
+    [SerializeField] private TextMeshProUGUI m_TypeUI;
+    [SerializeField] private Trophies m_Trophy;
+
     // Start is called before the first frame update
     void Start()
     {
-        m_TextUI = GetComponent<Text>();
-        m_Trophy = transform.parent.GetChild(1).gameObject.GetComponent<Trophies>();
-        m_TypeUI = transform.parent.GetChild(2).gameObject.GetComponent<Text>();
-
-
+        //set UI to for the speed run
         switch (GameState.GetSpeedRunning())
         {
-            case GameState.SpeedRunMode.Expore:
-                break;
+            case GameState.SpeedRunMode.Adventure:
+                m_TypeUI.text = "Adventure Mode";
+            break;
             case GameState.SpeedRunMode.SpeedRun:
-                m_TypeUI.text = "200 gems, 5 map and out";
+                m_TypeUI.text = "Time Attack: 200 gems, 5 map and out";
                 break;
-            case GameState.SpeedRunMode.EveryThing:
+            case GameState.SpeedRunMode.Everything:
                 m_TypeUI.text = "Get All";
-                break;
-            case GameState.SpeedRunMode.Finished:
-               
                 break;
             default:
                 break;
         }
 
-      
-        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Expore)
+        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Adventure)
         {
+            //this is not going to be a speed run
             transform.parent.gameObject.SetActive(false);
-        }
-        else
-        {
-            m_bTimerOn = true;
-        }
+        } 
     }
     /*___________________________________________________
-  * Job: Timer which looks like a speedrunners
+  * Job: Timer which looks like a speedrunners Timer
   * Ceratior: Nicholas
   ______________________________________________________*/
-    // Update is called once per frame
     void Update()
     {
-        if (m_bTimerOn)
+        
+        if ((!GameState.GetPauseFlag()) &&(!GameState.GetCinematicFlag()))//pause the game
         {
-            m_Seconds += Time.deltaTime;
-            if (m_Seconds >= 60)
+            if (m_EndTimer)
             {
-                m_Minutes++;
-                m_Seconds -= 60;
-                if (m_Minutes >= 60)
+                m_Seconds += Time.deltaTime;
+                if (m_Seconds >= 60)
                 {
-                    m_Hours++;
-                    m_Minutes -= 60;
+                    m_Minutes++;
+                    m_Seconds -= 60;
+                    if (m_Minutes >= 60)
+                    {
+                        m_Hours++;
+                        m_Minutes -= 60;
+                    }
+                }
+                m_TextUI.text = "Time:  ";
+
+                if (m_Hours >= 1)
+                {
+                    m_TextUI.text += m_Hours.ToString("0") + ":";
+                }
+
+                if (m_Minutes >= 1)
+                {
+                    m_TextUI.text += m_Minutes.ToString("0") + ":";
+                }
+
+                if (m_Seconds < 10)
+                {
+                    m_TextUI.text += "0";
+                }
+                m_TextUI.text += m_Seconds.ToString("F2");
+
+                //check to see if troiphy need to be changed
+                if (Records.check((m_Hours*10000)+(m_Minutes * 100) + (int)m_Seconds, GameState.GetSpeedRunning()))
+                {
+                    Debug.Log("call");
+                    m_Trophy.DecreaseTrophie();
                 }
             }
-            // UI.text = Hours.ToString("000") + " : " + Minutes.ToString("00") + " : ";
-
-            m_TextUI.text = null;
-
-            if (m_Hours >= 1)
-            {
-                m_TextUI.text += m_Hours.ToString("0") + ":";
-            }
-
-            if (m_Minutes >= 1)
-            {
-                m_TextUI.text += m_Minutes.ToString("0") + ":";
-            }
-
-            if (m_Seconds < 10)
-            {
-                m_TextUI.text += "0";
-            }
-            m_TextUI.text += m_Seconds.ToString("F2");
-
-            //check to see if troiphy need to be changed
-           if( Records.check((m_Minutes * 100)+ (int)m_Seconds, GameState.GetSpeedRunning())){
-                Debug.Log("call");
-                m_Trophy.DecreaseTrophie();
-            }
         }
-
     }
     public void StartTimer(){
-        m_bTimerOn = true;
+        m_EndTimer = true;
     }
     public void StopTimer()
     {
-        m_bTimerOn = false;
+        m_EndTimer = false;
         m_TextUI.fontSize = 50;
+    }
+
+    public float GetFinalTime()
+    {
+        return (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds;
     }
 }

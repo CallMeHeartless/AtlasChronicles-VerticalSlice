@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 #endif
 
-
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private Button m_playButton;
@@ -31,8 +30,11 @@ public class MainMenuController : MonoBehaviour
     public void PlayGame() {
         m_rButtonClick.Play();
         //this line changes the speed mode, currenly set to no speed run
-        GameState.SetSpeedRunning(GameState.SpeedRunMode.EveryThing);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //GameState.SetSpeedRunning(GameState.SpeedRunMode.SpeedRun);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        transform.parent.GetChild(2).gameObject.SetActive(true);
+        transform.parent.GetComponentInChildren<SpeedMenu>().UpdateMenu(0);
+        transform.gameObject.SetActive(false);
     }
 
     public void Settings()

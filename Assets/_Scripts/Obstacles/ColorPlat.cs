@@ -22,6 +22,7 @@ public class ColorPlat : MonoBehaviour
     void Start()
     {
         GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
+        CorrectColor();
     }
 
     private void Update()

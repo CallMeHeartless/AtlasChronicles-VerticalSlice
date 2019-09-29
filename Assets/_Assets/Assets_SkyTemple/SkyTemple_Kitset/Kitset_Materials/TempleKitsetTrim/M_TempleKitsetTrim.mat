@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_TempleKitsetTrim
   m_Shader: {fileID: 4800000, guid: 6dee2a73fd8b3d547b4a690302f60c52, type: 3}
-  m_ShaderKeywords: _USEFLATEMISSIVE_ON _USEMET_ON
+  m_ShaderKeywords: _USEFLATEMISSIVE_ON _USEFLATMETALLIC_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -35,10 +35,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Diff:
-        m_Texture: {fileID: 2800000, guid: f863d1f66e2ecd74d86906082beae8f1, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Diffuse:
         m_Texture: {fileID: 2800000, guid: 8c83c0a5b7d693f458f74376f3168fac, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -51,52 +47,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Height:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MSO:
-        m_Texture: {fileID: 2800000, guid: ed306a2bc76975e41bf3df1a6afa1eea, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Met:
-        m_Texture: {fileID: 2800000, guid: 06e5e339af0d6bc48ae0411e799dfabf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetalicMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Metallic:
-        m_Texture: {fileID: 2800000, guid: cfa0790f522d9d04584ca97b628f8146, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MetallicMask:
-        m_Texture: {fileID: 2800000, guid: 06e5e339af0d6bc48ae0411e799dfabf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Norm:
-        m_Texture: {fileID: 2800000, guid: 4d9d3db95822ab94085939933fe423e7, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Normal:
         m_Texture: {fileID: 2800000, guid: 6553b899d06212740bd3965369fde578, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Occ:
-        m_Texture: {fileID: 2800000, guid: 5fe2acfe72abdbb43817da81b2a287c2, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Occlusion:
-        m_Texture: {fileID: 2800000, guid: 7c1aaec0d068e3d4e9bf4e8a1dafbb67, type: 3}
+    - _OSM:
+        m_Texture: {fileID: 2800000, guid: ed306a2bc76975e41bf3df1a6afa1eea, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -107,52 +71,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Smo:
-        m_Texture: {fileID: 2800000, guid: ccdac7765beebaa49aec59e61f72583d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Smoothness:
-        m_Texture: {fileID: 2800000, guid: ee0c478cdd418d74ca269f834d8878ee, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _CurvFix: 1
-    - _CurvatureU: 0
-    - _CurvatureV: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FlatMet: 0
     - _FlatMetallic: 0
-    - _FlatSmo: 0
     - _FlatSmoothness: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Hue: 0
-    - _Lightness: 1
     - _Metallic: 0
-    - _MetallicValue: 0.9
     - _Mode: 0
-    - _OccIntensity: 0.25
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Saturation: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _UVScale: 200
     - _UVSec: 0
     - _UseFlatEmissive: 1
-    - _UseFlatMetallic: 0
+    - _UseFlatMetallic: 1
     - _UseFlatSmoothness: 0
-    - _UseMet: 1
-    - _UseSmo: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:

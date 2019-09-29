@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class SelectOnInput : MonoBehaviour {
@@ -18,16 +19,16 @@ public class SelectOnInput : MonoBehaviour {
         eventSystem = FindObjectOfType<EventSystem>();
 
         OnEnable();
-
-        //eventSystem.SetSelectedGameObject(null);
-        //eventSystem.SetSelectedGameObject(selectedObject);
+        
         bButtonSelected = true;
 
         m_Next = GetComponent<AudioSource>();
+        SelectUIComponent();
+
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         if (eventSystem == null || selectedObject == null)
         {
@@ -44,9 +45,13 @@ public class SelectOnInput : MonoBehaviour {
                 m_Next.Play();
         }
 
-        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) && eventSystem.currentSelectedGameObject == null)
+        if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) 
+          || Input.GetMouseButtonDown(2)) 
+          && eventSystem.currentSelectedGameObject == null)
         {
+            eventSystem.SetSelectedGameObject(null);
             eventSystem.SetSelectedGameObject(selectedObject);
+            SelectUIComponent();
         }
     }
 
@@ -62,7 +67,22 @@ public class SelectOnInput : MonoBehaviour {
         }
         eventSystem.SetSelectedGameObject(null);
         eventSystem.SetSelectedGameObject(selectedObject);
+        SelectUIComponent();
         bButtonSelected = true;
+    }
 
+    private void SelectUIComponent()
+    {
+        if (selectedObject == null)
+            return;
+
+        if (selectedObject.GetComponent<Button>() != null)
+        {
+            selectedObject.GetComponent<Button>().Select();
+        }
+        else if (selectedObject.GetComponent<Slider>() != null)
+        {
+            selectedObject.GetComponent<Slider>().Select();
+        }
     }
 }

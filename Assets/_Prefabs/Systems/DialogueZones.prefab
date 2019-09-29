@@ -138,7 +138,7 @@ MonoBehaviour:
     - Oh geez this is high up!
     - I think you might have all the maps!
     - If you are missing some, check out your map in the pause menu with <sprite=8>.
-    - Lets go back to the beginning and fuel those monoliths!!!
+    - Lets go fuel those monoliths and get out of here!
 --- !u!114 &2098776186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
     m_strName: Chests
     m_sentences:
     - These chests can't be destroyed by a mere whack.
-    - Lets try Jumping <sprite=2> and pressing attack <sprite=0> immediately afterwards.
+    - Lets try jumping <sprite=2> and pressing attack <sprite=0> immediately afterwards.
 --- !u!114 &1912301411756885862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,8 +579,8 @@ MonoBehaviour:
   m_conversation:
     m_strName: Run
     m_sentences:
-    - Hey!
-    - The Monoliths seem interactable now..
+    - Hey! This map fragment lets you see where the leylines are!
+    - Hmm... The Monoliths seem interactable now...
     - Try feeding some crystals into them
     - They could open us up a portal outta here!
 --- !u!114 &1912301412043097252
@@ -810,15 +810,17 @@ MonoBehaviour:
     m_sentences:
     - Hey!
     - Hey you!
-    - You're Widogast's apprentice right?
+    - You're Master Widogast's apprentice right?
     - Uhh... Atlas! Was it?
     - November Lonesome. Here at chyour service.
     - '...'
-    - So yeah the story of this world is still a work in progress- AHEM- HM.
-    - It'll be here soon enough !
-    - Collect Map Fragments and Ink Crystals to activate and Fill up the Ley-Monolith
-      Guages that are surrounding you currently.
-    - I'll be around to give advice so keep an eye out for me would'ya
+    - I know what you're thinking, but I'm no longer working for Lord Kino. I'm on
+      your side now!
+    - I'm here to help you find where he took your master! We'll need to power up
+      the temple portal so we can get out of here.
+    - Collect Map Fragments and Ink Crystals to activate and fill up the Ley-Monolith
+      Guages.
+    - I'll be around to give advice so keep an eye out for me would'ya?
     - Off you go now, wooptie doo.
 --- !u!114 &1912301412389233261
 MonoBehaviour:
@@ -1121,7 +1123,7 @@ MonoBehaviour:
   m_conversation:
     m_strName: Checkpoint
     m_sentences:
-    - Hey! its a Checkpoint!
+    - Hey! It's a Checkpoint!
     - Activate one by collecting a map fragment
     - If you aren't sure where your next goal is, press <sprite=1>.
 --- !u!114 &1912301413571468938
@@ -1197,12 +1199,12 @@ MonoBehaviour:
   m_conversation:
     m_strName: Reminder
     m_sentences:
-    - Ahhhh the floating islands
+    - Ahhhh the floating islands...
     - Make sure to keep using the Teleport marker mechanic to prevent yourself from
       falling off the faCE OF THE EART-
     - '*cOUgh*'
     - Its <sprite=6> and <sprite=7> remember?
-    - Use em to keep you safe >:L
+    - Use em to keep you safe!
 --- !u!114 &4850922910639715341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,7 +1279,7 @@ MonoBehaviour:
     m_strName: Switches
     m_sentences:
     - Hmmmm...
-    - So this is the reknown "Pillars" zone...
+    - So this is the renowned "Pillars" zone...
     - There must be a way to get onto those higher platforms
     - Maybe theres a special switch of some sort...
 --- !u!114 &2736295322307342769
@@ -1354,7 +1356,7 @@ MonoBehaviour:
     m_strName: Chests
     m_sentences:
     - These chests can't be destroyed by a mere whack.
-    - Lets try Jumping <sprite=2> and pressing attack <sprite=0> immediately afterwards.
+    - Lets try jumping <sprite=2> and pressing attack <sprite=0> immediately afterwards.
 --- !u!114 &5330361895593501988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1433,7 +1435,7 @@ MonoBehaviour:
     - You can then press <sprite=10> to switch places with the box from up to 10metres
       away!
     - You gotta be hasty with these boxes as they are timed to reset after a certain
-      amount of time....
+      amount of time...
     - Now that you know how the different ways of teleporting, try utilising both
       at the same time to solve different puzzles!
 --- !u!114 &5330361895648516313
@@ -1596,7 +1598,7 @@ MonoBehaviour:
     - Well rest assured you will be fine if you use this special spell.
     - Press <sprite=6> to place a Teleport Marker and then press <sprite=7> when you
       are up to 10 metres away!
-    - You will teleport back to where you initially started!
+    - You will teleport back to where you placed the marker!
 --- !u!114 &5330361896451883130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1746,7 +1748,7 @@ MonoBehaviour:
     m_strName: Wind
     m_sentences:
     - 'Hey! '
-    - I bet you can ride n glide those gusts of wind!
+    - I bet you can ride 'n' glide those gusts of wind!
 --- !u!114 &4675495920078115087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1766,6 +1768,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1912301412389233263}
     m_Modifications:
+    - target: {fileID: 9185642564718055365, guid: eb15d038b73a5be4abbf8909e583be6d,
+        type: 3}
+      propertyPath: m_Name
+      value: NovemberLonesome
+      objectReference: {fileID: 0}
     - target: {fileID: 9185642564718055370, guid: eb15d038b73a5be4abbf8909e583be6d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1820,11 +1827,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9185642564718055365, guid: eb15d038b73a5be4abbf8909e583be6d,
-        type: 3}
-      propertyPath: m_Name
-      value: NovemberLonesome
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb15d038b73a5be4abbf8909e583be6d, type: 3}

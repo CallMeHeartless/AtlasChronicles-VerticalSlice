@@ -74,7 +74,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 243556441277748768, guid: 6da555e14e3cb1447a086e349371c1d2,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 762753e35dd618549a6f3167252125d6, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
@@ -159,6 +159,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1891688538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1891688539}
+  m_Layer: 9
+  m_Name: SwitchTagSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1891688539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891688538}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 919805358136667571}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995454311728783212
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 3226857372614226847}
-  m_PathPosition: 1
+  m_PathPosition: 4
   m_PositionUnits: 0
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
@@ -800,6 +830,7 @@ Transform:
   - {fileID: 834861266119328064}
   - {fileID: 2119920311111180764}
   - {fileID: 395130738}
+  - {fileID: 1891688539}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -858,16 +889,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 995454311728783222}
     m_Modifications:
-    - target: {fileID: 8457486358290237593, guid: b3f6d788b9ec59b40a76b952dc064318,
-        type: 3}
-      propertyPath: m_Name
-      value: VFX_MapPickup
-      objectReference: {fileID: 0}
-    - target: {fileID: 8457486358290237593, guid: b3f6d788b9ec59b40a76b952dc064318,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 5777640907914751953, guid: b3f6d788b9ec59b40a76b952dc064318,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -938,7 +959,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.240401
       objectReference: {fileID: 0}
-    - target: {fileID: 1794736032675814507, guid: b3f6d788b9ec59b40a76b952dc064318,
+    - target: {fileID: 8457486358290237593, guid: b3f6d788b9ec59b40a76b952dc064318,
+        type: 3}
+      propertyPath: m_Name
+      value: VFX_MapPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8457486358290237593, guid: b3f6d788b9ec59b40a76b952dc064318,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7321764222494841987, guid: b3f6d788b9ec59b40a76b952dc064318,
         type: 3}
       propertyPath: m_Layer
       value: 14
@@ -948,7 +979,7 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 7321764222494841987, guid: b3f6d788b9ec59b40a76b952dc064318,
+    - target: {fileID: 1794736032675814507, guid: b3f6d788b9ec59b40a76b952dc064318,
         type: 3}
       propertyPath: m_Layer
       value: 14
