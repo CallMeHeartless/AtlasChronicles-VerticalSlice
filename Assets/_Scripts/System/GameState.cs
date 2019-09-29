@@ -12,7 +12,7 @@ public class GameState : MonoBehaviour
 
     public enum SpeedRunMode
     {
-        Explore,//standend amount of crysials and map
+        Adventure,//standend amount of crysials and map
         SpeedRun,//standend amount of crysials and map with a count up timer 
         Everything,//all maps and cystals required
         Finished,//this is used when the speed on is over and all mode should be place above this
@@ -20,7 +20,7 @@ public class GameState : MonoBehaviour
         ToTheTop// get to the top of the temple
     }
 
-    private static SpeedRunMode SpeedRunning = SpeedRunMode.Explore;
+    private static SpeedRunMode SpeedRunning = SpeedRunMode.Adventure;
   // private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {

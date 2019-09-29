@@ -24,7 +24,7 @@ public class Records : MonoBehaviour
        // Debug.Log(mode);
         switch (mode)
         {
-            case GameState.SpeedRunMode.Explore:
+            case GameState.SpeedRunMode.Adventure:
                 break;
             case GameState.SpeedRunMode.SpeedRun:
 

@@ -107,7 +107,7 @@ public class GameEndController : MonoBehaviour
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
 
-            if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Explore)
+            if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Adventure)
             {
               
                 GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().StopTimer();
