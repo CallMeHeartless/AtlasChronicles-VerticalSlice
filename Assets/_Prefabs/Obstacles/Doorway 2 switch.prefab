@@ -1,31 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &1051536543685226894
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700316764871886334}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10.344017, y: 7.243117, z: 6.0356107}
-  m_Center: {x: 0.050006866, y: 9.860551, z: 0}
---- !u!65 &2771386989936802433
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700316764871886334}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 14.653648, y: 13.73043, z: 6.0356107}
-  m_Center: {x: -12.434689, y: 6.6168942, z: 0}
 --- !u!65 &5275366808536626218
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37,21 +11,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 14.546211, y: 13.73043, z: 6.0356107}
-  m_Center: {x: 12.488407, y: 6.6168942, z: 0}
---- !u!65 &2493481486188180004
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700316764871886328}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 9.312234, y: 5.99398, z: 0.40027243}
-  m_Center: {x: 0.008078575, y: 2.86956, z: 0}
+  m_Size: {x: 9.588795, y: 5.99398, z: 0.40027243}
+  m_Center: {x: -0.038015366, y: 2.86956, z: 0}
 --- !u!114 &2646190890116362724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +30,45 @@ MonoBehaviour:
   m_gDoorClosed: {fileID: 3952369737649395496}
   m_fSpeed: 0.1
   OnceOnForeverOn: 0
+--- !u!65 &5277875118971192376
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700316764871886328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.344017, y: 7.243117, z: 6.0356107}
+  m_Center: {x: 0.050006866, y: 9.860551, z: 0}
+--- !u!65 &403198798040645158
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700316764871886328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.46714, y: 13.73043, z: 6.0356107}
+  m_Center: {x: -6.8805046, y: 6.6168942, z: 0}
+--- !u!65 &8330483948706640604
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700316764871886328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.774521, y: 13.73043, z: 6.0356107}
+  m_Center: {x: 7.0033493, y: 6.6168942, z: 0}
 --- !u!1001 &700316764871918428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76,6 +76,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8165702967449623881}
     m_Modifications:
+    - target: {fileID: 100004, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_Name
       value: sm_Gateway
@@ -83,14 +91,6 @@ PrefabInstance:
     - target: {fileID: 100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: e258064a1434c9042a103acbad03b371, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: e258064a1434c9042a103acbad03b371, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_LocalPosition.x

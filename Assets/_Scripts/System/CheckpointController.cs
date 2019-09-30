@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CheckpointController : MonoBehaviour
 {
@@ -14,9 +15,20 @@ public class CheckpointController : MonoBehaviour
     [SerializeField]
     private Material m_rActive;
     private MeshRenderer m_rRenderer;
+    //[SerializeField]
+    private TextMeshProUGUI m_rCheckpointTxt;
 
     private void Start() {
         m_rRenderer = GetComponentInChildren<MeshRenderer>();
+
+        // Checkpoint text gameobject is active. TMP component is disabled.
+        // To activate the text, activate the component via m_rCheckpointTxt.enabled = true
+        GameObject checkpointText = GameObject.FindGameObjectWithTag("CheckpointText");
+        if (checkpointText)
+        {
+            m_rCheckpointTxt = checkpointText.GetComponent<TextMeshProUGUI>();
+            m_rCheckpointTxt.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -39,6 +51,13 @@ public class CheckpointController : MonoBehaviour
                 }
                 else
                 {
+                    if(m_rCheckpointTxt != null)
+                    {
+                        if(!m_rCheckpointTxt.GetComponent<TextMeshProUGUI>().enabled)
+                        {
+                            StartCoroutine(ActivateCheckpointText());
+                        }
+                    }
                     player.m_rRespawnLocation = transform.position;
                 }
 
@@ -52,6 +71,16 @@ public class CheckpointController : MonoBehaviour
                 Debug.LogError("ERROR: Could not update player respawn position");
             }
         }
+    }
+
+    /// <summary>
+    /// VIV//Activates the Checkpoint text for 2 seconds
+    /// </summary>
+    IEnumerator ActivateCheckpointText()
+    {
+        m_rCheckpointTxt.enabled = true;
+        yield return new WaitForSeconds(2.0f);
+        m_rCheckpointTxt.enabled = false;
     }
 
     // Ensures that the recently activated checkpoint has the active material, and all others have inactive ones
