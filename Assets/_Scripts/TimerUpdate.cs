@@ -2,42 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 public class TimerUpdate : MonoBehaviour
 {
     bool m_EndTimer = true;
     float m_Seconds = 0;
     int m_Minutes = 0;
     int m_Hours = 0;
-    private Text m_TextUI;
-    private Text m_TypeUI;
-    private Trophies m_Trophy;
+    [SerializeField] private TextMeshProUGUI m_TextUI;
+    [SerializeField] private TextMeshProUGUI m_TypeUI;
+    [SerializeField] private Trophies m_Trophy;
+
     // Start is called before the first frame update
     void Start()
     {
         //set UI to for the speed run
-        m_TextUI = GetComponent<Text>();
-        m_Trophy = transform.parent.GetChild(1).gameObject.GetComponent<Trophies>();
-        m_TypeUI = transform.parent.GetChild(2).gameObject.GetComponent<Text>();
-
-
         switch (GameState.GetSpeedRunning())
         {
-            case GameState.SpeedRunMode.Expore:
-                break;
+            case GameState.SpeedRunMode.Adventure:
+                m_TypeUI.text = "Adventure Mode";
+            break;
             case GameState.SpeedRunMode.SpeedRun:
-                m_TypeUI.text = "200 gems, 5 map and out";
+                m_TypeUI.text = "Time Attack: 200 gems, 5 map and out";
                 break;
-            case GameState.SpeedRunMode.EveryThing:
+            case GameState.SpeedRunMode.Everything:
                 m_TypeUI.text = "Get All";
                 break;
-           
-              
             default:
                 break;
         }
 
-      
-        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Expore)
+        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Adventure)
         {
             //this is not going to be a speed run
             transform.parent.gameObject.SetActive(false);
@@ -65,7 +61,7 @@ public class TimerUpdate : MonoBehaviour
                         m_Minutes -= 60;
                     }
                 }
-                m_TextUI.text = null;
+                m_TextUI.text = "Time:  ";
 
                 if (m_Hours >= 1)
                 {
