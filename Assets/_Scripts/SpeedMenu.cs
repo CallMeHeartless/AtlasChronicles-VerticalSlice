@@ -18,10 +18,10 @@ public class SpeedMenu : MonoBehaviour
         HighlightedMode = _HighlightedMode;
         GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
 
-        Object.GetComponent<DontDestoryRecords>().GetSpeedMod(HighlightedMode, out m_fTime, out m_Trophie);
+        Object.GetComponent<DontDestroyRecords>().GetSpeedMode(HighlightedMode, out m_fTime, out m_Trophie);
 
-        transform.GetChild(1).gameObject.GetComponent<TrophieUI>().setSprite(m_Trophie);
-        transform.GetChild(2).gameObject.GetComponent<TrophieUI>().setSprite(HighlightedMode);
+        transform.GetChild(1).gameObject.GetComponent<TrophyUI>().setSprite(m_Trophie);
+        transform.GetChild(2).gameObject.GetComponent<TrophyUI>().setSprite(HighlightedMode);
 
 
         string Nest;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class TrophieUI : MonoBehaviour
+public class TrophyUI : MonoBehaviour
 {
     public Sprite[] m_spSprite;
     // Start is called before the first frame update
