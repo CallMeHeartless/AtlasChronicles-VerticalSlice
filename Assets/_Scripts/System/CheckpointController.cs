@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CheckpointController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class CheckpointController : MonoBehaviour
     [SerializeField]
     private Material m_rActive;
     private MeshRenderer m_rRenderer;
+    [SerializeField] private GameObject m_rCheckpointTxt;
 
     private void Start() {
         m_rRenderer = GetComponentInChildren<MeshRenderer>();
@@ -39,6 +41,10 @@ public class CheckpointController : MonoBehaviour
                 }
                 else
                 {
+                    if(!m_rCheckpointTxt.activeSelf)
+                    {
+                        StartCoroutine(ActivateCheckpointText());
+                    }
                     player.m_rRespawnLocation = transform.position;
                 }
 
@@ -52,6 +58,13 @@ public class CheckpointController : MonoBehaviour
                 Debug.LogError("ERROR: Could not update player respawn position");
             }
         }
+    }
+
+    IEnumerator ActivateCheckpointText()
+    {
+        m_rCheckpointTxt.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        m_rCheckpointTxt.SetActive(false);
     }
 
     // Ensures that the recently activated checkpoint has the active material, and all others have inactive ones
