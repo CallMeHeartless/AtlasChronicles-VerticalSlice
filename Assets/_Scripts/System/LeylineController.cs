@@ -11,7 +11,7 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
     private bool m_bAutoActivate = false;
     private List<LeyNodeController> m_rConnectedNodes = null;
     private SplineMeshTiling m_rSplineMesh;
-    private MeshRenderer[] m_rMeshRenderer;
+    private MeshRenderer[] m_rMeshRenderer = null;
     [SerializeField]
     private Material m_InactiveMaterial;
     [SerializeField]
@@ -26,17 +26,17 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
             // Register component
             parent.AddToLeylineList(this);
 
+            // Get spline mesh component
+            m_rSplineMesh = GetComponent<SplineMeshTiling>();
+            m_rMeshRenderer = GetComponentsInChildren<MeshRenderer>();
+            if (m_rMeshRenderer == null) {
+                Debug.LogError("ERROR: LeylineController could not find mesh renderer in children (m_rMeshRenderer is null).");
+            }
+
             // Deactivate self
             gameObject.SetActive(false);
         } else {
             Debug.LogError("ERROR: Leyline " + name + " is not a child of a zone.");
-        }
-
-        // Get spline mesh component
-        m_rSplineMesh = GetComponent<SplineMeshTiling>();
-        m_rMeshRenderer = GetComponentsInChildren<MeshRenderer>();
-        if (m_rMeshRenderer.Length == 0) {
-            Debug.Log("No mesh renderer");
         }
     }
 
@@ -81,13 +81,19 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
 
         // Update status
         m_bIsActive = _bOn;
+        gameObject.SetActive(true);
 
         // Change material // NEEDS better VFX
         if(_bOn && m_ActiveMaterial) { // Set active material
             //m_rMeshRenderer.material = m_ActiveMaterial;
-            foreach(MeshRenderer mesh in m_rMeshRenderer) {
-                mesh.material = m_ActiveMaterial;
+            if(m_rMeshRenderer != null) {
+                foreach (MeshRenderer mesh in m_rMeshRenderer) {
+                    mesh.material = m_ActiveMaterial;
+                }
+            } else {
+                Debug.LogError("ERROR: LeylineController could not apply materials on activation (m_rMeshRenderer is null).");
             }
+
         }
         else if(!_bOn && m_InactiveMaterial) { // Set inactive material
             //m_rSplineMesh.material = m_InactiveMaterial;
