@@ -15,10 +15,16 @@ public class CheckpointController : MonoBehaviour
     [SerializeField]
     private Material m_rActive;
     private MeshRenderer m_rRenderer;
-    [SerializeField] private GameObject m_rCheckpointTxt;
+    //[SerializeField]
+    private TextMeshProUGUI m_rCheckpointTxt;
 
     private void Start() {
         m_rRenderer = GetComponentInChildren<MeshRenderer>();
+
+        // Checkpoint text gameobject is active. TMP component is disabled.
+        // To activate the text, activate the component via m_rCheckpointTxt.enabled = true
+        m_rCheckpointTxt = GameObject.FindGameObjectWithTag("CheckpointText").GetComponent<TextMeshProUGUI>();
+        m_rCheckpointTxt.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,7 +47,7 @@ public class CheckpointController : MonoBehaviour
                 }
                 else
                 {
-                    if(!m_rCheckpointTxt.activeSelf)
+                    if(!m_rCheckpointTxt.GetComponent<TextMeshProUGUI>().enabled)
                     {
                         StartCoroutine(ActivateCheckpointText());
                     }
@@ -60,11 +66,14 @@ public class CheckpointController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// VIV//Activates the Checkpoint text for 2 seconds
+    /// </summary>
     IEnumerator ActivateCheckpointText()
     {
-        m_rCheckpointTxt.SetActive(true);
+        m_rCheckpointTxt.enabled = true;
         yield return new WaitForSeconds(2.0f);
-        m_rCheckpointTxt.SetActive(false);
+        m_rCheckpointTxt.enabled = false;
     }
 
     // Ensures that the recently activated checkpoint has the active material, and all others have inactive ones
