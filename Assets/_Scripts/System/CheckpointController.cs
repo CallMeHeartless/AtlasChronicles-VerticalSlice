@@ -23,8 +23,12 @@ public class CheckpointController : MonoBehaviour
 
         // Checkpoint text gameobject is active. TMP component is disabled.
         // To activate the text, activate the component via m_rCheckpointTxt.enabled = true
-        m_rCheckpointTxt = GameObject.FindGameObjectWithTag("CheckpointText").GetComponent<TextMeshProUGUI>();
-        m_rCheckpointTxt.enabled = false;
+        GameObject checkpointText = GameObject.FindGameObjectWithTag("CheckpointText");
+        if (checkpointText)
+        {
+            m_rCheckpointTxt = checkpointText.GetComponent<TextMeshProUGUI>();
+            m_rCheckpointTxt.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,9 +51,12 @@ public class CheckpointController : MonoBehaviour
                 }
                 else
                 {
-                    if(!m_rCheckpointTxt.GetComponent<TextMeshProUGUI>().enabled)
+                    if(m_rCheckpointTxt != null)
                     {
-                        StartCoroutine(ActivateCheckpointText());
+                        if(!m_rCheckpointTxt.GetComponent<TextMeshProUGUI>().enabled)
+                        {
+                            StartCoroutine(ActivateCheckpointText());
+                        }
                     }
                     player.m_rRespawnLocation = transform.position;
                 }
