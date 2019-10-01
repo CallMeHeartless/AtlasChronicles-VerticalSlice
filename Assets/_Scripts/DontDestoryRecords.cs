@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class DontDestoryRecords : MonoBehaviour
+public class DontDestroyRecords : MonoBehaviour
 {
     //note first one is not a speed run mode so 
     static private float[] gamemodeBestSpeed = new float[6] {0,0,0,0,0,0 };
-    static private int[] gamemodeBesttrophie = new int[6] {0,0,0,0,0,0 };
+    static private int[] gamemodeBestTrophy = new int[6] {0,0,0,0,0,0 };
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,7 +18,7 @@ public class DontDestoryRecords : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-    public void SetNewSpeedMod(int _mode,float _time,int _trophie)
+    public void SetNewSpeedMode(int _mode,float _time,int _trophie)
     {
         if (gamemodeBestSpeed[_mode] != 0)
         {
@@ -26,7 +26,7 @@ public class DontDestoryRecords : MonoBehaviour
             if (gamemodeBestSpeed[_mode] >= _time)
             {
                 gamemodeBestSpeed[_mode] = _time;
-                gamemodeBesttrophie[_mode] = _trophie;
+                gamemodeBestTrophy[_mode] = _trophie;
                 Debug.Log("newsave");
             }
         }
@@ -38,14 +38,14 @@ public class DontDestoryRecords : MonoBehaviour
             Debug.Log("time of At: " + _time);
             Debug.Log("teophie is: " + _trophie);
             gamemodeBestSpeed[_mode] = _time;
-            gamemodeBesttrophie[_mode] = _trophie;
+            gamemodeBestTrophy[_mode] = _trophie;
 
         }
     }
-    public void GetSpeedMod(int _mode, out float _time, out int _trophie)
+    public void GetSpeedMode(int _mode, out float _time, out int _trophie)
     {
         _time = gamemodeBestSpeed[_mode];
-        _trophie = gamemodeBesttrophie[_mode];
+        _trophie = gamemodeBestTrophy[_mode];
     }
 
     //private void Update()
