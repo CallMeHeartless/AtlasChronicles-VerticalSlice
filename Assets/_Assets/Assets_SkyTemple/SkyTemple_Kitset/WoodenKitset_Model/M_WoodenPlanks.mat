@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_WoodenPlanks
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION
+  m_Shader: {fileID: 4800000, guid: 6dee2a73fd8b3d547b4a690302f60c52, type: 3}
+  m_ShaderKeywords: _EMISSION _USEFLATEMISSIVE_ON _USEFLATMETALLIC_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Diffuse:
-        m_Texture: {fileID: 2800000, guid: 4e7b9885dfb03f244b107ff346ac8b52, type: 3}
+        m_Texture: {fileID: 2800000, guid: 43cf815df914cdc49a5062c1ff8c76d7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -72,11 +72,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 80720a7eee1757b42adfd87240ea34b2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3577ca3f031a01845925fa87e9098504, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OSM:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 6ec800701bff4af42ad691eeeb12b470, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Occ:
@@ -122,8 +122,8 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseFlatEmissive: 0
-    - _UseFlatMetallic: 0
+    - _UseFlatEmissive: 1
+    - _UseFlatMetallic: 1
     - _UseFlatSmoothness: 0
     - _ZWrite: 1
     - __dirty: 0
