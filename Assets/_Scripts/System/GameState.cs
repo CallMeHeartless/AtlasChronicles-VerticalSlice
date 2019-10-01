@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameState : MonoBehaviour
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
     private static bool s_bTimerTings = false;
+    private static AsyncOperation s_asyncLoad;
 
     public enum SpeedRunMode
     {
@@ -34,6 +36,12 @@ public class GameState : MonoBehaviour
     {
         return s_bInCinematic;
     }
+
+    public static AsyncOperation GetAsync()
+    {
+        return s_asyncLoad;
+    }
+
     // Toggles the cinematic flag
     public static void SetCinematicFlag(bool _bState) {
         s_bInCinematic = _bState;
@@ -72,4 +80,16 @@ public class GameState : MonoBehaviour
        s_bIsPlayerTeleporting = false;
        s_bTimerTings = false;
     }
+
+    public static IEnumerator LoadingScene(int _sceneIndex)
+    {
+        s_asyncLoad = SceneManager.LoadSceneAsync(_sceneIndex);
+
+        // Wait until the asynchronous scene fully loads
+        while (!s_asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+    
 }
