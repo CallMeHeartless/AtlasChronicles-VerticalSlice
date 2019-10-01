@@ -114,11 +114,11 @@ public class GameEndController : MonoBehaviour
 
 
                 GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
-                if (Object.GetComponent<DontDestroyRecords>())
+                if (Object.GetComponent<DontDestory>())
                 {
 
                     Debug.Log("we got her"+ (int)GameState.GetSpeedRunning());
-                    Object.GetComponent<DontDestroyRecords>().SetNewSpeedMode((int)GameState.GetSpeedRunning(),
+                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetSpeedRunning(),
                         GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().GetFinalTime(),
                         Records.m_CurrentPlace);
                     Debug.Log("we got pushed");

@@ -64,4 +64,12 @@ public class GameState : MonoBehaviour
     {
         return s_bTimerTings;
     }
+    //all the thing stoping the play move set bacm to false
+    public static void SetPlayerFree()
+    {
+       s_bIsPaused = false;
+       s_bInCinematic = false;
+       s_bIsPlayerTeleporting = false;
+       s_bTimerTings = false;
+    }
 }

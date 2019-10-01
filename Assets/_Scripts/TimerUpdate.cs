@@ -24,7 +24,7 @@ public class TimerUpdate : MonoBehaviour
                 m_TypeUI.text = "Adventure Mode";
             break;
             case GameState.SpeedRunMode.SpeedRun:
-                m_TypeUI.text = "Time Attack: 200 gems, 5 map and out";
+                m_TypeUI.text = "Time Attack: 160 gems, 5 map and out";
                 break;
             case GameState.SpeedRunMode.Everything:
                 m_TypeUI.text = "Get All";

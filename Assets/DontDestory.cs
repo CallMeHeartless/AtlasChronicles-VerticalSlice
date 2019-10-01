@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class DontDestroyRecords : MonoBehaviour
+public class DontDestory : MonoBehaviour
 {
     //note first one is not a speed run mode so 
-    static private float[] gamemodeBestSpeed = new float[6] {0,0,0,0,0,0 };
-    static private int[] gamemodeBestTrophy = new int[6] {0,0,0,0,0,0 };
+    static private float[] gamemodeBestSpeed = new float[6] { 0, 0, 0, 0, 0, 0 };
+    static private int[] gamemodeBestTrophy = new int[6] { 0, 0, 0, 0, 0, 0 };
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,7 +18,7 @@ public class DontDestroyRecords : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-    public void SetNewSpeedMode(int _mode,float _time,int _trophie)
+    public void SetNewSpeedMode(int _mode, float _time, int _trophie)
     {
         if (gamemodeBestSpeed[_mode] != 0)
         {
@@ -34,7 +34,7 @@ public class DontDestroyRecords : MonoBehaviour
         {
             Debug.Log("newsaved");
 
-            Debug.Log("saved At: "+ _mode);
+            Debug.Log("saved At: " + _mode);
             Debug.Log("time of At: " + _time);
             Debug.Log("teophie is: " + _trophie);
             gamemodeBestSpeed[_mode] = _time;
