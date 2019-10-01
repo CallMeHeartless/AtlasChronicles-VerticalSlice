@@ -48,13 +48,15 @@ public class CrystalDepoController : MonoBehaviour
     void Update(){
         // Only make changes to the Depo if the player is close enough
         if (m_bIsPlayerInRange && !m_bIsFinished) {
-
+            Debug.Log("in herer");
             // Check if the player is filling up the depo
             if (Input.GetButton(m_strFillButton)) {
                 // Update crystal count
+                Debug.Log("update");
                 UpdateCrystalCount();
             } else {
                 m_fCurrentFillTime = m_fDefaultFillTime;
+                Debug.Log("full");
             }
         } 
     }
@@ -108,6 +110,7 @@ public class CrystalDepoController : MonoBehaviour
     private void UpdateCrystalCount() {
         // Stop if the player does not have any crystals or if the leyline isn't visible
         if(GameStats.s_iSecondaryCollected == 0 || !m_rLeyLine.gameObject.activeSelf) {
+            Debug.Log("stop");
             return;
         }
 
@@ -121,7 +124,7 @@ public class CrystalDepoController : MonoBehaviour
 
             // Reduce overall time it takes
             float fInterpolation = ((float)m_iCurrentCrystals * 4.0f / (float)m_iNeededCrystals);
-            fInterpolation = Mathf.Clamp(fInterpolation, 0.2f, 1.0f);
+            fInterpolation = Mathf.Clamp(fInterpolation, 0.25f, 1.0f);
             m_fCurrentFillTime = Mathf.Lerp(m_fDefaultFillTime, m_fMinimumFillTime, fInterpolation);
 
             // Take a crystal from the player and add it to the depo
