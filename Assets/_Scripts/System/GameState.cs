@@ -22,7 +22,7 @@ public class GameState : MonoBehaviour
         ToTheTop// get to the top of the temple
     }
 
-    private static SpeedRunMode SpeedRunning = SpeedRunMode.Adventure;
+    private static SpeedRunMode m_bSpeedRunning = SpeedRunMode.Adventure;
   // private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
@@ -57,11 +57,11 @@ public class GameState : MonoBehaviour
     }
     public static void SetSpeedRunning(SpeedRunMode _SpeedRunState)
     {
-        SpeedRunning = _SpeedRunState;
+        m_bSpeedRunning = _SpeedRunState;
     }
-    public static SpeedRunMode GetSpeedRunning()
+    public static SpeedRunMode GetIsSpeedRunning()
     {
-       return SpeedRunning;
+       return m_bSpeedRunning;
     }
 
     public static void SetTimerFlag(bool _Timer)
@@ -84,6 +84,7 @@ public class GameState : MonoBehaviour
     public static IEnumerator LoadingScene(int _sceneIndex)
     {
         s_asyncLoad = SceneManager.LoadSceneAsync(_sceneIndex);
+        //asyncOperation.allowSceneActivation = false;
 
         // Wait until the asynchronous scene fully loads
         while (!s_asyncLoad.isDone)

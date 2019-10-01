@@ -44,6 +44,7 @@ public class MainMenuController : MonoBehaviour
         }
         m_rCanvas = GetComponent<Canvas>();
         m_rLoadingPanel.SetActive(false);
+        NavigateModeLeft(true);
     }
 
     public void ActivateMenu(bool _activate)
@@ -138,7 +139,6 @@ public class MainMenuController : MonoBehaviour
         _button.Select();
     }
     
-
     /// <summary>
     /// Sets a mode panel active depending on which side has been specified in the parameter
     /// </summary>
