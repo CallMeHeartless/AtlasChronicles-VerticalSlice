@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6148762012549303056}
   - component: {fileID: 6148762012558828784}
+  - component: {fileID: 7695869758210067947}
   m_Layer: 0
-  m_Name: dm_SpikedLog 1
+  m_Name: PendulumAnimated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,6 +53,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7695869758210067947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148762012549470000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a4cabae7f858a46bcf2387071598bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fBlendOverride: 1
 --- !u!1 &6148762012549470002
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,6 +78,7 @@ GameObject:
   - component: {fileID: 6148762012548500272}
   - component: {fileID: 6148762012547533296}
   - component: {fileID: 6148762012775611051}
+  - component: {fileID: 354870915107597816}
   m_Layer: 0
   m_Name: dm_SpikedLog_Body
   m_TagString: Untagged
@@ -143,6 +158,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8192673, y: 1.7336318, z: 7.1933637}
   m_Center: {x: -0.0036849976, y: -7.7179403, z: -0.015669126}
+--- !u!114 &354870915107597816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148762012549470002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fdcd832945b634f8d2bd7b45640fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iDamage: 1
+  m_rHitParticles: {fileID: 0}
+  m_strTargetTag:
+  - Player
+  m_bIsActive: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &6148762012549470004
 GameObject:
   m_ObjectHideFlags: 0
