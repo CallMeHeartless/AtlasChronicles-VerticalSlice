@@ -14,12 +14,14 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button m_playButton;
     [SerializeField] private GameObject m_rMenuButtons;
     [SerializeField] private GameObject m_rModeSelection;
+    [SerializeField] private Animator m_rNLOnPillar;
     [SerializeField] private Animator m_rNovemberLonesome;
     [SerializeField] private AudioSource m_rButtonClick;
     [SerializeField] private GameObject m_rAdventureModePanel;
     [SerializeField] private GameObject m_rTimeAttackModePanel;
     [SerializeField] private GameObject m_rLeftModeButton;
     [SerializeField] private GameObject m_rRightModeButton;
+    [SerializeField] private GameObject m_rLoadingPanel;
     [SerializeField] private TextMeshProUGUI m_rModeTitleText;
 
     private Canvas m_rCanvas;
@@ -41,12 +43,14 @@ public class MainMenuController : MonoBehaviour
             m_playButton.Select();
         }
         m_rCanvas = GetComponent<Canvas>();
+        m_rLoadingPanel.SetActive(false);
+        NavigateModeLeft(true);
     }
 
     public void ActivateMenu(bool _activate)
     {
         m_rMenuButtons.SetActive(_activate);
-        if(_activate)
+        if (_activate)
         {
             m_rCanvas.planeDistance = m_iRevealedPlaneDist;
         }
@@ -59,47 +63,55 @@ public class MainMenuController : MonoBehaviour
         {
             ActivateMenu(false);
             m_rCanvas.planeDistance = m_iRevealedPlaneDist;
-            m_rNovemberLonesome.SetBool("ShowMode", true);
+            m_rNLOnPillar.SetBool("ShowMode", true);
         }
         else
         {
             ActivateMenu(true);
-            m_rNovemberLonesome.SetBool("ShowMode", false);
+            m_rNLOnPillar.SetBool("ShowMode", false);
         }
     }
 
-    public void StartModeSelect() {
+    /// <summary>
+    /// Goes to mode select screen
+    /// </summary>
+    public void StartModeSelect()
+    {
         m_rButtonClick.Play();
         ActivateModeSelection(true);
-
-        //Activates/Deactivates each arrow button within mode selection depending on what is aready active
-
-        //this line changes the speed mode, currenly set to no speed run
-        //GameState.SetSpeedRunning(GameState.SpeedRunMode.SpeedRun);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
-
-        ////nik
-        //transform.parent.GetChild(2).gameObject.SetActive(true);
-        //transform.parent.GetComponentInChildren<SpeedMenu>().UpdateMenu(0);
-        //transform.gameObject.SetActive(false);
     }
+
+    /// <summary>
+    /// Starts game in adventure mode
+    /// </summary>
     public void StartAdventure()
     {
-        m_rButtonClick.Play();
-        //this line changes the speed mode, currenly set to no speed run
-        GameState.SetSpeedRunning(GameState.SpeedRunMode.Adventure);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        GameState.SetPlayerFree();
+        StartGame(GameState.SpeedRunMode.Adventure);
     }
 
+    /// <summary>
+    /// Starts game in adventure mode
+    /// </summary>
     public void StartTimeAttack()
     {
-        m_rButtonClick.Play();        
-        //this line changes the speed mode, currenly set to no speed run
-        GameState.SetSpeedRunning(GameState.SpeedRunMode.SpeedRun);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartGame(GameState.SpeedRunMode.SpeedRun);
+    }
+
+    public void StartGame(GameState.SpeedRunMode _mode)
+    {
+        m_rButtonClick.Play();
+        //m_rCanvas.planeDistance = m_iHiddenPlaneDist; //Hide November Lonesome
+
+        //Set the game mode and allow player to run free
+        GameState.SetSpeedRunning(_mode);
         GameState.SetPlayerFree();
+        m_rNLOnPillar.SetBool("ShowMode", false);
+        //m_rNLOnPillar.transform.GetChild(0).GetComponent<Animator>().SetTrigger("PopIn");
+
+        //Activate loading panel and start game scene
+        m_rLoadingPanel.SetActive(true);
+        StartCoroutine(GameState.LoadingScene(SceneManager.GetActiveScene().buildIndex + 1));
+        m_rNLOnPillar.SetTrigger("Action");
     }
 
     public void Settings()
@@ -127,7 +139,6 @@ public class MainMenuController : MonoBehaviour
         _button.Select();
     }
     
-
     /// <summary>
     /// Sets a mode panel active depending on which side has been specified in the parameter
     /// </summary>

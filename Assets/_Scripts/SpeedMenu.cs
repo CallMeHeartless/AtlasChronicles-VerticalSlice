@@ -2,17 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class SpeedMenu : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI m_rRecordFlavourTxt;
+    [SerializeField] private Sprite m_rHiddenCupSpr;
+    [SerializeField] private Sprite m_rBronzeCupSpr;
+    [SerializeField] private Sprite m_rSilverCupSpr;
+    [SerializeField] private Sprite m_rGoldCupSpr;
+
     private int HighlightedMode;
     private float m_fTime;
     private int m_Trophie;
-    // Start is called before the first frame update
 
-        //call this when you are change which which mode you highlighted 
-//change the time and trophie so they are of the new mode
+    private int m_iCurrentPlace = 0;
+
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        //m_iCurrentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
+        //SetRecordFlavourTxt(m_iCurrentPlace);
+    }
+
+
+    //call this when you are change which which mode you highlighted 
+    //change the time and trophie so they are of the new mode
     public void UpdateMenu(int _HighlightedMode)
     {
         HighlightedMode = _HighlightedMode;
@@ -78,6 +95,40 @@ public class SpeedMenu : MonoBehaviour
     public int GettrophieFlag()
     {
         return m_Trophie;
+    }
+
+    public void SetRecordFlavourTxt(int _currentPlace)
+    {
+        //NOTE:: NEED TO FIND WAY TO CHECK WHICH CUP WAS OBTAINED
+        switch (_currentPlace)
+        {
+            case 0:
+            {
+                m_rRecordFlavourTxt.text = "TAKE ON A SPEEDY CHALLENGE";
+                break;
+            }
+            case 1:
+            {
+                m_rRecordFlavourTxt.text = "LEGENDARY";
+                break;
+            }
+            case 2:
+            {
+                m_rRecordFlavourTxt.text = "GREAT";
+                break;
+            }
+            case 3:
+            {
+                m_rRecordFlavourTxt.text = "YOU TRIED";
+                break;
+            }
+
+            default:
+                break;
+        }
+        //if cup is GOLD
+        //if cup is SILVER
+        //if cup is BRNNZES
     }
    
 }
