@@ -90,6 +90,7 @@ public class MainMenuController : MonoBehaviour
         //this line changes the speed mode, currenly set to no speed run
         GameState.SetSpeedRunning(GameState.SpeedRunMode.Adventure);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameState.SetPlayerFree();
     }
 
     public void StartTimeAttack()
@@ -98,6 +99,7 @@ public class MainMenuController : MonoBehaviour
         //this line changes the speed mode, currenly set to no speed run
         GameState.SetSpeedRunning(GameState.SpeedRunMode.SpeedRun);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameState.SetPlayerFree();
     }
 
     public void Settings()
