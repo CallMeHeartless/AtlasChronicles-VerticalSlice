@@ -13,14 +13,7 @@ public class NPCTeleporter : MonoBehaviour
     {
         m_rNPC = transform.parent.gameObject.GetComponentInChildren<NPCController>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !CheckNPCIsChild())

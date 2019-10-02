@@ -27,6 +27,7 @@ public class GameEndController : MonoBehaviour
     [SerializeField]
     private bool m_bIsActive = false;
     private Animator m_rAnimator;
+    private TimerUpdate m_rTimerUpdate;
 
     public int[] m_iMinimumCrystalsModes;
     public int[] m_iMinimumMapsModes;
@@ -66,6 +67,9 @@ public class GameEndController : MonoBehaviour
 
         // Obtain Animation component
         m_rAnimator = GetComponentInChildren<Animator>();
+
+        //Obtain timer update component
+        m_rTimerUpdate = GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>();
 
         // Initialise crystal depo children
         InitialiseCrystalDepos();
@@ -119,13 +123,16 @@ public class GameEndController : MonoBehaviour
 
             if (GameState.GetIsSpeedRunMode() != GameState.SpeedRunMode.Adventure)
             {
-                GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().StopTimer();
+                m_rTimerUpdate.StopTimer();
                 GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
                 if (Object.GetComponent<DontDestory>())
                 {
                     Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetIsSpeedRunMode(),
-                        GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().GetFinalTime(),
+                        m_rTimerUpdate.GetFinalTime(),
                         Records.m_CurrentPlace);
+
+                    PlayerPrefs.SetInt("TimeAttackCurrentPlace", Records.m_CurrentPlace);
+                    PlayerPrefs.SetFloat("TimeAttackCurrentTimeScore", m_rTimerUpdate.GetFinalTime());
                 }
             }
             GameState.SetTimerFlag(true);
