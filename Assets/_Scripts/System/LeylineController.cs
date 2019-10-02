@@ -40,13 +40,6 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
         }
     }
 
-    private void Update() {
-        // DEBUG
-        if (Input.GetKeyDown(KeyCode.T)) {
-            ActivateLeyline(true);
-        }
-    }
-
     /// <summary>
     /// Used to register a LeyNodeController with this Leyline. Ensures that the related node will be updated with this leyline. Called at runtime. 
     /// </summary>

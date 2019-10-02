@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameState : MonoBehaviour
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
     private static bool s_bTimerTings = false;
+    private static AsyncOperation s_asyncLoad;
 
     public enum SpeedRunMode
     {
@@ -20,7 +22,7 @@ public class GameState : MonoBehaviour
         ToTheTop// get to the top of the temple
     }
 
-    private static SpeedRunMode SpeedRunning = SpeedRunMode.Adventure;
+    private static SpeedRunMode m_eSpeedRunning = SpeedRunMode.Adventure;
   // private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
@@ -34,6 +36,12 @@ public class GameState : MonoBehaviour
     {
         return s_bInCinematic;
     }
+
+    public static AsyncOperation GetAsync()
+    {
+        return s_asyncLoad;
+    }
+
     // Toggles the cinematic flag
     public static void SetCinematicFlag(bool _bState) {
         s_bInCinematic = _bState;
@@ -49,11 +57,11 @@ public class GameState : MonoBehaviour
     }
     public static void SetSpeedRunning(SpeedRunMode _SpeedRunState)
     {
-        SpeedRunning = _SpeedRunState;
+        m_eSpeedRunning = _SpeedRunState;
     }
-    public static SpeedRunMode GetSpeedRunning()
+    public static SpeedRunMode GetIsSpeedRunMode()
     {
-       return SpeedRunning;
+       return m_eSpeedRunning;
     }
 
     public static void SetTimerFlag(bool _Timer)
@@ -72,4 +80,21 @@ public class GameState : MonoBehaviour
        s_bIsPlayerTeleporting = false;
        s_bTimerTings = false;
     }
+
+    public static IEnumerator LoadingScene(int _sceneIndex)
+    {
+        s_asyncLoad = SceneManager.LoadSceneAsync(_sceneIndex);
+        //asyncOperation.allowSceneActivation = false;
+
+        // Wait until the asynchronous scene fully loads
+        while (!s_asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    public static SpeedRunMode GetSpeedRunning() {
+        return m_eSpeedRunning;
+    }
+    
 }

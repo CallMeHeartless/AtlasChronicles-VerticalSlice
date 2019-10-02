@@ -26,6 +26,7 @@ public class GameEndController : MonoBehaviour
     private GameObject m_rInfo = null; //Just ui telling player the portal is open
     [SerializeField]
     private bool m_bIsActive = false;
+    private Animator m_rAnimator;
 
     public int[] m_iMinimumCrystalsModes;
     public int[] m_iMinimumMapsModes;
@@ -44,24 +45,27 @@ public class GameEndController : MonoBehaviour
            
         }
 
-        //set crysal and maps to so that they are for the right speed run mode
-        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Everything)
+        // Set crystal and map requirements based on the selected speed run mode
+        if (GameState.GetIsSpeedRunMode() == GameState.SpeedRunMode.Everything)
         {
             m_iCrystalsNeeded = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length + (GameObject.FindGameObjectsWithTag("Box").Length*5);
-            Debug.Log("number is: " + m_iCrystalsNeeded);
+            Debug.Log("Required crystals: " + m_iCrystalsNeeded);
         }
         else
         {
-            m_iCrystalsNeeded = m_iMinimumCrystalsModes[(int)GameState.GetSpeedRunning()];
+            m_iCrystalsNeeded = m_iMinimumCrystalsModes[(int)GameState.GetIsSpeedRunMode()];
         }
        
-        m_iMapsNeeded = m_iMinimumMapsModes[(int)GameState.GetSpeedRunning()];
-        //Debug.Log((int)GameState.GetSpeedRunning());
+        m_iMapsNeeded = m_iMinimumMapsModes[(int)GameState.GetIsSpeedRunMode()];
 
+        // Turn off the 'portal is open' UI
         if (m_rInfo)
         {
             m_rInfo.SetActive(false);
         }
+
+        // Obtain Animation component
+        m_rAnimator = GetComponentInChildren<Animator>();
 
         // Initialise crystal depo children
         InitialiseCrystalDepos();
@@ -91,13 +95,19 @@ public class GameEndController : MonoBehaviour
         // Change portal state
         m_bIsActive = _bState;
 
+        // Trigger the appropriate animation (Kerry)
+        if (m_bIsActive) {
+            m_rAnimator.SetTrigger("Rebuild"); // Assemble the ruins
+        } else {
+            m_rAnimator.SetTrigger("Reset(TestTrigger)"); // Collapse the ruins
+        }
+
         // Handle particles 
         if (m_rPortalParticles) {
             m_rPortalParticles.SetActive(_bState);
 
             // Handle info message
-            if(m_rInfo)
-            {
+            if(m_rInfo){
                 m_rInfo.SetActive(true);
             }
         }
@@ -107,34 +117,33 @@ public class GameEndController : MonoBehaviour
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
 
-            if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Adventure)
+            if (GameState.GetIsSpeedRunMode() != GameState.SpeedRunMode.Adventure)
             {
-              
                 GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().StopTimer();
-
-
                 GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
                 if (Object.GetComponent<DontDestory>())
                 {
-
-                    Debug.Log("we got her"+ (int)GameState.GetSpeedRunning());
-                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetSpeedRunning(),
+                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetIsSpeedRunMode(),
                         GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().GetFinalTime(),
                         Records.m_CurrentPlace);
-                    Debug.Log("we got pushed");
                 }
             }
             GameState.SetTimerFlag(true);
             StartCoroutine("ExitLevel");
-
         }
     }
+
+    /// <summary>
+    /// Return to main menu after 5 seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ExitLevel()
     {
         yield return new WaitForSeconds(5f);
-
+        //Reset the level before loading main menu
         Zone.ClearZones();
         SceneManager.LoadScene(0);
+        yield return null;
     }
 
 

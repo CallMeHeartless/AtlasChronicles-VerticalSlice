@@ -57,7 +57,7 @@ public class Water : MonoBehaviour
         // Debug.Log(other.tag);
         // if (other.CompareTag("Player"))
         // {
-        // Debug.Log("dummy");
+        // Debug.Log("m_timeString");
 
         if (other.CompareTag("Player"))
         {

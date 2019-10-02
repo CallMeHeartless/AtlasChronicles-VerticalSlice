@@ -27,9 +27,9 @@ public class boxpill : MonoBehaviour
         else
         {
            //remove the first game object if their is to many
-           GameObject dummy = m_GLBoxes[0];
-            m_GLBoxes.Remove(dummy);
-            Destroy(dummy);
+           GameObject m_timeString = m_GLBoxes[0];
+            m_GLBoxes.Remove(m_timeString);
+            Destroy(m_timeString);
         }
         //spawn box
         m_iCurrentBoxes++;

@@ -47,7 +47,7 @@ public class enemyT1 : MonoBehaviour
         {
             if (m_reached)
             {
-                Debug.Log("dummy");
+                Debug.Log("m_timeString");
                 endpoint.GetComponent<newPostion>().StartCoroutine("Fade");
                 m_reached = false;
             }

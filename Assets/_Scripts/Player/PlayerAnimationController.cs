@@ -10,6 +10,7 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField]
     private TeleportTetherController m_rTeleportTetherController;
     private GameObject m_SwitchMarker;
+    private Animator m_rAnimator;
 
     private GameObject m_AttackCollider;
     [SerializeField]
@@ -27,7 +28,16 @@ public class PlayerAnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_rAnimator = GetComponent<Animator>();
+
+        if(m_rAnimator == null) {
+            Debug.LogError("ERROR: Animator could not be found on PlayerAnimationController GameObject.");
+        }
+
         m_rPlayerController = transform.root.GetComponent<PlayerController>();
+        if(m_rPlayerController == null) {
+            Debug.LogError("ERROR: PlayerAnimationController could not find parent PlayerContoller.");
+        }
         if (m_SwitchMarkerPrefab) {
             m_SwitchMarker = GameObject.Instantiate(m_SwitchMarkerPrefab);
             m_SwitchMarker.SetActive(false);
@@ -105,13 +115,12 @@ public class PlayerAnimationController : MonoBehaviour
     public void StartAttack() {
         m_rAttack.m_bIsActive = true;
         m_rPlayerController.ToggleWeaponScroll(true);
-        m_rPlayerController.ToggleHipScroll(false);
     }
 
     public void EndAttack() {
         m_rAttack.m_bIsActive = false;
-        m_rPlayerController.ToggleWeaponScroll(false);
-        m_rPlayerController.ToggleHipScroll(true);
+        m_rAnimator.SetTrigger("AttackReturn");
+        //m_rPlayerController.ToggleWeaponScroll(false);
     }
 
     public void AttackCooldown() {
