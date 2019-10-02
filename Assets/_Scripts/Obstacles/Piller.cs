@@ -25,7 +25,7 @@ public class Piller : MonoBehaviour, IMessageReceiver
     {
         if (m_bMoving)
         {
-            Debug.Log(currentPostion);
+            //Debug.Log(currentPostion);
                 if (Vector3.Distance(transform.position, m_gPillersPostion[currentPostion].transform.position) < .1f)
                 {
                     m_bMoving = false;
