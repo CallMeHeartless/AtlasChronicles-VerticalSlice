@@ -28,6 +28,9 @@ public class PlayerAnimationController : MonoBehaviour
     void Start()
     {
         m_rPlayerController = transform.root.GetComponent<PlayerController>();
+        if(m_rPlayerController == null) {
+            Debug.LogError("ERROR: PlayerAnimationController could not find parent PlayerContoller.");
+        }
         if (m_SwitchMarkerPrefab) {
             m_SwitchMarker = GameObject.Instantiate(m_SwitchMarkerPrefab);
             m_SwitchMarker.SetActive(false);
