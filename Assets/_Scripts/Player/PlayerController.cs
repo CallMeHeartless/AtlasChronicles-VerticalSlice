@@ -1231,7 +1231,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Toggles the hip scroll item
     public void ToggleHipScroll(bool _bState) {
-        m_rHipScroll.SetActive(_bState);
+        if (m_rHipScroll) {
+            m_rHipScroll.SetActive(_bState);
+        }
     }
 
     // Toggles the weapon scroll

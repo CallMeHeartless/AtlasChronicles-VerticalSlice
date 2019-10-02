@@ -142,8 +142,12 @@ public class PlayerAnimationController : MonoBehaviour
 
     // External cue to perform the teleportation transition
     public void TeleportationTransition() {
-        if (m_rPlayerController)
+        if (m_rPlayerController) {
             m_rPlayerController.TeleportationTransition();
+        } else {
+            Debug.LogError("CRITICAL ERROR: PlayerAnimationController is missing PlayerController reference.");
+        }
+
     }
 
     // Trigger first part of slam attack
