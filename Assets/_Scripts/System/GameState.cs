@@ -22,7 +22,7 @@ public class GameState : MonoBehaviour
         ToTheTop// get to the top of the temple
     }
 
-    private static SpeedRunMode m_bSpeedRunning = SpeedRunMode.Adventure;
+    private static SpeedRunMode m_eSpeedRunning = SpeedRunMode.Adventure;
   // private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
@@ -57,11 +57,11 @@ public class GameState : MonoBehaviour
     }
     public static void SetSpeedRunning(SpeedRunMode _SpeedRunState)
     {
-        m_bSpeedRunning = _SpeedRunState;
+        m_eSpeedRunning = _SpeedRunState;
     }
     public static SpeedRunMode GetIsSpeedRunning()
     {
-       return m_bSpeedRunning;
+       return m_eSpeedRunning;
     }
 
     public static void SetTimerFlag(bool _Timer)
@@ -91,6 +91,10 @@ public class GameState : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    public static SpeedRunMode GetSpeedRunning() {
+        return m_eSpeedRunning;
     }
     
 }
