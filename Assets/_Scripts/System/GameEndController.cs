@@ -46,17 +46,17 @@ public class GameEndController : MonoBehaviour
         }
 
         // Set crystal and map requirements based on the selected speed run mode
-        if (GameState.GetSpeedRunning() == GameState.SpeedRunMode.Everything)
+        if (GameState.GetIsSpeedRunMode() == GameState.SpeedRunMode.Everything)
         {
             m_iCrystalsNeeded = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length + (GameObject.FindGameObjectsWithTag("Box").Length*5);
             Debug.Log("Required crystals: " + m_iCrystalsNeeded);
         }
         else
         {
-            m_iCrystalsNeeded = m_iMinimumCrystalsModes[(int)GameState.GetSpeedRunning()];
+            m_iCrystalsNeeded = m_iMinimumCrystalsModes[(int)GameState.GetIsSpeedRunMode()];
         }
        
-        m_iMapsNeeded = m_iMinimumMapsModes[(int)GameState.GetSpeedRunning()];
+        m_iMapsNeeded = m_iMinimumMapsModes[(int)GameState.GetIsSpeedRunMode()];
 
         // Turn off the 'portal is open' UI
         if (m_rInfo)
@@ -117,34 +117,33 @@ public class GameEndController : MonoBehaviour
     public void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Player") && m_bIsActive) {
 
-            if (GameState.GetSpeedRunning() != GameState.SpeedRunMode.Adventure)
+            if (GameState.GetIsSpeedRunMode() != GameState.SpeedRunMode.Adventure)
             {
-              
                 GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().StopTimer();
-
-
                 GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
                 if (Object.GetComponent<DontDestory>())
                 {
-
-                    Debug.Log("we got her"+ (int)GameState.GetSpeedRunning());
-                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetSpeedRunning(),
+                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetIsSpeedRunMode(),
                         GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>().GetFinalTime(),
                         Records.m_CurrentPlace);
-                    Debug.Log("we got pushed");
                 }
             }
             GameState.SetTimerFlag(true);
             StartCoroutine("ExitLevel");
-
         }
     }
+
+    /// <summary>
+    /// Return to main menu after 5 seconds
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ExitLevel()
     {
         yield return new WaitForSeconds(5f);
-
+        //Reset the level before loading main menu
         Zone.ClearZones();
         SceneManager.LoadScene(0);
+        yield return null;
     }
 
 

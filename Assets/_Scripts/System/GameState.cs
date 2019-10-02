@@ -59,7 +59,7 @@ public class GameState : MonoBehaviour
     {
         m_bSpeedRunning = _SpeedRunState;
     }
-    public static SpeedRunMode GetIsSpeedRunning()
+    public static SpeedRunMode GetIsSpeedRunMode()
     {
        return m_bSpeedRunning;
     }

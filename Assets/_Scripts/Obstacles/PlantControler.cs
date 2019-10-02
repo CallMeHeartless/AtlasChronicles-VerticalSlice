@@ -133,7 +133,7 @@ public class PlantControler : MonoBehaviour
 
             //if (transform.rotation.eulerAngles.y > 90)
             //{
-            //    Debug.Log("dummy");
+            //    Debug.Log("m_timeString");
             //    //transform.eulerAngles= new Vector3(transform.localRotation.x, 180, transform.localRotation.z);
             //    // transform.Rotate(Vector3.up, Time.deltaTime * 10, Space.World);
             //}

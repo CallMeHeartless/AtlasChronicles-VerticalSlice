@@ -16,7 +16,7 @@ public class SpeedMenu : MonoBehaviour
     private int HighlightedMode;
     private float m_fTime;
     private int m_Trophie;
-
+    private string m_timeString;
     private int m_iCurrentPlace = 0;
 
 
@@ -52,34 +52,36 @@ public class SpeedMenu : MonoBehaviour
             if (Nest.Length < 6)
             {
                 //add in :
-                string dummy = Nest[1].ToString();
+                string m_timeString = Nest[1].ToString();
                 for (int i = 0; i < Nest.Length; i++)
                 {
                     if (Nest.Length - 5 == i)
                     {
-                        dummy = dummy + " : ";
+                        m_timeString = m_timeString + " : ";
                     }
-                    dummy = dummy + Nest[i].ToString();
+                    m_timeString = m_timeString + Nest[i].ToString();
                 }
-                Nest = dummy;
+                Nest = m_timeString;
             }
 
             if (Nest.Length < 9)
             {
                 //add in :
-                string dummy = Nest[1].ToString();
+                string m_timeString = Nest[1].ToString();
                 for (int i = 0; i < Nest.Length; i++)
                 {
                     if (Nest.Length - 8 == i)
                     {
-                        dummy = dummy + " : ";
+                        m_timeString = m_timeString + " : ";
                     }
-                    dummy = dummy + Nest[i].ToString();
+                    m_timeString = m_timeString + Nest[i].ToString();
                 }
-                Nest = dummy;
+                Nest = m_timeString;
             }
         }
         transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = Nest;
+        m_timeString = Nest;
+
     }
     //pressing xboxA should trigger this
     //start with the current mode
@@ -88,9 +90,9 @@ public class SpeedMenu : MonoBehaviour
         GameState.SetSpeedRunning((GameState.SpeedRunMode)HighlightedMode);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    public float GetTimeFlag()
+    public string GetTimeFlag()
     {
-        return m_fTime;
+        return m_timeString;
     }
     public int GettrophieFlag()
     {
@@ -107,7 +109,7 @@ public class SpeedMenu : MonoBehaviour
                 m_rRecordFlavourTxt.text = "TAKE ON A SPEEDY CHALLENGE";
                 break;
             }
-            case 1:
+            case 3:
             {
                 m_rRecordFlavourTxt.text = "LEGENDARY";
                 break;
@@ -117,7 +119,7 @@ public class SpeedMenu : MonoBehaviour
                 m_rRecordFlavourTxt.text = "GREAT";
                 break;
             }
-            case 3:
+            case 1:
             {
                 m_rRecordFlavourTxt.text = "YOU TRIED";
                 break;

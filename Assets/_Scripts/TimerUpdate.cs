@@ -18,7 +18,7 @@ public class TimerUpdate : MonoBehaviour
     void Start()
     {
         //set UI to for the speed run
-        switch (GameState.GetIsSpeedRunning())
+        switch (GameState.GetIsSpeedRunMode())
         {
             case GameState.SpeedRunMode.Adventure:
                 m_TypeUI.text = "Adventure Mode";
@@ -33,7 +33,7 @@ public class TimerUpdate : MonoBehaviour
                 break;
         }
 
-        if (GameState.GetIsSpeedRunning() == GameState.SpeedRunMode.Adventure)
+        if (GameState.GetIsSpeedRunMode() == GameState.SpeedRunMode.Adventure)
         {
             //this is not going to be a speed run
             transform.parent.gameObject.SetActive(false);
@@ -80,7 +80,7 @@ public class TimerUpdate : MonoBehaviour
                 m_TextUI.text += m_Seconds.ToString("F2");
 
                 //check to see if troiphy need to be changed
-                if (Records.check((m_Hours*10000)+(m_Minutes * 100) + (int)m_Seconds, GameState.GetIsSpeedRunning()))
+                if (Records.check((m_Hours*10000)+(m_Minutes * 100) + (int)m_Seconds, GameState.GetIsSpeedRunMode()))
                 {
                     Debug.Log("call");
                     m_Trophy.DecreaseTrophie();
