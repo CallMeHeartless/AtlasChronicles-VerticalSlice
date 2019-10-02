@@ -24,6 +24,7 @@ public class Switchable : MonoBehaviour
     private float m_fReturnTime = 3.0f;
     private float m_fReturnCount = 0.0f;
     private float m_fSpeed = 0.01f;
+    [SerializeField]
     private float m_fMaxSpeed = 0.5f;
     private MeshRenderer m_rMeshRenderer;
    // Material material;

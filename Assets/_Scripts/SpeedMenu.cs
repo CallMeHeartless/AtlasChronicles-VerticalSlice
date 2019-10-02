@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class SpeedMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_rRecordFlavourTxt;
+    [SerializeField] private Image m_rCurrentCup;
     [SerializeField] private Sprite m_rHiddenCupSpr;
     [SerializeField] private Sprite m_rBronzeCupSpr;
     [SerializeField] private Sprite m_rSilverCupSpr;
@@ -15,16 +16,18 @@ public class SpeedMenu : MonoBehaviour
 
     private int HighlightedMode;
     private float m_fTime;
-    private int m_Trophie;
+    private int m_Trophie = 0;
     private string m_timeString;
     private int m_iCurrentPlace = 0;
+    private int m_iBestScore = 0;
 
 
     // Start is called before the first frame update
     private void Start()
     {
         //m_iCurrentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
-        //SetRecordFlavourTxt(m_iCurrentPlace);
+        //PlayerPrefs.GetFloat("TimeAttackCurrentTimeScore", m_rTimerUpdate.GetFinalTime());
+        SetCurrentTimerScore(m_Trophie);
     }
 
 
@@ -37,8 +40,10 @@ public class SpeedMenu : MonoBehaviour
 
         Object.GetComponent<DontDestory>().GetSpeedMode(HighlightedMode, out m_fTime, out m_Trophie);
 
-        transform.GetChild(1).gameObject.GetComponent<TrophyUI>().setSprite(m_Trophie);
-        transform.GetChild(2).gameObject.GetComponent<TrophyUI>().setSprite(HighlightedMode);
+        //Set current highscore
+        SetCurrentTimerScore(m_Trophie);
+        //transform.GetChild(1).gameObject.GetComponent<TrophyUI>().setSprite(m_Trophie);
+        //transform.GetChild(2).gameObject.GetComponent<TrophyUI>().setSprite(HighlightedMode);
 
 
         string Nest;
@@ -99,38 +104,49 @@ public class SpeedMenu : MonoBehaviour
         return m_Trophie;
     }
 
-    public void SetRecordFlavourTxt(int _currentPlace)
+    /// <summary>
+    /// Sets the cup sprite and the flavour text depending on what the current score is
+    /// </summary>
+    /// <param name="_currentPlace">The placement/cup prize depending on the time attack score</param>
+    public void SetCurrentTimerScore(int _currentPlace)
     {
-        //NOTE:: NEED TO FIND WAY TO CHECK WHICH CUP WAS OBTAINED
         switch (_currentPlace)
         {
             case 0:
             {
+                //If NO of the records were beaten, a hidden cup is displayed
+                m_rCurrentCup.sprite = m_rHiddenCupSpr;
                 m_rRecordFlavourTxt.text = "TAKE ON A SPEEDY CHALLENGE";
                 break;
             }
             case 3:
             {
+                //If the time beats the Gold cup record
+                m_rCurrentCup.sprite = m_rGoldCupSpr;
                 m_rRecordFlavourTxt.text = "LEGENDARY";
                 break;
             }
             case 2:
             {
+                //If the time beats the Silver cup record
+                m_rCurrentCup.sprite = m_rSilverCupSpr;
                 m_rRecordFlavourTxt.text = "GREAT";
                 break;
             }
             case 1:
             {
+                //If the time beats the Bronze cup record
+                m_rCurrentCup.sprite = m_rBronzeCupSpr;
                 m_rRecordFlavourTxt.text = "YOU TRIED";
                 break;
             }
-
             default:
+            {
+                m_rCurrentCup.sprite = m_rHiddenCupSpr;
+                m_rRecordFlavourTxt.text = "TAKE ON A SPEEDY CHALLENGE";
                 break;
+            }
         }
-        //if cup is GOLD
-        //if cup is SILVER
-        //if cup is BRNNZES
     }
-   
+
 }

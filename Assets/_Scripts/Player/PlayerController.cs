@@ -227,7 +227,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         m_fWaterParticles.SetActive(false);
         m_rWeaponScroll.SetActive(false);
-
         //if(GameObject.FindGameObjectWithTag("CinematicManager") == null)
         //{
         //    Instantiate(m_rCineManagerPrefab, Vector3.zero, Quaternion.identity);
@@ -675,7 +674,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
             // Basic attack when on the ground
             m_rAnimator.SetTrigger("Attack");
-        }else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
+            //// Adds a mixing transform using a path instead
+            //Transform mixTransform = transform.Find("Base HumanLLegThigh");
+
+            //// Add mixing transform
+            //anim["wave_hand"].AddMixingTransform(mixTransform);
+        }
+        else if(Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && !m_rCharacterController.isGrounded) {
             // Slam attack when in the air
             ToggleGlideScroll(false);
             m_rAnimator.SetTrigger("GroundSlam");
@@ -1170,7 +1175,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_Velocity = Vector3.zero;
         m_bCanAttack = false;
         ToggleWeaponScroll(true);
-        ToggleHipScroll(false);
     }
 
     // Slam attack middle - damage stage
@@ -1198,8 +1202,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rAnimator.SetBool("Grounded", true);
         m_rAnimator.ResetTrigger("GroundSlam");
         ToggleWeaponScroll(false);
-        ToggleHipScroll(true);
-
     }
 
     // Message events
@@ -1229,13 +1231,23 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Toggles the hip scroll item
     public void ToggleHipScroll(bool _bState) {
-        m_rHipScroll.SetActive(_bState);
+        if (m_rHipScroll) {
+            m_rHipScroll.SetActive(_bState);
+        }
     }
 
     // Toggles the weapon scroll
     public void ToggleWeaponScroll(bool _bState) {
         m_rWeaponScroll.SetActive(_bState);
         m_rHipScroll.SetActive(!_bState);
+        if(_bState)
+        {
+            m_rHipScroll.transform.localScale = Vector3.zero;
+        }
+        else
+        {
+            m_rHipScroll.transform.localScale = Vector3.one;
+        }
     }
     public int getWeight()
     {
