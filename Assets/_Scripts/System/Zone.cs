@@ -77,7 +77,7 @@ public class Zone : MonoBehaviour
             // Check if the fragment ID matches the zone ID
             if (zone.DoesIDMatchZone(_uiFragmentID)) {
                 zone.SetMapFragmentStatus(true);
-                Debug.Log("Collected map for zone " + _uiFragmentID);
+                //Debug.Log("Collected map for zone " + _uiFragmentID);
             }
         }
     }
@@ -111,7 +111,7 @@ public class Zone : MonoBehaviour
         }
     }
 
-    // Toggles map vision for all zones with collected map fragments
+    // Toggles map vision for all zones with collected map fragments // Legacy
     public static void ToggleMapVision(bool _bOn) {
         foreach(Zone zone in s_Zones) {
             if (zone.GetIsMapFragmentCollected()) {
