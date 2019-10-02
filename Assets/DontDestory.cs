@@ -17,6 +17,10 @@ public class DontDestory : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        //Set up playerprefs for speed mode
+        gamemodeBestTrophy[1] = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
+        //gamemodeBestSpeed[1] = PlayerPrefs.GetFloat("TimeAttackBestScore", 0.0f);
     }
     public void SetNewSpeedMode(int _mode, float _time, int _trophie)
     {
