@@ -14,24 +14,27 @@ public class TimerUpdate : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_TypeUI;
     [SerializeField] private Trophies m_Trophy;
 
+    bool m_bSpeedRun = false;
+
     // Start is called before the first frame update
     void Start()
     {
         //set UI to for the speed run
-        switch (GameState.GetIsSpeedRunMode())
-        {
-            case GameState.SpeedRunMode.Adventure:
-                m_TypeUI.text = "Adventure Mode";
-            break;
-            case GameState.SpeedRunMode.SpeedRun:
-                m_TypeUI.text = "Time Attack: 160 gems, 5 map and out";
-                break;
-            case GameState.SpeedRunMode.Everything:
-                m_TypeUI.text = "Get All";
-                break;
-            default:
-                break;
-        }
+        //switch (GameState.GetIsSpeedRunMode())
+        //{
+        //    case GameState.SpeedRunMode.Adventure:
+        //        m_TypeUI.text = "Adventure Mode";
+        //    break;
+        //    case GameState.SpeedRunMode.SpeedRun:
+        //        m_TypeUI.text = "Time Attack: 160 gems, 5 map and out";
+        //        m_bSpeedRun = true;
+        //        break;
+        //    case GameState.SpeedRunMode.Everything:
+        //        m_TypeUI.text = "Get All";
+        //        break;
+        //    default:
+        //        break;
+        //}
 
         if (GameState.GetIsSpeedRunMode() == GameState.SpeedRunMode.Adventure)
         {
@@ -45,7 +48,9 @@ public class TimerUpdate : MonoBehaviour
   ______________________________________________________*/
     void Update()
     {
-        
+        if (!m_bSpeedRun)
+            return;
+
         if ((!GameState.GetPauseFlag()) &&(!GameState.GetCinematicFlag()))//pause the game
         {
             if (m_EndTimer)
