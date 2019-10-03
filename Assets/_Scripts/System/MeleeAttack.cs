@@ -17,6 +17,7 @@ public class MeleeAttack : MonoBehaviour
     private string[] m_strTargetTag;
     [HideInInspector]
     public bool m_bIsActive = false;
+    public bool m_bIsPeriodic = false;
 
     public UnityEvent OnHit;
 
@@ -24,6 +25,9 @@ public class MeleeAttack : MonoBehaviour
     void Start()
     {
         m_HitBox = GetComponent<Collider>();
+        if (m_bIsPeriodic) {
+            m_bIsActive = true;
+        }
     }
 
     
@@ -42,6 +46,9 @@ public class MeleeAttack : MonoBehaviour
                     }
                     OnHit.Invoke();
                     m_bIsActive = false; // Prevent multiple collisions
+                    if (m_bIsPeriodic) {
+                        Invoke("ResetAttack", 1.0f);
+                    }
                 }
             }
         }
@@ -59,6 +66,9 @@ public class MeleeAttack : MonoBehaviour
                     }
                     OnHit.Invoke();
                     m_bIsActive = false; // Prevent multiple collisions
+                    if (m_bIsPeriodic) {
+                        Invoke("ResetAttack", 1.0f);
+                    }
                 }
             }
         }
@@ -75,5 +85,8 @@ public class MeleeAttack : MonoBehaviour
         return false;
     }
 
+    private void ResetAttack() {
+        m_bIsActive = true;
+    }
 
 }
