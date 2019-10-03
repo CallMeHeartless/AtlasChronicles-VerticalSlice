@@ -6,7 +6,7 @@ Shader "S_InkWellLevel"
 {
 	Properties
 	{
-		_RaiseLevel("RaiseLevel", Range( 0 , 1)) = 1
+		_Height("Height", Range( 0 , 1)) = 1
 		_Diff("Diff", 2D) = "white" {}
 		_EmissiveColor("EmissiveColor", Color) = (0,0,0,0)
 		_InkColor("InkColor", Color) = (0,0,0,0)
@@ -36,8 +36,8 @@ Shader "S_InkWellLevel"
 #define _InkColor_arr S_InkWellLevel
 			UNITY_DEFINE_INSTANCED_PROP(float4, _EmissiveColor)
 #define _EmissiveColor_arr S_InkWellLevel
-			UNITY_DEFINE_INSTANCED_PROP(float, _RaiseLevel)
-#define _RaiseLevel_arr S_InkWellLevel
+			UNITY_DEFINE_INSTANCED_PROP(float, _Height)
+#define _Height_arr S_InkWellLevel
 			UNITY_DEFINE_INSTANCED_PROP(float, _EmissiveIntensity)
 #define _EmissiveIntensity_arr S_InkWellLevel
 		UNITY_INSTANCING_BUFFER_END(S_InkWellLevel)
@@ -46,8 +46,8 @@ Shader "S_InkWellLevel"
 		{
 			float2 uv_Diff = i.uv_texcoord * _Diff_ST.xy + _Diff_ST.zw;
 			float4 _InkColor_Instance = UNITY_ACCESS_INSTANCED_PROP(_InkColor_arr, _InkColor);
-			float _RaiseLevel_Instance = UNITY_ACCESS_INSTANCED_PROP(_RaiseLevel_arr, _RaiseLevel);
-			float clampResult22 = clamp( ( ( ( 1.0 - (i.uv_texcoord).y ) - 1.0 ) + ( _RaiseLevel_Instance + 1.0 ) ) , 0.0 , 1.0 );
+			float _Height_Instance = UNITY_ACCESS_INSTANCED_PROP(_Height_arr, _Height);
+			float clampResult22 = clamp( ( ( ( 1.0 - (i.uv_texcoord).y ) - 1.0 ) + ( _Height_Instance + 1.0 ) ) , 0.0 , 1.0 );
 			float temp_output_11_0 = pow( clampResult22 , 100.0 );
 			float4 lerpResult17 = lerp( tex2D( _Diff, uv_Diff ) , _InkColor_Instance , temp_output_11_0);
 			o.Albedo = lerpResult17.rgb;
@@ -66,12 +66,12 @@ Shader "S_InkWellLevel"
 }
 /*ASEBEGIN
 Version=16400
-1927;1;1266;964;2165.83;972.1191;1.602109;True;False
+1927;7;1266;958;2165.83;967.3127;1.602109;True;False
 Node;AmplifyShaderEditor.TextureCoordinatesNode;2;-1926.835,-379.3794;Float;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.ComponentMaskNode;1;-1691.695,-384.7672;Float;True;False;True;False;False;1;0;FLOAT2;0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.OneMinusNode;3;-1442.353,-378.5808;Float;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;5;-1427.614,-130.071;Float;False;InstancedProperty;_RaiseLevel;RaiseLevel;0;0;Create;True;0;0;False;0;1;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;26;-1688.923,-113.4179;Float;False;Constant;_PlusOne;PlusOne;5;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;5;-1427.614,-130.071;Float;False;InstancedProperty;_Height;Height;0;0;Create;True;0;0;False;0;1;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.OneMinusNode;3;-1442.353,-378.5808;Float;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;25;-1108.277,-105.9738;Float;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleSubtractOpNode;4;-1267.625,-379.627;Float;True;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;23;-765.2464,-246.0958;Float;False;Constant;_Float0;Float 0;5;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
@@ -80,8 +80,8 @@ Node;AmplifyShaderEditor.RangedFloatNode;24;-775.8386,-172.7827;Float;False;Cons
 Node;AmplifyShaderEditor.ClampOpNode;22;-539.3932,-336.2202;Float;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;12;-1316.063,44.29032;Float;False;Constant;_POWER;POWER;1;0;Create;True;0;0;False;0;100;0;0;100;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;19;-648.1023,-108.6448;Float;False;Constant;_NoEmissive;No Emissive;4;0;Create;True;0;0;False;0;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;15;-717.958,50.11788;Float;False;InstancedProperty;_EmissiveColor;EmissiveColor;2;0;Create;True;0;0;False;0;0,0,0,0;0.6093364,0,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.PowerNode;11;-385.4237,-270.8917;Float;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;15;-717.958,50.11788;Float;False;InstancedProperty;_EmissiveColor;EmissiveColor;2;0;Create;True;0;0;False;0;0,0,0,0;0.6093364,0,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.LerpOp;18;-294.591,-106.528;Float;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SamplerNode;13;-840.7344,-860.1205;Float;True;Property;_Diff;Diff;1;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;21;-288.2401,86.10352;Float;False;InstancedProperty;_EmissiveIntensity;EmissiveIntensity;4;0;Create;True;0;0;False;0;0;1;0;0;0;1;FLOAT;0
@@ -112,4 +112,4 @@ WireConnection;17;2;11;0
 WireConnection;0;0;17;0
 WireConnection;0;2;20;0
 ASEEND*/
-//CHKSM=74D8A9ADE407654BCCD8F10257957B90DD04DF30
+//CHKSM=84CCE44BA049B000F655473C74E88510DCF83388

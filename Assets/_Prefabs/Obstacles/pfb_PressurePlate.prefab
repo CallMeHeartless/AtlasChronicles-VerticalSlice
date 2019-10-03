@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Weight: 0
   m_RequirmentWeight: 1
   m_RequirmentColor: 0
+  m_IsOn: 0
   m_fSpeed: 0.025
 --- !u!1001 &8798352651868346999
 PrefabInstance:
@@ -233,6 +234,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9100442221701383024}
     m_Modifications:
+    - target: {fileID: 100000, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
+      propertyPath: m_Name
+      value: sm_PressurePlate
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -285,14 +294,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
-      propertyPath: m_Name
-      value: sm_PressurePlate
-      objectReference: {fileID: 0}
-    - target: {fileID: 100004, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 8
-      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100010, guid: 785d52a0d4d38ad4499c99288814d826, type: 3}
+    - target: {fileID: 2300000, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100010, guid: 785d52a0d4d38ad4499c99288814d826, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea8c719d3a03e80419aa7c028f3ff1cd, type: 3}
 --- !u!4 &8798352651868471543 stripped
