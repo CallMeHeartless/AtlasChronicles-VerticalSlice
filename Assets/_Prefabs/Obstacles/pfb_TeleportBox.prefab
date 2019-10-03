@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_bReturnAfterDelay: 0
   m_fReturnTime: 3
+  m_fMaxSpeed: 0.5
 --- !u!208 &8370798759684792142
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -106,6 +107,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4198243330629954564}
     m_Modifications:
+    - target: {fileID: 100000, guid: 8dc98b878b0152f46bfb50cba5341061, type: 3}
+      propertyPath: m_Name
+      value: sm_TeleportBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 8dc98b878b0152f46bfb50cba5341061, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 8dc98b878b0152f46bfb50cba5341061, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -161,10 +170,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 8dc98b878b0152f46bfb50cba5341061, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 8dc98b878b0152f46bfb50cba5341061, type: 3}
-      propertyPath: m_Name
-      value: sm_TeleportBox
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 8dc98b878b0152f46bfb50cba5341061, type: 3}
       propertyPath: m_Materials.Array.data[0]
