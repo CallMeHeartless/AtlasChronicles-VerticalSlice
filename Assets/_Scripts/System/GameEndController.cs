@@ -150,7 +150,6 @@ public class GameEndController : MonoBehaviour
                         Records.m_CurrentPlace);
 
                     PlayerPrefs.SetInt("TimeAttackCurrentPlace", Records.m_CurrentPlace);
-                    PlayerPrefs.SetFloat("TimeAttackCurrentTimeScore", m_rTimerUpdate.GetFinalTime());
                     m_rTimerUpdate.DisplayTimeAttackResults();
                 }
             }

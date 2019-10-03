@@ -56,8 +56,11 @@ public class DialogueManager : MonoBehaviour
     private bool m_skipDialogue = false;
     private string m_strCurrentDialogue = "";
     private string m_strCurrentSentence = "";
-    private string m_strNext = "Jump";
-    private string m_strNext2 = "XBoxXButton";
+    private string m_strNext = "AButton";
+    private string m_strNext2 = "BButton";
+    private string m_strNext3 = "XBoxXButton";
+    private string m_strSkip = "YButton";
+
     private string m_strStart = "XBoxStart";
     //private string m_strComplete = "Jump";
 
@@ -91,14 +94,19 @@ public class DialogueManager : MonoBehaviour
         //Check whether the keyboard or controller was last pressed
         InputChecker();
         //Dont process input if game is paused
-        if (GameState.GetPauseFlag())
-        {
+        if (GameState.GetPauseFlag() || !m_bConversing)
             return;
-        }
 
-        if (Input.GetButtonDown(m_strNext) || Input.GetButtonDown(m_strNext2))
+        if (Input.GetButtonDown(m_strNext) 
+            || Input.GetButtonDown(m_strNext2) 
+            || Input.GetButtonDown(m_strNext3))
         {
             InteractSentence();
+        }
+
+        if(Input.GetButtonDown(m_strSkip))
+        {
+            BeginDialogue(false);
         }
     }
 
@@ -118,13 +126,12 @@ public class DialogueManager : MonoBehaviour
         if (Input.GetAxis("XBoxLT") > 0 || Input.GetAxis("XBoxRT") > 0
               || Input.GetAxis("XBoxHor") != 0 || Input.GetAxis("XBoxVert") != 0
               || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0
-          || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
+              || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
         {
-            
             s_bInputController = true;
         }
 
-        //If any joystick keys are pressed on the xbox controller
+        //If any joystick keys are pressed on the xbox controller, set controller in use
         for (int i = 0; i < 20; i++)
         {
             if (Input.GetKeyDown("joystick 1 button " + i))

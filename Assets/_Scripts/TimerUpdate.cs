@@ -25,7 +25,6 @@ public class TimerUpdate : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_rBestRecordTime;
 
     [SerializeField] private Image m_rCurrentTrophy;
-    [SerializeField] private Image m_rBestTrophy;
 
     [SerializeField] private Sprite m_rHiddenTrophy;
     [SerializeField] private Sprite m_rBronzeTrophy;
@@ -43,19 +42,18 @@ public class TimerUpdate : MonoBehaviour
             case GameState.GameplayMode.Adventure:
             {
                 m_TypeUI.text = "Adventure Mode";
-                m_timerUIPanel.SetActive(true);
+                m_timerUIPanel.SetActive(false);
                 break;
             }
             case GameState.GameplayMode.SpeedRun:
             {
-                m_TypeUI.text = "Time Attack: 160 gems, 5 map and out";
+                m_TypeUI.text = "Time Attack: COLLECT 160 GEMS AND 5 MAPS BEFORE HEADING TO THE EXIT";
                 m_timerUIPanel.SetActive(true);
 
                 m_rCurrentRecordTime.text = "--:--:--";
                 m_rBestRecordTime.text = "--:--:--";
                 m_rFlavourText.text = "GOOD JOB";
                 m_rCurrentTrophy.sprite = m_rHiddenTrophy;
-                m_rBestTrophy.sprite = m_rHiddenTrophy;
                 break;
             }
             case GameState.GameplayMode.Everything:
@@ -82,7 +80,7 @@ public class TimerUpdate : MonoBehaviour
         //If in Results page
         if(m_TimeAttackResultsPanel.activeSelf)
         {
-            if (Input.GetAxis("Jump") != 0)
+            if (Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
             {
                 Zone.ClearZones();
                 SceneManager.LoadScene(0);
@@ -142,8 +140,6 @@ public class TimerUpdate : MonoBehaviour
 
         //Retrieve time record values required to be set into ui view
         int currentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
-        float currentScore = PlayerPrefs.GetFloat("TimeAttackCurrentTimeScore", 0);
-        float bestScore = PlayerPrefs.GetFloat("TimeAttackGoldTimeScore", 0);
         string currentScoreString = PlayerPrefs.GetString("TimeAttackTimeString", "--:--:--");
 
         //Convert scores to strings
@@ -173,10 +169,14 @@ public class TimerUpdate : MonoBehaviour
                 m_rFlavourText.text = "GOOD JOB";
                 break;
             }
-            default:
+            case 0:
             {
                 m_rCurrentTrophy.sprite = m_rHiddenTrophy;
                 m_rFlavourText.text = "TRY AGAIN";
+                break;
+            }
+            default:
+            {
                 break;
             }
         }
@@ -235,9 +235,9 @@ public class TimerUpdate : MonoBehaviour
 
         int roundedSeconds = Mathf.RoundToInt(m_Seconds);
 
-        string secs = (roundedSeconds > 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
-        string minutes = (m_Minutes > 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
-        string hours = (m_Hours > 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
+        string secs = (roundedSeconds >= 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
+        string minutes = (m_Minutes >= 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
+        string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
         totalTimeString = hours + ":" + minutes + ":" + secs;
 
         PlayerPrefs.SetString("TimeAttackTimeString", totalTimeString);

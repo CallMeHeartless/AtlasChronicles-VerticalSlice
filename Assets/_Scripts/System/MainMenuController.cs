@@ -22,7 +22,9 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject m_rLeftModeButton;
     [SerializeField] private GameObject m_rRightModeButton;
     [SerializeField] private GameObject m_rLoadingPanel;
+    [SerializeField] private GameObject m_rNLExpressions;
     [SerializeField] private TextMeshProUGUI m_rModeTitleText;
+    private SpeedMenu m_rModeMenu;
 
     private Canvas m_rCanvas;
 
@@ -43,8 +45,30 @@ public class MainMenuController : MonoBehaviour
             m_playButton.Select();
         }
         m_rCanvas = GetComponent<Canvas>();
+        m_rModeMenu = m_rModeSelection.GetComponent<SpeedMenu>();
+        m_rNLExpressions.SetActive(false);
         m_rLoadingPanel.SetActive(false);
         NavigateModeLeft(true);
+    }
+
+    private void Update()
+    {
+        if (m_rModeSelection.activeSelf)
+        {
+            if (Input.GetMouseButtonDown(1)) //Back button
+            {
+                ActivateModeSelection(false);
+            }
+            if (Input.GetAxis("XBoxL2") != 0)
+            {
+                NavigateModeLeft(true);
+            }
+            if (Input.GetAxis("XBoxR2") != 0)
+            {
+                NavigateModeLeft(false);
+            }
+        }
+        
     }
 
     public void ActivateMenu(bool _activate)
@@ -59,15 +83,18 @@ public class MainMenuController : MonoBehaviour
     public void ActivateModeSelection(bool _activate)
     {
         m_rModeSelection.SetActive(_activate);
+        m_rModeMenu.UpdateTimerPanelValues();
         if (_activate)
         {
             ActivateMenu(false);
             m_rCanvas.planeDistance = m_iRevealedPlaneDist;
+            m_rNLExpressions.SetActive(true);
             m_rNLOnPillar.SetBool("ShowMode", true);
         }
         else
         {
             ActivateMenu(true);
+            m_rNLExpressions.SetActive(false);
             m_rNLOnPillar.SetBool("ShowMode", false);
         }
     }
@@ -99,6 +126,8 @@ public class MainMenuController : MonoBehaviour
 
     public void StartGame(GameState.GameplayMode _mode)
     {
+        m_rNLExpressions.SetActive(false);
+
         m_rButtonClick.Play();
         //m_rCanvas.planeDistance = m_iHiddenPlaneDist; //Hide November Lonesome
 

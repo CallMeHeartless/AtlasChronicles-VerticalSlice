@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class SpeedMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_rRecordFlavourTxt;
+    [SerializeField] private TextMeshProUGUI m_rCurrentRecordTxt;
     [SerializeField] private Image m_rCurrentCup;
     [SerializeField] private Sprite m_rHiddenCupSpr;
     [SerializeField] private Sprite m_rBronzeCupSpr;
@@ -21,18 +22,6 @@ public class SpeedMenu : MonoBehaviour
     private int m_iCurrentPlace = 0;
     private int m_iBestScore = 0;
 
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        //m_iCurrentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
-        //PlayerPrefs.GetFloat("TimeAttackCurrentTimeScore", m_rTimerUpdate.GetFinalTime());
-
-        //if(GameState.GetSpeedRunning())
-        //    SetCurrentTimerScore(m_Trophie);
-    }
-
-
     //call this when you are change which which mode you highlighted 
     //change the time and trophie so they are of the new mode
     public void UpdateMenu(int _HighlightedMode)
@@ -43,7 +32,8 @@ public class SpeedMenu : MonoBehaviour
         Object.GetComponent<DontDestory>().GetSpeedMode(HighlightedMode, out m_fTime, out m_Trophie);
 
         //Set current highscore
-        SetCurrentTimerScore(m_Trophie);
+        //SetCurrentTimerScore(m_Trophie);
+
         //transform.GetChild(1).gameObject.GetComponent<TrophyUI>().setSprite(m_Trophie);
         //transform.GetChild(2).gameObject.GetComponent<TrophyUI>().setSprite(HighlightedMode);
 
@@ -105,14 +95,24 @@ public class SpeedMenu : MonoBehaviour
     {
         return m_Trophie;
     }
+    
+    public void ResetScores()
+    {
+        PlayerPrefs.SetInt("TimeAttackCurrentPlace", 0);
+        PlayerPrefs.SetString("TimeAttackTimeString", "--:--:--");
+        UpdateTimerPanelValues();
+    }
 
     /// <summary>
     /// Sets the cup sprite and the flavour text depending on what the current score is
     /// </summary>
     /// <param name="_currentPlace">The placement/cup prize depending on the time attack score</param>
-    public void SetCurrentTimerScore(int _currentPlace)
+    public void UpdateTimerPanelValues()
     {
-        switch (_currentPlace)
+        int currentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
+        m_rCurrentRecordTxt.text = PlayerPrefs.GetString("TimeAttackTimeString", "--:--:--");
+
+        switch (currentPlace)
         {
             case 0:
             {

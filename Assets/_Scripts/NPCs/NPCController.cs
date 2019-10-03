@@ -107,7 +107,7 @@ public class NPCController : MonoBehaviour
 
 
             //If X button pressed, activate dialogue
-            if (Input.GetButtonDown("XBoxXButton") && !m_bInteracting && GameState.DoesPlayerHaveControl()
+            if (Input.GetButtonDown("BButton") && !m_bInteracting && GameState.DoesPlayerHaveControl()
                 && (m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden") || m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle")))
             {
                 m_bInteracting = true;
