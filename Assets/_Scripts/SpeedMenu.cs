@@ -27,7 +27,9 @@ public class SpeedMenu : MonoBehaviour
     {
         //m_iCurrentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
         //PlayerPrefs.GetFloat("TimeAttackCurrentTimeScore", m_rTimerUpdate.GetFinalTime());
-        SetCurrentTimerScore(m_Trophie);
+
+        //if(GameState.GetSpeedRunning())
+        //    SetCurrentTimerScore(m_Trophie);
     }
 
 
@@ -92,7 +94,7 @@ public class SpeedMenu : MonoBehaviour
     //start with the current mode
     public void StartGame()
     {
-        GameState.SetSpeedRunning((GameState.SpeedRunMode)HighlightedMode);
+        GameState.SetGameplayMode((GameState.GameplayMode)HighlightedMode);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public string GetTimeFlag()

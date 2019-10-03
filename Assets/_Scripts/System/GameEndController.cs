@@ -11,31 +11,27 @@ public class GameEndController : MonoBehaviour
     public static GameEndController instance { get { return m_sInstance; } }
 
     [Header("Collection variables")]
-    [SerializeField]
-    private int m_iCrystalsNeeded = 200;
-    [SerializeField]
-    private int m_iMapsNeeded = 5;
+    [SerializeField] private int m_iCrystalsNeeded = 200;
+    [SerializeField] private int m_iMapsNeeded = 5;
 
     // Properties / references
     [Header("References")]
     public string m_strEndText = "Congrats! You obtained all 6 map fragments. Return with them to the start to leave the world.";
     private TextMeshProUGUI m_rText;
-    [SerializeField]
-    private GameObject m_rPortalParticles = null;
-    [SerializeField]
-    private GameObject m_rInfo = null; //Just ui telling player the portal is open
-    [SerializeField]
-    private bool m_bIsActive = false;
+    [SerializeField] private GameObject m_rPortalParticles = null;
+    [SerializeField] private GameObject m_rInfo = null; //Just ui telling player the portal is open
+    [SerializeField] private bool m_bIsActive = false;
+    private bool m_bGameComplete = false;
     private Animator m_rAnimator;
     private TimerUpdate m_rTimerUpdate;
 
     public int[] m_iMinimumCrystalsModes;
     public int[] m_iMinimumMapsModes;
     
-
     public static int m_iMinimumCrystals = 100;
     public static int m_iMinimumMaps = 5;
     public static bool m_bHasEnoughMaps = false;
+    public bool m_bIsTriggeredOnce = false;
        
     void Awake()
     {
@@ -43,21 +39,20 @@ public class GameEndController : MonoBehaviour
         if (!m_sInstance) {
             m_sInstance = this;
             // Initialise static variables
-           
         }
 
         // Set crystal and map requirements based on the selected speed run mode
-        if (GameState.GetIsSpeedRunMode() == GameState.SpeedRunMode.Everything)
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.Everything)
         {
             m_iCrystalsNeeded = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length + (GameObject.FindGameObjectsWithTag("Box").Length*5);
             Debug.Log("Required crystals: " + m_iCrystalsNeeded);
         }
         else
         {
-            m_iCrystalsNeeded = m_iMinimumCrystalsModes[(int)GameState.GetIsSpeedRunMode()];
+            m_iCrystalsNeeded = m_iMinimumCrystalsModes[(int)GameState.GetGameplayMode()];
         }
        
-        m_iMapsNeeded = m_iMinimumMapsModes[(int)GameState.GetIsSpeedRunMode()];
+        m_iMapsNeeded = m_iMinimumMapsModes[(int)GameState.GetGameplayMode()];
 
         // Turn off the 'portal is open' UI
         if (m_rInfo)
@@ -73,6 +68,22 @@ public class GameEndController : MonoBehaviour
 
         // Initialise crystal depo children
         InitialiseCrystalDepos();
+
+        m_bGameComplete = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            m_bIsActive = true;
+            m_iCrystalsNeeded = 0;
+            m_iMapsNeeded = 0;
+        }
+
+        if (!m_bGameComplete)
+            return;
+        
     }
 
     // Called when the player collects a map fragment to check if they have them all (or when they have lost one)
@@ -119,24 +130,42 @@ public class GameEndController : MonoBehaviour
 
     // Return the player to the main menu upon completion
     public void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Player") && m_bIsActive) {
-
-            if (GameState.GetIsSpeedRunMode() != GameState.SpeedRunMode.Adventure)
+        if(other.CompareTag("Player") && m_bIsActive)
+        {
+            m_bIsTriggeredOnce = true;
+            
+            GameState.SetTimerFlag(true);
+            m_bGameComplete = true;
+            if (GameState.GetGameplayMode() != GameState.GameplayMode.Adventure)
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
                 m_rTimerUpdate.StopTimer();
                 GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
                 if (Object.GetComponent<DontDestory>())
                 {
-                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetIsSpeedRunMode(),
+                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetGameplayMode(),
                         m_rTimerUpdate.GetFinalTime(),
                         Records.m_CurrentPlace);
 
                     PlayerPrefs.SetInt("TimeAttackCurrentPlace", Records.m_CurrentPlace);
                     PlayerPrefs.SetFloat("TimeAttackCurrentTimeScore", m_rTimerUpdate.GetFinalTime());
+                    m_rTimerUpdate.DisplayTimeAttackResults();
                 }
             }
-            GameState.SetTimerFlag(true);
-            StartCoroutine("ExitLevel");
+            else
+            {
+                StartCoroutine(ExitLevel());
+            }
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            m_bIsTriggeredOnce = false;
         }
     }
 

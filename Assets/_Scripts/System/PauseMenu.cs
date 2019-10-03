@@ -58,27 +58,7 @@ public class PauseMenu : MonoBehaviour
             && !m_rPausePanel.activeSelf && !m_rSettingsPanel.activeSelf && !m_rMapPanel.activeSelf)
         {
             m_rButtonClick.Play();          // Play a click sound when player accesses the pause menu
-            m_rPausePanel.SetActive(true);  //Activate the pause menu
-            m_rPauseSection.SetActive(true);//Activate the pause section
-
-            //Unlock cursor so player can use the mouse when the game is paused
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            //Disable camera usage when paused
-            if (m_rCineCamera != null)
-                m_rCineCamera.enabled = false;
-
-            //Disable cinematic functionality when paused
-            m_rScriptActivator.SetChildrenActive(false);
-            //CinematicManager.ActivateCinematics(false);
-            CinematicManager.PauseAllCinematics(true);
-
-            // Set game as paused 
-            GameState.SetPauseFlag(true);
-            m_bIsPaused = true;
-
-            m_rDisplayStat.HideUIGamePanel(false);
+            Pause();
         }
         // Resume gameplay
         else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("XBoxStart"))
@@ -121,6 +101,31 @@ public class PauseMenu : MonoBehaviour
 
             //NOTE: PAUSE AND RESUME CUTSCENES AFTER RESUMING
         }
+    }
+
+    public void Pause()
+    {
+        m_rPausePanel.SetActive(true);  //Activate the pause menu
+        m_rPauseSection.SetActive(true);//Activate the pause section
+
+        //Unlock cursor so player can use the mouse when the game is paused
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        //Disable camera usage when paused
+        if (m_rCineCamera != null)
+            m_rCineCamera.enabled = false;
+
+        //Disable cinematic functionality when paused
+        m_rScriptActivator.SetChildrenActive(false);
+        //CinematicManager.ActivateCinematics(false);
+        CinematicManager.PauseAllCinematics(true);
+
+        // Set game as paused 
+        GameState.SetPauseFlag(true);
+        m_bIsPaused = true;
+
+        m_rDisplayStat.HideUIGamePanel(false);
     }
 
     public void Click()

@@ -86,7 +86,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void StartAdventure()
     {
-        StartGame(GameState.SpeedRunMode.Adventure);
+        StartGame(GameState.GameplayMode.Adventure);
     }
 
     /// <summary>
@@ -94,16 +94,16 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void StartTimeAttack()
     {
-        StartGame(GameState.SpeedRunMode.SpeedRun);
+        StartGame(GameState.GameplayMode.SpeedRun);
     }
 
-    public void StartGame(GameState.SpeedRunMode _mode)
+    public void StartGame(GameState.GameplayMode _mode)
     {
         m_rButtonClick.Play();
         //m_rCanvas.planeDistance = m_iHiddenPlaneDist; //Hide November Lonesome
 
         //Set the game mode and allow player to run free
-        GameState.SetSpeedRunning(_mode);
+        GameState.SetGameplayMode(_mode);
         GameState.SetPlayerFree();
         m_rNLOnPillar.SetBool("ShowMode", false);
         //m_rNLOnPillar.transform.GetChild(0).GetComponent<Animator>().SetTrigger("PopIn");

@@ -14,7 +14,7 @@ public class Records : MonoBehaviour
   * Job: degrade the current rank trophie
   * Ceratior: Nicholas
   ______________________________________________________*/
-    static public bool check(int CurrentTime,GameState.SpeedRunMode mode)
+    static public bool check(int CurrentTime,GameState.GameplayMode mode)
     {
        
         if ((CurrentTime<= 0)||( m_CurrentPlace < 1))
@@ -24,9 +24,9 @@ public class Records : MonoBehaviour
        // Debug.Log(mode);
         switch (mode)
         {
-            case GameState.SpeedRunMode.Adventure:
+            case GameState.GameplayMode.Adventure:
                 break;
-            case GameState.SpeedRunMode.SpeedRun:
+            case GameState.GameplayMode.SpeedRun:
 
                 if (CurrentTime == m_SpeedRunRecords_SpeedRun[m_CurrentPlace-1])
                 {
@@ -35,7 +35,7 @@ public class Records : MonoBehaviour
                     return true;
                 }
                 break;
-            case GameState.SpeedRunMode.Everything:
+            case GameState.GameplayMode.Everything:
  
                 if (CurrentTime == m_SpeedRunRecords_AllItems[m_CurrentPlace-1])
                 {
