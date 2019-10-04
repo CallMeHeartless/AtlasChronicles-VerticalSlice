@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 6148762012547533296}
   - component: {fileID: 6148762012775611051}
   - component: {fileID: 354870915107597816}
+  - component: {fileID: 5979670880481878006}
   m_Layer: 0
   m_Name: dm_SpikedLog_Body
   m_TagString: Untagged
@@ -153,7 +154,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6148762012549470002}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.8192673, y: 1.7336318, z: 7.1933637}
@@ -175,11 +176,26 @@ MonoBehaviour:
   m_strTargetTag:
   - Player
   m_bIsActive: 0
+  m_bIsPeriodic: 1
   OnHit:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!136 &5979670880481878006
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148762012549470002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.9161447
+  m_Height: 7.06198
+  m_Direction: 2
+  m_Center: {x: -0.046009302, y: -7.6817646, z: 0.019511797}
 --- !u!1 &6148762012549470004
 GameObject:
   m_ObjectHideFlags: 0
