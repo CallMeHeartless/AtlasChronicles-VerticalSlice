@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1361584503
 SphereCollider:
@@ -105,7 +105,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2098776188
 SphereCollider:
@@ -137,8 +137,11 @@ MonoBehaviour:
     m_sentences:
     - Oh geez this is high up!
     - I think you might have all the maps!
-    - If you are missing some, check out your map in the pause menu with <sprite=8>.
-    - Lets go fuel those monoliths and get out of here!
+    - If you happen to be missing some, check out your map in the pause menu with
+      <sprite=8>.
+    - 'It seems we can finish powering up the world by activating those monoliths
+      up on top of the temple... '
+    - How are we going to get up there I wonder?
 --- !u!114 &2098776186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +188,6 @@ Transform:
   - {fileID: 1912301412043097257}
   - {fileID: 1912301412389233263}
   - {fileID: 1912301412053336606}
-  - {fileID: 1912301413267007928}
   - {fileID: 1912301413571468941}
   - {fileID: 1912301411756885865}
   - {fileID: 5330361895593501991}
@@ -248,7 +250,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1451837171601316335
 SphereCollider:
@@ -324,7 +326,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &8387347071376983164
 SphereCollider:
@@ -399,7 +401,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5539310982067397457
 SphereCollider:
@@ -474,7 +476,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1912301411756885860
 SphereCollider:
@@ -545,7 +547,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912301412043097256}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -78.98, y: 11.77, z: -105.18}
+  m_LocalPosition: {x: -74.89, y: 11.77, z: -103.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
@@ -562,7 +564,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 3
   m_Center: {x: 0.5, y: -1.5, z: 0}
 --- !u!114 &1912301412043097254
 MonoBehaviour:
@@ -580,7 +582,7 @@ MonoBehaviour:
     m_strName: Run
     m_sentences:
     - Hey! This map fragment lets you see where the leylines are!
-    - Hmm... You'll need to reach the Ley Monoliths on top of the temple...
+    - Hmm... The Monoliths seem interactable now...
     - 'Collect Ink Crystals to power them up. '
     - They could open us up a portal outta here!
 --- !u!114 &1912301412043097252
@@ -697,7 +699,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912301412053336609}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -54.76, y: 6.785, z: -134.8}
+  m_LocalPosition: {x: -71.22, y: 43.69, z: 74.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
@@ -773,7 +775,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912301412389233262}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -62.93, y: 6.785, z: -130.47}
+  m_LocalPosition: {x: -61.64, y: 6.785, z: -130.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1912301411934123670}
@@ -812,7 +814,7 @@ MonoBehaviour:
     - Hey you!
     - You're Master Widogast's apprentice right?
     - Uhh... Atlas! Was it?
-    - November Lonesome. Here at chyour service.
+    - November Lonesome. Here at ch'your service.
     - '...'
     - I know what you're thinking, but I'm no longer working for Lord Kino. I'm on
       your side now!
@@ -911,82 +913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1912301413267007931
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1912301413267007928}
-  - component: {fileID: 1912301413267007927}
-  - component: {fileID: 1912301413267007926}
-  - component: {fileID: 1912301413267007929}
-  m_Layer: 14
-  m_Name: FeedMonolithDialogue (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1912301413267007928
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912301413267007931}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -69.72, y: 6.785, z: -136.92}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1912301413267007927
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912301413267007931}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 4.6148033
-  m_Center: {x: 0.114803314, y: -1.5, z: 0}
---- !u!114 &1912301413267007926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912301413267007931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96fb5c7eb1208604f8ed3f3be07e4f9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_conversation:
-    m_strName: Monolith
-    m_sentences:
-    - Have the leylines activated yet?
-    - Hold <sprite=3> for a bit while standing infront of a monolith to feed it with
-      crystals
---- !u!114 &1912301413267007929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912301413267007931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d53325ed43359df48909b95a3c5c662a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1912301413271221826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,7 +974,7 @@ MonoBehaviour:
   m_conversation:
     m_strName: Glide
     m_sentences:
-    - Is that the infamous Master Widogast's Magic Scroll?
+    - Is that the famous Master Widogast's Magic Scroll?
     - I heard rumors that holding your jump activates a gliding spell.....
 --- !u!114 &1912301413271221694
 MonoBehaviour:
@@ -1093,7 +1019,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1912301413571468936
 SphereCollider:
@@ -1169,7 +1095,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &7259402814908353700
 SphereCollider:
@@ -1248,7 +1174,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &830320273213601815
 SphereCollider:
@@ -1325,7 +1251,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -7.5520005, y: -14.277, z: 1.2820001}
 --- !u!135 &5330361895593501986
 SphereCollider:
@@ -1355,7 +1281,7 @@ MonoBehaviour:
   m_conversation:
     m_strName: Chests
     m_sentences:
-    - These chests can't be destroyed by a mere whack.
+    - These chests can't be destroyed with a mere whack.
     - Lets try jumping <sprite=2> and pressing attack <sprite=0> immediately afterwards.
 --- !u!114 &5330361895593501988
 MonoBehaviour:
@@ -1400,7 +1326,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5330361895648516311
 SphereCollider:
@@ -1481,7 +1407,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5330361896383557512
 SphereCollider:
@@ -1563,7 +1489,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5330361896451883128
 SphereCollider:
@@ -1642,7 +1568,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5330361897261065425
 SphereCollider:
@@ -1717,7 +1643,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44843661930241817}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &3304098497578093436
 SphereCollider:

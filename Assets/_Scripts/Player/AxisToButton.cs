@@ -18,7 +18,7 @@ public class AxisToButton
     public void Update()
     {
         m_fPrevious = m_fCurrent;
-        m_fCurrent = Input.GetAxisRaw(m_strAxis);
+        //m_fCurrent = Input.GetAxisRaw(m_strAxis);
     }
 
     public InputState GetCurrentState() {

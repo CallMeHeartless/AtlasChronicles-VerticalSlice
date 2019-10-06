@@ -10,9 +10,10 @@ public class GameState : MonoBehaviour
     private static bool s_bInCinematic = false;
     private static bool s_bIsPlayerTeleporting = false;
     private static bool s_bTimerTings = false;
+    private static bool s_bGetIsSpeedRunning = false;
     private static AsyncOperation s_asyncLoad;
 
-    public enum SpeedRunMode
+    public enum GameplayMode
     {
         Adventure,//standend amount of crysials and map
         SpeedRun,//standend amount of crysials and map with a count up timer 
@@ -22,7 +23,7 @@ public class GameState : MonoBehaviour
         ToTheTop// get to the top of the temple
     }
 
-    private static SpeedRunMode m_eSpeedRunning = SpeedRunMode.Adventure;
+    private static GameplayMode m_eGameplayMode = GameplayMode.Adventure;
   // private static bool SpeedRunning = false;
     // Toggles the pause flag
     public static void SetPauseFlag(bool _bState) {
@@ -55,13 +56,23 @@ public class GameState : MonoBehaviour
     public static bool DoesPlayerHaveControl() {
         return !(s_bIsPaused || s_bInCinematic || s_bIsPlayerTeleporting||s_bTimerTings); // Add here accordingly
     }
-    public static void SetSpeedRunning(SpeedRunMode _SpeedRunState)
+    public static void SetGameplayMode(GameplayMode _SpeedRunState)
     {
-        m_eSpeedRunning = _SpeedRunState;
+        m_eGameplayMode = _SpeedRunState;
     }
-    public static SpeedRunMode GetIsSpeedRunMode()
+    public static GameplayMode GetGameplayMode()
     {
-       return m_eSpeedRunning;
+       return m_eGameplayMode;
+    }
+
+    public static bool GetIsSpeedRunning()
+    {
+        return s_bGetIsSpeedRunning;
+    }
+
+    public static void SetIsSpeedRunning()
+    {
+        s_bGetIsSpeedRunning = (m_eGameplayMode == GameplayMode.SpeedRun ? true : false);
     }
 
     public static void SetTimerFlag(bool _Timer)
@@ -93,8 +104,5 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public static SpeedRunMode GetSpeedRunning() {
-        return m_eSpeedRunning;
-    }
     
 }
