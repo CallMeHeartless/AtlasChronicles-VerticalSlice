@@ -72,8 +72,8 @@ MonoBehaviour:
   m_rPortalParticles: {fileID: 1486986140174253015}
   m_rInfo: {fileID: 0}
   m_bIsActive: 0
-  m_iMinimumCrystalsModes: a0000000a000000080010000
-  m_iMinimumMapsModes: 050000000500000006000000
+  m_iMinimumCrystalsModes: a0000000a0000000800100000000000000000000
+  m_iMinimumMapsModes: 0500000005000000060000000000000006000000
   m_bIsTriggeredOnce: 0
 --- !u!1 &2939479463787522722
 GameObject:
@@ -1261,16 +1261,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2216185426755426649}
     m_Modifications:
-    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
-        type: 3}
-      propertyPath: m_Name
-      value: VFX_EndPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3887776286266928472, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1326,6 +1316,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_Name
+      value: VFX_EndPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887776286266928475, guid: 5c03bbdf43308eb4e8b68cbce4263ef9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c03bbdf43308eb4e8b68cbce4263ef9, type: 3}
 --- !u!4 &1486986140174253012 stripped
@@ -1347,10 +1347,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2216185426755426649}
     m_Modifications:
-    - target: {fileID: 100000, guid: 4de11ed8b8315354bb4707a940ecc4df, type: 3}
-      propertyPath: m_Name
-      value: SM_Step_low
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4de11ed8b8315354bb4707a940ecc4df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1402,6 +1398,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 4de11ed8b8315354bb4707a940ecc4df, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.010000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4de11ed8b8315354bb4707a940ecc4df, type: 3}
+      propertyPath: m_Name
+      value: SM_Step_low
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 4de11ed8b8315354bb4707a940ecc4df, type: 3}
       propertyPath: m_Materials.Array.data[0]
