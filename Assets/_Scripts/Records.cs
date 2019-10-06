@@ -7,7 +7,8 @@ public class Records : MonoBehaviour
     //changing m_SpeedRunRecords changes that runs speed modes trophie freeshwhole
     static private int[] m_SpeedRunRecords_SpeedRun = new int[3] { 2500, 1700, 1000 };// min min,second second
     static private int[] m_SpeedRunRecords_AllItems = new int[3] { 2500, 1700, 1000 };// min min,second second
-    static private int[] m_SpeedRunRecords_other = new int[3] { 2500, 1700, 1000 };// min min,second second
+    static private int[] m_SpeedRunRecords_Rush = new int[3] { 2500, 1700, 1000 };// min min,second second
+    static private int[] m_SpeedRunRecords_MapRun = new int[3] { 2500, 1700, 1000 };// min min,second second
     static public int m_CurrentPlace =3;
 
     /*___________________________________________________
@@ -39,13 +40,26 @@ public class Records : MonoBehaviour
  
                 if (CurrentTime == m_SpeedRunRecords_AllItems[m_CurrentPlace-1])
                 {
-                   
                     m_CurrentPlace--;
-                    Debug.Log("hit Everythingh");
                     return true;
                 }
                 break;
-         
+            case GameState.GameplayMode.Rush:
+
+                if (CurrentTime == m_SpeedRunRecords_Rush[m_CurrentPlace - 1])
+                {
+                    m_CurrentPlace--;
+                    return true;
+                }
+                break;
+            case GameState.GameplayMode.ForTheMaps:
+
+                if (CurrentTime == m_SpeedRunRecords_MapRun[m_CurrentPlace - 1])
+                {
+                    m_CurrentPlace--;
+                    return true;
+                }
+                break;
             default:
                 break;
         }
