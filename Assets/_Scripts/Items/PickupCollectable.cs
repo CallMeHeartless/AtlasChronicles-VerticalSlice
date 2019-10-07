@@ -22,17 +22,16 @@ public class PickupCollectable : Pickup
         GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex]++;
         GameEndController.CheckMapCollection(); // Review later
 
-        // Update the ink gauge
-        InkGauge rInkGauge = InkGauge.GetInstance();
-        if (rInkGauge)
-        {
-            rInkGauge.IncrementGaugeLimit();
+        // Disable the magnetic component
+        MagneticController magnetic = GetComponent<MagneticController>();
+        if (magnetic) {
+            magnetic.m_bIsMagnetised = false;
         }
        
-            if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
-            {
-                TimerUpdate.AddTime(5);
-            }
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
+        {
+            TimerUpdate.AddTime(5);
+        }
         
     }
 }

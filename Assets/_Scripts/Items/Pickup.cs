@@ -73,6 +73,12 @@ public class Pickup : MonoBehaviour
             //Hide UI Game Panel a few seconds after the pickup has been collected
             m_rDisplayStats.HideUIGamePanel(true);
 
+            // Add a map to the satchel // Kerry
+            if(m_eType == PickupType.EMap) {
+                PlayerController player = other.GetComponent<PlayerController>();
+                player.AddMapToSatchel();
+            }
+
             //Do not excute the rest of the function if the map has not been stolen
             if (m_eType == PickupType.EMap && !m_bStolen)
                 return;
