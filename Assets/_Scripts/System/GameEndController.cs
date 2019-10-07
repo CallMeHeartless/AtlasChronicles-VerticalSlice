@@ -70,6 +70,12 @@ public class GameEndController : MonoBehaviour
         InitialiseCrystalDepos();
 
         m_bGameComplete = false;
+
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.Rush)
+        {
+            SetPortalState(true);
+        }
+
     }
 
     private void Update()
@@ -83,7 +89,14 @@ public class GameEndController : MonoBehaviour
 
         if (!m_bGameComplete)
             return;
-        
+
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
+        {
+           if( GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] == m_iMinimumMaps)
+            {
+                SetPortalState(true);
+            }
+        }
     }
 
     // Called when the player collects a map fragment to check if they have them all (or when they have lost one)

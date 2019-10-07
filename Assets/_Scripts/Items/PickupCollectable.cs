@@ -28,5 +28,11 @@ public class PickupCollectable : Pickup
         {
             rInkGauge.IncrementGaugeLimit();
         }
+       
+            if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
+            {
+                TimerUpdate.AddTime(5);
+            }
+        
     }
 }

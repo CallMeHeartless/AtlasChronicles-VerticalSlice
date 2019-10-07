@@ -8,7 +8,7 @@ public class ColorPlat : MonoBehaviour
     public GameObject m_gEffectingObject;
     public enum m_Colors
     {
-        blue,green,red
+        red,green,blue
     }
     public enum m_Blockage
     {
@@ -18,10 +18,17 @@ public class ColorPlat : MonoBehaviour
     public m_Colors m_colCurrentColor;
     public m_Colors m_colSetColor;
     public m_Blockage m_MatType;
+    private MeshRenderer m_rMeshRenderer;
     // Start is called before the first frame update
     void Start()
     {
-        GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
+        m_rMeshRenderer = GetComponentInChildren<MeshRenderer>();
+        if (!m_rMeshRenderer)
+        {
+            Debug.LogError("ERROR: No mesh renderer found on " + name);
+        }
+        m_rMeshRenderer.material.SetInt("_Select", (int)m_colCurrentColor);
+        // GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
         CorrectColor();
     }
 
@@ -83,16 +90,18 @@ public class ColorPlat : MonoBehaviour
     public void changeColor()
     {
         //Debug.Log("Colorchange");
-        if (m_Colors.red== m_colCurrentColor)
+        if (m_Colors.blue== m_colCurrentColor)
         {
             m_colCurrentColor = 0;
+           
         }
         else
         {
 
             m_colCurrentColor += 1;
         }
-        GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
+        m_rMeshRenderer.material.SetInt("_Select", (int)m_colCurrentColor);
+       // GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
         CorrectColor();
         GetComponent<DamageController>().ResetDamage();
     }

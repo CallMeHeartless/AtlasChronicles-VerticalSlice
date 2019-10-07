@@ -31,6 +31,7 @@ public class TimerUpdate : MonoBehaviour
     [SerializeField] private Sprite m_rSilverTrophy;
     [SerializeField] private Sprite m_rGoldTrophy;
 
+    static private float AddedTime =0;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +62,16 @@ public class TimerUpdate : MonoBehaviour
                 m_TypeUI.text = "Get All";
                 break;
             }
+            case GameState.GameplayMode.Rush:
+                {
+                    m_TypeUI.text = "Get to the end as fast as possable";
+                    break;
+                }
+            case GameState.GameplayMode.ForTheMaps:
+                {
+                    m_TypeUI.text = "get all map fragment, but becareful as collecting crysal will cost you time";
+                    break;
+                }
             default:
                 break;
         }
@@ -91,6 +102,10 @@ public class TimerUpdate : MonoBehaviour
         {
             if (m_EndTimer)
             {
+                if (AddedTime !=0)
+                {
+                    m_Seconds += AddedTime;
+                }
                 m_Seconds += Time.deltaTime;
                 if (m_Seconds >= 60)
                 {
@@ -243,5 +258,9 @@ public class TimerUpdate : MonoBehaviour
         PlayerPrefs.SetString("TimeAttackTimeString", totalTimeString);
 
         return (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds;
+    }
+    static public void AddTime(int _addTime)
+    {
+        AddedTime += _addTime;
     }
 }
