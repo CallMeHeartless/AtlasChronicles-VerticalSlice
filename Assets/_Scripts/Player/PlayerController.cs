@@ -252,6 +252,14 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
+
+        // Debug
+        //if (Input.GetKeyDown(KeyCode.L)) {
+        //    AddMapToSatchel();
+        //}
+        //if (Input.GetKeyDown(KeyCode.K)) {
+        //    m_rAnimator.SetTrigger("LoseMap");
+        //}
     }
 
     private void LateUpdate() {
@@ -1165,6 +1173,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             --GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
             _Goon.ToggleMapFragment(true);
             GameEndController.CheckMapCollection();
+
+            // Take the map fragment from the player's satchel
+            m_rAnimator.SetTrigger("LoseMap");
         }
     }
 
@@ -1275,5 +1286,9 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     public void SetCineGroundCheckFalse()
     {
         m_bCineGroundCheck = false;
+    }
+
+    public void AddMapToSatchel() {
+        m_rAnimator.SetTrigger("Maps");
     }
 }
