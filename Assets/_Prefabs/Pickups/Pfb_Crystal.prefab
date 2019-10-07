@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 1465790141833206193}
   - component: {fileID: 5680148856163161794}
   - component: {fileID: 2802042902511503403}
+  - component: {fileID: 5150612311785969006}
   m_Layer: 14
   m_Name: Pfb_Crystal
   m_TagString: SecondaryPickup
@@ -228,7 +229,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.5, z: 2}
+  m_Size: {x: 1, y: 1.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5540800120736492382
 Rigidbody:
@@ -376,6 +377,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_iZoneID: 0
   m_rParticles: {fileID: 8306159080667790295}
+--- !u!114 &5150612311785969006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5540800120736492376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c77e4253c43f940b39056ba04d3cb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fMagneticDistance: 2.5
+  m_fMoveSpeed: 15
+  m_bIsMagnetised: 1
 --- !u!1001 &2989825327231402699
 PrefabInstance:
   m_ObjectHideFlags: 0
