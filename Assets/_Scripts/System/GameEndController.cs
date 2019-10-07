@@ -71,7 +71,7 @@ public class GameEndController : MonoBehaviour
 
         m_bGameComplete = false;
 
-        if (GameState.GetGameplayMode() == GameState.GameplayMode.Adventure)
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.Rush)
         {
             SetPortalState(true);
         }
