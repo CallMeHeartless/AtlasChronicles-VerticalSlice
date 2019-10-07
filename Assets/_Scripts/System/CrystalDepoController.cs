@@ -32,6 +32,9 @@ public class CrystalDepoController : MonoBehaviour
         // Set current fill time
         m_fCurrentFillTime = m_fDefaultFillTime;
 
+        // DEBUG
+        m_FillMaterial = GetComponentInChildren<MeshRenderer>().materials[1];
+
         // Find reference to display UI
         GameObject UI = GameObject.Find("GameUI");
         if (UI) {
@@ -40,8 +43,11 @@ public class CrystalDepoController : MonoBehaviour
             Debug.LogError("ERROR: GameUI not found. Display stat reference not set.");
         }
 
-        // DEBUG
-        m_FillMaterial = GetComponentInChildren<MeshRenderer>().materials[1];
+        if (m_iNeededCrystals == 0)
+        {
+            Debug.Log("crystals 0");
+            UpdateStatus();
+        }
     }
 
     // Update is called once per frame
@@ -92,12 +98,23 @@ public class CrystalDepoController : MonoBehaviour
     /// </summary>
     private void UpdateStatus() {
         // Update material
-        m_FillMaterial.SetFloat("_Height", (float)m_iCurrentCrystals / (float)m_iNeededCrystals);
-
-        // Activate leyline if filled
-        if (m_iCurrentCrystals >= m_iNeededCrystals && m_rLeyLine) {
+        if (m_iNeededCrystals == 0)
+        {
+            m_FillMaterial.SetFloat("_Height", 1.0f);
             m_rLeyLine.ActivateLeyline(true);
             m_bIsFinished = true;
+
+        }
+        else
+        {
+            m_FillMaterial.SetFloat("_Height", (float)m_iCurrentCrystals / (float)m_iNeededCrystals);
+
+            // Activate leyline if filled
+            if (m_iCurrentCrystals >= m_iNeededCrystals && m_rLeyLine)
+            {
+                m_rLeyLine.ActivateLeyline(true);
+                m_bIsFinished = true;
+            }
         }
     }
 
