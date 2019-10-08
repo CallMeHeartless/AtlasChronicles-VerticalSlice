@@ -10,6 +10,7 @@ public class MagneticController : MonoBehaviour
     private float m_fDistanceToPlayer = 0.0f;
     [SerializeField]
     private float m_fMoveSpeed = 0.3f;
+    public bool m_bIsMagnetised = true;
 
     private void Start() {
         // Initialise the player reference
@@ -21,7 +22,7 @@ public class MagneticController : MonoBehaviour
 
     void Update(){
         // Do not process if there is no player reference, or the game is paused etc.
-        if (!s_rPlayer || !GameState.DoesPlayerHaveControl()) {
+        if (!s_rPlayer || !GameState.DoesPlayerHaveControl() || !m_bIsMagnetised) {
             return;
         }
 
@@ -31,7 +32,7 @@ public class MagneticController : MonoBehaviour
         // Move the object towards the player if they are close enough to feel the pull
         if(m_fDistanceToPlayer <= m_fMagneticDistance) {
             // Find the unit direction towards the player
-            Vector3 ToPlayer = (transform.position - s_rPlayer.transform.position).normalized;
+            Vector3 ToPlayer = (s_rPlayer.transform.position - transform.position).normalized;
 
             // Move the object towards the player
             transform.Translate(ToPlayer * m_fMoveSpeed * Time.deltaTime, Space.World);
