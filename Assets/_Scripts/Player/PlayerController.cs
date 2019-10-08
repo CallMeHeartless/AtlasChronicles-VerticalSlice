@@ -175,6 +175,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private AudioPlayer m_rSlamAttackAudio;
     [SerializeField] private AudioPlayer m_rTagAudio;
     [SerializeField] private AudioPlayer m_rDamagedAudio;
+    [SerializeField] private AudioSource m_rCollectableAudio;
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
@@ -1277,6 +1278,11 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_rFreeLook.m_XAxis.m_InputAxisName = m_strXAxisButton;
             m_rFreeLook.m_YAxis.m_InputAxisName = m_strYAxisButton;
         }
+    }
+
+    public AudioSource GetCollectableAudio()
+    {
+        return m_rCollectableAudio;
     }
 
     public void SetCineGroundCheckTrue()

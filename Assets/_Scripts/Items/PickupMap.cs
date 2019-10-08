@@ -13,8 +13,10 @@ public class PickupMap : Pickup
         {
             print("ERROR: UNASSIGNED MAP ZONE : " + name);
         }
+        m_rAudio = GetComponent<AudioSource>();
+
     }
-    
+
     /// <summary>
     /// Executes map collection which has two modes: stolen and cinematic
     /// </summary>
