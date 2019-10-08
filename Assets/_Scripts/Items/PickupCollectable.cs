@@ -20,12 +20,12 @@ public class PickupCollectable : Pickup
     {
         m_rAudio.Play();
         GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex]++;
-        GameEndController.CheckMapCollection(); // Review later
+        //GameEndController.CheckMapCollection(); // Review later
 
         // Disable the magnetic component
         MagneticController magnetic = GetComponent<MagneticController>();
         if (magnetic) {
-            magnetic.m_bIsMagnetised = false;
+            magnetic.SnapToPlayer();
         }
        
         if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
