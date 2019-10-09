@@ -54,6 +54,9 @@ public class BreakableObject : MonoBehaviour
     {
         if(m_rOriginalObject && m_rBrokenObject)
         {
+            // Handle an instance of the teleport marker being attached
+            HandleTeleportMarker();
+
             m_bBroken = true;
 
             if (m_rBreakingAudio)
@@ -177,5 +180,18 @@ public class BreakableObject : MonoBehaviour
     public bool GetIsBroken()
     {
         return m_bBroken;
+    }
+
+    /// <summary>
+    /// Handles the situation where there may be a teleport marker parented to this object.
+    /// </summary>
+    private void HandleTeleportMarker() {
+        // Check if the Teleport marker is a child of this object // Kerry
+        Transform marker = transform.Find("TestTeleportMarker(Clone)"); // This may need updating 
+        if (marker) {
+            // The marker exists, instruct the player to disable it
+            PlayerController.instance.CancelTeleportMarker();
+        }
+
     }
 }
