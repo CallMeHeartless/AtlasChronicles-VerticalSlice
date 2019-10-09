@@ -91,7 +91,6 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlayLandDust()
     {
         m_rLeftFootDustParticles.Play();
-
         m_rRightFootDustParticles.Play();
     }
 
