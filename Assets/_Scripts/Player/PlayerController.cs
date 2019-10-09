@@ -178,13 +178,13 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private AudioSource m_rCollectableAudio;
 
     //Collectable Audio pitch shift variables
-    private bool m_bCurrentlyCollecting = false;
-    private float m_fCurrentCollectionTime = 1.0f;
-    private float m_fMaximumCollectionTime = 2.0f;
+    [SerializeField] private float m_fIncreasePitch = 0.12f;
+    [SerializeField] float m_fMaxPitch = 1.1f;
     private float m_fCurrentPitch = 0.55f;
     private float m_fInitPitch = 0.6f;
-    private float m_fMaxPitch = 1.1f;
-    private float m_fIncreasePitch = 0.12f;
+    private float m_fCurrentCollectionTime = 1.0f;
+    private float m_fMaximumCollectionTime = 2.0f;
+    private bool m_bCurrentlyCollecting = false;
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
