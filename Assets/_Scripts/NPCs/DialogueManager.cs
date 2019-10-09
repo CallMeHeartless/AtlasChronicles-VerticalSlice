@@ -256,10 +256,22 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeSentence(string _sentence, TextMeshProUGUI _textBox)
     {
         bool spriteEncountered = false;
+        bool newWord = true;
         _textBox.text = "";
         m_bTyping = true;
         foreach (char letter in _sentence.ToCharArray())
         {
+            if (newWord)
+            {
+                m_speakAudio.PlayAudio();
+                newWord = false;
+            }
+
+            if(letter == ' ')
+            {
+                newWord = true;
+            }
+
             if (letter == '<')
             {
                 //Skip typing effect when a sprite is encountered by continuing the forloop and 
@@ -281,7 +293,8 @@ public class DialogueManager : MonoBehaviour
                 continue;
 
             //Play a speaking sound while each letter is spoken and then execute/push char into text box
-            m_speakAudio.PlayAudio();
+            //Randomize chance to play audio 2/5 chances
+
             yield return null;
         }
         m_bTyping = false;

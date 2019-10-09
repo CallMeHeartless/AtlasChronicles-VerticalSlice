@@ -11,6 +11,7 @@ public class MagneticController : MonoBehaviour
     [SerializeField]
     private float m_fMoveSpeed = 0.3f;
     public bool m_bIsMagnetised = true;
+    private bool m_bIsAttachedToPlayer = false;
 
     private void Start() {
         // Initialise the player reference
@@ -38,6 +39,15 @@ public class MagneticController : MonoBehaviour
             transform.Translate(ToPlayer * m_fMoveSpeed * Time.deltaTime, Space.World);
         }
     }
+
+    /// <summary>
+    /// Moves the object directly to the player
+    /// </summary>
+    public void SnapToPlayer() {
+        transform.Translate(s_rPlayer.transform.position - transform.position);
+        m_bIsMagnetised = false;
+    }
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {

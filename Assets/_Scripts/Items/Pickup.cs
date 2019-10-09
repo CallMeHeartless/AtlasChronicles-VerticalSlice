@@ -20,7 +20,7 @@ public class Pickup : MonoBehaviour
     protected AudioSource m_rAudio;
     protected PickupType m_eType = PickupType.ECollectable;
     private Zone m_rParent;
-    
+
     protected virtual void Start()
     {
         if (m_rParticles != null)
@@ -73,10 +73,17 @@ public class Pickup : MonoBehaviour
             //Hide UI Game Panel a few seconds after the pickup has been collected
             m_rDisplayStats.HideUIGamePanel(true);
 
+            PlayerController player = other.GetComponent<PlayerController>();
+
             // Add a map to the satchel // Kerry
-            if(m_eType == PickupType.EMap) {
-                PlayerController player = other.GetComponent<PlayerController>();
+            if (m_eType == PickupType.EMap)
+            {
                 player.AddMapToSatchel();
+            }
+
+            if (m_eType == PickupType.ECollectable)
+            {
+                player.PlayCollectableAudio(ref m_rAudio);
             }
 
             //Do not excute the rest of the function if the map has not been stolen
