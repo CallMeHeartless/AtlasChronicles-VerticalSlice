@@ -177,6 +177,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private AudioPlayer m_rDamagedAudio;
     [SerializeField] private AudioSource m_rCollectableAudio;
 
+    //Collectable Audio pitch shift variables
+    private bool m_bCurrentlyCollecting = false;
+    private float m_fCurrentCollectionTime = 1.0f;
+    private float m_fMaximumCollectionTime = 2.0f;
+    private float m_fCurrentPitch = 0.55f;
+    private float m_fInitPitch = 0.6f;
+    private float m_fMaxPitch = 1.1f;
+    private float m_fIncreasePitch = 0.12f;
+
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
     private int m_iWeight = 3;
@@ -228,10 +237,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
         m_fWaterParticles.SetActive(false);
         m_rWeaponScroll.SetActive(false);
-        //if(GameObject.FindGameObjectWithTag("CinematicManager") == null)
-        //{
-        //    Instantiate(m_rCineManagerPrefab, Vector3.zero, Quaternion.identity);
-        //}
+
+        m_fCurrentPitch = m_fInitPitch;
     }
 
     // Update is called once per frame
@@ -253,6 +260,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_MovementDirection = Vector3.zero;
         HandlePlayerMovement();
         HandlePlayerAbilities();
+
+        UpdateCollectableAudio();
 
         // Debug
         //if (Input.GetKeyDown(KeyCode.L)) {
@@ -1296,5 +1305,55 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     public void AddMapToSatchel() {
         m_rAnimator.SetTrigger("Maps");
+    }
+
+    /// <summary>
+    /// Updates collectable audio loguc
+    /// </summary>
+    public void UpdateCollectableAudio()
+    {
+        //Only calculate timer if player is currently collecting crystals
+        if (!m_bCurrentlyCollecting)
+            return;
+
+        m_fCurrentCollectionTime += Time.deltaTime;
+
+        //IF collection time exceeds max time for nxt crystal to be collected, reset time
+        if (m_fCurrentCollectionTime >= m_fMaximumCollectionTime)
+        {
+            //Reset the pitch, time and set currently Collecting as false so time counting does not occur when not needed.
+            m_fCurrentPitch = m_fInitPitch;
+            m_fCurrentCollectionTime = 0.0f;
+            m_bCurrentlyCollecting = false;
+        }
+    }
+
+    /// <summary>
+    /// Plays the sound of a collectable through the audioSource reference passed through with an increased pitch. 
+    /// Called through the Pickup Class. 
+    /// </summary>
+    /// <param name="_audio">AudioSource passed through from collectable collected</param>
+    public void PlayCollectableAudio(ref AudioSource _audio)
+    {
+        //Set the new pitch in the referenced collectable audioplyer
+        _audio.pitch = m_fCurrentPitch;
+
+        //Set as collecting and reset collection start time to begin pitch raise
+        m_bCurrentlyCollecting = true;
+        m_fCurrentCollectionTime = 0.0f;
+
+        //Increase pitch of audio
+        if (m_fCurrentPitch < m_fMaxPitch && (m_fCurrentPitch + m_fIncreasePitch <= m_fMaxPitch))
+        {
+            //Only increase pitch if current pitch is less than max pitch, including when new pitch is calcualted
+            m_fCurrentPitch += m_fIncreasePitch;
+        }
+        else if(m_fCurrentPitch >= m_fMaxPitch)
+        {
+            //Set current pitch as max pitch if current pitch is above max
+            m_fCurrentPitch = m_fMaxPitch;
+        }
+
+        _audio.Play();
     }
 }

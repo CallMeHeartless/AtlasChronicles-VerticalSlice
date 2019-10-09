@@ -21,16 +21,6 @@ public class Pickup : MonoBehaviour
     protected PickupType m_eType = PickupType.ECollectable;
     private Zone m_rParent;
 
-    public static float s_fCurrentCollectionTime = 1.0f;
-    public static float s_fMinimumCollectionTime = 1.0f;
-    public static float s_fMaximumCollectionTime = 10.0f;
-
-    public static float s_fCurrentPitch = 0.0f;
-    public static bool s_bCurrentlyCollecting = false;
-    private float m_fInitPitch = 1.0f;
-    private float m_fMaxPitch = 3.0f;
-    private float m_fIncreasePitch = 0.2f;
-
     protected virtual void Start()
     {
         if (m_rParticles != null)
@@ -46,26 +36,6 @@ public class Pickup : MonoBehaviour
             m_iZoneID = m_rParent.GetZoneID();
             m_rParent.AddToZone(gameObject);
         }
-
-        s_fCurrentPitch = m_fInitPitch;
-    }
-
-    private void Update()
-    {
-        //NOTE: MUST FIND WAY TO UPDATE FRM DIF CLASS THAT DOES NOT HAVE MULTIPLE INSTANCES OF THE PICKUP
-        //if (!s_bCurrentlyCollecting)
-        //    return;
-
-        //s_fCurrentCollectionTime += Time.deltaTime;
-
-        //if (s_fCurrentCollectionTime > s_fMaximumCollectionTime)
-        //{
-        //    print("resetted: " + s_fCurrentCollectionTime + "    " + s_fMaximumCollectionTime);
-
-        //    s_fCurrentCollectionTime = 0.0f;
-        //    s_fCurrentPitch = m_fInitPitch;
-        //    s_bCurrentlyCollecting = false;
-        //}
     }
 
     /// <summary>
@@ -103,10 +73,11 @@ public class Pickup : MonoBehaviour
             //Hide UI Game Panel a few seconds after the pickup has been collected
             m_rDisplayStats.HideUIGamePanel(true);
 
-            if(m_eType == PickupType.ECollectable)
+            PlayerController player = other.GetComponent<PlayerController>();
+
+            if (m_eType == PickupType.ECollectable)
             {
-                s_fCurrentCollectionTime = 0.0f;
-                PlayCollectableSound();
+                player.PlayCollectableAudio(ref m_rAudio);
             }
 
             //Do not excute the rest of the function if the map has not been stolen
@@ -153,17 +124,4 @@ public class Pickup : MonoBehaviour
         return m_bIsCollected;
     }
 
-    public void PlayCollectableSound()
-    {
-        s_bCurrentlyCollecting = true;
-
-        //IF collection time exceeds max time for nxt crystal to be collected, reset time
-        if (s_fCurrentPitch < m_fMaxPitch)
-        {
-            s_fCurrentPitch += m_fIncreasePitch;
-        }
-
-        m_rAudio.pitch = s_fCurrentPitch;
-        m_rAudio.Play();
-    }
 }
