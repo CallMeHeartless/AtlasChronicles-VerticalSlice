@@ -10,10 +10,10 @@ public class CheckpointController : MonoBehaviour
     public bool m_bIsPowered = true;
 
     [Header("Materials")]
-    [SerializeField]
-    private Material m_rInactive;
-    [SerializeField]
-    private Material m_rActive;
+    //[SerializeField]
+    //private Material m_rInactive;
+    //[SerializeField]
+    //private Material m_rActive;
     private MeshRenderer m_rRenderer;
     //[SerializeField]
     private TextMeshProUGUI m_rCheckpointTxt;
@@ -90,6 +90,7 @@ public class CheckpointController : MonoBehaviour
             CheckpointController controller = checkpoint.GetComponent<CheckpointController>();
             if (controller && controller == this) {
                 controller.SetMaterial(true);
+
             } else {
                 controller.SetMaterial(false);
             }
@@ -98,14 +99,21 @@ public class CheckpointController : MonoBehaviour
 
     // Toggles the material used by the checkpoint
     private void SetMaterial(bool _bActive) {
+        if (!m_bIsPowered) { return; }
+
         if (_bActive) {
-            m_rRenderer.material = m_rActive;
+            m_rRenderer.material.SetFloat("_CurrentCheckpoint", 1);
         } else {
-            m_rRenderer.material = m_rInactive;
+            m_rRenderer.material.SetFloat("_CurrentCheckpoint", 0);
+            
         }
     }
 
+    /// <summary>
+    /// Makes the checkpoint useable
+    /// </summary>
     public void PowerOn() {
         m_bIsPowered = true;
+        m_rRenderer.material.SetFloat("_Active", 1);
     }
 }
