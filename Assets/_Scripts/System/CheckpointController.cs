@@ -14,12 +14,12 @@ public class CheckpointController : MonoBehaviour
     //private Material m_rInactive;
     //[SerializeField]
     //private Material m_rActive;
-    private MeshRenderer m_rRenderer;
+    private MeshRenderer[] m_rRenderer;
     //[SerializeField]
     private TextMeshProUGUI m_rCheckpointTxt;
 
     private void Start() {
-        m_rRenderer = GetComponentInChildren<MeshRenderer>();
+        m_rRenderer = transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();
 
         // Checkpoint text gameobject is active. TMP component is disabled.
         // To activate the text, activate the component via m_rCheckpointTxt.enabled = true
@@ -55,6 +55,11 @@ public class CheckpointController : MonoBehaviour
                     {
                         if(!m_rCheckpointTxt.GetComponent<TextMeshProUGUI>().enabled)
                         {
+                            for (int i = 0; i < m_rRenderer.Length; i++)
+                            {
+                                m_rRenderer[i].material.SetFloat("_Select", 1);
+                            }
+                           
                             StartCoroutine(ActivateCheckpointText());
                         }
                     }
@@ -102,10 +107,16 @@ public class CheckpointController : MonoBehaviour
         if (!m_bIsPowered) { return; }
 
         if (_bActive) {
-            m_rRenderer.material.SetFloat("_CurrentCheckpoint", 1);
+            for (int i = 0; i < m_rRenderer.Length; i++)
+            {
+                m_rRenderer[i].material.SetFloat("_Select", 2);
+            }
         } else {
-            m_rRenderer.material.SetFloat("_CurrentCheckpoint", 0);
-            
+            for (int i = 0; i < m_rRenderer.Length; i++)
+            {
+                m_rRenderer[i].material.SetFloat("_Select", 1);
+            }
+
         }
     }
 
@@ -114,6 +125,9 @@ public class CheckpointController : MonoBehaviour
     /// </summary>
     public void PowerOn() {
         m_bIsPowered = true;
-        m_rRenderer.material.SetFloat("_Active", 1);
+        for (int i = 0; i < m_rRenderer.Length; i++)
+        {
+            m_rRenderer[i].material.SetFloat("_Select", 1);
+        }
     }
 }
