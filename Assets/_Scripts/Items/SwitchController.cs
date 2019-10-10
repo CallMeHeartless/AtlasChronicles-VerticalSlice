@@ -9,7 +9,7 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
     private bool m_bTriggeredOnce = true;
 
     private DamageController m_rDamageController;
-    public GameObject OpenThisDoor;
+    public List<GameObject> OpenThisDoor;
     //[SerializeField]
     public List<MonoBehaviour> m_ObjectsToMessage;
 
@@ -54,7 +54,9 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
     }
     public void switchoff()
     {
-        OpenThisDoor.GetComponent<Door>().SwitchChanged(0, true);
-
+        for (int i = 0; i < OpenThisDoor.Count; ++i)
+        {
+            OpenThisDoor[i].GetComponent<Door>().SwitchChanged(0, true);
+        }
     }
 }
