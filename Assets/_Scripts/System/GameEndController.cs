@@ -61,7 +61,7 @@ public class GameEndController : MonoBehaviour
         }
 
         // Obtain Animation component
-        m_rAnimator = GetComponentInChildren<Animator>();
+        m_rAnimator = transform.GetChild(8).GetComponent<Animator>();
 
         //Obtain timer update component
         m_rTimerUpdate = GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>();
@@ -190,7 +190,7 @@ public class GameEndController : MonoBehaviour
         yield return new WaitForSeconds(5f);
         //Reset the level before loading main menu
         Zone.ClearZones();
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
         yield return null;
     }
 
