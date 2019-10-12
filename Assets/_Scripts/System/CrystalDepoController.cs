@@ -33,7 +33,7 @@ public class CrystalDepoController : MonoBehaviour
         m_fCurrentFillTime = m_fDefaultFillTime;
 
         // DEBUG
-        m_FillMaterial = GetComponentInChildren<MeshRenderer>().materials[1];
+        m_FillMaterial = transform.GetChild(1).GetComponent<MeshRenderer>().materials[0];
 
         // Find reference to display UI
         GameObject UI = GameObject.Find("GameUI");
