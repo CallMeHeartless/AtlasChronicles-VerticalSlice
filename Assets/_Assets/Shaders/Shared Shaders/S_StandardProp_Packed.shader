@@ -95,7 +95,7 @@ Shader "S_StandardProp_Packed"
 }
 /*ASEBEGIN
 Version=16400
-386;27;1266;994;1604.586;527.6602;1.428679;True;False
+1927;7;1266;958;1604.586;501.944;1.428679;True;False
 Node;AmplifyShaderEditor.ColorNode;11;-820.4048,64.10258;Float;False;InstancedProperty;_FlatEmissive;FlatEmissive;6;0;Create;True;0;0;False;0;0,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;14;-1173.435,-176.0871;Float;False;InstancedProperty;_FlatSmoothness;FlatSmoothness;8;0;Create;True;0;0;False;0;0;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;10;-1121.482,-44.74232;Float;True;Property;_Emissive;Emissive;5;0;Create;True;0;0;False;0;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;6;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -120,4 +120,4 @@ WireConnection;0;3;7;0
 WireConnection;0;4;13;0
 WireConnection;0;5;3;1
 ASEEND*/
-//CHKSM=1987A93D7113E5CAE17AC9A864E5B78FA5A2C631
+//CHKSM=478C2CA01B4983FD2747A68650F61F2BA79486C5

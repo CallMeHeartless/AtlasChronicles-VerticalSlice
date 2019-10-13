@@ -75,6 +75,12 @@ public class Pickup : MonoBehaviour
 
             PlayerController player = other.GetComponent<PlayerController>();
 
+            // Add a map to the satchel // Kerry
+            if (m_eType == PickupType.EMap)
+            {
+                player.AddMapToSatchel();
+            }
+
             if (m_eType == PickupType.ECollectable)
             {
                 player.PlayCollectableAudio(ref m_rAudio);
@@ -123,5 +129,4 @@ public class Pickup : MonoBehaviour
     {
         return m_bIsCollected;
     }
-
 }
