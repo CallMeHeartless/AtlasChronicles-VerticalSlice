@@ -122,6 +122,10 @@ public class PlayerAnimationController : MonoBehaviour
         //m_rPlayerController.ToggleWeaponScroll(false);
     }
 
+    public void AttackScrollOff() {
+        m_rPlayerController.ToggleWeaponScroll(false);
+    }
+
     public void AttackCooldown() {
         StartCoroutine(m_rPlayerController.AttackCooldown());
     }
