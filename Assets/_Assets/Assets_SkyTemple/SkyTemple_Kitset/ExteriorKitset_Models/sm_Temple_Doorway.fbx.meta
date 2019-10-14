@@ -3,35 +3,72 @@ guid: 18a5dafcc02c67b41a022ceb3b996d39
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: sm_Doorway
-    100002: sm_DoorwayLeft
-    100004: sm_DoorwayRight
-    100006: sm_DoorwayTop
-    100008: //RootNode
-    400000: sm_Doorway
-    400002: sm_DoorwayLeft
-    400004: sm_DoorwayRight
-    400006: sm_DoorwayTop
-    400008: //RootNode
-    2100000: Trims
-    2100002: Tileable
-    2100004: Plaster
-    2100006: Doorway
+    100000: DoorwayWall_Exterior
+    100002: DoorwayWall_Interior
+    100004: sm_Doorway
+    100006: sm_DoorwayLeft
+    100008: sm_DoorwayRight
+    100010: sm_DoorwayTop
+    100012: //RootNode
+    100014: sm_TempleExterior_LargeWall_LOD00
+    100016: sm_TempleExterior_LargeWall_LOD01
+    100018: sm_TempleExterior_LargeWall_LOD02
+    100020: sm_TempleInterior_Wall_LOD00
+    100022: sm_TempleInterior_Wall_LOD01
+    100024: sm_TempleInterior_Wall_LOD02
+    400000: DoorwayWall_Exterior
+    400002: DoorwayWall_Interior
+    400004: sm_Doorway
+    400006: sm_DoorwayLeft
+    400008: sm_DoorwayRight
+    400010: sm_DoorwayTop
+    400012: //RootNode
+    400014: sm_TempleExterior_LargeWall_LOD00
+    400016: sm_TempleExterior_LargeWall_LOD01
+    400018: sm_TempleExterior_LargeWall_LOD02
+    400020: sm_TempleInterior_Wall_LOD00
+    400022: sm_TempleInterior_Wall_LOD01
+    400024: sm_TempleInterior_Wall_LOD02
+    2100000: Trim
+    2100002: Brick
+    2100004: Trims
+    2100006: Tileable
+    2100008: Plaster
+    2100010: Doorway
     2300000: sm_Doorway
     2300002: sm_DoorwayLeft
     2300004: sm_DoorwayRight
     2300006: sm_DoorwayTop
+    2300008: sm_TempleExterior_LargeWall_LOD00
+    2300010: sm_TempleExterior_LargeWall_LOD01
+    2300012: sm_TempleExterior_LargeWall_LOD02
+    2300014: sm_TempleInterior_Wall_LOD00
+    2300016: sm_TempleInterior_Wall_LOD01
+    2300018: sm_TempleInterior_Wall_LOD02
     3300000: sm_Doorway
     3300002: sm_DoorwayLeft
     3300004: sm_DoorwayRight
     3300006: sm_DoorwayTop
-    4300000: sm_DoorwayRight
-    4300002: sm_DoorwayLeft
-    4300004: sm_DoorwayTop
-    4300006: sm_Doorway
+    3300008: sm_TempleExterior_LargeWall_LOD00
+    3300010: sm_TempleExterior_LargeWall_LOD01
+    3300012: sm_TempleExterior_LargeWall_LOD02
+    3300014: sm_TempleInterior_Wall_LOD00
+    3300016: sm_TempleInterior_Wall_LOD01
+    3300018: sm_TempleInterior_Wall_LOD02
+    4300000: sm_TempleInterior_Wall_LOD00
+    4300002: sm_TempleInterior_Wall_LOD01
+    4300004: sm_TempleInterior_Wall_LOD02
+    4300006: sm_TempleExterior_LargeWall_LOD02
+    4300008: sm_TempleExterior_LargeWall_LOD01
+    4300010: sm_TempleExterior_LargeWall_LOD00
+    4300012: sm_DoorwayRight
+    4300014: sm_DoorwayLeft
+    4300016: sm_DoorwayTop
+    4300018: sm_Doorway
+    20500000: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -59,7 +96,10 @@ ModelImporter:
     clipAnimations: []
     isReadable: 1
   meshes:
-    lODScreenPercentages: []
+    lODScreenPercentages:
+    - 0.25
+    - 0.125
+    - 0.01
     globalScale: 1
     meshCompression: 0
     addColliders: 0
@@ -91,7 +131,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
