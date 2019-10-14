@@ -1261,8 +1261,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private IEnumerator MovePlayer() {
+        m_rCharacterController.enabled = false;
         yield return new WaitForEndOfFrame();
         transform.position = m_rRespawnLocation;
+        m_rCharacterController.enabled = true;
     }
 
     // Toggles the hip scroll item
