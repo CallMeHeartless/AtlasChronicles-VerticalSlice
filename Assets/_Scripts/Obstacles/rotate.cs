@@ -48,15 +48,15 @@ public class rotate : MonoBehaviour
 
         if (RotateX)
         {
-            transform.Rotate((RotateClockrise ? Vector3.right : Vector3.left), m_fSpeed);
+            transform.Rotate((RotateClockrise ? Vector3.right : Vector3.left),Time.deltaTime* m_fSpeed);
         }
         if (RotateY)
         {
-            transform.Rotate((RotateClockrise ? Vector3.up : Vector3.down), m_fSpeed);
+            transform.Rotate((RotateClockrise ? Vector3.up : Vector3.down), Time.deltaTime*m_fSpeed);
         }
         if (RotateZ)
         {
-            transform.Rotate((RotateClockrise ? Vector3.forward : Vector3.back), m_fSpeed);
+            transform.Rotate((RotateClockrise ? Vector3.forward : Vector3.back), Time.deltaTime*m_fSpeed);
         }
         //check if Roation match Required Roation
         Checker();

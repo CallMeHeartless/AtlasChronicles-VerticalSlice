@@ -245,6 +245,19 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Update is called once per frame
     void Update() {
+
+        if (transform.parent != null)
+        {
+
+        }
+        else
+        {
+            if (transform.localScale != Vector3.one)
+            {
+                transform.localScale = Vector3.one;
+            }
+        }
+
         if (!GameState.DoesPlayerHaveControl()) {
             ClearPlayerEvents();
             return;
