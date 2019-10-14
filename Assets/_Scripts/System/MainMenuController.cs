@@ -21,12 +21,12 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject m_rTimeAttackModePanel;
     [SerializeField] private GameObject m_rLeftModeButton;
     [SerializeField] private GameObject m_rRightModeButton;
-    [SerializeField] private GameObject m_rLoadingPanel;
     [SerializeField] private GameObject m_rNLExpressions;
     [SerializeField] private TextMeshProUGUI m_rModeTitleText;
     private SpeedMenu m_rModeMenu;
 
     private Canvas m_rCanvas;
+    private LoadingScreen m_rLoadingScreen;
 
     //Values showing november lonesome on screen behind or infront of menus
     [SerializeField] private int m_iHiddenPlaneDist = 1;
@@ -47,8 +47,8 @@ public class MainMenuController : MonoBehaviour
         m_rCanvas = GetComponent<Canvas>();
         m_rModeMenu = m_rModeSelection.GetComponent<SpeedMenu>();
         m_rNLExpressions.SetActive(false);
-        m_rLoadingPanel.SetActive(false);
         NavigateModeLeft(true);
+        m_rLoadingScreen = FindObjectOfType<LoadingScreen>();
     }
 
     private void Update()
@@ -138,8 +138,11 @@ public class MainMenuController : MonoBehaviour
         //m_rNLOnPillar.transform.GetChild(0).GetComponent<Animator>().SetTrigger("PopIn");
 
         //Activate loading panel and start game scene
-        m_rLoadingPanel.SetActive(true);
-        StartCoroutine(GameState.LoadingScene(SceneManager.GetActiveScene().buildIndex + 1));
+        //m_rLoadingPanel.SetActive(true);
+        AsyncOperation s_asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+
+        m_rLoadingScreen.ActivateLoadingScreen(s_asyncLoad);
+        //StartCoroutine(GameState.LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
         m_rNLOnPillar.SetTrigger("Action");
     }
 

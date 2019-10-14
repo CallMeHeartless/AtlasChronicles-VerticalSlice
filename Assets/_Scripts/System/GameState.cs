@@ -91,7 +91,7 @@ public class GameState : MonoBehaviour
        s_bTimerTings = false;
     }
 
-    public static IEnumerator LoadingScene(int _sceneIndex)
+    public static IEnumerator LoadScene(int _sceneIndex)
     {
         s_asyncLoad = SceneManager.LoadSceneAsync(_sceneIndex);
         //asyncOperation.allowSceneActivation = false;
@@ -102,5 +102,4 @@ public class GameState : MonoBehaviour
             yield return null;
         }
     }
-    
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class TimerUpdate : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class TimerUpdate : MonoBehaviour
     bool m_bResultsChecked = false;
     [SerializeField] private GameObject m_timerUIPanel;
     [SerializeField] private GameObject m_TimeAttackResultsPanel;
+    [SerializeField] private CinemachineFreeLook m_rCamera; 
 
     [SerializeField] private TextMeshProUGUI m_TextUI;
     [SerializeField] private TextMeshProUGUI m_TypeUI;
@@ -22,8 +24,6 @@ public class TimerUpdate : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI m_rFlavourText;
     [SerializeField] private TextMeshProUGUI m_rCurrentRecordTime;
-    [SerializeField] private TextMeshProUGUI m_rBestRecordTime;
-
     [SerializeField] private Image m_rCurrentTrophy;
 
     [SerializeField] private Sprite m_rHiddenTrophy;
@@ -52,7 +52,6 @@ public class TimerUpdate : MonoBehaviour
                 m_timerUIPanel.SetActive(true);
 
                 m_rCurrentRecordTime.text = "--:--:--";
-                m_rBestRecordTime.text = "--:--:--";
                 m_rFlavourText.text = "GOOD JOB";
                 m_rCurrentTrophy.sprite = m_rHiddenTrophy;
                 break;
@@ -88,16 +87,6 @@ public class TimerUpdate : MonoBehaviour
   ______________________________________________________*/
     void Update()
     {
-        //If in Results page
-        if(m_TimeAttackResultsPanel.activeSelf)
-        {
-            if (Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
-            {
-                Zone.ClearZones();
-                SceneManager.LoadScene(0);
-            }
-        }
-
         if ((!GameState.GetPauseFlag()) &&(!GameState.GetCinematicFlag()))//pause the game
         {
             if (m_EndTimer)
@@ -152,6 +141,10 @@ public class TimerUpdate : MonoBehaviour
         SetRecordChecked(false);
 
         m_TimeAttackResultsPanel.SetActive(true);
+        GameState.SetPauseFlag(true);
+        m_rCamera.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         //Retrieve time record values required to be set into ui view
         int currentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
@@ -167,7 +160,7 @@ public class TimerUpdate : MonoBehaviour
             {
                 //If the time beats the Gold cup record
                 m_rCurrentTrophy.sprite = m_rGoldTrophy;
-                m_rFlavourText.text = "LEGENDARY";
+                m_rFlavourText.text = "LEGENDARY!!!";
                 break;
             }
             case 2:
@@ -181,7 +174,7 @@ public class TimerUpdate : MonoBehaviour
             {
                 //If the time beats the Bronze cup record
                 m_rCurrentTrophy.sprite = m_rBronzeTrophy;
-                m_rFlavourText.text = "GOOD JOB";
+                m_rFlavourText.text = "GOOD JOB!";
                 break;
             }
             case 0:
