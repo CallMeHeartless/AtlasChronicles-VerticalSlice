@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using MessageSystem;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour, IMessageReceiver {
@@ -176,15 +177,16 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     [SerializeField] private AudioPlayer m_rTagAudio;
     [SerializeField] private AudioPlayer m_rDamagedAudio;
     [SerializeField] private AudioSource m_rCollectableAudio;
+    [SerializeField] private AudioSource m_rLastCollectedAudio;
 
     //Collectable Audio pitch shift variables
-    private bool m_bCurrentlyCollecting = false;
-    private float m_fCurrentCollectionTime = 1.0f;
-    private float m_fMaximumCollectionTime = 2.0f;
+    [SerializeField] private float m_fIncreasePitch = 0.12f;
+    [SerializeField] float m_fMaxPitch = 1.1f;
     private float m_fCurrentPitch = 0.55f;
     private float m_fInitPitch = 0.6f;
-    private float m_fMaxPitch = 1.1f;
-    private float m_fIncreasePitch = 0.12f;
+    private float m_fCurrentCollectionTime = 1.0f;
+    private float m_fMaximumCollectionTime = 2.0f;
+    private bool m_bCurrentlyCollecting = false;
 
     private Material m_CurrentWalkingSurface = null;    // Reference used to make decisions about audio.
     private bool m_bIsSprinting = false;
@@ -243,6 +245,19 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
 
     // Update is called once per frame
     void Update() {
+
+        if (transform.parent != null)
+        {
+
+        }
+        else
+        {
+            if (transform.localScale != Vector3.one)
+            {
+                transform.localScale = Vector3.one;
+            }
+        }
+
         if (!GameState.DoesPlayerHaveControl()) {
             ClearPlayerEvents();
             return;
@@ -1246,8 +1261,10 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     }
 
     private IEnumerator MovePlayer() {
+        m_rCharacterController.enabled = false;
         yield return new WaitForEndOfFrame();
         transform.position = m_rRespawnLocation;
+        m_rCharacterController.enabled = true;
     }
 
     // Toggles the hip scroll item
@@ -1307,6 +1324,8 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         m_rAnimator.SetTrigger("Maps");
     }
 
+    [SerializeField] AudioMixer m_rMixer;
+
     /// <summary>
     /// Updates collectable audio loguc
     /// </summary>
@@ -1315,6 +1334,33 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //Only calculate timer if player is currently collecting crystals
         if (!m_bCurrentlyCollecting)
             return;
+
+        //if(m_rLastCollectedAudio != null)
+        //{
+        //    if (m_fCurrentCollectionTime < 0.1f && m_rLastCollectedAudio.isPlaying)
+        //    {
+        //        float mixerVal = 0.0f;
+        //        m_rMixer.GetFloat("Collectables", out mixerVal);
+        //        print("SDHFDKJSHF: " + mixerVal);
+
+        //        m_rMixer.SetFloat("Collectables", 0.5f);
+
+        //        m_rMixer.GetFloat("Collectables", out mixerVal);
+        //        print("newSDHFDKJSHF: " + mixerVal);
+
+        //        //m_rMixer.SetFloat("Collectables", );
+        //    }
+        //    else
+        //    {
+        //        m_rMixer.SetFloat("Collectables", 0.0f);
+
+        //    }
+        //}
+        //else
+        //{
+        //    m_rMixer.SetFloat("Collectables", 0.0f);
+
+        //}
 
         m_fCurrentCollectionTime += Time.deltaTime;
 
@@ -1327,7 +1373,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             m_bCurrentlyCollecting = false;
         }
     }
-
+    
     /// <summary>
     /// Plays the sound of a collectable through the audioSource reference passed through with an increased pitch. 
     /// Called through the Pickup Class. 
@@ -1338,7 +1384,6 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
         //Set the new pitch in the referenced collectable audioplyer
         _audio.pitch = m_fCurrentPitch;
 
-        //Set as collecting and reset collection start time to begin pitch raise
         m_bCurrentlyCollecting = true;
         m_fCurrentCollectionTime = 0.0f;
 
@@ -1353,7 +1398,15 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             //Set current pitch as max pitch if current pitch is above max
             m_fCurrentPitch = m_fMaxPitch;
         }
+        
+        StartCoroutine(PlayNextTrackAfterSeconds(_audio, 0.0f));
 
-        _audio.Play();
+        m_rLastCollectedAudio = _audio;
+    }
+
+    IEnumerator PlayNextTrackAfterSeconds(AudioSource _track, float _seconds)
+    {
+        yield return new WaitForSeconds(_seconds);
+        _track.Play();
     }
 }

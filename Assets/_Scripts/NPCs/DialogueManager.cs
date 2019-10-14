@@ -104,7 +104,7 @@ public class DialogueManager : MonoBehaviour
             InteractSentence();
         }
 
-        if(Input.GetButtonDown(m_strSkip))
+        if(Input.GetButtonDown(m_strSkip) && m_bConversing)
         {
             BeginDialogue(false);
         }
@@ -418,6 +418,7 @@ public class DialogueManager : MonoBehaviour
             StopAllCoroutines();
             m_rContinueButton.gameObject.SetActive(false);
             m_rContainerAnimator.SetBool("Activate", false);
+            m_bConversing = false;
             StartCoroutine(ActivateDialogue(false));
         }
     }
