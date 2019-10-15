@@ -7,8 +7,12 @@ public class LoadingScreen : MonoBehaviour
 {
     private const float MIN_WAIT_TIME = 2.0f;
 
-    [SerializeField] private GameObject m_rLoadingPanel;
     public static LoadingScreen Instance;
+
+    [SerializeField] private GameObject m_rLoadingScrSpace;
+    [SerializeField] private GameObject m_rLoadingOverlay;
+    private GameObject m_rCurrentLoadingPanel;
+
     private AsyncOperation m_currentLoadingOperation;
     private Animator m_animator;
     private Canvas m_canvas;
@@ -22,9 +26,7 @@ public class LoadingScreen : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-
-            m_animator = GetComponentInChildren<Animator>();
-            m_canvas = GetComponent<Canvas>();
+            AssignCurrentSceneCanvas();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -39,7 +41,7 @@ public class LoadingScreen : MonoBehaviour
     {
         if (m_bIsLoading)
         {
-            if (m_currentLoadingOperation.isDone && !m_bAnimationHasTriggered)
+            if (m_currentLoadingOperation.allowSceneActivation && !m_bAnimationHasTriggered)
             {
                 m_animator.SetTrigger("Hide");
                 m_bAnimationHasTriggered = true;
@@ -56,18 +58,30 @@ public class LoadingScreen : MonoBehaviour
         }
     }
 
+    void AssignCurrentSceneCanvas()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            m_rCurrentLoadingPanel = m_rLoadingScrSpace;
+        }
+        else
+        {
+            m_rCurrentLoadingPanel = m_rLoadingOverlay;
+        }
+        m_animator = m_rCurrentLoadingPanel.GetComponent<Animator>();
+        m_canvas = m_rCurrentLoadingPanel.GetComponent<Canvas>();
+        if(m_canvas.worldCamera == null)
+        {
+            m_canvas.worldCamera = GameObject.Find("Camera").GetComponent<Camera>();
+        }
+    }
+
     public void ActivateLoadingScreen(AsyncOperation _operation)
     {
-        //if(SceneManager.GetActiveScene().buildIndex == 0)
-        //{
-        //    m_canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        //}
-        //else
-        //{
-        //    m_canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        //}
+        AssignCurrentSceneCanvas();
+
         m_currentLoadingOperation = _operation;
-        m_rLoadingPanel.SetActive(true);
+        m_rCurrentLoadingPanel.SetActive(true);
         _operation.allowSceneActivation = false;
         m_fTimeElapsed = 0.0f;
         m_bIsLoading = true;
@@ -78,8 +92,10 @@ public class LoadingScreen : MonoBehaviour
 
     public void HideLoadingScreen()
     {
+        m_rCurrentLoadingPanel.SetActive(false);
+
         // Disable the loading screen:
-        m_rLoadingPanel.SetActive(false);
+        //m_rLoadingPanel.SetActive(false);
         m_currentLoadingOperation = null;
         m_bIsLoading = false;
         m_fTimeElapsed = 0.0f;
