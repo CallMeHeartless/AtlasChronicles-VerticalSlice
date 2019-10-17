@@ -91,7 +91,6 @@ public class PlayerAnimationController : MonoBehaviour
     public void PlayLandDust()
     {
         m_rLeftFootDustParticles.Play();
-
         m_rRightFootDustParticles.Play();
     }
 
@@ -121,6 +120,10 @@ public class PlayerAnimationController : MonoBehaviour
         m_rAttack.m_bIsActive = false;
         m_rAnimator.SetTrigger("AttackReturn");
         //m_rPlayerController.ToggleWeaponScroll(false);
+    }
+
+    public void AttackScrollOff() {
+        m_rPlayerController.ToggleWeaponScroll(false);
     }
 
     public void AttackCooldown() {

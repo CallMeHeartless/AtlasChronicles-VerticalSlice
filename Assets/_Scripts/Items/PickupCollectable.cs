@@ -10,6 +10,7 @@ public class PickupCollectable : Pickup
         base.Start();
         m_eType = PickupType.ECollectable;
         m_rPickupPic = GameObject.FindGameObjectWithTag("PickupPicUI");
+        //m_rAudio = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().GetCollectableAudio();
     }
 
     /// <summary>
@@ -18,14 +19,14 @@ public class PickupCollectable : Pickup
     /// <author>Vivian</author>
     protected override void Collect()
     {
-        m_rAudio.Play();
+        //m_rAudio.Play();
         GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex]++;
         //GameEndController.CheckMapCollection(); // Review later
 
         // Disable the magnetic component
         MagneticController magnetic = GetComponent<MagneticController>();
         if (magnetic) {
-            magnetic.m_bIsMagnetised = false;
+            magnetic.SnapToPlayer();
         }
        
         if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
