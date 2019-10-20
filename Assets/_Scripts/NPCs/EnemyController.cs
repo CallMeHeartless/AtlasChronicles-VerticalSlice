@@ -85,6 +85,7 @@ public class EnemyController : MonoBehaviour
         }
         else if(m_rStateMachine.GetBool("bCanSeePlayer")){ // Do not execute multiple times
             m_rStateMachine.SetBool("bCanSeePlayer", false);
+            m_rAnimator.SetBool("SeesPlayer", false);
             // Transition to look, then return home
             //m_rAnimator.SetTrigger("LoseSight"); /// Removed to be called at the start of BasicLosePlayer
         }
