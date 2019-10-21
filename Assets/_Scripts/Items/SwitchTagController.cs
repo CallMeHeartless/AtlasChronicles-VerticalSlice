@@ -15,9 +15,9 @@ public class SwitchTagController : MonoBehaviour
     private PlayerController m_rPlayerReference;
     [SerializeField]
     private GameObject m_rInkSparkleTest;
-    [SerializeField]
-    private TeleportTetherController m_rTeleportTether;
-    public TeleportTetherController teleportTether { set { m_rTeleportTether = value; } }
+    //[SerializeField]
+    //private TeleportTetherController m_rTeleportTether;
+    //public TeleportTetherController teleportTether { set { m_rTeleportTether = value; } }
 
     // Update is called once per frame
     void Update(){
@@ -56,9 +56,9 @@ public class SwitchTagController : MonoBehaviour
             m_AttachedObject.GetComponent<Switchable>().Tag();
 
             // Display the line renderer teleport tether
-            if (m_rTeleportTether) {
-                m_rTeleportTether.SetTetherEnd(m_AttachedObject.position);
-            }
+            //if (m_rTeleportTether) {
+            //    m_rTeleportTether.SetTetherEnd(m_AttachedObject.position);
+            //}
 
             // Create a sparkle effect
             GameObject sparkle = Instantiate(m_rInkSparkleTest, 
@@ -74,7 +74,7 @@ public class SwitchTagController : MonoBehaviour
             && other.gameObject.layer != LayerMask.NameToLayer("Tutorial")
             && other.gameObject.layer != LayerMask.NameToLayer("Cinematic")
             && other.gameObject.layer != LayerMask.NameToLayer("TagIgnore")) {
-            print("Object: " + other.name);
+            //print("Object: " + other.name);
 
             // Destroy animation? DO NOT DESTROY OBJECT
             GameObject sparkle = Instantiate(m_rInkSparkleTest, transform.localPosition, Quaternion.identity);
@@ -93,9 +93,9 @@ public class SwitchTagController : MonoBehaviour
         if (m_AttachedObject) {
             m_AttachedObject.GetComponent<Switchable>().DeTag();
         }
-        if (m_rTeleportTether) {
-            m_rTeleportTether.BreakTether();
-        }
+        //if (m_rTeleportTether) {
+        //    m_rTeleportTether.BreakTether();
+        //}
        
         m_AttachedObject = null;
         gameObject.SetActive(false);
