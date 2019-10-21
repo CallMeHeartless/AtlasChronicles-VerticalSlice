@@ -23,7 +23,7 @@ public class ColorPlat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_rAnimator = GetComponent<Animator>();
+        m_rAnimator = GetComponentInChildren<Animator>();
         m_rMeshRenderer = GetComponentInChildren<MeshRenderer>();
         if (!m_rMeshRenderer)
         {
