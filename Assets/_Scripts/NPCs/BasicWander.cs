@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BasicWander : AIState
 {
@@ -25,21 +26,18 @@ public class BasicWander : AIState
             m_rAgent.isStopped = false;
         }
 
+        CheckPathIsValid();
+
         // Determine which animation should be played
         if (m_rAgent.velocity.sqrMagnitude == 0.0f) {
-            //m_rAI.animator.SetTrigger("Idle");
             m_rAI.animator.SetBool("bIsWandering", false);
         } else {
-            //m_rAI.animator.SetTrigger("Patrol");
             m_rAI.animator.SetBool("bIsWandering", true);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        //if (!m_rAI.isKnockedOut) {
-        //    m_rAI.animator.SetTrigger("SpotPlayer");
-        //}
     }
 
     // Obtains a new destination for the Goon within their wander properties
@@ -49,6 +47,23 @@ public class BasicWander : AIState
         Vector3 target = Quaternion.AngleAxis(fRandomAngle, Vector3.up) * Vector3.right * fRandomRadius;
         target += m_rWanderProperties.m_HomePosition; // Add vector to home position to find offset point
         m_rAI.SetDestination(target);
+    }
+
+    /// <summary>
+    /// Used to check if the Goon is attempting to travel to a destination they cannot reach. Finds a new destination if true.
+    /// </summary>
+    private void CheckPathIsValid() {
+        // Obtain path status
+        NavMeshPath path = new NavMeshPath();
+        m_rAgent.CalculatePath(m_rAgent.destination, path);
+
+        // Check if path status is invalid
+        if(path.status == NavMeshPathStatus.PathInvalid) {
+            // Obtain a new target position
+            FindNewPosition();
+            m_fWanderIntervalTimer = 0.0f;
+            Debug.Log("Invalid path found: Rerouting.");
+        }
     }
 
 }

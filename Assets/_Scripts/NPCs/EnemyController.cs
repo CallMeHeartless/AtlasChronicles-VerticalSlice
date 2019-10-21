@@ -71,7 +71,7 @@ public class EnemyController : MonoBehaviour
             m_rNavAgent.isStopped = true;
             return;
         }
-        //m_rNavAgent.isStopped = false;
+
         // Look for the player
         m_rPlayer = m_rVision.DetectPlayer(m_rEyes);
         if (m_rPlayer) {
@@ -85,8 +85,7 @@ public class EnemyController : MonoBehaviour
         }
         else if(m_rStateMachine.GetBool("bCanSeePlayer")){ // Do not execute multiple times
             m_rStateMachine.SetBool("bCanSeePlayer", false);
-            // Transition to look, then return home
-            //m_rAnimator.SetTrigger("LoseSight"); /// Removed to be called at the start of BasicLosePlayer
+            m_rAnimator.SetBool("SeesPlayer", false);
         }
 
         // Check if away from navmesh
@@ -199,11 +198,13 @@ public class EnemyController : MonoBehaviour
     // Apply a tag to the enemy, disorienting them
     public void SetTag(bool _bState) {
         m_rStateMachine.SetBool("bIsTagged", _bState);
-        //m_rAnimator.SetBool("Tagged", _bState); // Moved to BasicDisorient
+
         m_bIsTagged = _bState;
         if (_bState) { // Represents a Goon being tagged
             m_rStateMachine.SetTrigger("Disorient");
             ToggleMapFragment(false);
+        } else {
+            m_rStateMachine.SetBool("bCanSeePlayer", true);
         }
     }
 
