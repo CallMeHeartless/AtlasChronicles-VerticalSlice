@@ -11,6 +11,8 @@ public class GameState : MonoBehaviour
     private static bool s_bIsPlayerTeleporting = false;
     private static bool s_bTimerTings = false;
     private static bool s_bGetIsSpeedRunning = false;
+    private static bool s_bMainMenuAccessed = false;
+    private static bool s_bFirstTimeGameAccessed = false;
     private static AsyncOperation s_asyncLoad;
 
     public enum GameplayMode
@@ -78,10 +80,39 @@ public class GameState : MonoBehaviour
     {
         s_bTimerTings = _Timer;
     }
+
     public static bool GetTimer()
     {
         return s_bTimerTings;
     }
+
+    public static void SetMainMenuAccessed(bool _accessed)
+    {
+        if(s_bFirstTimeGameAccessed)
+        {
+            s_bMainMenuAccessed = false;
+        }
+        else
+        {
+            s_bMainMenuAccessed = _accessed;
+        }
+    }
+
+    public static bool GetMainMenuAccessed()
+    {
+        return s_bMainMenuAccessed;
+    }
+
+    public static void SetFirstTimeGameAccessed(bool _accessed)
+    {
+        s_bFirstTimeGameAccessed = _accessed;
+    }
+
+    public static bool GetFirstTimeGameAccessed()
+    {
+        return s_bFirstTimeGameAccessed;
+    }
+
     //all the thing stoping the play move set bacm to false
     public static void SetPlayerFree()
     {
@@ -91,7 +122,7 @@ public class GameState : MonoBehaviour
        s_bTimerTings = false;
     }
 
-    public static IEnumerator LoadingScene(int _sceneIndex)
+    public static IEnumerator LoadScene(int _sceneIndex)
     {
         s_asyncLoad = SceneManager.LoadSceneAsync(_sceneIndex);
         //asyncOperation.allowSceneActivation = false;
@@ -102,5 +133,4 @@ public class GameState : MonoBehaviour
             yield return null;
         }
     }
-    
 }
