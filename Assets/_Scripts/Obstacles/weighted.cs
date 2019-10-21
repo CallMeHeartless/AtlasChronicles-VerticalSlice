@@ -28,7 +28,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
     public bool m_RequirmentColor = false;
 
     public bool m_IsOn = false;
-
+    public bool m_bTypeDoor = false;
     public float m_fSpeed;
     GameObject WeightedLoaction;
     GameObject m_Topplate;
@@ -221,13 +221,23 @@ public class weighted : MonoBehaviour, IMessageReceiver
             {
                 if (!m_IsOn)
                 {
-                    for (int i = 0; i < m_gEffectingObject.Count; ++i)
+
+                    if (m_bTypeDoor== true)
                     {
-                        IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
-                        target.OnReceiveMessage(MessageType.eOn, m_PassNumber[i]);//true
+                        gameObject.GetComponent<SwitchController>().switchoff();
                     }
-                    pastWasFalse = false;
-                    m_IsOn = true;
+                    else
+                    {
+
+
+                        for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                        {
+                            IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                            target.OnReceiveMessage(MessageType.eOn, m_PassNumber[i]);//true
+                        }
+                        pastWasFalse = false;
+                        m_IsOn = true;
+                    }
                 }
             }
             else
@@ -236,14 +246,22 @@ public class weighted : MonoBehaviour, IMessageReceiver
                 {
                     if (m_IsOn)
                     {
-                        for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                        if (m_bTypeDoor == true)
                         {
-                            IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
-                            target.OnReceiveMessage(MessageType.eOff, m_PassNumber[i]);//false
+                            gameObject.GetComponent<SwitchController>().switchoff();
                         }
-                        pastWasFalse = true;
+                        else
+                        {
+
+                            for (int i = 0; i < m_gEffectingObject.Count; ++i)
+                            {
+                                IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
+                                target.OnReceiveMessage(MessageType.eOff, m_PassNumber[i]);//false
+                            }
+                            pastWasFalse = true;
+                        }
+                        m_IsOn = false;
                     }
-                    m_IsOn = false;
                 }
 
             }

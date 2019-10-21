@@ -43,9 +43,9 @@ public class PlayerAnimationController : MonoBehaviour
             m_SwitchMarker.SetActive(false);
             SwitchTagController switchTag = m_SwitchMarker.GetComponent<SwitchTagController>();
             switchTag.SetPlayerReference(transform.root.GetComponent<PlayerController>());
-            if (m_rTeleportTetherController) {
-                switchTag.teleportTether = m_rTeleportTetherController;
-            }
+            //if (m_rTeleportTetherController) {
+            //    switchTag.teleportTether = m_rTeleportTetherController;
+            //}
         } else {
             Debug.LogError("ERROR: PlayerAnimationController - Switch Marker Prefab not set. Null reference exception");
         }

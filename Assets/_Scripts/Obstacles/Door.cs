@@ -12,6 +12,7 @@ public class Door : MonoBehaviour, IMessageReceiver
     public bool OnceOnForeverOn;
     private bool m_bUnlocked = false;
     private bool m_bMoving = false;
+    public bool m_bSetActive = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -85,6 +86,10 @@ public class Door : MonoBehaviour, IMessageReceiver
         //Debug.Log("Unlocked: "+m_bUnlocked);
         if (newLock != m_bUnlocked)
         {
+            if (m_bSetActive == true)
+            {
+                transform.GetChild(0).gameObject.SetActive(true);
+            }
             m_bUnlocked = newLock;
             m_bMoving = true;
         }
