@@ -21,6 +21,9 @@ public class GameEndController : MonoBehaviour
     [SerializeField] private GameObject m_rPortalParticles = null;
     [SerializeField] private GameObject m_rInfo = null; //Just ui telling player the portal is open
     [SerializeField] private bool m_bIsActive = false;
+    [SerializeField] private GameObject m_rPlayer = null;
+    private LoadingScreen m_rLoadingScreen;
+
     private bool m_bGameComplete = false;
     private Animator m_rAnimator;
     private TimerUpdate m_rTimerUpdate;
@@ -32,7 +35,9 @@ public class GameEndController : MonoBehaviour
     public static int m_iMinimumMaps = 5;
     public static bool m_bHasEnoughMaps = false;
     public bool m_bIsTriggeredOnce = false;
-       
+    private bool m_bTimeResultsActivated = false;
+
+
     void Awake()
     {
         // Find instance
@@ -45,7 +50,6 @@ public class GameEndController : MonoBehaviour
         if (GameState.GetGameplayMode() == GameState.GameplayMode.Everything)
         {
             m_iCrystalsNeeded = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length + (GameObject.FindGameObjectsWithTag("Box").Length*5);
-            Debug.Log("Required crystals: " + m_iCrystalsNeeded);
         }
         else
         {
@@ -65,6 +69,7 @@ public class GameEndController : MonoBehaviour
 
         //Obtain timer update component
         m_rTimerUpdate = GameObject.FindGameObjectWithTag("TextUI").GetComponent<TimerUpdate>();
+        m_rLoadingScreen = FindObjectOfType<LoadingScreen>();
 
         // Initialise crystal depo children
         InitialiseCrystalDepos();
@@ -76,15 +81,27 @@ public class GameEndController : MonoBehaviour
             SetPortalState(true);
         }
 
+        GameState.SetFirstTimeGameAccessed(true);
     }
 
     private void Update()
     {
+        //If in Results page
+        if (m_bTimeResultsActivated)
+        {
+            if (Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
+            {
+                ExitLevel();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
+            print("!!!!!!");
             m_bIsActive = true;
             m_iCrystalsNeeded = 0;
             m_iMapsNeeded = 0;
+            m_rPlayer.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5.0f);
         }
 
         if (!m_bGameComplete)
@@ -143,7 +160,7 @@ public class GameEndController : MonoBehaviour
 
     // Return the player to the main menu upon completion
     public void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Player") && m_bIsActive)
+        if(other.CompareTag("Player") && m_bIsActive && !m_bGameComplete)
         {
             m_bIsTriggeredOnce = true;
             
@@ -164,11 +181,12 @@ public class GameEndController : MonoBehaviour
 
                     PlayerPrefs.SetInt("TimeAttackCurrentPlace", Records.m_CurrentPlace);
                     m_rTimerUpdate.DisplayTimeAttackResults();
+                    m_bTimeResultsActivated = true;
                 }
             }
             else
             {
-                StartCoroutine(ExitLevel());
+                ExitLevel();
             }
         }
     }
@@ -185,17 +203,23 @@ public class GameEndController : MonoBehaviour
     /// Return to main menu after 5 seconds
     /// </summary>
     /// <returns></returns>
-    IEnumerator ExitLevel()
+    void ExitLevel()
     {
-        yield return new WaitForSeconds(2f);
+        print("exiting level");
         //Reset the level before loading main menu
         Zone.ClearZones();
-        if (GameState.GetGameplayMode() == GameState.GameplayMode.Adventure)
+
+        if(GameState.GetMainMenuAccessed())
         {
+            //If game was run by starting through main menu, allow loading screens
+            AsyncOperation s_asyncLoad = SceneManager.LoadSceneAsync(0);
+            m_rLoadingScreen.ActivateLoadingScreen(s_asyncLoad);
+        }
+        else
+        {
+            //If game was not started through main menu, load scenes without loading screens
             SceneManager.LoadScene(0);
         }
-        
-        yield return null;
     }
 
 
