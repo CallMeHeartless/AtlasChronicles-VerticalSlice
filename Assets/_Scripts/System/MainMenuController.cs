@@ -17,16 +17,20 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Animator m_rNLOnPillar;
     [SerializeField] private Animator m_rNovemberLonesome;
     [SerializeField] private AudioSource m_rButtonClick;
-    [SerializeField] private GameObject m_rAdventureModePanel;
-    [SerializeField] private GameObject m_rTimeAttackModePanel;
     [SerializeField] private GameObject m_rLeftModeButton;
     [SerializeField] private GameObject m_rRightModeButton;
-    [SerializeField] private GameObject m_rLoadingPanel;
     [SerializeField] private GameObject m_rNLExpressions;
     [SerializeField] private TextMeshProUGUI m_rModeTitleText;
+
+    [SerializeField] private GameObject[] m_rModePanels;
+    int m_iCurrentModeGroup = 0;
+    private bool m_LAxisInUse = false;
+    private bool m_RAxisInUse = false;
+
     private SpeedMenu m_rModeMenu;
 
     private Canvas m_rCanvas;
+    private LoadingScreen m_rLoadingScreen;
 
     //Values showing november lonesome on screen behind or infront of menus
     [SerializeField] private int m_iHiddenPlaneDist = 1;
@@ -47,8 +51,13 @@ public class MainMenuController : MonoBehaviour
         m_rCanvas = GetComponent<Canvas>();
         m_rModeMenu = m_rModeSelection.GetComponent<SpeedMenu>();
         m_rNLExpressions.SetActive(false);
-        m_rLoadingPanel.SetActive(false);
-        NavigateModeLeft(true);
+
+        m_rLoadingScreen = FindObjectOfType<LoadingScreen>();
+        ResetModeSelection();
+
+        //LoadingScreen bug prevention
+        if (!GameState.GetFirstTimeGameAccessed())
+            GameState.SetMainMenuAccessed(true);
     }
 
     private void Update()
@@ -59,16 +68,46 @@ public class MainMenuController : MonoBehaviour
             {
                 ActivateModeSelection(false);
             }
-            if (Input.GetAxis("XBoxL2") != 0)
+            if (Input.GetAxis("Horizontal") < 0 && !m_LAxisInUse)
             {
-                NavigateModeLeft(true);
+                NavigateModeLeftArray(true);
+                m_LAxisInUse = true;
+                m_RAxisInUse = false;
             }
-            if (Input.GetAxis("XBoxR2") != 0)
+            if (Input.GetAxis("Horizontal") > 0 && !m_RAxisInUse)
             {
-                NavigateModeLeft(false);
+                NavigateModeLeftArray(false);
+                m_LAxisInUse = false;
+                m_RAxisInUse = true;
+            }
+            if (Input.GetAxis("Horizontal") == 0)
+            {
+                m_LAxisInUse = false;
+                m_RAxisInUse = false;
+            }
+            if(m_iCurrentModeGroup == 1)//time attack mode
+            {
+                if (Input.GetAxis("YButton") != 0)
+                {
+                    m_rModeMenu.ResetScores();
+                }
             }
         }
-        
+    }
+
+    void AxisButtonDown(string _button, bool _inUse)
+    {
+        if (Input.GetAxisRaw(_button) != 0)
+        {
+            if (_inUse == false)
+            {
+                _inUse = true;
+            }
+        }
+        if (Input.GetAxisRaw(_button) == 0)
+        {
+            _inUse = false;
+        }
     }
 
     public void ActivateMenu(bool _activate)
@@ -138,8 +177,22 @@ public class MainMenuController : MonoBehaviour
         //m_rNLOnPillar.transform.GetChild(0).GetComponent<Animator>().SetTrigger("PopIn");
 
         //Activate loading panel and start game scene
-        m_rLoadingPanel.SetActive(true);
-        StartCoroutine(GameState.LoadingScene(SceneManager.GetActiveScene().buildIndex + 1));
+        //m_rLoadingPanel.SetActive(true);
+
+        if (GameState.GetMainMenuAccessed())
+        {
+            //If game was run by starting through main menu, allow loading screens
+            AsyncOperation s_asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+            m_rLoadingScreen.ActivateLoadingScreen(s_asyncLoad);
+        }
+        else
+        {
+            //If game was not started through main menu, load scenes without loading screens
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+
+
+        //StartCoroutine(GameState.LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
         m_rNLOnPillar.SetTrigger("Action");
     }
 
@@ -167,17 +220,58 @@ public class MainMenuController : MonoBehaviour
     public void MakeButtonSelected(Button _button) {
         _button.Select();
     }
-    
+
     /// <summary>
     /// Sets a mode panel active depending on which side has been specified in the parameter
     /// </summary>
     /// <param name="_left">Whether the left mode (adventure) or time attack mode (right) is active</param>
-    public void NavigateModeLeft(bool _left)
+    public void NavigateModeLeftArray(bool _left)
     {
-        m_rLeftModeButton.SetActive((_left ? false : true));
-        m_rRightModeButton.SetActive((_left ? true : false));
-        m_rAdventureModePanel.SetActive((_left ? true : false));
-        m_rTimeAttackModePanel.SetActive((_left ? false : true));
-        m_rModeTitleText.text = (_left ? "ADVENTURE MODE" : "TIME ATTACK MODE");
+        //Switch tab groups by shifting to the left
+        if (_left)
+        {
+            if (m_iCurrentModeGroup > 0)
+            {
+                //Hide current group
+                m_rModePanels[m_iCurrentModeGroup].SetActive(false);
+
+                --m_iCurrentModeGroup;
+
+                //Activate previous group
+                m_rModePanels[m_iCurrentModeGroup].SetActive(true);
+            }
+        }
+        else
+        {
+            //Switch tab groups by shifting to the right
+            if (m_iCurrentModeGroup < m_rModePanels.Length - 1)
+            {
+                //Hide current group
+                m_rModePanels[m_iCurrentModeGroup].SetActive(false);
+
+                ++m_iCurrentModeGroup;
+
+                //Activate previous group
+                m_rModePanels[m_iCurrentModeGroup].SetActive(true);
+            }
+        }
+        m_rButtonClick.Play();
+        m_rLeftModeButton.SetActive(((m_iCurrentModeGroup == 0) ? false : true));
+        m_rRightModeButton.SetActive(((m_iCurrentModeGroup == m_rModePanels.Length - 1)  ? false : true));
+    }
+
+    void ResetModeSelection()
+    {
+        // Deactivate any other active tabs // Just in case multiple are active
+        for (int i = 0; i < m_rModePanels.Length; ++i)
+        {
+            if (m_rModePanels[i].activeSelf && i != m_iCurrentModeGroup)
+            {
+                m_rModePanels[m_iCurrentModeGroup].SetActive(false);
+            }
+        }
+
+        m_rLeftModeButton.SetActive(((m_iCurrentModeGroup == 0) ? false : true));
+        m_rRightModeButton.SetActive(((m_iCurrentModeGroup == m_rModePanels.Length - 1) ? false : true));
     }
 }

@@ -17,6 +17,7 @@ public class SettingsScript : MonoBehaviour
     [SerializeField] private Color m_highlightedColour; //The button's highlighted colour
     [SerializeField] private Toggle m_camToggleX, m_camToggleY; //The toggle UI components
     [SerializeField] private AudioMixer m_rMixer;       //The Audio Mixer for the game
+    [SerializeField] private GameObject m_rInputManagerPrefab; //The Prefab for the input manager (used to instantiate if it doesnt exist in current scene)
 
     private CinemachineFreeLook m_rCineCamera;  //The camera reference
     private int m_currentGroup = -1;            //The currently selected tab group
@@ -51,6 +52,11 @@ public class SettingsScript : MonoBehaviour
         {
             m_rMixer.SetFloat("BGMVol", Mathf.Log10(PlayerPrefsManager.RetrieveAudioBGM()) * 20);
             m_rMixer.SetFloat("SFXVol", Mathf.Log10(PlayerPrefsManager.RetrieveAudioVFX()) * 20);
+        }
+
+        if(InputManager.m_instance == null)
+        {
+            Instantiate(m_rInputManagerPrefab);
         }
     }
 
