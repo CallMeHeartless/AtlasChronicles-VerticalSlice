@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1864228747659894408}
   - component: {fileID: 1864228747659894413}
   - component: {fileID: 1907690576386471535}
+  - component: {fileID: 4108777394297385039}
   m_Layer: 0
   m_Name: ColorStop
   m_TagString: Untagged
@@ -145,6 +146,7 @@ MonoBehaviour:
   m_iMaxHealth: 2
   m_fInvulnerabilityTime: 0
   m_fHitAngle: 360
+  m_rInvulnerableFlash: {fileID: 0}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -187,3 +189,22 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnDamageMessageReceivers: []
+--- !u!95 &4108777394297385039
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864228747659894423}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
