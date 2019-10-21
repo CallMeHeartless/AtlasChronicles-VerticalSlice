@@ -80,6 +80,8 @@ public class GameEndController : MonoBehaviour
         {
             SetPortalState(true);
         }
+
+        GameState.SetFirstTimeGameAccessed(true);
     }
 
     private void Update()
@@ -95,6 +97,7 @@ public class GameEndController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
+            print("!!!!!!");
             m_bIsActive = true;
             m_iCrystalsNeeded = 0;
             m_iMapsNeeded = 0;
@@ -202,10 +205,21 @@ public class GameEndController : MonoBehaviour
     /// <returns></returns>
     void ExitLevel()
     {
+        print("exiting level");
         //Reset the level before loading main menu
         Zone.ClearZones();
-        AsyncOperation s_asyncLoad = SceneManager.LoadSceneAsync(0);
-        m_rLoadingScreen.ActivateLoadingScreen(s_asyncLoad);
+
+        if(GameState.GetMainMenuAccessed())
+        {
+            //If game was run by starting through main menu, allow loading screens
+            AsyncOperation s_asyncLoad = SceneManager.LoadSceneAsync(0);
+            m_rLoadingScreen.ActivateLoadingScreen(s_asyncLoad);
+        }
+        else
+        {
+            //If game was not started through main menu, load scenes without loading screens
+            SceneManager.LoadScene(0);
+        }
     }
 
 

@@ -7,7 +7,7 @@ public class LoadingScreen : MonoBehaviour
 {
     private const float MIN_WAIT_TIME = 2.0f;
 
-    public static LoadingScreen Instance;
+    public static LoadingScreen s_LoadingScrInstance;
 
     [SerializeField] private GameObject m_rLoadingScrSpace;
     [SerializeField] private GameObject m_rLoadingOverlay;
@@ -23,15 +23,15 @@ public class LoadingScreen : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (s_LoadingScrInstance == null)
         {
-            Instance = this;
+            s_LoadingScrInstance = this;
             AssignCurrentSceneCanvas();
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             return;
         }
     }
@@ -60,6 +60,9 @@ public class LoadingScreen : MonoBehaviour
 
     void AssignCurrentSceneCanvas()
     {
+        m_rCurrentLoadingPanel = s_LoadingScrInstance.m_rCurrentLoadingPanel;
+        m_rLoadingScrSpace = s_LoadingScrInstance.m_rLoadingScrSpace;
+        m_rLoadingOverlay = s_LoadingScrInstance.m_rLoadingOverlay;
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             m_rCurrentLoadingPanel = m_rLoadingScrSpace;
@@ -70,21 +73,32 @@ public class LoadingScreen : MonoBehaviour
         }
         m_animator = m_rCurrentLoadingPanel.GetComponent<Animator>();
         m_canvas = m_rCurrentLoadingPanel.GetComponent<Canvas>();
-        if(m_canvas.worldCamera == null)
+        if(m_canvas != null)
         {
-            m_canvas.worldCamera = GameObject.Find("Camera").GetComponent<Camera>();
+            if (m_canvas.worldCamera == null)
+            {
+                Camera cam = GameObject.Find("Camera").GetComponent<Camera>();
+                if(cam != null)
+                {
+                    m_canvas.worldCamera = cam;
+                }
+            }
         }
     }
 
     public void ActivateLoadingScreen(AsyncOperation _operation)
     {
+        s_LoadingScrInstance.m_currentLoadingOperation = _operation;
+        m_currentLoadingOperation = s_LoadingScrInstance.m_currentLoadingOperation;
+
         AssignCurrentSceneCanvas();
 
-        m_currentLoadingOperation = _operation;
         m_rCurrentLoadingPanel.SetActive(true);
-        _operation.allowSceneActivation = false;
+        m_currentLoadingOperation.allowSceneActivation = false;
         m_fTimeElapsed = 0.0f;
-        m_bIsLoading = true;
+        m_bAnimationHasTriggered = false;
+        s_LoadingScrInstance.m_bIsLoading = true;
+        m_bIsLoading = s_LoadingScrInstance.m_bIsLoading;
 
         //// Play the fade in animation:          
         m_animator.SetTrigger("Show");
@@ -93,9 +107,9 @@ public class LoadingScreen : MonoBehaviour
     public void HideLoadingScreen()
     {
         m_rCurrentLoadingPanel.SetActive(false);
-
+        m_rLoadingScrSpace.SetActive(false);
+        m_rLoadingOverlay.SetActive(false);
         // Disable the loading screen:
-        //m_rLoadingPanel.SetActive(false);
         m_currentLoadingOperation = null;
         m_bIsLoading = false;
         m_fTimeElapsed = 0.0f;

@@ -30,14 +30,7 @@ public class SpeedMenu : MonoBehaviour
         GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
 
         Object.GetComponent<DontDestory>().GetSpeedMode(HighlightedMode, out m_fTime, out m_Trophie);
-
-        //Set current highscore
-        //SetCurrentTimerScore(m_Trophie);
-
-        //transform.GetChild(1).gameObject.GetComponent<TrophyUI>().setSprite(m_Trophie);
-        //transform.GetChild(2).gameObject.GetComponent<TrophyUI>().setSprite(HighlightedMode);
-
-
+        
         string Nest;
         if ((HighlightedMode == 0)|| m_fTime== 0)
         {
