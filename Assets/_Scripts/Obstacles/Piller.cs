@@ -12,6 +12,7 @@ public class Piller : MonoBehaviour, IMessageReceiver
     public float m_fSpeedBoust = 0.0001f;
     public float m_fMinSpeed = 0.01f;
     public float m_fMaxSpeed = 0.1f;
+    public bool m_fActiveOnce = false;
     private bool m_bUnlocked = false;
     private bool m_bMoving = false;
     // Start is called before the first frame update
@@ -47,18 +48,33 @@ public class Piller : MonoBehaviour, IMessageReceiver
             // Open the door
             case MessageType.eOn:
                 {
+                    if (currentPostion == m_gPillersPostion.Length)
+                    {
+
+                    }
+                    else
+                    {
+                        m_bMoving = true;
+                        currentPostion += (int)_source;
+                        m_fSpeed = m_fMinSpeed;
+                    }
                    // m_bUnlocked = true;
-                    m_bMoving = true;
-                    currentPostion += (int)_source;
-                    m_fSpeed = m_fMinSpeed;
+                   
                     break;
                 }
             // Reset the door
             case MessageType.eOff:
                 {
-                    m_bMoving = true;
-                    currentPostion -= (int)_source;
-                    m_fSpeed = m_fMinSpeed;
+                    if (m_fActiveOnce == true)
+                    {
+
+                    }
+                    else
+                    {
+                        m_bMoving = true;
+                        currentPostion -= (int)_source;
+                        m_fSpeed = m_fMinSpeed;
+                    }
                     break;
                 }
 
