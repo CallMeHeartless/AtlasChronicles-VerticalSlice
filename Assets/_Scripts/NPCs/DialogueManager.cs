@@ -66,7 +66,7 @@ public class DialogueManager : MonoBehaviour
 
     private bool m_bTyping = false;
     private bool m_bConversing = false;
-    public static bool s_bInputController = true;
+    //public static bool s_bInputController = true;
 
     // Start is called before the first frame update
     void Start()
@@ -92,7 +92,7 @@ public class DialogueManager : MonoBehaviour
     public void Update()
     {
         //Check whether the keyboard or controller was last pressed
-        InputChecker();
+        //InputChecker();
         //Dont process input if game is paused
         if (GameState.GetPauseFlag() || !m_bConversing)
             return;
@@ -114,33 +114,33 @@ public class DialogueManager : MonoBehaviour
     /// Checks whether the last input pressed was from the keyboard or controller and
     ///         sets the static variable of s_bInputController to true or false
     /// </summary>
-    void InputChecker()
-    {
-        if (Input.anyKeyDown)
-        {
-            s_bInputController = false;
-        }
+    //void InputChecker()
+    //{
+    //    if (Input.anyKeyDown)
+    //    {
+    //        s_bInputController = false;
+    //    }
 
-        //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
-        //buttons are pressed on controller
-        if (Input.GetAxis("XBoxLT") > 0 || Input.GetAxis("XBoxRT") > 0
-              || Input.GetAxis("XBoxHor") != 0 || Input.GetAxis("XBoxVert") != 0
-              || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0
-              || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
-        {
-            s_bInputController = true;
-        }
+    //    //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
+    //    //buttons are pressed on controller
+    //    if (Input.GetAxis("XBoxLT") > 0 || Input.GetAxis("XBoxRT") > 0
+    //          || Input.GetAxis("XBoxHor") != 0 || Input.GetAxis("XBoxVert") != 0
+    //          || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0
+    //          || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
+    //    {
+    //        s_bInputController = true;
+    //    }
 
-        //If any joystick keys are pressed on the xbox controller, set controller in use
-        for (int i = 0; i < 20; i++)
-        {
-            if (Input.GetKeyDown("joystick 1 button " + i))
-            {
-                s_bInputController = true;
-            }
-        }
-        //print((s_bInputController ? "Controller" : "Key"));
-    }
+    //    //If any joystick keys are pressed on the xbox controller, set controller in use
+    //    for (int i = 0; i < 20; i++)
+    //    {
+    //        if (Input.GetKeyDown("joystick 1 button " + i))
+    //        {
+    //            s_bInputController = true;
+    //        }
+    //    }
+    //    //print((s_bInputController ? "Controller" : "Key"));
+    //}
 
     /// <summary>
     /// Begin dialogue by queuing all sentences from the conversation
@@ -197,7 +197,7 @@ public class DialogueManager : MonoBehaviour
         //Retrieve first sentence of the queue while removing it at the same time
         m_strCurrentSentence = m_sentences.Dequeue();
 
-        if(!s_bInputController)
+        if(!InputManager.s_bInputController)
         {
             ReplaceWithKeySprite(ref m_strCurrentSentence);
         }
