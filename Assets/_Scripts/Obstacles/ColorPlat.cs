@@ -6,6 +6,7 @@ public class ColorPlat : MonoBehaviour
 {
     public Material[] m_matMaterialColor = new Material[5]; 
     public GameObject m_gEffectingObject;
+    private Animator m_rAnimator;
     public enum m_Colors
     {
         red,green,blue
@@ -22,6 +23,7 @@ public class ColorPlat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_rAnimator = GetComponentInChildren<Animator>();
         m_rMeshRenderer = GetComponentInChildren<MeshRenderer>();
         if (!m_rMeshRenderer)
         {
@@ -30,6 +32,7 @@ public class ColorPlat : MonoBehaviour
         m_rMeshRenderer.material.SetInt("_Select", (int)m_colCurrentColor);
         // GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
         CorrectColor();
+
     }
 
     private void Update()
@@ -97,6 +100,10 @@ public class ColorPlat : MonoBehaviour
         }
         else
         {
+            // Play animation
+            if (m_rAnimator) {
+                m_rAnimator.SetTrigger("Switch");
+            }
 
             m_colCurrentColor += 1;
         }

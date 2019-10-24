@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class QuadLookAt : MonoBehaviour
 {
@@ -24,8 +25,7 @@ public class QuadLookAt : MonoBehaviour
         //Only look at cam if enabled
         if(m_rBubble.enabled)
         {
-            //Set bubble sprite according to last sprite used
-            m_rBubble.sprite = ((DialogueManager.s_bInputController) ? m_rControllerBubble : m_rKeyBubble);
+            m_rBubble.sprite = ((InputManager.s_bInputController) ? m_rControllerBubble : m_rKeyBubble);
 
             transform.LookAt(transform.position + m_rCameraReference.transform.rotation * Vector3.forward,
                                 m_rCameraReference.transform.rotation * Vector3.up);

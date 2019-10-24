@@ -55,4 +55,14 @@ public class BasicChase : AIState
     private bool PlayerInAttackRange() {
         return (m_rAI.transform.position - m_rPlayerReference.transform.position).sqrMagnitude <= m_fAttackRange * m_fAttackRange;
     }
+
+    private void CheckPathIsValid() {
+        NavMeshPath path = new NavMeshPath();
+
+        m_rAgent.CalculatePath(m_rAgent.destination, path);
+        if(path.status == NavMeshPathStatus.PathPartial) {
+            Debug.Log("Can't reach player");
+        }
+        
+    }
 }

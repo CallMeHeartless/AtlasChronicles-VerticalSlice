@@ -90,7 +90,15 @@ public class BreakableObject : MonoBehaviour
                 m_fCollectableHeight = 1.0f;
 
             // Instantiate each prize in the chests position
-            m_rPrizes[i] = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity, m_rParent.transform);
+            if(m_rParent == null)
+            {
+                m_rPrizes[i] = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity);
+            }
+            else
+            {
+                //If there is a parent to the chest, instantiate it under the parent's transform
+                m_rPrizes[i] = Instantiate(m_rPrizes[i], transform.localPosition, Quaternion.identity, m_rParent.transform);
+            }
 
             //Calculate the destinations of the prizes (to be spread out around the chest)
             float angle = 0.0f;
