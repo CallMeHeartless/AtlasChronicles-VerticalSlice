@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_TemplePillarTrim_Zone05
-  m_Shader: {fileID: 4800000, guid: 6dee2a73fd8b3d547b4a690302f60c52, type: 3}
-  m_ShaderKeywords: _USEFLATEMISSIVE_ON _USEFLATMETALLIC_ON _USEFLATSMOOTHNESS_ON
-  m_LightmapFlags: 0
+  m_Name: M_LandscapePaint_Zone02
+  m_Shader: {fileID: 4800000, guid: f0054655cf12562459e41555a8e618c1, type: 3}
+  m_ShaderKeywords: _USEFLATMETALLIC_ON
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -35,16 +35,32 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Diffuse:
-        m_Texture: {fileID: 2800000, guid: dd5b484c9e81f4047b2d00160481ecbf, type: 3}
+    - _DirtDiff:
+        m_Texture: {fileID: 2800000, guid: d38dc5fc57e343a42838128945cb5e83, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DirtNorm:
+        m_Texture: {fileID: 2800000, guid: e5c78e9bfc25ca04792efb78cd550cb8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DirtOSM:
+        m_Texture: {fileID: 2800000, guid: b3d3948bddcd1634a9e96ad1a7611c19, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Emissive:
+    - _GrassDiff:
+        m_Texture: {fileID: 2800000, guid: 1e7f9f10e50cb114e8d9da3813b19e4e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GrassNorm:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GrassOSM:
+        m_Texture: {fileID: 2800000, guid: cefc4be6b4624e94c911d5e7d20e7bc7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -55,20 +71,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Normal:
-        m_Texture: {fileID: 2800000, guid: 6ba2d397aa2e2e54b88d41a0566d18cd, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OSM:
-        m_Texture: {fileID: 2800000, guid: 619271f10d6828b48b249d0c3cacc516, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TileDiff:
+        m_Texture: {fileID: 2800000, guid: e5b46b1675cf88c46a943393cbdb377e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TileNorm:
+        m_Texture: {fileID: 2800000, guid: 3c9b200529380db429fa84c9014a7878, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TileOSM:
+        m_Texture: {fileID: 2800000, guid: 548415fece0bb9a4ea3c846cbf984a62, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -79,12 +99,12 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DirtTile: 0.2
     - _DstBlend: 0
-    - _FlatMetallic: 0
-    - _FlatSmoothness: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _GrassTile: 0.2
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -92,13 +112,14 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _TileTile: -0.3
     - _UVSec: 0
-    - _UseFlatEmissive: 1
     - _UseFlatMetallic: 1
-    - _UseFlatSmoothness: 1
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DirtHSL: {r: 0, g: 1, b: 2, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FlatEmissive: {r: 0, g: 0, b: 0, a: 0}
+    - _GrassHSL: {r: 0, g: 0.95, b: 1.07, a: 0}
+    - _TileHSL: {r: 0, g: 1, b: 1, a: 0}
