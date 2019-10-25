@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5429940028440488666}
   - component: {fileID: 5642859337384391504}
   - component: {fileID: 121573873199093854}
+  - component: {fileID: 976273323}
   m_Layer: 0
   m_Name: CircularClouds_Layer01
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4902199748809300644}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.2971, y: -9.47, z: 0.00000013351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 9.593657, y: 9.593657, z: 9.593657}
   m_Children: []
   m_Father: {fileID: 8410335442239117541}
@@ -1192,6 +1193,19 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &976273323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902199748809300644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fa698560b688845bf08bafe6dc1b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AdditionalVertexStreamMesh: {fileID: 0}
 --- !u!1 &8335579349825188103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,13 +1232,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8335579349825188103}
-  m_LocalRotation: {x: -0, y: 0.9030602, z: -0, w: 0.429514}
-  m_LocalPosition: {x: -3.5266967, y: -9.64, z: -3.7211556}
-  m_LocalScale: {x: 9.593657, y: 9.593657, z: 9.593657}
+  m_LocalRotation: {x: -0, y: 0.050442282, z: -0, w: 0.998727}
+  m_LocalPosition: {x: 0.62352, y: -1.4055, z: -0.54893}
+  m_LocalScale: {x: 10.896475, y: 10.896475, z: 10.896475}
   m_Children: []
   m_Father: {fileID: 8410335442239117541}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 129.127, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 5.7830005, z: 0}
 --- !u!33 &8936584273789491138
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2381,9 +2395,15 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_SelectedFaces: 00000000
+  m_SelectedEdges:
+  - a: 0
+    b: 0
+  - a: 0
+    b: 0
+  - a: 0
+    b: 0
+  m_SelectedVertices: 000000000000000000000000
 --- !u!1 &8410335442239117540
 GameObject:
   m_ObjectHideFlags: 0
