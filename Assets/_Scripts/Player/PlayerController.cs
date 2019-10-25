@@ -596,7 +596,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
     private void ProcessFloat() {
         if (!m_rCharacterController.isGrounded) {
             // The player can start floating after a double jump
-            if (m_bCanGlide && m_fFloatTimer == 0.0f) { // Change comparison to < m_fFloatTimer for multiple floats per jump
+            if (m_bCanGlide && m_fFloatTimer < m_fFloatTime) { // Change comparison to < m_fFloatTime for multiple floats per jump //== 0.0f
                 ToggleFloatState(true);
             }
             else if (Input.GetButtonUp(m_strJumpButton)) {

@@ -14,10 +14,45 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
     //[SerializeField]
     public List<MonoBehaviour> m_ObjectsToMessage;
 
+    [SerializeField] private bool m_bDescendObject = false;
+    [SerializeField] private GameObject m_rObjectToDescend;
+    [SerializeField] private float m_rDescendDistance;
+    private float m_fInitYPos = 0.0f;
+    private bool m_bDescending = false;
+
+    [SerializeField] private Material m_rGlowMat;
+
     // Start is called before the first frame update
     void Start()
     {
+        if(m_rObjectToDescend)
+        {
+            m_fInitYPos = m_rObjectToDescend.transform.position.y;
+        }
         m_rDamageController = GetComponent<DamageController>();
+    }
+
+    private void Update()
+    {
+        if (!m_bDescendObject || !m_bDescending || !m_rObjectToDescend)
+            return;
+
+        print("Pos: " + m_rObjectToDescend.transform.position.y);
+        print("Dest: " + (m_fInitYPos - m_rDescendDistance));
+
+        if (m_rObjectToDescend.transform.position.y > m_fInitYPos - m_rDescendDistance)
+        {
+            m_rObjectToDescend.transform.position = new Vector3(m_rObjectToDescend.transform.position.x, m_rObjectToDescend.transform.position.y - (0.5f *Time.deltaTime), m_rObjectToDescend.transform.position.z);
+        }
+        else
+        {
+            m_bDescending = false;
+            if(m_rGlowMat)
+            {
+                MeshRenderer renderer = GetComponent<MeshRenderer>();
+                renderer.material = m_rGlowMat;
+            }
+        }
     }
 
     void Reset() {
@@ -31,6 +66,15 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
                 target.OnReceiveMessage(MessageType.eActivate, null);
         }
         Debug.Log("Activate Messages sent");
+        
+    }
+
+    public void DescendObject()
+    {
+        if (m_bDescendObject)
+        {
+            m_bDescending = true;
+        }
     }
 
     public void SendResetMessages() {
