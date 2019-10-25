@@ -77,16 +77,23 @@ public class Piller : MonoBehaviour, IMessageReceiver
             // Reset the door
             case MessageType.eOff:
                 {
-                    if (m_fActiveOnce == true)
+                    if (m_fActiveOnce)
                     {
 
                     }
                     else
                     {
-                        m_bMoving = true;
-                        currentPostion -= (int)_source;
-                        m_fSpeed = m_fMinSpeed;
-						PlayAudio(true, true);
+                        if (m_fActiveOnce == true)
+                        {
+
+                        }
+                        else
+                        {
+                            m_bMoving = true;
+                            currentPostion -= (int)_source;
+                            m_fSpeed = m_fMinSpeed;
+                            PlayAudio(true, true);
+                        }
                     }
                     break;
                 }
