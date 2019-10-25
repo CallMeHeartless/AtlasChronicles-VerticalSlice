@@ -25,13 +25,16 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
     // Start is called before the first frame update
     void Start()
     {
-        m_fInitYPos = m_rObjectToDescend.transform.position.y;
+        if(m_rObjectToDescend)
+        {
+            m_fInitYPos = m_rObjectToDescend.transform.position.y;
+        }
         m_rDamageController = GetComponent<DamageController>();
     }
 
     private void Update()
     {
-        if (!m_bDescendObject || !m_bDescending)
+        if (!m_bDescendObject || !m_bDescending || !m_rObjectToDescend)
             return;
 
         print("Pos: " + m_rObjectToDescend.transform.position.y);

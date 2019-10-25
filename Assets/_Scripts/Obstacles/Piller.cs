@@ -97,6 +97,8 @@ public class Piller : MonoBehaviour, IMessageReceiver
 
     void PlayAudio(bool _play, bool _reverse = false)
     {
+        if (!m_rAudioPlayer)
+            return;
         if (_play)
         {
             if (_reverse)
