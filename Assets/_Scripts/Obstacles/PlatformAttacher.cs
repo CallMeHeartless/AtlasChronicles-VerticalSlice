@@ -22,12 +22,20 @@ public class PlatformAttacher : MonoBehaviour
                 other.gameObject.transform.parent = this.transform;
             }
         }
+        else if(other.gameObject.CompareTag("TeleportBox"))
+        {
+            other.gameObject.transform.parent = this.transform;
+        }
     }
 
     private void OnTriggerExit(Collider other) {
         //Unparent player from platform
         if (other.gameObject.CompareTag("Player")) {
             other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(false);
+            other.gameObject.transform.parent = null;
+        }
+        else if (other.gameObject.CompareTag("TeleportBox"))
+        {
             other.gameObject.transform.parent = null;
         }
     }
