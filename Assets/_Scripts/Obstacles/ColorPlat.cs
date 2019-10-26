@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColorPlat : MonoBehaviour
 {
-    public Material[] m_matMaterialColor = new Material[5]; 
+    
     public GameObject m_gEffectingObject;
     private Animator m_rAnimator;
     public enum m_Colors
@@ -30,6 +30,16 @@ public class ColorPlat : MonoBehaviour
             Debug.LogError("ERROR: No mesh renderer found on " + name);
         }
         m_rMeshRenderer.material.SetInt("_Select", (int)m_colCurrentColor);
+
+        //setting the color of the wheel to what is stored in m_colCurrentColor
+        if ((m_Colors.green == m_colCurrentColor)|| (m_Colors.red == m_colCurrentColor))
+        {
+            if (m_rAnimator)
+            {
+                m_rAnimator.SetTrigger("Switch");
+            }
+        }
+       
         // GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
         CorrectColor();
 
