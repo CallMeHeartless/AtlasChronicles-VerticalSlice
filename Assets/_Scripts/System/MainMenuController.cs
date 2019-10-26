@@ -156,6 +156,27 @@ public class MainMenuController : MonoBehaviour
     }
 
     /// <summary>
+    /// Starts game in hoarder mode
+    /// </summary>
+    public void StartHoarding()
+    {
+        StartGame(GameState.GameplayMode.Everything);
+    }
+    /// <summary>
+    /// Starts game in adventure mode
+    /// </summary>
+    public void StartRushAttack()
+    {
+        StartGame(GameState.GameplayMode.Rush);
+    }
+    /// <summary>
+    /// Starts game in adventure mode
+    /// </summary>
+    public void StartMapAttack()
+    {
+        StartGame(GameState.GameplayMode.ForTheMaps);
+    }
+    /// <summary>
     /// Starts game in adventure mode
     /// </summary>
     public void StartTimeAttack()
