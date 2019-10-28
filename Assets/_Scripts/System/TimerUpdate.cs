@@ -37,6 +37,11 @@ public class TimerUpdate : MonoBehaviour
     {
         SetRecordChecked(false);
 
+        if(!m_rCamera)
+        {
+            m_rCamera = GameObject.Find("Camera").transform.parent.GetComponent<CinemachineFreeLook>();
+        }
+
         //set UI to for the speed run
         switch (GameState.GetGameplayMode())
         {

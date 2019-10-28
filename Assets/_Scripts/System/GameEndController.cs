@@ -96,13 +96,13 @@ public class GameEndController : MonoBehaviour
         }
 
         //Viv Hacks
-        //if (Input.GetKeyDown(KeyCode.Alpha9))
-        //{
-        //    m_bIsActive = true;
-        //    m_iCrystalsNeeded = 0;
-        //    m_iMapsNeeded = 0;
-        //    m_rPlayer.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5.0f);
-        //}
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            m_bIsActive = true;
+            m_iCrystalsNeeded = 0;
+            m_iMapsNeeded = 0;
+            m_rPlayer.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5.0f);
+        }
 
         if (!m_bGameComplete)
             return;

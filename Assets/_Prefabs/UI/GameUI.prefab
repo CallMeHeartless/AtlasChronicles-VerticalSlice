@@ -2457,7 +2457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -99.99988}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8071992290638484747
@@ -4210,7 +4210,6 @@ GameObject:
   - component: {fileID: 4371825800204368493}
   - component: {fileID: 4371825800204368492}
   - component: {fileID: 4371825800204368495}
-  - component: {fileID: 1711566577215449470}
   - component: {fileID: 46223837}
   m_Layer: 5
   m_Name: GameUI
@@ -4331,22 +4330,6 @@ MonoBehaviour:
   - {fileID: 1587828205221441693}
   - {fileID: 1725135934}
   m_iHP: 4
---- !u!114 &1711566577215449470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4371825800204368490}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf239f82cf386c44d8e0d54c5bd86ccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  newPOV: 15
-  delay: 2
-  loading: 2
-  camera: {fileID: 0}
 --- !u!114 &46223837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4975,7 +4958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 99.99988}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4478213468413990488
@@ -7920,6 +7903,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 976bf44208e37d543a777b6bd917b3ec, type: 3}
+--- !u!224 &3323851565879516903 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4527238586510092371, guid: 976bf44208e37d543a777b6bd917b3ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 1221402255991764660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8614254531708314152 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7455902947801175196, guid: 976bf44208e37d543a777b6bd917b3ec,
@@ -7935,12 +7924,6 @@ MonoBehaviour:
 --- !u!1 &5898909092725016579 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4696806298183646903, guid: 976bf44208e37d543a777b6bd917b3ec,
-    type: 3}
-  m_PrefabInstance: {fileID: 1221402255991764660}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &3323851565879516903 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4527238586510092371, guid: 976bf44208e37d543a777b6bd917b3ec,
     type: 3}
   m_PrefabInstance: {fileID: 1221402255991764660}
   m_PrefabAsset: {fileID: 0}
@@ -8060,26 +8043,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789228527558601914, guid: d4833daa904687044bb77732ef6c3897,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789228527558601914, guid: d4833daa904687044bb77732ef6c3897,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8941967594501992704, guid: d4833daa904687044bb77732ef6c3897,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8941967594501992704, guid: d4833daa904687044bb77732ef6c3897,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4166393629551228978, guid: d4833daa904687044bb77732ef6c3897,
         type: 3}
@@ -8226,6 +8189,12 @@ PrefabInstance:
       propertyPath: OnBPressed.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 3808481027206600517}
+    - target: {fileID: 7251291832102975661, guid: 40269e3675d232f499a04fdb3c68e520,
+        type: 3}
+      propertyPath: m_rInputManagerPrefab
+      value: 
+      objectReference: {fileID: 2387015784555761796, guid: 49004c79d9e896a4baebbb36b1fb79d8,
+        type: 3}
     - target: {fileID: 6929751797882352251, guid: 40269e3675d232f499a04fdb3c68e520,
         type: 3}
       propertyPath: eventSystem
