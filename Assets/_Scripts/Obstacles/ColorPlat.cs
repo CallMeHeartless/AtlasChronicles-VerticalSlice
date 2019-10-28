@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ColorPlat : MonoBehaviour
 {
-    public Material[] m_matMaterialColor = new Material[5]; 
+    
     public GameObject m_gEffectingObject;
     private Animator m_rAnimator;
     public enum m_Colors
     {
-        red,green,blue
+        blue, green, red
     }
     public enum m_Blockage
     {
@@ -30,6 +30,16 @@ public class ColorPlat : MonoBehaviour
             Debug.LogError("ERROR: No mesh renderer found on " + name);
         }
         m_rMeshRenderer.material.SetInt("_Select", (int)m_colCurrentColor);
+
+        //setting the color of the wheel to what is stored in m_colCurrentColor
+        if ((m_Colors.green == m_colCurrentColor)|| (m_Colors.red == m_colCurrentColor))
+        {
+            if (m_rAnimator)
+            {
+                m_rAnimator.SetTrigger("Switch");
+            }
+        }
+       
         // GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
         CorrectColor();
 
@@ -93,20 +103,23 @@ public class ColorPlat : MonoBehaviour
     public void changeColor()
     {
         //Debug.Log("Colorchange");
-        if (m_Colors.blue== m_colCurrentColor)
+        if (m_Colors.red == m_colCurrentColor)
         {
             m_colCurrentColor = 0;
            
         }
         else
         {
-            // Play animation
-            if (m_rAnimator) {
-                m_rAnimator.SetTrigger("Switch");
-            }
-
+            
             m_colCurrentColor += 1;
         }
+
+        // Play animation
+        if (m_rAnimator)
+        {
+            m_rAnimator.SetTrigger("Switch");
+        }
+
         m_rMeshRenderer.material.SetInt("_Select", (int)m_colCurrentColor);
        // GetComponentInChildren<MeshRenderer>().material = m_matMaterialColor[(sbyte)m_colCurrentColor];
         CorrectColor();

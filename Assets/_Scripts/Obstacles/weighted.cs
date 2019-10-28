@@ -228,16 +228,20 @@ public class weighted : MonoBehaviour, IMessageReceiver
                     }
                     else
                     {
-
+                        Debug.Log("count: "+m_gEffectingObject.Count);
 
                         for (int i = 0; i < m_gEffectingObject.Count; ++i)
                         {
                             IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
                             target.OnReceiveMessage(MessageType.eOn, m_PassNumber[i]);//true
                         }
+                        Debug.Log("out: ");
+
                         pastWasFalse = false;
-                        m_IsOn = true;
+                       
+                        
                     }
+                    m_IsOn = true;
                 }
             }
             else
