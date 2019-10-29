@@ -12,35 +12,27 @@ public class ModeMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_rRecordFlavourTxt;
     [SerializeField] private TextMeshProUGUI m_rCurrentRecordTxt;
 
-    [SerializeField] private TextMeshProUGUI m_rRecordGoldTxt;
-    [SerializeField] private TextMeshProUGUI m_rRecordSilverTxt;
-    [SerializeField] private TextMeshProUGUI m_rRecordBronzeTxt;
-
     [SerializeField] private Image m_rCurrentCup;
     [SerializeField] private Sprite m_rHiddenCupSpr;
     [SerializeField] private Sprite m_rBronzeCupSpr;
     [SerializeField] private Sprite m_rSilverCupSpr;
     [SerializeField] private Sprite m_rGoldCupSpr;
 
-    [SerializeField] private string m_strGoldText = "LEGENDARY";
-    [SerializeField] private string m_strSilverText = "AWESOME";
-    [SerializeField] private string m_strBronzeText = "NICE!";
-    [SerializeField] private string m_strHiddenText = "TAKE ON A SPEEDY CHALLENGE";
-
     private string m_strPlayerBestPlace = "PP_TimeAttackCurrentPlace";
-    private string m_strPlayerBestTime = "PP_TimeAttackTimeString";
+    private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
+    private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
 
     private float m_fTime;
     private int m_iHighlightedMode;
-    private int m_Trophie = 0;
+    private int m_Trophie = 0;           
 
     private int m_iCurrentPlace = 0;
     private int m_iBestScore = 0;
-    private string m_timeString;
+    private int m_iBestTime = 0;
 
     private void Start()
     {
-        Records.PlayerPrefModeRetriever(m_levelMode, ref m_strPlayerBestPlace, ref m_strPlayerBestTime);
+        Records.PlayerPrefModeRetriever(m_levelMode, ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
     }
 
     //call this when you are change which which mode you highlighted 
@@ -96,21 +88,20 @@ public class ModeMenu : MonoBehaviour
     //}
     //pressing xboxA should trigger this
     //start with the current mode
-
-    public string GetTimeFlag()
-    {
-        return m_timeString;
-    }
-
-    public int GettrophieFlag()
-    {
-        return m_Trophie;
-    }
+    //public string GetTimeFlag()
+    //{
+    //    return m_timeString;
+    //}
+    //public int GettrophieFlag()
+    //{
+    //    return m_Trophie;
+    //}
     
     public void ResetScores()
     {
         PlayerPrefs.SetInt(m_strPlayerBestPlace, 0);
-        PlayerPrefs.SetString(m_strPlayerBestTime, "--:--:--");
+        PlayerPrefs.SetString(m_strPlayerBestTimeStr, "--:--:--");
+        PlayerPrefs.SetInt(m_strPlayerBestTimeInt, 111111);
         UpdateTimerPanelValues();
     }
 
@@ -120,8 +111,14 @@ public class ModeMenu : MonoBehaviour
     /// <param name="_currentPlace">The placement/cup prize depending on the time attack score</param>
     public void UpdateTimerPanelValues()
     {
-        int currentPlace = PlayerPrefs.GetInt(m_strPlayerBestPlace, 0);
-        m_rCurrentRecordTxt.text = PlayerPrefs.GetString(m_strPlayerBestTime, "--:--:--");
+        Records.PlayerPrefModeRetriever(m_levelMode, ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
+
+        //int currentPlace = PlayerPrefs.GetInt(m_strPlayerBestPlace, 0);
+        int currentIntTime = PlayerPrefs.GetInt(m_strPlayerBestTimeInt, 111111);
+        string strTimeString = PlayerPrefs.GetString(m_strPlayerBestTimeStr, "--:--:--");
+        int currentPlace = Records.CheckCurrentPlace(m_levelMode, currentIntTime);
+        m_rCurrentRecordTxt.text = strTimeString;
+        m_rRecordFlavourTxt.text = Records.RetrieveFlavourText(true, m_levelMode, currentPlace);
 
         switch (currentPlace)
         {
@@ -129,28 +126,24 @@ public class ModeMenu : MonoBehaviour
             {
                 //If the time beats the Gold cup record
                 m_rCurrentCup.sprite = m_rGoldCupSpr;
-                m_rRecordFlavourTxt.text = m_strGoldText;
                 break;
             }
             case 2:
             {
                 //If the time beats the Silver cup record
                 m_rCurrentCup.sprite = m_rSilverCupSpr;
-                m_rRecordFlavourTxt.text = m_strSilverText;
                 break;
             }
             case 1:
             {
                 //If the time beats the Bronze cup record
                 m_rCurrentCup.sprite = m_rBronzeCupSpr;
-                m_rRecordFlavourTxt.text = m_strBronzeText;
                 break;
             }
             default: //Case 0
             {
                 //If NONE of the records were beaten, a hidden cup is displayed
                 m_rCurrentCup.sprite = m_rHiddenCupSpr;
-                m_rRecordFlavourTxt.text = m_strHiddenText;
                 break;
             }
         }

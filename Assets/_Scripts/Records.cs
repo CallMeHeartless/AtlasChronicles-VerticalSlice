@@ -5,84 +5,138 @@ using UnityEngine;
 public class Records : MonoBehaviour
 {
     //changing m_SpeedRunRecords changes that runs speed modes trophie freeshwhole
-    static private int[] m_SpeedRunRecords_SpeedRun = new int[3] { 2500, 1700, 1000 };// min min,second second
-    static private int[] m_SpeedRunRecords_AllItems = new int[3] { 2500, 1700, 1000 };// min min,second second
+    static private int[] m_SpeedRunRecords_SpeedRun = new int[3] { 2000, 1400, 1000 };// min min,second second
+    static private int[] m_SpeedRunRecords_Hoarder = new int[3] { 2500, 1700, 1000 };// min min,second second
     static private int[] m_SpeedRunRecords_Rush = new int[3] { 0250, 0130, 0100 };// min min,second second
     static private int[] m_SpeedRunRecords_MapRun = new int[3] { 150, 100, 50 };// min min,second second
-    static public int m_CurrentPlace = 3;
+    //static public int currentPlace = 3;
 
-    static public string m_strNoRecordFlavourText = "BETTER LUCK NEXT TIME";
+    static private string m_strNoRecordFlavourText = "BETTER LUCK NEXT TIME";
 
-    static public string m_strGoldRecordFlavourText = "--INVALID GOLD TEXT--";
-    static public string m_strSilverRecordFlavourText = "--INVALID SILVER TEXT--";
-    static public string m_strBronzeRecordFlavourText = "--INVALID BRONZE TEXT--";
+    static private string m_strGoldRecordFlavourText = "--INVALID GOLD TEXT--";
+    static private string m_strSilverRecordFlavourText = "--INVALID SILVER TEXT--";
+    static private string m_strBronzeRecordFlavourText = "--INVALID BRONZE TEXT--";
+    static private int[] currentRecordCheck = m_SpeedRunRecords_SpeedRun;
 
-    /*___________________________________________________
-  * Job: degrade the current rank trophie
-  * Ceratior: Nicholas
-  ______________________________________________________*/
-    static public int CheckCurrentPlace(bool _mainMenu, int _currentTime, GameState.GameplayMode _currentMode, ref string _placementText)
+
+    /// <summary>
+    /// Flavour text based on if in menu, which mode and which placement the player is
+    /// </summary>
+    /// <param name="_mainMenu"></param>
+    /// <param name="_currentMode"></param>
+    /// <param name="_currentPlace"></param>
+    /// <returns></returns>
+    static public string RetrieveFlavourText(bool _mainMenu, GameState.GameplayMode _currentMode, int _currentPlace)
     {
-        if (_currentTime<= 0 || _currentMode == GameState.GameplayMode.Adventure)
+        if (_currentMode == GameState.GameplayMode.Adventure)
         {
-            return 0;
+            return "Adventure Mode";
         }
-
-        int[] currentRecordCheck = m_SpeedRunRecords_SpeedRun;
-
+        
         switch (_currentMode)
         {
             case GameState.GameplayMode.SpeedRun:
             {
                 currentRecordCheck = m_SpeedRunRecords_SpeedRun;
-                m_strNoRecordFlavourText = (_mainMenu ? "TAKE ON A SPEEDY CHALLENGE" : "BETTER LUCK NEXT TIME!");
-                m_strGoldRecordFlavourText = "YOU ARE LEGENDARY";
-                m_strSilverRecordFlavourText = "AWESOME";
-                m_strBronzeRecordFlavourText = "GOOD JOB";
+                m_strNoRecordFlavourText = (_mainMenu ? "TAKE ON A SPEEDY CHALLENGE" : "YOU NEED TO BE FASTER... F A S T E R!!!");
+                m_strGoldRecordFlavourText = "AN ABSOLUTE LEGEND";
+                m_strSilverRecordFlavourText = "A SPEEDY SOUL";
+                m_strBronzeRecordFlavourText = "A QUICK INDIVIDUAL";
                 break;
             }
             case GameState.GameplayMode.Hoarder:
             {
-                currentRecordCheck = m_SpeedRunRecords_AllItems;
-                m_strNoRecordFlavourText = (_mainMenu ? "READY TO HOARD?" : "YOU DIDN'T HOARD ENOUGH!");
-                m_strGoldRecordFlavourText = "YOU ARE LEGENDARY";
-                m_strSilverRecordFlavourText = "AWESOME";
-                m_strBronzeRecordFlavourText = "GOOD JOB";
+                currentRecordCheck = m_SpeedRunRecords_Hoarder;
+                m_strNoRecordFlavourText = (_mainMenu ? "READY TO HOARD?" : "WHAT KIND OF HOARDER ARE YOU?!");
+                m_strGoldRecordFlavourText = "AN ABSOLUTE HOARDER";
+                m_strSilverRecordFlavourText = "A COLLECTOR";
+                m_strBronzeRecordFlavourText = "A SIMPLE GATHERER";
                 break;
             }
             case GameState.GameplayMode.Rush:
             {
                 currentRecordCheck = m_SpeedRunRecords_Rush;
-                m_strNoRecordFlavourText = (_mainMenu ? "TO THE TEMPLE WE GO!" : "NOT FAST ENOUGH!");
+                m_strNoRecordFlavourText = (_mainMenu ? "TO THE TEMPLE WE GO!" : "RUSH FASTER");
                 m_strGoldRecordFlavourText = "THE RUSHIEST OF ALL RUSHERS";
-                m_strSilverRecordFlavourText = "YOU'RE GETTING THERE!";
-                m_strBronzeRecordFlavourText = "YOU JUST MADE IT!";
+                m_strSilverRecordFlavourText = "AN HONOURABLE RUSHER";
+                m_strBronzeRecordFlavourText = "A DECENT RUSHER";
                 break;
             }
             case GameState.GameplayMode.MapHunt:
             {
                 currentRecordCheck = m_SpeedRunRecords_MapRun;
-                m_strNoRecordFlavourText = (_mainMenu ? "WHO NEEDS CRYSTALS? GO MAPS!" : "EUGH! THATS WAY TOO MANY CRYSTALS!");
-                m_strGoldRecordFlavourText = "A MAP-ONLY LOVER";
-                m_strSilverRecordFlavourText = "GOTTA LOVE MAPS A BIT MORE";
+                m_strNoRecordFlavourText = (_mainMenu ? "WHO NEEDS CRYSTALS? GO MAPS!" : "OI! THATS WAY TOO MANY CRYSTALS!");
+                m_strGoldRecordFlavourText = "MAP CONNOISSEUR";
+                m_strSilverRecordFlavourText = "MAP COLLECTOR";
                 m_strBronzeRecordFlavourText = "GOTTA LOVE MAPS A BIT MORE";
                 break;
             }
             default:
                 break;
         }
+        string determinedFlavourText = "";
+
+        //Determines which flavour text should be displayed based on the placement
+        if (_currentPlace == 0)
+            determinedFlavourText = m_strNoRecordFlavourText;
+        else if (_currentPlace == 1)
+            determinedFlavourText = m_strBronzeRecordFlavourText;
+        else if (_currentPlace == 2)
+            determinedFlavourText = m_strSilverRecordFlavourText;
+        else if (_currentPlace == 3)
+            determinedFlavourText = m_strGoldRecordFlavourText;
+
+        return determinedFlavourText;
+    }
+
+    static public int CheckCurrentPlace(GameState.GameplayMode _currentMode, int _currentTime)
+    {
+        int currentPlace = 0;
+        SetCurrentGameModeSelected(_currentMode);
 
         //Determine the current trophy placement with the given time
         for (int i = 0; i < 3; ++i)
         {
-            if (_currentTime >= currentRecordCheck[i])
+            if (_currentTime > currentRecordCheck[i])
             {
-                m_CurrentPlace = i;
-                
-                return 1;
+                currentPlace = i; //0 or 1 or 2//none or bronze or silver
+                return currentPlace;
+            }
+            if (_currentTime < currentRecordCheck[2])
+            {
+                currentPlace = 3;
             }
         }
-        return 0;
+        return currentPlace;
+    }
+    
+    static public void SetCurrentGameModeSelected(GameState.GameplayMode _currentMode)
+    {
+        switch (_currentMode)
+        {
+            case GameState.GameplayMode.SpeedRun:
+            {
+            currentRecordCheck = m_SpeedRunRecords_SpeedRun;
+            break;
+            }
+            case GameState.GameplayMode.Hoarder:
+            {
+                currentRecordCheck = m_SpeedRunRecords_Hoarder;
+                break;
+            }
+            case GameState.GameplayMode.Rush:
+            {
+                currentRecordCheck = m_SpeedRunRecords_Rush;
+                break;
+            }
+            case GameState.GameplayMode.MapHunt:
+            {
+                currentRecordCheck = m_SpeedRunRecords_MapRun;
+                break;
+            }
+            default:
+            break;
+        }
     }
 
     /// <summary>
@@ -90,39 +144,46 @@ public class Records : MonoBehaviour
     /// </summary>
     /// <param name="_mode"> Mode to retrieve place and time values for</param>
     /// <param name="_playerBestPlace">The player's best place value</param>
-    /// <param name="_playerbestTime">The player's Best Time value</param>
-    static public void PlayerPrefModeRetriever(GameState.GameplayMode _mode, ref string _playerBestPlace, ref string _playerbestTime)
+    /// <param name="_playerBestStrTime">The player's Best Time value</param>
+    static public void PlayerPrefModeRetriever(GameState.GameplayMode _mode, ref string _playerBestPlace, ref string _playerBestStrTime, ref string _playerBestIntTime)
     {
         switch (_mode)
         {
             case GameState.GameplayMode.SpeedRun:
             {
                 _playerBestPlace = "PP_TimeAttackCurrentPlace";
-                _playerbestTime = "PP_TimeAttackTimeString";
+                _playerBestStrTime = "PP_TimeAttackTimeString";
+                _playerBestIntTime = "PP_TimeAttackTimeInt";
                 break;
             }
             case GameState.GameplayMode.Hoarder:
             {
                 _playerBestPlace = "PP_HoarderCurrentPlace";
-                _playerbestTime = "PP_HoarderTimeString";
+                _playerBestStrTime = "PP_HoarderTimeString";
+                _playerBestIntTime = "PP_HoarderTimeInt";
                 break;
             }
             case GameState.GameplayMode.Rush:
             {
                 _playerBestPlace = "PP_RushCurrentPlace";
-                _playerbestTime = "PP_RushTimeString";
+                _playerBestStrTime = "PP_RushTimeString";
+                _playerBestIntTime = "PP_RushTimeInt";
                 break;
             }
             case GameState.GameplayMode.MapHunt:
             {
                 _playerBestPlace = "PP_MapHuntCurrentPlace";
-                _playerbestTime = "PP_MapHuntTimeString";
+                _playerBestStrTime = "PP_MapHuntTimeString";
+                _playerBestIntTime = "PP_MapHuntTimeInt";
                 break;
             }
             default:
+            {
                 _playerBestPlace = "NODATA";
-                _playerbestTime = "NODATA";
+                _playerBestStrTime = "NODATA";
+                _playerBestStrTime = "NODATA";
                 break;
+            }
         }
     }
 }

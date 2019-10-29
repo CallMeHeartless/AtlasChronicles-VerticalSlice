@@ -33,6 +33,10 @@ public class TimerUpdate : MonoBehaviour
     private string m_strFlavourText = "--INVALID--";
     private int m_iTrophyPlacement = 0;
 
+    private string m_strPlayerBestPlace = "PP_TimeAttackCurrentPlace";
+    private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
+    private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
+
     static private float AddedTime =0;
     // Start is called before the first frame update
     void Start()
@@ -86,7 +90,9 @@ public class TimerUpdate : MonoBehaviour
         {
             //this is not going to be a speed run
             m_TimeAttackResultsPanel.SetActive(false);
-        } 
+        }
+
+        Records.PlayerPrefModeRetriever(GameState.GetGameplayMode(), ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
     }
     /*___________________________________________________
   * Job: Timer which looks like a speedrunners Timer
@@ -94,58 +100,53 @@ public class TimerUpdate : MonoBehaviour
   ______________________________________________________*/
     void Update()
     {
-        //if ((!GameState.GetPauseFlag()) &&(!GameState.GetCinematicFlag()))//pause the game
-        //{
-        //    if (m_EndTimer)
-        //    {
-        //        if (AddedTime !=0)
-        //        {
-        //            m_Seconds += AddedTime;
-        //        }
-        //        m_Seconds += Time.deltaTime;
-        //        if (m_Seconds >= 60)
-        //        {
-        //            m_Minutes++;
-        //            m_Seconds -= 60;
-        //            if (m_Minutes >= 60)
-        //            {
-        //                m_Hours++;
-        //                m_Minutes -= 60;
-        //            }
-        //        }
-        //        m_TextUI.text = "";
+        if ((!GameState.GetPauseFlag()) && (!GameState.GetCinematicFlag()))//pause the game
+        {
+            if (m_EndTimer)
+            {
+                if (AddedTime != 0)
+                {
+                    m_Seconds += AddedTime;
+                }
+                m_Seconds += Time.deltaTime;
+                if (m_Seconds >= 60)
+                {
+                    m_Minutes++;
+                    m_Seconds -= 60;
+                    if (m_Minutes >= 60)
+                    {
+                        m_Hours++;
+                        m_Minutes -= 60;
+                    }
+                }
+                m_TextUI.text = "";
 
-        //        if (m_Hours >= 1)
-        //        {
-        //            m_TextUI.text += m_Hours.ToString("0") + ":";
-        //        }
+                if (m_Hours >= 1)
+                {
+                    m_TextUI.text += m_Hours.ToString("0") + ":";
+                }
 
-        //        if (m_Minutes >= 1)
-        //        {
-        //            m_TextUI.text += m_Minutes.ToString("0") + ":";
-        //        }
+                if (m_Minutes >= 1)
+                {
+                    m_TextUI.text += m_Minutes.ToString("0") + ":";
+                }
 
-        //        if (m_Seconds < 10)
-        //        {
-        //            m_TextUI.text += "0";
-        //        }
-        //        m_TextUI.text += m_Seconds.ToString("F2");
+                if (m_Seconds < 10)
+                {
+                    m_TextUI.text += "0";
+                }
+                m_TextUI.text += m_Seconds.ToString("F2");
 
-        //        //check to see if troiphy need to be changed
-        //        DetermineTrophy();
-        //    }
-        //}
-    }
-
-    public void DetermineTrophy()
-    {
-        m_iTrophyPlacement = Records.CheckCurrentPlace(false, (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds, GameState.GetGameplayMode(), ref m_strFlavourText);
+                //check to see if troiphy need to be changed
+                m_iTrophyPlacement = Records.CheckCurrentPlace(GameState.GetGameplayMode(), (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds);
+            }
+        }
     }
 
     /// <summary>
     /// Activates the TimeAttackResults panel and updates all ui elements with time records
     /// </summary>
-    public void DisplayTimeAttackResults()
+    public void DisplayEndResultsPanel()
     {
         SetRecordChecked(false);
 
@@ -155,13 +156,18 @@ public class TimerUpdate : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        //PlayerPrefs.SetString(m_strPlayerBestTimeStr, totalTimeString);
+        //PlayerPrefs.SetInt(m_strPlayerBestTimeInt, finalTimeInteger);
+
+
         //Retrieve time record values required to be set into ui view
-        int currentPlace = PlayerPrefs.GetInt("PP_TimeAttackCurrentPlace", 0);
-        string currentScoreString = PlayerPrefs.GetString("PP_TimeAttackTimeString", "--:--:--");
+        string currentScoreString = PlayerPrefs.GetString(m_strPlayerBestTimeStr, "--:--:--");
+        int currentScoreInt = PlayerPrefs.GetInt(m_strPlayerBestTimeInt, 111111);
+        int currentPlace = Records.CheckCurrentPlace(GameState.GetGameplayMode(), currentScoreInt);
 
         //Convert scores to strings
         m_rCurrentRecordTime.text = currentScoreString;
-        //m_rBestRecordTime.text = 
+        m_rFlavourText.text = Records.RetrieveFlavourText(false, GameState.GetGameplayMode(), currentPlace);
 
         switch (currentPlace)
         {
@@ -169,27 +175,23 @@ public class TimerUpdate : MonoBehaviour
             {
                 //If the time beats the Gold cup record
                 m_rCurrentTrophy.sprite = m_rGoldTrophy;
-                m_rFlavourText.text = "LEGENDARY!!!";
                 break;
             }
             case 2:
             {
                 //If the time beats the Silver cup record
                 m_rCurrentTrophy.sprite = m_rSilverTrophy;
-                m_rFlavourText.text = "NICE!!";
                 break;
             }
             case 1:
             {
                 //If the time beats the Bronze cup record
                 m_rCurrentTrophy.sprite = m_rBronzeTrophy;
-                m_rFlavourText.text = "GOOD JOB!";
                 break;
             }
             case 0:
             {
                 m_rCurrentTrophy.sprite = m_rHiddenTrophy;
-                m_rFlavourText.text = "TRY AGAIN";
                 break;
             }
             default:
@@ -253,7 +255,7 @@ public class TimerUpdate : MonoBehaviour
         m_Hours = _hours;
     }
 
-    public float GetFinalTime()
+    public int GetFinalTime(ref string _finalStrTime, ref int _finalIntTime)
     {
         string totalTimeString = "";
 
@@ -262,11 +264,15 @@ public class TimerUpdate : MonoBehaviour
         string secs = (roundedSeconds >= 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
         string minutes = (m_Minutes >= 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
         string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
+
         totalTimeString = hours + ":" + minutes + ":" + secs;
+        int finalTimeInteger = (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds;
 
-        PlayerPrefs.SetString("TimeAttackTimeString", totalTimeString);
+        //SETTING FINAL TIME SCORE
+        PlayerPrefs.SetString(m_strPlayerBestTimeStr, totalTimeString);
+        PlayerPrefs.SetInt(m_strPlayerBestTimeInt, finalTimeInteger);
 
-        return (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds;
+        return finalTimeInteger;
     }
     static public void AddTime(int _addTime)
     {

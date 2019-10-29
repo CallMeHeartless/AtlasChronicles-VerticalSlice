@@ -38,7 +38,6 @@ public class GameEndController : MonoBehaviour
     public bool m_bExitingLevel = false;
     private bool m_bTimeResultsActivated = false;
 
-
     void Awake()
     {
         // Find instance
@@ -185,21 +184,18 @@ public class GameEndController : MonoBehaviour
             m_bGameComplete = true;
             if (GameState.GetGameplayMode() != GameState.GameplayMode.Adventure)
             {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
                 m_rTimerUpdate.StopTimer();
                 DontDestory records = GameObject.FindGameObjectWithTag("TimeRecords").GetComponent<DontDestory>();
                 if (records)
                 {
-                    m_rTimerUpdate.DetermineTrophy();
+                    //m_rTimerUpdate.DetermineTrophy();
 
-                    records.SetNewSpeedMode((int)GameState.GetGameplayMode(),
-                        m_rTimerUpdate.GetFinalTime(),
-                        Records.m_CurrentPlace);
+                    //records.SetNewSpeedMode((int)GameState.GetGameplayMode(),
+                    //    m_rTimerUpdate.GetFinalTime(),
+                    //    Records.m_CurrentPlace);
 
-                    PlayerPrefs.SetInt("PP_TimeAttackCurrentPlace", Records.m_CurrentPlace);
-                    m_rTimerUpdate.DisplayTimeAttackResults();
+                    //Set the time and place based on results and display on ui
+                    m_rTimerUpdate.DisplayEndResultsPanel();
                     m_bTimeResultsActivated = true;
                 }
             }
