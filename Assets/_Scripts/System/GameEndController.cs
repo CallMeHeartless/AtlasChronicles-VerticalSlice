@@ -35,6 +35,7 @@ public class GameEndController : MonoBehaviour
     public static int m_iMinimumMaps = 5;
     public static bool m_bHasEnoughMaps = false;
     public bool m_bIsTriggeredOnce = false;
+    public bool m_bExitingLevel = false;
     private bool m_bTimeResultsActivated = false;
 
 
@@ -47,7 +48,7 @@ public class GameEndController : MonoBehaviour
         }
 
         // Set crystal and map requirements based on the selected speed run mode
-        if (GameState.GetGameplayMode() == GameState.GameplayMode.Everything)
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.Hoarder)
         {
             m_iCrystalsNeeded = GameObject.FindGameObjectsWithTag("SecondaryPickup").Length + (GameObject.FindGameObjectsWithTag("Box").Length*5);
         }
@@ -62,6 +63,11 @@ public class GameEndController : MonoBehaviour
         if (m_rInfo)
         {
             m_rInfo.SetActive(false);
+        }
+
+        if(!m_rPlayer)
+        {
+            m_rPlayer = GameObject.Find("Player");
         }
 
         // Obtain Animation component
@@ -89,8 +95,9 @@ public class GameEndController : MonoBehaviour
         //If in Results page
         if (m_bTimeResultsActivated)
         {
-            if (Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
+            if (!m_bExitingLevel && Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
             {
+                m_bExitingLevel = true;
                 ExitLevel();
             }
         }
@@ -103,11 +110,21 @@ public class GameEndController : MonoBehaviour
             m_iMapsNeeded = 0;
             m_rPlayer.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5.0f);
         }
+        if(Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            m_rTimerUpdate.StopTimer();
+            m_rTimerUpdate.SetCheatFinalTime(0, 16, 30.0f);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            m_rTimerUpdate.StopTimer();
+            m_rTimerUpdate.SetCheatFinalTime(0, 19, 30.0f);
+        }
 
         if (!m_bGameComplete)
             return;
 
-        if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.MapHunt)
         {
            if( GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] == m_iMinimumMaps)
             {
@@ -172,14 +189,16 @@ public class GameEndController : MonoBehaviour
                 Cursor.visible = false;
 
                 m_rTimerUpdate.StopTimer();
-                GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
-                if (Object.GetComponent<DontDestory>())
+                DontDestory records = GameObject.FindGameObjectWithTag("TimeRecords").GetComponent<DontDestory>();
+                if (records)
                 {
-                    Object.GetComponent<DontDestory>().SetNewSpeedMode((int)GameState.GetGameplayMode(),
+                    m_rTimerUpdate.DetermineTrophy();
+
+                    records.SetNewSpeedMode((int)GameState.GetGameplayMode(),
                         m_rTimerUpdate.GetFinalTime(),
                         Records.m_CurrentPlace);
 
-                    PlayerPrefs.SetInt("TimeAttackCurrentPlace", Records.m_CurrentPlace);
+                    PlayerPrefs.SetInt("PP_TimeAttackCurrentPlace", Records.m_CurrentPlace);
                     m_rTimerUpdate.DisplayTimeAttackResults();
                     m_bTimeResultsActivated = true;
                 }
@@ -205,7 +224,6 @@ public class GameEndController : MonoBehaviour
     /// <returns></returns>
     void ExitLevel()
     {
-        print("exiting level");
         //Reset the level before loading main menu
         Zone.ClearZones();
 

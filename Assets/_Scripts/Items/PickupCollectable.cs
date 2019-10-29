@@ -29,7 +29,7 @@ public class PickupCollectable : Pickup
             magnetic.SnapToPlayer();
         }
        
-        if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.MapHunt)
         {
             TimerUpdate.AddTime(5);
         }

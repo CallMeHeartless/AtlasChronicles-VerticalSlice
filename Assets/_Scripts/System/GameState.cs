@@ -19,9 +19,9 @@ public class GameState : MonoBehaviour
     {
         Adventure,//standend amount of crysials and map
         SpeedRun,//standend amount of crysials and map with a count up timer 
-        Everything,//all maps and cystals required
+        Hoarder,//all maps and cystals required
         Rush,//this is used when the speed on is over and all mode should be place above this
-        ForTheMaps, //all maps low gems and out 
+        MapHunt, //all maps low gems and out 
     }
 
     private static GameplayMode m_eGameplayMode = GameplayMode.Adventure;
