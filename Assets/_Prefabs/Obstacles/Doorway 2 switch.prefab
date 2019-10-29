@@ -30,6 +30,7 @@ MonoBehaviour:
   m_gDoorClosed: {fileID: 3952369737649395496}
   m_fSpeed: 0.1
   OnceOnForeverOn: 0
+  m_bSetActive: 0
 --- !u!65 &908629348802085335
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -76,18 +77,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8165702967449623881}
     m_Modifications:
-    - target: {fileID: 100002, guid: e258064a1434c9042a103acbad03b371, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
-      propertyPath: m_Name
-      value: sm_Gateway
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -95,6 +84,10 @@ PrefabInstance:
     - target: {fileID: 400002, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_LocalPosition.x
@@ -139,6 +132,14 @@ PrefabInstance:
     - target: {fileID: 400000, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_Name
+      value: sm_Gateway
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e258064a1434c9042a103acbad03b371, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: e258064a1434c9042a103acbad03b371, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -189,16 +190,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8825201625970701133, guid: 699a3742610862348b03de236a3b32bd,
-        type: 3}
-      propertyPath: m_Name
-      value: Doorway 2 switch
-      objectReference: {fileID: 0}
-    - target: {fileID: 8825201625970701133, guid: 699a3742610862348b03de236a3b32bd,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 5867409354780465683, guid: 699a3742610862348b03de236a3b32bd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -298,6 +289,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8825201625970701133, guid: 699a3742610862348b03de236a3b32bd,
+        type: 3}
+      propertyPath: m_Name
+      value: Doorway 2 switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 8825201625970701133, guid: 699a3742610862348b03de236a3b32bd,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6732256866385853302, guid: 699a3742610862348b03de236a3b32bd,
         type: 3}
@@ -414,6 +415,16 @@ PrefabInstance:
       propertyPath: m_bDoorLocks.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6395378152798065289, guid: 699a3742610862348b03de236a3b32bd,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d4483d39da984874f8e1a67ebaa7c350, type: 2}
+    - target: {fileID: 6395378152798065295, guid: 699a3742610862348b03de236a3b32bd,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d4483d39da984874f8e1a67ebaa7c350, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 699a3742610862348b03de236a3b32bd, type: 3}
 --- !u!4 &8165702967449623881 stripped
@@ -447,21 +458,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8165702967449623881}
     m_Modifications:
-    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
-        type: 3}
-      propertyPath: m_Name
-      value: ColorStop (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
-        type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 1864228747659894412, guid: ec010fa41e292f840997596aa61d6d20,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -496,6 +492,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: m_Name
+      value: ColorStop (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864228747659894423, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1864228747659894408, guid: ec010fa41e292f840997596aa61d6d20,
         type: 3}
@@ -547,5 +558,15 @@ PrefabInstance:
       propertyPath: OnReceiveDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5533359849490392636, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d4483d39da984874f8e1a67ebaa7c350, type: 2}
+    - target: {fileID: 5533359849490392634, guid: ec010fa41e292f840997596aa61d6d20,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d4483d39da984874f8e1a67ebaa7c350, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec010fa41e292f840997596aa61d6d20, type: 3}
