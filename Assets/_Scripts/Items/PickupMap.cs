@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PickupMap : Pickup
 {
+    public UnityEvent onPickup;
+
     protected override void Start()
     {
         base.Start();
@@ -36,6 +39,9 @@ public class PickupMap : Pickup
         }
         else
         {
+            // Invoke events
+            onPickup.Invoke();
+
             Destroy(gameObject, 0.1f);
             //Maps that are not stolen are basically zone specific maps that should activate a cinematic when triggered with
             CinematicManager.ActivateCinematicByID(0);
