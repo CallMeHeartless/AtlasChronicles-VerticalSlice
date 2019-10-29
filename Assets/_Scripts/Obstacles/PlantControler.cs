@@ -40,7 +40,7 @@ public class PlantControler : MonoBehaviour
                 angle = -Vector3.Angle(transform.parent.parent.right, targetDir) ;
             }
 
-            Debug.Log(angle);
+            //Debug.Log(angle);
             // //angle = angle + 90;
 
             // //if ((angle < (transform.rotation.z - angle))&& (angle < 2))
@@ -90,7 +90,7 @@ public class PlantControler : MonoBehaviour
             {
                 if ((angle >= LeftNumber) && (angle <= RightNumber))
                 {
-                    Debug.Log("inrange");
+                    //Debug.Log("inrange");
                     lok = true;
                 }
                 }
@@ -98,7 +98,7 @@ public class PlantControler : MonoBehaviour
             {
                 if ((angle >= LeftNumber) || (angle <= RightNumber))
                 {
-                    Debug.Log("outrange");
+                    //Debug.Log("outrange");
                     lok = true;
                 }
                 }
