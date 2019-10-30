@@ -183,7 +183,8 @@ public class TimerUpdate : MonoBehaviour
     /// </summary>
     public void DisplayEndResultsPanel()
     {
-        SetRecordChecked(false);
+        DetermineFinalTime();
+        SetRecordChecked(true);
 
         m_TimeAttackResultsPanel.SetActive(true);
         GameState.SetPauseFlag(true);
@@ -290,7 +291,7 @@ public class TimerUpdate : MonoBehaviour
         m_Hours = _hours;
     }
 
-    public int GetFinalTime(ref string _finalStrTime, ref int _finalIntTime)
+    public void DetermineFinalTime()
     {
         string totalTimeString = "";
 
@@ -306,8 +307,6 @@ public class TimerUpdate : MonoBehaviour
         //SETTING FINAL TIME SCORE
         PlayerPrefs.SetString(m_strPlayerBestTimeStr, totalTimeString);
         PlayerPrefs.SetInt(m_strPlayerBestTimeInt, finalTimeInteger);
-
-        return finalTimeInteger;
     }
    static public void CystalCollection()
     {
