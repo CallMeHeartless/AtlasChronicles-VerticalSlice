@@ -37,7 +37,7 @@ public class TimerUpdate : MonoBehaviour
     private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
     private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
 
-    static private float AddedTime =0;
+    static private float m_AddedTime =0;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,7 +60,7 @@ public class TimerUpdate : MonoBehaviour
             case GameState.GameplayMode.SpeedRun:
             {
                 m_TypeUI.text = "Time Attack: COLLECT 160 GEMS AND 5 MAPS BEFORE HEADING TO THE EXIT";
-                m_timerUIPanel.SetActive(true);
+               // m_timerUIPanel.SetActive(true);
 
                 m_rCurrentRecordTime.text = "--:--:--";
                 m_rFlavourText.text = "GOOD JOB";
@@ -79,7 +79,7 @@ public class TimerUpdate : MonoBehaviour
                 }
             case GameState.GameplayMode.MapHunt:
                 {
-                    m_TypeUI.text = "get all map fragment, but becareful as collecting crysal will cost you time";
+                    m_TypeUI.text = "get all map fragment and don't get as little amount of crystals";
                     break;
                 }
             default:
@@ -100,45 +100,80 @@ public class TimerUpdate : MonoBehaviour
   ______________________________________________________*/
     void Update()
     {
+
+
+//<<<<<<< HEAD
+//        if (AddedTime != 0)
+//        {
+//            m_Seconds += AddedTime;
+//        }
+//        m_Seconds += Time.deltaTime;
+//        if (m_Seconds >= 60)
+//=======
+
         if ((!GameState.GetPauseFlag()) && (!GameState.GetCinematicFlag()))//pause the game
         {
-            if (m_EndTimer)
+            if (m_AddedTime != 0)
             {
-                if (AddedTime != 0)
+                m_Seconds += m_AddedTime;
+                m_AddedTime = 0;
+            }
+
+            if (GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)
+            {
+
+
+                if (m_EndTimer)
                 {
-                    m_Seconds += AddedTime;
-                }
-                m_Seconds += Time.deltaTime;
-                if (m_Seconds >= 60)
-                {
-                    m_Minutes++;
-                    m_Seconds -= 60;
-                    if (m_Minutes >= 60)
+
+                    m_Seconds += Time.deltaTime;
+                    if (m_Seconds >= 60)
                     {
-                        m_Hours++;
-                        m_Minutes -= 60;
+                        m_Minutes++;
+                        m_Seconds -= 60;
+                        if (m_Minutes >= 60)
+                        {
+                            m_Hours++;
+                            m_Minutes -= 60;
+                        }
                     }
-                }
-                m_TextUI.text = "";
+                    m_TextUI.text = "";
 
-                if (m_Hours >= 1)
-                {
-                    m_TextUI.text += m_Hours.ToString("0") + ":";
-                }
+                    if (m_Hours >= 1)
+                    {
+                        m_TextUI.text += m_Hours.ToString("0") + ":";
+                    }
 
-                if (m_Minutes >= 1)
-                {
-                    m_TextUI.text += m_Minutes.ToString("0") + ":";
-                }
+                    if (m_Minutes >= 1)
+                    {
+                        m_TextUI.text += m_Minutes.ToString("0") + ":";
+                    }
 
-                if (m_Seconds < 10)
-                {
-                    m_TextUI.text += "0";
-                }
-                m_TextUI.text += m_Seconds.ToString("F2");
+                    if (m_Seconds < 10)
+                    {
+                        m_TextUI.text += "0";
+                    }
+                    m_TextUI.text += m_Seconds.ToString("F2");
 
-                //check to see if troiphy need to be changed
-                m_iTrophyPlacement = Records.CheckCurrentPlace(GameState.GetGameplayMode(), (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds);
+                    //check to see if troiphy need to be changed
+                    m_iTrophyPlacement = Records.CheckCurrentPlace(GameState.GetGameplayMode(), (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds);
+                }
+//=======
+//                    //check to see if troiphy need to be changed
+//                    if (Records.check((m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds, GameState.GetGameplayMode()))
+//                    {
+//                        m_Trophy.DecreaseTrophie();
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                m_TextUI.text = m_Seconds.ToString(m_Seconds.ToString());
+//                if (Records.check((int)m_Seconds, GameState.GetGameplayMode()))
+//                {
+//                    m_Trophy.DecreaseTrophie();
+//                } 
+//>>>>>>> d6d9659d765c2c36d116fe39aaadf8b627abb86b
             }
         }
     }
@@ -274,8 +309,8 @@ public class TimerUpdate : MonoBehaviour
 
         return finalTimeInteger;
     }
-    static public void AddTime(int _addTime)
+   static public void CystalCollection()
     {
-        AddedTime += _addTime;
+        m_AddedTime++;
     }
 }
