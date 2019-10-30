@@ -19,7 +19,7 @@ public class CheckpointController : MonoBehaviour
     private TextMeshProUGUI m_rCheckpointTxt;
 
     private void Start() {
-        m_rRenderer = transform.GetChild(2).GetComponentsInChildren<MeshRenderer>();
+        
 
         // Checkpoint text gameobject is active. TMP component is disabled.
         // To activate the text, activate the component via m_rCheckpointTxt.enabled = true
@@ -29,6 +29,7 @@ public class CheckpointController : MonoBehaviour
             m_rCheckpointTxt = checkpointText.GetComponent<TextMeshProUGUI>();
             m_rCheckpointTxt.enabled = false;
         }
+        m_rRenderer = transform.Find("sm_Checkpoint").GetComponentsInChildren<MeshRenderer>(); // formerly GetChild(2)
     }
 
     private void OnTriggerEnter(Collider other)
