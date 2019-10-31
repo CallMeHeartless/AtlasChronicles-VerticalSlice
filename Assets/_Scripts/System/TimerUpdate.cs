@@ -263,9 +263,9 @@ public class TimerUpdate : MonoBehaviour
         //Set the goal format depending on the current mode
         for (int i = 0; i < m_rGoalFormats.Length; i++)
         {
-            if (i == m_rGoalFormats.Length - 1 && _mode == GameState.GameplayMode.MapHunt) //If it is the player's record
+            if (i == 3 && _mode == GameState.GameplayMode.MapHunt) //If it is the player's record
             {
-                m_rGoalFormats[i].text = "<br><br><br>CRYSTALS";
+                m_rGoalFormats[3].text = "<br><br><br>CRYSTALS";
                 break;
             }
 
