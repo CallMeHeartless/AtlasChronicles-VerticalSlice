@@ -232,6 +232,7 @@ public class weighted : MonoBehaviour, IMessageReceiver
 
                         for (int i = 0; i < m_gEffectingObject.Count; ++i)
                         {
+                            m_gEffectingObject[i].gameObject.SetActive(true);
                             IMessageReceiver target = m_gEffectingObject[i] as IMessageReceiver;
                             target.OnReceiveMessage(MessageType.eOn, m_PassNumber[i]);//true
                         }
