@@ -27,7 +27,7 @@ public class MainMenuController : MonoBehaviour
     private bool m_LAxisInUse = false;
     private bool m_RAxisInUse = false;
 
-    private SpeedMenu m_rModeMenu;
+    private ModeMenu m_rModeMenu;
 
     private Canvas m_rCanvas;
     private LoadingScreen m_rLoadingScreen;
@@ -49,7 +49,8 @@ public class MainMenuController : MonoBehaviour
             m_playButton.Select();
         }
         m_rCanvas = GetComponent<Canvas>();
-        m_rModeMenu = m_rModeSelection.GetComponent<SpeedMenu>();
+        //m_rModeMenu = m_rModeSelection.GetComponent<ModeMenu>();
+        m_rModeMenu = m_rModePanels[m_iCurrentModeGroup].GetComponent<ModeMenu>();
         m_rNLExpressions.SetActive(false);
 
         m_rLoadingScreen = FindObjectOfType<LoadingScreen>();
@@ -89,7 +90,10 @@ public class MainMenuController : MonoBehaviour
             {
                 if (Input.GetAxis("YButton") != 0)
                 {
-                    m_rModeMenu.ResetScores();
+                    if(m_rModeMenu)
+                    {
+                        m_rModeMenu.ResetScores();
+                    }
                 }
             }
         }
@@ -122,9 +126,14 @@ public class MainMenuController : MonoBehaviour
     public void ActivateModeSelection(bool _activate)
     {
         m_rModeSelection.SetActive(_activate);
-        m_rModeMenu.UpdateTimerPanelValues();
         if (_activate)
         {
+            if(m_rModePanels[m_iCurrentModeGroup].GetComponent<ModeMenu>() != null)
+            {
+                m_rModeMenu = m_rModePanels[m_iCurrentModeGroup].GetComponent<ModeMenu>();
+                m_rModeMenu.UpdateTimerPanelValues();
+            }
+
             ActivateMenu(false);
             m_rCanvas.planeDistance = m_iRevealedPlaneDist;
             m_rNLExpressions.SetActive(true);
@@ -160,7 +169,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void StartHoarding()
     {
-        StartGame(GameState.GameplayMode.Everything);
+        StartGame(GameState.GameplayMode.Hoarder);
     }
     /// <summary>
     /// Starts game in adventure mode
@@ -174,7 +183,7 @@ public class MainMenuController : MonoBehaviour
     /// </summary>
     public void StartMapAttack()
     {
-        StartGame(GameState.GameplayMode.ForTheMaps);
+        StartGame(GameState.GameplayMode.MapHunt);
     }
     /// <summary>
     /// Starts game in adventure mode
@@ -277,6 +286,11 @@ public class MainMenuController : MonoBehaviour
             }
         }
         m_rButtonClick.Play();
+        if (m_rModePanels[m_iCurrentModeGroup].GetComponent<ModeMenu>() != null)
+        {
+            m_rModeMenu = m_rModePanels[m_iCurrentModeGroup].GetComponent<ModeMenu>();
+            m_rModeMenu.UpdateTimerPanelValues();
+        }
         m_rLeftModeButton.SetActive(((m_iCurrentModeGroup == 0) ? false : true));
         m_rRightModeButton.SetActive(((m_iCurrentModeGroup == m_rModePanels.Length - 1)  ? false : true));
     }

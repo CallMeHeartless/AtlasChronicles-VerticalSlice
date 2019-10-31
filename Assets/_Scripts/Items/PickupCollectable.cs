@@ -25,13 +25,13 @@ public class PickupCollectable : Pickup
 
         // Disable the magnetic component
         MagneticController magnetic = GetComponent<MagneticController>();
-        if (magnetic) {
+        if ((magnetic)&&( GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)) {
             magnetic.SnapToPlayer();
         }
        
-        if (GameState.GetGameplayMode() == GameState.GameplayMode.ForTheMaps)
+        if (GameState.GetGameplayMode() == GameState.GameplayMode.MapHunt)
         {
-            TimerUpdate.AddTime(5);
+            TimerUpdate.CystalCollection();
         }
         
     }
