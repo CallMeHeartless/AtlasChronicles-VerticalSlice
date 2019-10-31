@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 
+#pragma warning disable CS0649
+
 public class TimerUpdate : MonoBehaviour
 {
     bool m_EndTimer = true;
@@ -21,6 +23,12 @@ public class TimerUpdate : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_TextUI;
     [SerializeField] private TextMeshProUGUI m_TypeUI;
     [SerializeField] private Trophies m_Trophy;
+
+    [SerializeField] private TextMeshProUGUI m_rPanelTitle;
+    [SerializeField] private TextMeshProUGUI m_rGoldTime;
+    [SerializeField] private TextMeshProUGUI m_rSilverTime;
+    [SerializeField] private TextMeshProUGUI m_rBronzeTime;
+    [SerializeField] private TextMeshProUGUI[] m_rGoalFormats;
 
     [SerializeField] private TextMeshProUGUI m_rFlavourText;
     [SerializeField] private TextMeshProUGUI m_rCurrentRecordTime;
@@ -191,11 +199,7 @@ public class TimerUpdate : MonoBehaviour
         m_rCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        //PlayerPrefs.SetString(m_strPlayerBestTimeStr, totalTimeString);
-        //PlayerPrefs.SetInt(m_strPlayerBestTimeInt, finalTimeInteger);
-
-
+        
         //Retrieve time record values required to be set into ui view
         string currentScoreString = PlayerPrefs.GetString(m_strPlayerBestTimeStr, "--:--:--");
         int currentScoreInt = PlayerPrefs.GetInt(m_strPlayerBestTimeInt, 111111);
@@ -204,6 +208,8 @@ public class TimerUpdate : MonoBehaviour
         //Convert scores to strings
         m_rCurrentRecordTime.text = currentScoreString;
         m_rFlavourText.text = Records.RetrieveFlavourText(false, GameState.GetGameplayMode(), currentPlace);
+
+        SetModeSettings(GameState.GetGameplayMode());
 
         switch (currentPlace)
         {
@@ -235,6 +241,53 @@ public class TimerUpdate : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void SetModeSettings(GameState.GameplayMode _mode)
+    {
+        string goalFormat = "H : M : S";
+
+        switch (_mode)
+        {
+            case GameState.GameplayMode.SpeedRun:
+            {
+                m_rPanelTitle.text = "Time Attack Results";
+                break;
+            }
+            case GameState.GameplayMode.Hoarder:
+            {
+                m_rPanelTitle.text = "Hoarder Results";
+                break;
+            }
+            case GameState.GameplayMode.Rush:
+            {
+                m_rPanelTitle.text = "RUSH RESULTS";
+                break;
+            }
+            case GameState.GameplayMode.MapHunt:
+            {
+                m_rPanelTitle.text = "MAP HUNT RESULTS";
+                goalFormat = "CRYSTALS";
+                break;
+            }
+            default:
+            {
+                m_rPanelTitle.text = "ADVENTURE RESULTS";
+                goalFormat = "ADVENTUREMODESHOULDNOTHAVEAFORMAT!";
+                break;
+            }
+        }
+
+        //Set the goal format depending on the current mode
+        for (int i = 0; i < m_rGoalFormats.Length; i++)
+        {
+            m_rGoalFormats[i].text = goalFormat;
+        }
+
+        //Update the goal scores depending on the current mode
+        m_rGoldTime.text = Records.GetGoalScore(_mode, 3);
+        m_rSilverTime.text = Records.GetGoalScore(_mode, 2);
+        m_rBronzeTime.text = Records.GetGoalScore(_mode, 1);
     }
 
     public string AddZeroBeforeSingleDigit(string _singleDigit)
@@ -302,14 +355,21 @@ public class TimerUpdate : MonoBehaviour
         string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
 
         totalTimeString = hours + ":" + minutes + ":" + secs;
-        int finalTimeInteger = (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds;
+        int finalTimeInteger = ConvertHMSToInteger(m_Hours, m_Minutes, roundedSeconds);
 
         //SETTING FINAL TIME SCORE
         PlayerPrefs.SetString(m_strPlayerBestTimeStr, totalTimeString);
         PlayerPrefs.SetInt(m_strPlayerBestTimeInt, finalTimeInteger);
     }
+
+    int ConvertHMSToInteger(int _hours, int _mins, int _secs)
+    {
+        return (m_Hours * 10000) + (m_Minutes * 100) + _secs;
+    }
+
    static public void CystalCollection()
     {
         m_AddedTime++;
     }
 }
+#pragma warning restore CS0649

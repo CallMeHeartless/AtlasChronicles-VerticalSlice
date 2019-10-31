@@ -7,7 +7,7 @@ public class Records : MonoBehaviour
     //changing m_SpeedRunRecords changes that runs speed modes trophie freeshwhole
     static private int[] m_SpeedRunRecords_SpeedRun = new int[3] { 2000, 1400, 1000 };// min min,second second
     static private int[] m_SpeedRunRecords_Hoarder = new int[3] { 2500, 1700, 1000 };// min min,second second
-    static private int[] m_SpeedRunRecords_Rush = new int[3] { 0250, 0130, 0100 };// min min,second second
+    static private int[] m_SpeedRunRecords_Rush = new int[3] { 250, 130, 100 };// min min,second second
     static private int[] m_SpeedRunRecords_MapRun = new int[3] { 150, 100, 50 };// min min,second second
     //static public int currentPlace = 3;
 
@@ -17,7 +17,6 @@ public class Records : MonoBehaviour
     static private string m_strSilverRecordFlavourText = "--INVALID SILVER TEXT--";
     static private string m_strBronzeRecordFlavourText = "--INVALID BRONZE TEXT--";
     static private int[] currentRecordCheck = m_SpeedRunRecords_SpeedRun;
-
 
     /// <summary>
     /// Flavour text based on if in menu, which mode and which placement the player is
@@ -32,12 +31,14 @@ public class Records : MonoBehaviour
         {
             return "Adventure Mode";
         }
-        
+
+        //Make sure code is accessing the correct records for the given mode
+        SetCurrentGameModeSelected(_currentMode);
+
         switch (_currentMode)
         {
             case GameState.GameplayMode.SpeedRun:
             {
-                currentRecordCheck = m_SpeedRunRecords_SpeedRun;
                 m_strNoRecordFlavourText = (_mainMenu ? "TAKE ON A SPEEDY CHALLENGE" : "YOU NEED TO BE FASTER... F A S T E R!!!");
                 m_strGoldRecordFlavourText = "AN ABSOLUTE LEGEND";
                 m_strSilverRecordFlavourText = "A SPEEDY SOUL";
@@ -46,7 +47,6 @@ public class Records : MonoBehaviour
             }
             case GameState.GameplayMode.Hoarder:
             {
-                currentRecordCheck = m_SpeedRunRecords_Hoarder;
                 m_strNoRecordFlavourText = (_mainMenu ? "READY TO HOARD?" : "WHAT KIND OF HOARDER ARE YOU?!");
                 m_strGoldRecordFlavourText = "AN ABSOLUTE HOARDER";
                 m_strSilverRecordFlavourText = "A COLLECTOR";
@@ -55,7 +55,6 @@ public class Records : MonoBehaviour
             }
             case GameState.GameplayMode.Rush:
             {
-                currentRecordCheck = m_SpeedRunRecords_Rush;
                 m_strNoRecordFlavourText = (_mainMenu ? "TO THE TEMPLE WE GO!" : "RUSH FASTER");
                 m_strGoldRecordFlavourText = "THE RUSHIEST OF ALL RUSHERS";
                 m_strSilverRecordFlavourText = "AN HONOURABLE RUSHER";
@@ -64,7 +63,6 @@ public class Records : MonoBehaviour
             }
             case GameState.GameplayMode.MapHunt:
             {
-                currentRecordCheck = m_SpeedRunRecords_MapRun;
                 m_strNoRecordFlavourText = (_mainMenu ? "WHO NEEDS CRYSTALS? GO MAPS!" : "OI! THATS WAY TOO MANY CRYSTALS!");
                 m_strGoldRecordFlavourText = "MAP CONNOISSEUR";
                 m_strSilverRecordFlavourText = "MAP COLLECTOR";
@@ -138,6 +136,45 @@ public class Records : MonoBehaviour
             break;
         }
     }
+
+    static public string GetGoalScore(GameState.GameplayMode _mode, int _place)
+    {
+        SetCurrentGameModeSelected(_mode);
+        if (_mode == GameState.GameplayMode.MapHunt)
+        {
+            return currentRecordCheck[_place - 1].ToString();
+        }
+        //Following same array logic- but -1 as 0 isnt counted. 
+        //  1 = bronze, 2 = silver, 3 = gold
+        return ConvertRecordToString(currentRecordCheck[_place-1]); 
+    }
+
+    /// <summary>
+    /// Converts stored records into strings. Not reusable.
+    /// </summary>
+    /// <param name="_record">record retrieved from score array</param>
+    /// <returns>a formatted string version of goal (incl colons)</returns>
+    static public string ConvertRecordToString(int _record)
+    {
+        string recordStr = _record.ToString();
+        string recordMins = "";
+        string recordSecs = "";
+
+        if (recordStr.Length == 3)
+        {
+            recordMins += '0' + recordStr[0];
+        }
+        else if (recordStr.Length == 4)
+        {
+            recordMins += recordStr[0] + recordStr[1];
+        }
+        recordSecs += recordStr[recordStr.Length - 2] + recordStr[recordStr.Length - 1];
+
+        recordStr = "00:" + recordMins + ":" + recordSecs;
+
+        return recordStr;
+    }
+
 
     /// <summary>
     /// Retrieves the string values to access PlayerPrefs for 'current place' and 'best time' based on the given mode.
