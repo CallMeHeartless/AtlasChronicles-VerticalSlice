@@ -18,6 +18,10 @@ public class ModeMenu : MonoBehaviour
     [SerializeField] private Sprite m_rSilverCupSpr;
     [SerializeField] private Sprite m_rGoldCupSpr;
 
+    [SerializeField] private TextMeshProUGUI m_rGoldTime;
+    [SerializeField] private TextMeshProUGUI m_rSilverTime;
+    [SerializeField] private TextMeshProUGUI m_rBronzeTime;
+
     private string m_strPlayerBestPlace = "PP_TimeAttackCurrentPlace";
     private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
     private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
@@ -119,6 +123,10 @@ public class ModeMenu : MonoBehaviour
         int currentPlace = Records.CheckCurrentPlace(m_levelMode, currentIntTime);
         m_rCurrentRecordTxt.text = strTimeString;
         m_rRecordFlavourTxt.text = Records.RetrieveFlavourText(true, m_levelMode, currentPlace);
+        
+        m_rGoldTime.text = Records.GetGoalScore(m_levelMode, 3);
+        m_rSilverTime.text = Records.GetGoalScore(m_levelMode, 2);
+        m_rBronzeTime.text = Records.GetGoalScore(m_levelMode, 1);
 
         switch (currentPlace)
         {

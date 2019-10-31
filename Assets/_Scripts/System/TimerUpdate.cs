@@ -129,8 +129,6 @@ public class TimerUpdate : MonoBehaviour
 
             if (GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)
             {
-
-
                 if (m_EndTimer)
                 {
 
@@ -163,25 +161,9 @@ public class TimerUpdate : MonoBehaviour
                     }
                     m_TextUI.text += m_Seconds.ToString("F2");
 
-                    //check to see if troiphy need to be changed
+                    //check to see if trophy needS to be changed
                     m_iTrophyPlacement = Records.CheckCurrentPlace(GameState.GetGameplayMode(), (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds);
                 }
-//=======
-//                    //check to see if troiphy need to be changed
-//                    if (Records.check((m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds, GameState.GetGameplayMode()))
-//                    {
-//                        m_Trophy.DecreaseTrophie();
-//                    }
-//                }
-//            }
-//            else
-//            {
-//                m_TextUI.text = m_Seconds.ToString(m_Seconds.ToString());
-//                if (Records.check((int)m_Seconds, GameState.GetGameplayMode()))
-//                {
-//                    m_Trophy.DecreaseTrophie();
-//                } 
-//>>>>>>> d6d9659d765c2c36d116fe39aaadf8b627abb86b
             }
         }
     }
@@ -245,7 +227,7 @@ public class TimerUpdate : MonoBehaviour
 
     void SetModeSettings(GameState.GameplayMode _mode)
     {
-        string goalFormat = "H : M : S";
+        string goalFormat = "<br><br><br>H : M : S";
 
         switch (_mode)
         {
@@ -261,18 +243,18 @@ public class TimerUpdate : MonoBehaviour
             }
             case GameState.GameplayMode.Rush:
             {
-                m_rPanelTitle.text = "RUSH RESULTS";
+                m_rPanelTitle.text = "Rush Results";
                 break;
             }
             case GameState.GameplayMode.MapHunt:
             {
-                m_rPanelTitle.text = "MAP HUNT RESULTS";
-                goalFormat = "CRYSTALS";
+                m_rPanelTitle.text = "Map Hunt Results";
+                goalFormat = "LESS THAN<br><br><br>CRYSTALS";
                 break;
             }
             default:
             {
-                m_rPanelTitle.text = "ADVENTURE RESULTS";
+                m_rPanelTitle.text = "Adventure Results";
                 goalFormat = "ADVENTUREMODESHOULDNOTHAVEAFORMAT!";
                 break;
             }
@@ -281,6 +263,12 @@ public class TimerUpdate : MonoBehaviour
         //Set the goal format depending on the current mode
         for (int i = 0; i < m_rGoalFormats.Length; i++)
         {
+            if (i == m_rGoalFormats.Length - 1 && _mode == GameState.GameplayMode.MapHunt) //If it is the player's record
+            {
+                m_rGoalFormats[i].text = "<br><br><br>CRYSTALS";
+                break;
+            }
+
             m_rGoalFormats[i].text = goalFormat;
         }
 
@@ -347,15 +335,24 @@ public class TimerUpdate : MonoBehaviour
     public void DetermineFinalTime()
     {
         string totalTimeString = "";
+        int finalTimeInteger = 111111;
 
         int roundedSeconds = Mathf.RoundToInt(m_Seconds);
 
-        string secs = (roundedSeconds >= 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
-        string minutes = (m_Minutes >= 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
-        string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
+        if(GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)
+        {
+            string secs = (roundedSeconds >= 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
+            string minutes = (m_Minutes >= 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
+            string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
 
-        totalTimeString = hours + ":" + minutes + ":" + secs;
-        int finalTimeInteger = ConvertHMSToInteger(m_Hours, m_Minutes, roundedSeconds);
+            totalTimeString = hours + ":" + minutes + ":" + secs;
+            finalTimeInteger = ConvertHMSToInteger(m_Hours, m_Minutes, roundedSeconds);
+        }
+        else
+        {
+            totalTimeString = roundedSeconds.ToString();
+            finalTimeInteger = ConvertHMSToInteger(m_Hours, m_Minutes, roundedSeconds);
+        }
 
         //SETTING FINAL TIME SCORE
         PlayerPrefs.SetString(m_strPlayerBestTimeStr, totalTimeString);
