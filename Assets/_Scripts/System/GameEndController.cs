@@ -188,12 +188,6 @@ public class GameEndController : MonoBehaviour
                 DontDestory records = GameObject.FindGameObjectWithTag("TimeRecords").GetComponent<DontDestory>();
                 if (records)
                 {
-                    //m_rTimerUpdate.DetermineTrophy();
-
-                    //records.SetNewSpeedMode((int)GameState.GetGameplayMode(),
-                    //    m_rTimerUpdate.GetFinalTime(),
-                    //    Records.m_CurrentPlace);
-
                     //Set the time and place based on results and display on ui
                     m_rTimerUpdate.DisplayEndResultsPanel();
                     m_bTimeResultsActivated = true;

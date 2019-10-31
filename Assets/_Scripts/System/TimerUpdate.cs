@@ -351,7 +351,7 @@ public class TimerUpdate : MonoBehaviour
         else
         {
             totalTimeString = roundedSeconds.ToString();
-            finalTimeInteger = ConvertHMSToInteger(m_Hours, m_Minutes, roundedSeconds);
+            finalTimeInteger = roundedSeconds;
         }
 
         //SETTING FINAL TIME SCORE
