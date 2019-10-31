@@ -162,13 +162,13 @@ public class Records : MonoBehaviour
 
         if (recordStr.Length == 3)
         {
-            recordMins += '0' + recordStr[0];
+            recordMins = '0' + recordStr[0].ToString();
         }
         else if (recordStr.Length == 4)
         {
-            recordMins += recordStr[0] + recordStr[1];
+            recordMins = recordStr[0].ToString() + recordStr[1].ToString();
         }
-        recordSecs += recordStr[recordStr.Length - 2] + recordStr[recordStr.Length - 1];
+        recordSecs += recordStr[recordStr.Length - 2].ToString() + recordStr[recordStr.Length - 1].ToString();
 
         recordStr = "00:" + recordMins + ":" + recordSecs;
 
