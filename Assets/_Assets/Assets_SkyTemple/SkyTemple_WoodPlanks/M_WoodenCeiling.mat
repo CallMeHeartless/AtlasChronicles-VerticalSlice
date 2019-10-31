@@ -8,10 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_WoodenCeiling
-  m_Shader: {fileID: 4800000, guid: 6dee2a73fd8b3d547b4a690302f60c52, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0d6d3e956e1fba743b91cc201fa78f49, type: 3}
   m_ShaderKeywords: _USEFLATEMISSIVE_ON _USEFLATMETALLIC_ON
-  m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -35,6 +35,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Diff01:
+        m_Texture: {fileID: 2800000, guid: a7269110e657f3643b46d8436a6a552f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Diff02:
+        m_Texture: {fileID: 2800000, guid: a7269110e657f3643b46d8436a6a552f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Diffuse:
         m_Texture: {fileID: 2800000, guid: a7269110e657f3643b46d8436a6a552f, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -47,6 +55,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FlatMoss:
+        m_Texture: {fileID: 2800000, guid: a7269110e657f3643b46d8436a6a552f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -55,11 +67,27 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Norm01:
+        m_Texture: {fileID: 2800000, guid: c6b322a8f9f814c4194c03cf2c525c75, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Norm02:
+        m_Texture: {fileID: 2800000, guid: c6b322a8f9f814c4194c03cf2c525c75, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normal:
         m_Texture: {fileID: 2800000, guid: c6b322a8f9f814c4194c03cf2c525c75, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OSM:
+        m_Texture: {fileID: 2800000, guid: f5f73324a6357f344b29772a93100a72, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OSM01:
+        m_Texture: {fileID: 2800000, guid: f5f73324a6357f344b29772a93100a72, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OSM02:
         m_Texture: {fileID: 2800000, guid: f5f73324a6357f344b29772a93100a72, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -92,6 +120,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Tile: 0.1
     - _UVSec: 0
     - _UseFlatEmissive: 1
     - _UseFlatMetallic: 1
@@ -100,5 +129,8 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Diff01_ColorVariation: {r: 0.999, g: 1.05, b: 0.2, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatEmissive: {r: 0, g: 0, b: 0, a: 0}
+    - _FlatMossColorVar: {r: 0, g: 1, b: 0.2, a: 0}
+    - _Vector0: {r: 0, g: 1, b: 1, a: 0}
