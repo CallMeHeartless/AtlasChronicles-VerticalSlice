@@ -73,7 +73,7 @@ public class GameState : MonoBehaviour
 
     public static void SetIsSpeedRunning()
     {
-        s_bGetIsSpeedRunning = (m_eGameplayMode == GameplayMode.SpeedRun ? true : false);
+        s_bGetIsSpeedRunning = (m_eGameplayMode != GameplayMode.Adventure ? true : false);
     }
 
     public static void SetTimerFlag(bool _Timer)
