@@ -20,8 +20,6 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
     private float m_fInitYPos = 0.0f;
     private bool m_bDescending = false;
 
-    [SerializeField] private Material m_rGlowMat;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +42,6 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
         else
         {
             m_bDescending = false;
-            if(m_rGlowMat)
-            {
-                MeshRenderer renderer = GetComponent<MeshRenderer>();
-                renderer.material = m_rGlowMat;
-            }
         }
     }
 
