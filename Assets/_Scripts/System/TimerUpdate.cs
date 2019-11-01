@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 
+#pragma warning disable CS0649
+
 public class TimerUpdate : MonoBehaviour
 {
     bool m_EndTimer = true;
@@ -22,6 +24,12 @@ public class TimerUpdate : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_TypeUI;
     [SerializeField] private Trophies m_Trophy;
 
+    [SerializeField] private TextMeshProUGUI m_rPanelTitle;
+    [SerializeField] private TextMeshProUGUI m_rGoldTime;
+    [SerializeField] private TextMeshProUGUI m_rSilverTime;
+    [SerializeField] private TextMeshProUGUI m_rBronzeTime;
+    [SerializeField] private TextMeshProUGUI[] m_rGoalFormats;
+
     [SerializeField] private TextMeshProUGUI m_rFlavourText;
     [SerializeField] private TextMeshProUGUI m_rCurrentRecordTime;
     [SerializeField] private Image m_rCurrentTrophy;
@@ -30,12 +38,23 @@ public class TimerUpdate : MonoBehaviour
     [SerializeField] private Sprite m_rBronzeTrophy;
     [SerializeField] private Sprite m_rSilverTrophy;
     [SerializeField] private Sprite m_rGoldTrophy;
+    private string m_strFlavourText = "--INVALID--";
+    private int m_iTrophyPlacement = 0;
 
-    static private float AddedTime =0;
+    private string m_strPlayerBestPlace = "PP_TimeAttackCurrentPlace";
+    private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
+    private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
+
+    static private float m_AddedTime =0;
     // Start is called before the first frame update
     void Start()
     {
         SetRecordChecked(false);
+
+        if(!m_rCamera)
+        {
+            m_rCamera = GameObject.Find("Camera").transform.parent.GetComponent<CinemachineFreeLook>();
+        }
 
         //set UI to for the speed run
         switch (GameState.GetGameplayMode())
@@ -49,14 +68,14 @@ public class TimerUpdate : MonoBehaviour
             case GameState.GameplayMode.SpeedRun:
             {
                 m_TypeUI.text = "Time Attack: COLLECT 160 GEMS AND 5 MAPS BEFORE HEADING TO THE EXIT";
-                m_timerUIPanel.SetActive(true);
+               // m_timerUIPanel.SetActive(true);
 
                 m_rCurrentRecordTime.text = "--:--:--";
                 m_rFlavourText.text = "GOOD JOB";
                 m_rCurrentTrophy.sprite = m_rHiddenTrophy;
                 break;
             }
-            case GameState.GameplayMode.Everything:
+            case GameState.GameplayMode.Hoarder:
             {
                 m_TypeUI.text = "Get All";
                 break;
@@ -66,9 +85,9 @@ public class TimerUpdate : MonoBehaviour
                     m_TypeUI.text = "Get to the end as fast as possable";
                     break;
                 }
-            case GameState.GameplayMode.ForTheMaps:
+            case GameState.GameplayMode.MapHunt:
                 {
-                    m_TypeUI.text = "get all map fragment, but becareful as collecting crysal will cost you time";
+                    m_TypeUI.text = "get all map fragment and don't get as little amount of crystals";
                     break;
                 }
             default:
@@ -79,7 +98,9 @@ public class TimerUpdate : MonoBehaviour
         {
             //this is not going to be a speed run
             m_TimeAttackResultsPanel.SetActive(false);
-        } 
+        }
+
+        Records.PlayerPrefModeRetriever(GameState.GetGameplayMode(), ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
     }
     /*___________________________________________________
   * Job: Timer which looks like a speedrunners Timer
@@ -87,47 +108,61 @@ public class TimerUpdate : MonoBehaviour
   ______________________________________________________*/
     void Update()
     {
-        if ((!GameState.GetPauseFlag()) &&(!GameState.GetCinematicFlag()))//pause the game
+
+
+//<<<<<<< HEAD
+//        if (AddedTime != 0)
+//        {
+//            m_Seconds += AddedTime;
+//        }
+//        m_Seconds += Time.deltaTime;
+//        if (m_Seconds >= 60)
+//=======
+
+        if ((!GameState.GetPauseFlag()) && (!GameState.GetCinematicFlag()))//pause the game
         {
-            if (m_EndTimer)
+            if (m_AddedTime != 0)
             {
-                if (AddedTime !=0)
+                m_Seconds += m_AddedTime;
+                m_AddedTime = 0;
+            }
+
+            if (GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)
+            {
+                if (m_EndTimer)
                 {
-                    m_Seconds += AddedTime;
-                }
-                m_Seconds += Time.deltaTime;
-                if (m_Seconds >= 60)
-                {
-                    m_Minutes++;
-                    m_Seconds -= 60;
-                    if (m_Minutes >= 60)
+
+                    m_Seconds += Time.deltaTime;
+                    if (m_Seconds >= 60)
                     {
-                        m_Hours++;
-                        m_Minutes -= 60;
+                        m_Minutes++;
+                        m_Seconds -= 60;
+                        if (m_Minutes >= 60)
+                        {
+                            m_Hours++;
+                            m_Minutes -= 60;
+                        }
                     }
-                }
-                m_TextUI.text = "";
+                    m_TextUI.text = "";
 
-                if (m_Hours >= 1)
-                {
-                    m_TextUI.text += m_Hours.ToString("0") + ":";
-                }
+                    if (m_Hours >= 1)
+                    {
+                        m_TextUI.text += m_Hours.ToString("0") + ":";
+                    }
 
-                if (m_Minutes >= 1)
-                {
-                    m_TextUI.text += m_Minutes.ToString("0") + ":";
-                }
+                    if (m_Minutes >= 1)
+                    {
+                        m_TextUI.text += m_Minutes.ToString("0") + ":";
+                    }
 
-                if (m_Seconds < 10)
-                {
-                    m_TextUI.text += "0";
-                }
-                m_TextUI.text += m_Seconds.ToString("F2");
+                    if (m_Seconds < 10)
+                    {
+                        m_TextUI.text += "0";
+                    }
+                    m_TextUI.text += m_Seconds.ToString("F2");
 
-                //check to see if troiphy need to be changed
-                if (Records.check((m_Hours*10000)+(m_Minutes * 100) + (int)m_Seconds, GameState.GetGameplayMode()))
-                {
-                    m_Trophy.DecreaseTrophie();
+                    //check to see if trophy needS to be changed
+                    m_iTrophyPlacement = Records.CheckCurrentPlace(GameState.GetGameplayMode(), (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds);
                 }
             }
         }
@@ -136,23 +171,27 @@ public class TimerUpdate : MonoBehaviour
     /// <summary>
     /// Activates the TimeAttackResults panel and updates all ui elements with time records
     /// </summary>
-    public void DisplayTimeAttackResults()
+    public void DisplayEndResultsPanel()
     {
-        SetRecordChecked(false);
+        DetermineFinalTime();
+        SetRecordChecked(true);
 
         m_TimeAttackResultsPanel.SetActive(true);
         GameState.SetPauseFlag(true);
         m_rCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
+        
         //Retrieve time record values required to be set into ui view
-        int currentPlace = PlayerPrefs.GetInt("TimeAttackCurrentPlace", 0);
-        string currentScoreString = PlayerPrefs.GetString("TimeAttackTimeString", "--:--:--");
+        string currentScoreString = PlayerPrefs.GetString(m_strPlayerBestTimeStr, "--:--:--");
+        int currentScoreInt = PlayerPrefs.GetInt(m_strPlayerBestTimeInt, 111111);
+        int currentPlace = Records.CheckCurrentPlace(GameState.GetGameplayMode(), currentScoreInt);
 
         //Convert scores to strings
         m_rCurrentRecordTime.text = currentScoreString;
-        //m_rBestRecordTime.text = 
+        m_rFlavourText.text = Records.RetrieveFlavourText(false, GameState.GetGameplayMode(), currentPlace);
+
+        SetModeSettings(GameState.GetGameplayMode());
 
         switch (currentPlace)
         {
@@ -160,27 +199,23 @@ public class TimerUpdate : MonoBehaviour
             {
                 //If the time beats the Gold cup record
                 m_rCurrentTrophy.sprite = m_rGoldTrophy;
-                m_rFlavourText.text = "LEGENDARY!!!";
                 break;
             }
             case 2:
             {
                 //If the time beats the Silver cup record
                 m_rCurrentTrophy.sprite = m_rSilverTrophy;
-                m_rFlavourText.text = "NICE!!";
                 break;
             }
             case 1:
             {
                 //If the time beats the Bronze cup record
                 m_rCurrentTrophy.sprite = m_rBronzeTrophy;
-                m_rFlavourText.text = "GOOD JOB!";
                 break;
             }
             case 0:
             {
                 m_rCurrentTrophy.sprite = m_rHiddenTrophy;
-                m_rFlavourText.text = "TRY AGAIN";
                 break;
             }
             default:
@@ -188,6 +223,59 @@ public class TimerUpdate : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void SetModeSettings(GameState.GameplayMode _mode)
+    {
+        string goalFormat = "<br><br><br>H : M : S";
+
+        switch (_mode)
+        {
+            case GameState.GameplayMode.SpeedRun:
+            {
+                m_rPanelTitle.text = "Time Attack Results";
+                break;
+            }
+            case GameState.GameplayMode.Hoarder:
+            {
+                m_rPanelTitle.text = "Hoarder Results";
+                break;
+            }
+            case GameState.GameplayMode.Rush:
+            {
+                m_rPanelTitle.text = "Rush Results";
+                break;
+            }
+            case GameState.GameplayMode.MapHunt:
+            {
+                m_rPanelTitle.text = "Map Hunt Results";
+                goalFormat = "LESS THAN<br><br><br>CRYSTALS";
+                break;
+            }
+            default:
+            {
+                m_rPanelTitle.text = "Adventure Results";
+                goalFormat = "ADVENTUREMODESHOULDNOTHAVEAFORMAT!";
+                break;
+            }
+        }
+
+        //Set the goal format depending on the current mode
+        for (int i = 0; i < m_rGoalFormats.Length; i++)
+        {
+            if (i == 3 && _mode == GameState.GameplayMode.MapHunt) //If it is the player's record
+            {
+                m_rGoalFormats[3].text = "<br><br><br>CRYSTALS";
+                break;
+            }
+
+            m_rGoalFormats[i].text = goalFormat;
+        }
+
+        //Update the goal scores depending on the current mode
+        m_rGoldTime.text = Records.GetGoalScore(_mode, 3);
+        m_rSilverTime.text = Records.GetGoalScore(_mode, 2);
+        m_rBronzeTime.text = Records.GetGoalScore(_mode, 1);
     }
 
     public string AddZeroBeforeSingleDigit(string _singleDigit)
@@ -237,23 +325,48 @@ public class TimerUpdate : MonoBehaviour
         m_EndTimer = false;
     }
 
-    public float GetFinalTime()
+    public void SetCheatFinalTime(int _hours, int _mins, float _secs)
+    {
+        m_Seconds = _secs;
+        m_Minutes = _mins;
+        m_Hours = _hours;
+    }
+
+    public void DetermineFinalTime()
     {
         string totalTimeString = "";
+        int finalTimeInteger = 111111;
 
         int roundedSeconds = Mathf.RoundToInt(m_Seconds);
 
-        string secs = (roundedSeconds >= 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
-        string minutes = (m_Minutes >= 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
-        string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
-        totalTimeString = hours + ":" + minutes + ":" + secs;
+        if(GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)
+        {
+            string secs = (roundedSeconds >= 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
+            string minutes = (m_Minutes >= 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
+            string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
 
-        PlayerPrefs.SetString("TimeAttackTimeString", totalTimeString);
+            totalTimeString = hours + ":" + minutes + ":" + secs;
+            finalTimeInteger = ConvertHMSToInteger(m_Hours, m_Minutes, roundedSeconds);
+        }
+        else
+        {
+            totalTimeString = roundedSeconds.ToString();
+            finalTimeInteger = roundedSeconds;
+        }
 
-        return (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds;
+        //SETTING FINAL TIME SCORE
+        PlayerPrefs.SetString(m_strPlayerBestTimeStr, totalTimeString);
+        PlayerPrefs.SetInt(m_strPlayerBestTimeInt, finalTimeInteger);
     }
-    static public void AddTime(int _addTime)
+
+    int ConvertHMSToInteger(int _hours, int _mins, int _secs)
     {
-        AddedTime += _addTime;
+        return (m_Hours * 10000) + (m_Minutes * 100) + _secs;
+    }
+
+   static public void CystalCollection()
+    {
+        m_AddedTime++;
     }
 }
+#pragma warning restore CS0649
