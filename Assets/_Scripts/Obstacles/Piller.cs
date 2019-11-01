@@ -66,10 +66,7 @@ public class Piller : MonoBehaviour, IMessageReceiver
                     }
                     else
                     {
-                        m_bMoving = true;
-                        currentPostion += (int)_source;
-                        m_fSpeed = m_fMinSpeed;
-						PlayAudio(true, false);
+                        ActivatePillar();
                     }
                    // m_bUnlocked = true;
                     break;
@@ -83,17 +80,10 @@ public class Piller : MonoBehaviour, IMessageReceiver
                     }
                     else
                     {
-                        if (m_fActiveOnce == true)
-                        {
-
-                        }
-                        else
-                        {
-                            m_bMoving = true;
-                            currentPostion -= (int)_source;
-                            m_fSpeed = m_fMinSpeed;
-                            PlayAudio(true, true);
-                        }
+                        m_bMoving = true;
+                        currentPostion -= (int)_source;
+                        m_fSpeed = m_fMinSpeed;
+                        PlayAudio(true, true);
                     }
                     break;
                 }

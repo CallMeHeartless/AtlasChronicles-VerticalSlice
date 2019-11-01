@@ -24,6 +24,7 @@ public class Trophies : MonoBehaviour
         if (m_CurrentTrophie!=0)
         {
             m_CurrentTrophie--;
+            //Records.currentPlace = m_CurrentTrophie;
             gameObject.GetComponent<Image>().sprite = m_STrophie[m_CurrentTrophie];
         }
         else
@@ -33,6 +34,4 @@ public class Trophies : MonoBehaviour
         }
       
     }
-
-    //save trophie
 }

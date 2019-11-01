@@ -30,6 +30,7 @@ public class DontDestory : MonoBehaviour
             if (gamemodeBestSpeed[_mode] >= _time)
             {
                 gamemodeBestSpeed[_mode] = _time;
+
                 gamemodeBestTrophy[_mode] = _trophie;
                 Debug.Log("newsave");
             }

@@ -20,8 +20,6 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
     private float m_fInitYPos = 0.0f;
     private bool m_bDescending = false;
 
-    [SerializeField] private Material m_rGlowMat;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -37,9 +35,6 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
         if (!m_bDescendObject || !m_bDescending || !m_rObjectToDescend)
             return;
 
-        print("Pos: " + m_rObjectToDescend.transform.position.y);
-        print("Dest: " + (m_fInitYPos - m_rDescendDistance));
-
         if (m_rObjectToDescend.transform.position.y > m_fInitYPos - m_rDescendDistance)
         {
             m_rObjectToDescend.transform.position = new Vector3(m_rObjectToDescend.transform.position.x, m_rObjectToDescend.transform.position.y - (0.5f *Time.deltaTime), m_rObjectToDescend.transform.position.z);
@@ -47,11 +42,6 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
         else
         {
             m_bDescending = false;
-            if(m_rGlowMat)
-            {
-                MeshRenderer renderer = GetComponent<MeshRenderer>();
-                renderer.material = m_rGlowMat;
-            }
         }
     }
 
@@ -64,9 +54,7 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
         for(int i = 0; i < m_ObjectsToMessage.Count; ++i) {
             IMessageReceiver target = m_ObjectsToMessage[i] as IMessageReceiver;
                 target.OnReceiveMessage(MessageType.eActivate, null);
-        }
-        Debug.Log("Activate Messages sent");
-        
+        }       
     }
 
     public void DescendObject()
