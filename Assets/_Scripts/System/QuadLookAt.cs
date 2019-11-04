@@ -25,7 +25,7 @@ public class QuadLookAt : MonoBehaviour
         //Only look at cam if enabled
         if(m_rBubble.enabled)
         {
-            m_rBubble.sprite = ((InputManager.s_bInputController) ? m_rControllerBubble : m_rKeyBubble);
+            m_rBubble.sprite = ((InputManager.s_bInputIsController) ? m_rControllerBubble : m_rKeyBubble);
 
             transform.LookAt(transform.position + m_rCameraReference.transform.rotation * Vector3.forward,
                                 m_rCameraReference.transform.rotation * Vector3.up);

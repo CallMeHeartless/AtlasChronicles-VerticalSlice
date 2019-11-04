@@ -165,7 +165,7 @@ public class DialogueManager : MonoBehaviour
         //Retrieve first sentence of the queue while removing it at the same time
         m_strCurrentSentence = m_sentences.Dequeue();
 
-        if(!InputManager.s_bInputController)
+        if(!InputManager.s_bInputIsController)
         {
             ReplaceWithKeySprite(ref m_strCurrentSentence);
         }

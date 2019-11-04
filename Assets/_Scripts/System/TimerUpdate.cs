@@ -186,6 +186,7 @@ public class TimerUpdate : MonoBehaviour
         string currentScoreString = PlayerPrefs.GetString(m_strPlayerBestTimeStr, "--:--:--");
         int currentScoreInt = PlayerPrefs.GetInt(m_strPlayerBestTimeInt, 111111);
         int currentPlace = Records.CheckCurrentPlace(GameState.GetGameplayMode(), currentScoreInt);
+        PlayerPrefs.SetInt(m_strPlayerBestPlace, currentPlace);
 
         //Convert scores to strings
         m_rCurrentRecordTime.text = currentScoreString;

@@ -22,6 +22,8 @@ public class ModeMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_rSilverTime;
     [SerializeField] private TextMeshProUGUI m_rBronzeTime;
 
+    [SerializeField] private GameObject m_rController;
+
     private string m_strPlayerBestPlace = "PP_TimeAttackCurrentPlace";
     private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
     private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
@@ -36,73 +38,20 @@ public class ModeMenu : MonoBehaviour
 
     private void Start()
     {
+        //Establish unique strings/codes used to access scores from player prefs depending on which mode is selected
         Records.PlayerPrefModeRetriever(m_levelMode, ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
+
+        //Check if button exists in children
+        Button resetButton = GetComponentInChildren<Button>();
+        if (resetButton)
+        {
+            resetButton.onClick.AddListener(delegate { ResetScores(); });
+        }
     }
 
-    //call this when you are change which which mode you highlighted 
-    //change the time and trophie so they are of the new mode
-    //public void UpdateMenu(int _HighlightedMode)
-    //{
-    //    m_iHighlightedMode = _HighlightedMode;
-    //    GameObject Object = GameObject.FindGameObjectWithTag("TimeRecords");
-
-    //    Object.GetComponent<DontDestory>().GetSpeedMode(m_iHighlightedMode, out m_fTime, out m_Trophie);
-
-    //    string Nest;
-    //    if ((m_iHighlightedMode == 0)|| m_fTime== 0)
-    //    {
-    //         Nest = "-- : -- : --";
-    //    }
-    //    else
-    //    {
-    //        Nest = m_fTime.ToString();
-    //        if (Nest.Length < 6)
-    //        {
-    //            //add in :
-    //            string m_timeString = Nest[1].ToString();
-    //            for (int i = 0; i < Nest.Length; i++)
-    //            {
-    //                if (Nest.Length - 5 == i)
-    //                {
-    //                    m_timeString = m_timeString + " : ";
-    //                }
-    //                m_timeString = m_timeString + Nest[i].ToString();
-    //            }
-    //            Nest = m_timeString;
-    //        }
-
-    //        if (Nest.Length < 9)
-    //        {
-    //            //add in :
-    //            string m_timeString = Nest[1].ToString();
-    //            for (int i = 0; i < Nest.Length; i++)
-    //            {
-    //                if (Nest.Length - 8 == i)
-    //                {
-    //                    m_timeString = m_timeString + " : ";
-    //                }
-    //                m_timeString = m_timeString + Nest[i].ToString();
-    //            }
-    //            Nest = m_timeString;
-    //        }
-    //    }
-    //    transform.GetChild(3).GetChild(0).gameObject.GetComponent<Text>().text = Nest;
-    //    m_timeString = Nest;
-
-    //}
-    //pressing xboxA should trigger this
-    //start with the current mode
-    //public string GetTimeFlag()
-    //{
-    //    return m_timeString;
-    //}
-    //public int GettrophieFlag()
-    //{
-    //    return m_Trophie;
-    //}
-    
     public void ResetScores()
     {
+        //Resets scores by resetting player pref values and then updating current ui once
         PlayerPrefs.SetInt(m_strPlayerBestPlace, 0);
         PlayerPrefs.SetString(m_strPlayerBestTimeStr, "--:--:--");
         PlayerPrefs.SetInt(m_strPlayerBestTimeInt, 111111);
@@ -117,10 +66,11 @@ public class ModeMenu : MonoBehaviour
     {
         Records.PlayerPrefModeRetriever(m_levelMode, ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
 
-        //int currentPlace = PlayerPrefs.GetInt(m_strPlayerBestPlace, 0);
-        int currentIntTime = PlayerPrefs.GetInt(m_strPlayerBestTimeInt, 111111);
+        //Retrieve scores from player prefs
         string strTimeString = PlayerPrefs.GetString(m_strPlayerBestTimeStr, "--:--:--");
-        int currentPlace = Records.CheckCurrentPlace(m_levelMode, currentIntTime);
+        int currentPlace = PlayerPrefs.GetInt(m_strPlayerBestPlace, 0);
+
+        //Update score text ui
         m_rCurrentRecordTxt.text = strTimeString;
         m_rRecordFlavourTxt.text = Records.RetrieveFlavourText(true, m_levelMode, currentPlace);
         

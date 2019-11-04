@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public static bool s_bInputController = true;
+    public static bool s_bInputIsController = true;
     public static InputManager m_instance = null;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            s_bInputController = false;
+            s_bInputIsController = false;
         }
 
         //If LT, RT, horizontal, vertical, RHorizontal and RVertical 
@@ -49,7 +49,7 @@ public class InputManager : MonoBehaviour
               || Input.GetAxis("XBoxRHor") != 0 || Input.GetAxis("XBoxRVert") != 0
               || Input.GetAxis("DPadX") != 0 || Input.GetAxis("DPadY") != 0)
         {
-            s_bInputController = true;
+            s_bInputIsController = true;
         }
 
         //If any joystick keys are pressed on the xbox controller, set controller in use
@@ -57,7 +57,7 @@ public class InputManager : MonoBehaviour
         {
             if (Input.GetKeyDown("joystick 1 button " + i))
             {
-                s_bInputController = true;
+                s_bInputIsController = true;
             }
         }
         //print((s_bInputController ? "Controller" : "Key"));
