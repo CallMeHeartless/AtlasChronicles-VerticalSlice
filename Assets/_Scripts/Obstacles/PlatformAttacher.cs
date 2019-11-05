@@ -22,7 +22,7 @@ public class PlatformAttacher : MonoBehaviour
                 other.gameObject.transform.parent = this.transform;
             }
         }
-        else if(other.gameObject.CompareTag("TeleportBox"))
+        else if(other.gameObject.CompareTag("TeleportBox") || other.gameObject.CompareTag("SecondaryPickup"))
         {
             other.gameObject.transform.parent = this.transform;
         }
@@ -34,7 +34,7 @@ public class PlatformAttacher : MonoBehaviour
             other.gameObject.GetComponent<PlayerController>().SetOnMovingPlatform(false);
             other.gameObject.transform.parent = null;
         }
-        else if (other.gameObject.CompareTag("TeleportBox"))
+        else if (other.gameObject.CompareTag("TeleportBox") || other.gameObject.CompareTag("SecondaryPickup"))
         {
             other.gameObject.transform.parent = null;
         }
