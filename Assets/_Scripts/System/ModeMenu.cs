@@ -22,8 +22,6 @@ public class ModeMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_rSilverTime;
     [SerializeField] private TextMeshProUGUI m_rBronzeTime;
 
-    [SerializeField] private GameObject m_rController;
-
     private string m_strPlayerBestPlace = "PP_TimeAttackCurrentPlace";
     private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
     private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
