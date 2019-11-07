@@ -8,7 +8,7 @@ public class Records : MonoBehaviour
     static private int[] m_SpeedRunRecords_TimeAttack = new int[3] { 2000, 1400, 830 };// min min,second second
     static private int[] m_SpeedRunRecords_Hoarder = new int[3] { 2500, 2000, 1200 };// min min,second second
     static private int[] m_SpeedRunRecords_Rush = new int[3] { 230, 130, 110 };// min min,second second
-    static private int[] m_SpeedRunRecords_MapRun = new int[3] { 150, 100, 50 };// min min,second second
+    static private int[] m_SpeedRunRecords_MapRun = new int[3] { 100, 70, 40 };// min min,second second
     //static public int currentPlace = 3;
 
     static private string m_strNoRecordFlavourText = "BETTER LUCK NEXT TIME";
