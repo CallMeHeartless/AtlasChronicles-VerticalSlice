@@ -65,9 +65,11 @@ public class MainMenuController : MonoBehaviour
     {
         if (m_rModeSelection.activeSelf)
         {
-            if (Input.GetMouseButtonDown(1)) //Back button
+            if (Input.GetKeyDown("joystick button 1") || Input.GetMouseButtonDown(1)) //Back button
             {
-                ActivateModeSelection(false);
+                m_rModeSelection.SetActive(false);
+                m_rMenuButtons.SetActive(true);
+                m_rNLOnPillar.SetBool("ShowMode", false);
             }
             if (Input.GetAxis("Horizontal") < 0 && !m_LAxisInUse)
             {
