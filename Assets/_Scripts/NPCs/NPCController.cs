@@ -11,6 +11,7 @@ public class NPCController : MonoBehaviour
     private QuadLookAt m_rInfoBubble;
     private GameObject m_rPlayer;
     private GameObject m_rUIGamePanel;
+    private DisplayStat m_rUIDisplayStats;
     private GameObject m_rNLModel;
 
     float m_fRustleCounter = 0.0f;
@@ -34,6 +35,7 @@ public class NPCController : MonoBehaviour
         m_rInfoBubble.gameObject.SetActive(false);
         m_rDialogueZone = gameObject.transform.parent.GetComponent<DialogueActivator>();
         m_rUIGamePanel = GameObject.FindGameObjectWithTag("UIGamePanel");
+        m_rUIDisplayStats = GameObject.FindGameObjectWithTag("UI").GetComponent<DisplayStat>();
         m_rNLModel = m_rAnimator.gameObject;
 
         //Set up initial values
@@ -49,7 +51,7 @@ public class NPCController : MonoBehaviour
     {
         if (m_bInteracting)
         {
-            m_rUIGamePanel.SetActive(false);
+            //m_rUIGamePanel.SetActive(false);
 
             if (!m_bTalking && m_rDialogueZone.GetIsTalking())
             {
@@ -69,7 +71,7 @@ public class NPCController : MonoBehaviour
                 //If conversation has ended, 'hide' npc and switch game mode back to playable state
                 HideNovLonesome();
                 GameState.SetCinematicFlag(false);
-                m_rUIGamePanel.SetActive(true);
+                //m_rUIGamePanel.SetActive(true);
                 m_bInteracting = false;
                 m_bExited = true;
                 m_bFirstEntry = true;
@@ -78,8 +80,9 @@ public class NPCController : MonoBehaviour
         }
 
         //Handle when to pop up the NPC from the ground if it does not yet exist at that position
-        if (Vector3.Distance(transform.position, m_rPlayer.transform.position) <= 5.0f 
-            && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("TeleportArrive"))
+        if (Vector3.Distance(transform.position, m_rPlayer.transform.position) <= 5.0f
+            && !m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("TeleportArrive")
+            && m_rDialogueZone.GetIsContainerHidden())
         {
             m_bWithinRadius = true;
 
@@ -117,8 +120,8 @@ public class NPCController : MonoBehaviour
                 m_rInfoBubble.gameObject.SetActive(false);
                 m_rDialogueZone.TriggerDialogue();
                 GameState.SetCinematicFlag(true);
-                m_rUIGamePanel.SetActive(false);
-
+                //m_rUIGamePanel.SetActive(false);
+                //m_rUIDisplayStats.HideUIGamePanel(true);
                 //Rotate both player and novlonesome towards each other
                 RotateTowardsPos(this.transform, m_rPlayer.transform);
                 RotateTowardsPos(m_rPlayer.transform, this.transform);

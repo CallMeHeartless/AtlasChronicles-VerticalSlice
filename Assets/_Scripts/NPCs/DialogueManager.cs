@@ -71,6 +71,12 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(GameState.GetGameplayMode() != GameState.GameplayMode.Adventure)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         m_sentences = new Queue<string>();
 
         //Assign all references required
@@ -108,6 +114,11 @@ public class DialogueManager : MonoBehaviour
         {
             BeginDialogue(false);
         }
+    }
+
+    public bool GetIsDialogueUIHidden()
+    {
+        return m_rContainerAnimator.GetCurrentAnimatorStateInfo(0).IsName("HiddenContainer");
     }
     
     /// <summary>

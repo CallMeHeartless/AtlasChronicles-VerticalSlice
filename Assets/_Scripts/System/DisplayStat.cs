@@ -9,6 +9,9 @@ public class DisplayStat : MonoBehaviour
 {
     [SerializeField] GameObject m_rCollectableText;
     [SerializeField] GameObject m_rMapCountText;
+    [SerializeField] Sprite[] m_rMapImages;
+    [SerializeField] GameObject m_rCurrentMapImage;
+
     [SerializeField] GameObject[] m_rHearts;
     [SerializeField] GameObject m_rHeart;
     [SerializeField] GameObject m_rUIGamePanel;
@@ -60,10 +63,13 @@ public class DisplayStat : MonoBehaviour
             GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString() 
             + "/" + GameStats.s_iCollectableTotal[GameStats.s_iLevelIndex];
 
+        int numMaps = GameStats.s_iMapsBoard[GameStats.s_iLevelIndex];
         //Update text based on how many maps have been collected
-        m_rMapCountText.GetComponent<TextMeshProUGUI>().text = 
-            GameStats.s_iMapsBoard[GameStats.s_iLevelIndex].ToString() 
+        m_rMapCountText.GetComponent<TextMeshProUGUI>().text =
+            numMaps.ToString() 
             + "/" + GameStats.s_iMapsTotal[GameStats.s_iLevelIndex];
+
+        m_rCurrentMapImage.GetComponent<Image>().sprite = m_rMapImages[numMaps];
     }
   
     ////NIK
@@ -86,7 +92,6 @@ public class DisplayStat : MonoBehaviour
     public void UpdateHealth(int _hp) {
         //Hide and Show UI Gamepanel IF maps do not exist when taking damage
         if (GameStats.s_iMapsBoard[GameStats.s_iLevelIndex] > 0) {
-            HideUIGamePanel(true);
             HideUIGamePanel(false);
         }
 
@@ -121,6 +126,12 @@ public class DisplayStat : MonoBehaviour
      * Author: Vivian
      ******************************************************************/
     void HideGameUIPanel() {
+
+        if(!m_bShown)
+        {
+            return;
+        }
+
         if (!GetDirectorIsPlaying(0)) {
             m_rDirectors[0].Play();
             m_bShown = false;

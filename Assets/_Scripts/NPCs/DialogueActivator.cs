@@ -61,4 +61,9 @@ public class DialogueActivator : MonoBehaviour
     {
         return m_manager.GetIsConversing();
     }
+
+    public bool GetIsContainerHidden()
+    {
+        return m_manager.GetIsDialogueUIHidden();
+    }
 }
