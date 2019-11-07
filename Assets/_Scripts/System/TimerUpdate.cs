@@ -16,28 +16,33 @@ public class TimerUpdate : MonoBehaviour
     int m_Hours = 0;
 
     bool m_bResultsChecked = false;
+    [Header("Game Object References")]
     [SerializeField] private GameObject m_timerUIPanel;
     [SerializeField] private GameObject m_TimeAttackResultsPanel;
-    [SerializeField] private CinemachineFreeLook m_rCamera; 
+    [SerializeField] private GameObject m_rPressToContinue;
 
+    [Header("Camera Reference")]
+    [SerializeField] private CinemachineFreeLook m_rCamera;
+
+    [Header("Record Data and References")]
     [SerializeField] private TextMeshProUGUI m_TextUI;
     [SerializeField] private TextMeshProUGUI m_TypeUI;
     [SerializeField] private Trophies m_Trophy;
-
     [SerializeField] private TextMeshProUGUI m_rPanelTitle;
     [SerializeField] private TextMeshProUGUI m_rGoldTime;
     [SerializeField] private TextMeshProUGUI m_rSilverTime;
     [SerializeField] private TextMeshProUGUI m_rBronzeTime;
     [SerializeField] private TextMeshProUGUI[] m_rGoalFormats;
-
     [SerializeField] private TextMeshProUGUI m_rFlavourText;
     [SerializeField] private TextMeshProUGUI m_rCurrentRecordTime;
-    [SerializeField] private Image m_rCurrentTrophy;
 
+    [Header("Trophy references")]
+    [SerializeField] private Image m_rCurrentTrophy;
     [SerializeField] private Sprite m_rHiddenTrophy;
     [SerializeField] private Sprite m_rBronzeTrophy;
     [SerializeField] private Sprite m_rSilverTrophy;
     [SerializeField] private Sprite m_rGoldTrophy;
+
     private string m_strFlavourText = "--INVALID--";
     private int m_iTrophyPlacement = 0;
 
@@ -99,7 +104,7 @@ public class TimerUpdate : MonoBehaviour
             //this is not going to be a speed run
             m_TimeAttackResultsPanel.SetActive(false);
         }
-
+        m_rPressToContinue.SetActive(false);
         Records.PlayerPrefModeRetriever(GameState.GetGameplayMode(), ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
     }
     /*___________________________________________________
@@ -108,17 +113,6 @@ public class TimerUpdate : MonoBehaviour
   ______________________________________________________*/
     void Update()
     {
-
-
-//<<<<<<< HEAD
-//        if (AddedTime != 0)
-//        {
-//            m_Seconds += AddedTime;
-//        }
-//        m_Seconds += Time.deltaTime;
-//        if (m_Seconds >= 60)
-//=======
-
         if ((!GameState.GetPauseFlag()) && (!GameState.GetCinematicFlag()))//pause the game
         {
             if (m_AddedTime != 0)
@@ -277,6 +271,16 @@ public class TimerUpdate : MonoBehaviour
         m_rGoldTime.text = Records.GetGoalScore(_mode, 3);
         m_rSilverTime.text = Records.GetGoalScore(_mode, 2);
         m_rBronzeTime.text = Records.GetGoalScore(_mode, 1);
+    }
+
+    public void AllowPressToContinue()
+    {
+        m_rPressToContinue.SetActive(true);
+    }
+
+    public bool GetIsPressToContinueActive()
+    {
+        return m_rPressToContinue.activeSelf;
     }
 
     public string AddZeroBeforeSingleDigit(string _singleDigit)

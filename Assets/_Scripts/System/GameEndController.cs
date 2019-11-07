@@ -38,6 +38,9 @@ public class GameEndController : MonoBehaviour
     public bool m_bExitingLevel = false;
     private bool m_bTimeResultsActivated = false;
 
+    private float m_fMinimumSpeedPanelTime = 3.0f;
+    private float m_fCurrentSpeedPanelTime = 0.0f;
+
     void Awake()
     {
         // Find instance
@@ -94,10 +97,21 @@ public class GameEndController : MonoBehaviour
         //If in Results page
         if (m_bTimeResultsActivated)
         {
-            if (!m_bExitingLevel && Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
+            if (m_bTimeResultsActivated)
             {
-                m_bExitingLevel = true;
-                ExitLevel();
+                m_fCurrentSpeedPanelTime += Time.deltaTime;
+                if (m_fMinimumSpeedPanelTime <= m_fCurrentSpeedPanelTime)
+                {
+                    if(!m_rTimerUpdate.GetIsPressToContinueActive())
+                    {
+                        m_rTimerUpdate.AllowPressToContinue();
+                    }
+                    if (!m_bExitingLevel && Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
+                    {
+                        m_bExitingLevel = true;
+                        ExitLevel();
+                    }
+                }
             }
         }
 
@@ -191,6 +205,7 @@ public class GameEndController : MonoBehaviour
                     //Set the time and place based on results and display on ui
                     m_rTimerUpdate.DisplayEndResultsPanel();
                     m_bTimeResultsActivated = true;
+                    m_fCurrentSpeedPanelTime = 0.0f;
                 }
             }
             else

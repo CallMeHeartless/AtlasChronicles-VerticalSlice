@@ -704,7 +704,7 @@ public class PlayerController : MonoBehaviour, IMessageReceiver {
             HandleMapVision();
         }
         // Attack
-        if (Input.GetButtonDown(m_strAttackButton)  && m_bCanAttack && m_rCharacterController.isGrounded) {
+        if (Input.GetButtonDown(m_strAttackButton) && m_bCanAttack && m_rCharacterController.isGrounded) {
             // Basic attack when on the ground
             m_rAnimator.SetTrigger("Attack");
             //// Adds a mixing transform using a path instead

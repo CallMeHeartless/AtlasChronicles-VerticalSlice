@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadingScreen : MonoBehaviour
 {
-    private const float MIN_WAIT_TIME = 2.0f;
+    private const float MIN_WAIT_TIME = 10.0f;
 
     public static LoadingScreen s_LoadingScrInstance;
 

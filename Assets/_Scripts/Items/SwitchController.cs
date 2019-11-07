@@ -20,6 +20,10 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
     private float m_fInitYPos = 0.0f;
     private bool m_bDescending = false;
 
+    [SerializeField] private GameObject m_SwitchPad;
+    private MeshRenderer[] m_rSwitchPadRenderer;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +32,8 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
             m_fInitYPos = m_rObjectToDescend.transform.position.y;
         }
         m_rDamageController = GetComponent<DamageController>();
+        m_rSwitchPadRenderer = m_SwitchPad.GetComponentsInChildren<MeshRenderer>();
+        SetSwitchPadColour(2);
     }
 
     private void Update()
@@ -42,6 +48,15 @@ public class SwitchController : MonoBehaviour, IMessageReceiver
         else
         {
             m_bDescending = false;
+            SetSwitchPadColour(1);
+        }
+    }
+
+    void SetSwitchPadColour(int _colourCode)
+    {
+        for (int i = 0; i < m_rSwitchPadRenderer.Length; i++)
+        {
+            m_rSwitchPadRenderer[i].material.SetFloat("_Select", _colourCode);
         }
     }
 

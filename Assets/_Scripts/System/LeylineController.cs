@@ -84,7 +84,8 @@ public class LeylineController : MonoBehaviour, IMessageReceiver
                     mesh.material = m_ActiveMaterial;
                 }
             } else {
-                Debug.LogError("ERROR: LeylineController could not apply materials on activation (m_rMeshRenderer is null).");
+                //NOT SO URGENT ISSUE: THIS GETS CALLED IN RUSH MODE
+                //Debug.LogError("ERROR: LeylineController could not apply materials on activation (m_rMeshRenderer is null).");
             }
 
         }

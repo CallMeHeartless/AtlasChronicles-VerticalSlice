@@ -86,16 +86,6 @@ public class MainMenuController : MonoBehaviour
                 m_LAxisInUse = false;
                 m_RAxisInUse = false;
             }
-            if(m_iCurrentModeGroup == 1)//time attack mode
-            {
-                if (Input.GetAxis("YButton") != 0)
-                {
-                    if(m_rModeMenu)
-                    {
-                        m_rModeMenu.ResetScores();
-                    }
-                }
-            }
         }
     }
 

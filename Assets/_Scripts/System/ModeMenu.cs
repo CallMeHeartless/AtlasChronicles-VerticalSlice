@@ -47,6 +47,14 @@ public class ModeMenu : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetAxis("YButton") != 0)
+        {
+            ResetScores();
+        }
+    }
+
     public void ResetScores()
     {
         //Resets scores by resetting player pref values and then updating current ui once

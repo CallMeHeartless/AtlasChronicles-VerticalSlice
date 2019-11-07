@@ -20,12 +20,17 @@ public class BasicWander : AIState
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         m_fWanderIntervalTimer += Time.deltaTime;
         // Check if it's time to find a new wander position
-        if(m_fWanderIntervalTimer >= m_rWanderProperties.m_fWanderInterval) {
-            FindNewPosition(); // Obtain new position
-            m_fWanderIntervalTimer = 0.0f; // Reset timer
-            m_rAgent.isStopped = false;
+        if(m_rWanderProperties == null)
+        {
+            m_rWanderProperties = m_rAI.m_rWanderProperties;
+            if (m_fWanderIntervalTimer >= m_rWanderProperties.m_fWanderInterval)
+            {
+                FindNewPosition(); // Obtain new position
+                m_fWanderIntervalTimer = 0.0f; // Reset timer
+                m_rAgent.isStopped = false;
+            }
         }
-
+        
         CheckPathIsValid();
 
         // Determine which animation should be played
