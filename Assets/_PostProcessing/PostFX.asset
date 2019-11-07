@@ -17,6 +17,7 @@ MonoBehaviour:
   - {fileID: 114403662116855938}
   - {fileID: 114676400987159692}
   - {fileID: 114880963810887696}
+  - {fileID: 114419835269270162}
 --- !u!114 &114403662116855938
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -87,7 +88,7 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 1
+    overrideState: 0
     value: 1.05
   contrast:
     overrideState: 1
@@ -1328,6 +1329,32 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
+--- !u!114 &114419835269270162
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
+  m_Name: ChromaticAberration
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  spectralLut:
+    overrideState: 0
+    value: {fileID: 0}
+    defaultState: 1
+  intensity:
+    overrideState: 1
+    value: 0
+  fastMode:
+    overrideState: 0
+    value: 0
 --- !u!114 &114676400987159692
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1346,13 +1373,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 4
+    value: 1
   threshold:
-    overrideState: 1
+    overrideState: 0
     value: 0.85
   softKnee:
     overrideState: 1
-    value: 0.353
+    value: 0.309
   clamp:
     overrideState: 0
     value: 65472
@@ -1396,7 +1423,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.5
+    value: 0.74
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -1445,21 +1472,21 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0, g: 0.13085961, b: 0.3679245, a: 1}
+    value: {r: 0, g: 0.10929343, b: 0.31132078, a: 1}
   center:
     overrideState: 0
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.268
+    value: 0.537
   smoothness:
-    overrideState: 0
-    value: 0.2
-  roundness:
-    overrideState: 0
+    overrideState: 1
     value: 1
+  roundness:
+    overrideState: 1
+    value: 0
   rounded:
-    overrideState: 0
+    overrideState: 1
     value: 0
   mask:
     overrideState: 0
