@@ -326,6 +326,7 @@ MonoBehaviour:
   m_rGoldTime: {fileID: 7463829600804008127}
   m_rSilverTime: {fileID: 7463829602373439408}
   m_rBronzeTime: {fileID: 7463829601476968298}
+  m_rStartButton: {fileID: 2039737369}
 --- !u!1 &125295791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1637,7 @@ MonoBehaviour:
   m_rGoldTime: {fileID: 1126503656916890757}
   m_rSilverTime: {fileID: 1126503658561850250}
   m_rBronzeTime: {fileID: 1126503657564945232}
+  m_rStartButton: {fileID: 1126503657140493023}
 --- !u!1 &343366900
 GameObject:
   m_ObjectHideFlags: 0
@@ -2964,6 +2966,7 @@ MonoBehaviour:
   m_rGoldTime: {fileID: 7463829600471355513}
   m_rSilverTime: {fileID: 7463829602118430582}
   m_rBronzeTime: {fileID: 7463829601270603692}
+  m_rStartButton: {fileID: 1161614032}
 --- !u!1 &542539141
 GameObject:
   m_ObjectHideFlags: 0
@@ -7291,6 +7294,7 @@ MonoBehaviour:
   m_rGoldTime: {fileID: 7463829601188098353}
   m_rSilverTime: {fileID: 7463829601688014398}
   m_rBronzeTime: {fileID: 7463829600557022948}
+  m_rStartButton: {fileID: 905929948}
 --- !u!1 &1238153765
 GameObject:
   m_ObjectHideFlags: 0
@@ -9014,7 +9018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed53c468ab48774ebb01bcd8be90ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playButton: {fileID: 0}
+  m_playButton: {fileID: 1294758485}
   m_rMenuButtons: {fileID: 251029732}
   m_rModeSelection: {fileID: 3494563373361360185}
   m_rNLOnPillar: {fileID: 1335444783}
@@ -11701,7 +11705,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 14
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -11724,19 +11728,19 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 350226697513402777}
-    characterCount: 15
+    characterCount: 14
     spriteCount: 0
     spaceCount: 1
     wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 2
-  m_havePropertiesChanged: 1
+    materialCount: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -12450,7 +12454,7 @@ GameObject:
   - component: {fileID: 1126503657140493022}
   - component: {fileID: 1126503657140493023}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: TimerStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15911,7 +15915,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: "Collect all the ink crystals and maps \nto unlock the end portal"
+  m_text: "Collect all the ink crystals and maps \nand complete the level with the
+    fastest time!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d05cc972f4b96d14990d567e7fbbd36d, type: 2}
   m_sharedMaterial: {fileID: 21571239768399962, guid: d05cc972f4b96d14990d567e7fbbd36d,

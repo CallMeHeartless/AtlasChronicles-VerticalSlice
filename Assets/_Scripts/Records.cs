@@ -5,9 +5,9 @@ using UnityEngine;
 public class Records : MonoBehaviour
 {
     //changing m_SpeedRunRecords changes that runs speed modes trophie freeshwhole
-    static private int[] m_SpeedRunRecords_SpeedRun = new int[3] { 2000, 1400, 1000 };// min min,second second
-    static private int[] m_SpeedRunRecords_Hoarder = new int[3] { 2500, 1700, 1000 };// min min,second second
-    static private int[] m_SpeedRunRecords_Rush = new int[3] { 250, 130, 100 };// min min,second second
+    static private int[] m_SpeedRunRecords_TimeAttack = new int[3] { 2000, 1400, 830 };// min min,second second
+    static private int[] m_SpeedRunRecords_Hoarder = new int[3] { 2500, 2000, 1200 };// min min,second second
+    static private int[] m_SpeedRunRecords_Rush = new int[3] { 230, 130, 110 };// min min,second second
     static private int[] m_SpeedRunRecords_MapRun = new int[3] { 150, 100, 50 };// min min,second second
     //static public int currentPlace = 3;
 
@@ -16,7 +16,7 @@ public class Records : MonoBehaviour
     static private string m_strGoldRecordFlavourText = "--INVALID GOLD TEXT--";
     static private string m_strSilverRecordFlavourText = "--INVALID SILVER TEXT--";
     static private string m_strBronzeRecordFlavourText = "--INVALID BRONZE TEXT--";
-    static private int[] currentRecordCheck = m_SpeedRunRecords_SpeedRun;
+    static private int[] currentRecordCheck = m_SpeedRunRecords_TimeAttack;
 
     /// <summary>
     /// Flavour text based on if in menu, which mode and which placement the player is
@@ -114,7 +114,7 @@ public class Records : MonoBehaviour
         {
             case GameState.GameplayMode.SpeedRun:
             {
-            currentRecordCheck = m_SpeedRunRecords_SpeedRun;
+            currentRecordCheck = m_SpeedRunRecords_TimeAttack;
             break;
             }
             case GameState.GameplayMode.Hoarder:

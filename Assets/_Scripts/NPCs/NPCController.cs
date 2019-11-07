@@ -115,6 +115,7 @@ public class NPCController : MonoBehaviour
             if (Input.GetButtonDown("BButton") && !m_bInteracting && GameState.DoesPlayerHaveControl()
                 && (m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hidden") || m_rAnimator.GetCurrentAnimatorStateInfo(0).IsName("Rustle")))
             {
+                m_rUIDisplayStats.ActivateModeDescription(false);
                 m_bInteracting = true;
                 m_rAnimator.SetTrigger("PopOut");
                 m_rInfoBubble.gameObject.SetActive(false);

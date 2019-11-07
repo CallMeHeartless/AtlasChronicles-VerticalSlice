@@ -17,17 +17,20 @@ public class TimerUpdate : MonoBehaviour
 
     bool m_bResultsChecked = false;
     [Header("Game Object References")]
-    [SerializeField] private GameObject m_timerUIPanel;
-    [SerializeField] private GameObject m_TimeAttackResultsPanel;
+    [SerializeField] private GameObject m_rTimerUIPanel;
+    [SerializeField] private GameObject m_rTimeAttackResultsPanel;
     [SerializeField] private GameObject m_rPressToContinue;
 
     [Header("Camera Reference")]
     [SerializeField] private CinemachineFreeLook m_rCamera;
 
-    [Header("Record Data and References")]
-    [SerializeField] private TextMeshProUGUI m_TextUI;
-    [SerializeField] private TextMeshProUGUI m_TypeUI;
-    [SerializeField] private Trophies m_Trophy;
+    [Header("Corner Information")]
+    [SerializeField] private TextMeshProUGUI m_rTimeCornerTextUI;
+    [SerializeField] private TextMeshProUGUI m_rModeTypeCornerTextUI;
+    private string m_rModeDescription;
+    [SerializeField] private Trophies m_rCornerTrophy;
+
+    [Header("Result Panel Information")]
     [SerializeField] private TextMeshProUGUI m_rPanelTitle;
     [SerializeField] private TextMeshProUGUI m_rGoldTime;
     [SerializeField] private TextMeshProUGUI m_rSilverTime;
@@ -43,6 +46,8 @@ public class TimerUpdate : MonoBehaviour
     [SerializeField] private Sprite m_rSilverTrophy;
     [SerializeField] private Sprite m_rGoldTrophy;
 
+    private DisplayStat m_rDisplayStat;
+
     private string m_strFlavourText = "--INVALID--";
     private int m_iTrophyPlacement = 0;
 
@@ -50,13 +55,14 @@ public class TimerUpdate : MonoBehaviour
     private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
     private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
 
-    static private float m_AddedTime =0;
+    static private float m_AddedTime = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         SetRecordChecked(false);
 
-        if(!m_rCamera)
+        if (!m_rCamera)
         {
             m_rCamera = GameObject.Find("Camera").transform.parent.GetComponent<CinemachineFreeLook>();
         }
@@ -66,47 +72,57 @@ public class TimerUpdate : MonoBehaviour
         {
             case GameState.GameplayMode.Adventure:
             {
-                m_TypeUI.text = "Adventure Mode";
-                m_timerUIPanel.SetActive(false);
+                m_rModeTypeCornerTextUI.text = "Adventure Mode";
+                m_rTimerUIPanel.SetActive(false);
+                m_rModeDescription = "Collect all Maps and Ink Crystals to restore the teleportation hub!";
                 break;
             }
             case GameState.GameplayMode.SpeedRun:
             {
-                m_TypeUI.text = "Time Attack: COLLECT 160 GEMS AND 5 MAPS BEFORE HEADING TO THE EXIT";
-               // m_timerUIPanel.SetActive(true);
+                m_rModeTypeCornerTextUI.text = "Time Attack Mode";
+                m_rModeDescription = "Time Attack: COLLECT 160 GEMS AND 5 MAPS BEFORE HEADING TO THE EXIT";
 
-                m_rCurrentRecordTime.text = "--:--:--";
-                m_rFlavourText.text = "GOOD JOB";
-                m_rCurrentTrophy.sprite = m_rHiddenTrophy;
+
                 break;
             }
             case GameState.GameplayMode.Hoarder:
             {
-                m_TypeUI.text = "Get All";
+                m_rModeTypeCornerTextUI.text = "Hoarder Mode";
+                m_rModeDescription = "Collect all Maps, Ink Crystals and complete the level with the fastest time!";
                 break;
             }
             case GameState.GameplayMode.Rush:
-                {
-                    m_TypeUI.text = "Get to the end as fast as possable";
-                    break;
-                }
-            case GameState.GameplayMode.MapHunt:
-                {
-                    m_TypeUI.text = "get all map fragment and don't get as little amount of crystals";
-                    break;
-                }
-            default:
+            {
+                m_rModeTypeCornerTextUI.text = "Rush Mode";
+                m_rModeDescription = "Get to the top of the temple as fast as you can!";
                 break;
+            }
+            case GameState.GameplayMode.MapHunt:
+            {
+                m_rModeTypeCornerTextUI.text = "Map Hunt Mode";
+                m_rModeDescription = "Collect all MAPS while collecting the least amount of Ink Crystals as possible";
+                break;
+            }
+            default:
+            break;
         }
 
         if (GameState.GetGameplayMode() == GameState.GameplayMode.Adventure)
         {
             //this is not going to be a speed run
-            m_TimeAttackResultsPanel.SetActive(false);
+            m_rTimeAttackResultsPanel.SetActive(false);
         }
+
         m_rPressToContinue.SetActive(false);
+        m_rDisplayStat = transform.parent.GetComponent<DisplayStat>();
+        if(m_rDisplayStat)
+        {
+            m_rDisplayStat.SetModeDescTxt(m_rModeDescription);
+        }
+        
         Records.PlayerPrefModeRetriever(GameState.GetGameplayMode(), ref m_strPlayerBestPlace, ref m_strPlayerBestTimeStr, ref m_strPlayerBestTimeInt);
     }
+
     /*___________________________________________________
   * Job: Timer which looks like a speedrunners Timer
   * Ceratior: Nicholas
@@ -137,32 +153,37 @@ public class TimerUpdate : MonoBehaviour
                             m_Minutes -= 60;
                         }
                     }
-                    m_TextUI.text = "";
+                    m_rTimeCornerTextUI.text = "";
 
                     if (m_Hours >= 1)
                     {
-                        m_TextUI.text += m_Hours.ToString("0") + ":";
+                        m_rTimeCornerTextUI.text += m_Hours.ToString("0") + ":";
                     }
 
                     if (m_Minutes >= 1)
                     {
-                        m_TextUI.text += m_Minutes.ToString("0") + ":";
+                        m_rTimeCornerTextUI.text += m_Minutes.ToString("0") + ":";
                     }
 
                     if (m_Seconds < 10)
                     {
-                        m_TextUI.text += "0";
+                        m_rTimeCornerTextUI.text += "0";
                     }
-                    m_TextUI.text += m_Seconds.ToString("F2");
+                    m_rTimeCornerTextUI.text += m_Seconds.ToString("F2");
 
-                    //check to see if trophy needS to be changed
+                    //check to see if trophy needs to be changed
                     m_iTrophyPlacement = Records.CheckCurrentPlace(GameState.GetGameplayMode(), (m_Hours * 10000) + (m_Minutes * 100) + (int)m_Seconds);
                 }
+            }
+            else
+            {
+                //Map mode
+                m_rTimeCornerTextUI.text = GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString();
             }
         }
     }
 
-    /// <summary>
+    /// <summary> Viv
     /// Activates the TimeAttackResults panel and updates all ui elements with time records
     /// </summary>
     public void DisplayEndResultsPanel()
@@ -170,12 +191,12 @@ public class TimerUpdate : MonoBehaviour
         DetermineFinalTime();
         SetRecordChecked(true);
 
-        m_TimeAttackResultsPanel.SetActive(true);
+        m_rTimeAttackResultsPanel.SetActive(true);
         GameState.SetPauseFlag(true);
         m_rCamera.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        
+
         //Retrieve time record values required to be set into ui view
         string currentScoreString = PlayerPrefs.GetString(m_strPlayerBestTimeStr, "--:--:--");
         int currentScoreInt = PlayerPrefs.GetInt(m_strPlayerBestTimeInt, 111111);
@@ -220,6 +241,10 @@ public class TimerUpdate : MonoBehaviour
         }
     }
 
+    /// <summary> Viv
+    /// Sets up the mode settings for whichever mode is being played
+    /// </summary>
+    /// <param name="_mode"></param>
     void SetModeSettings(GameState.GameplayMode _mode)
     {
         string goalFormat = "<br><br><br>H : M : S";
@@ -273,22 +298,34 @@ public class TimerUpdate : MonoBehaviour
         m_rBronzeTime.text = Records.GetGoalScore(_mode, 1);
     }
 
+    /// <summary> Viv
+    /// Show press to continue text (used from game end controller)
+    /// </summary>
     public void AllowPressToContinue()
     {
         m_rPressToContinue.SetActive(true);
     }
 
+    /// <summary> Viv
+    /// Checks if press to continue is currently active
+    /// </summary>
+    /// <returns></returns>
     public bool GetIsPressToContinueActive()
     {
         return m_rPressToContinue.activeSelf;
     }
 
+    /// <summary> Viv
+    /// Adds a 0 before a single digit
+    /// </summary>
+    /// <param name="_singleDigit"></param>
+    /// <returns></returns>
     public string AddZeroBeforeSingleDigit(string _singleDigit)
     {
         return "0" + _singleDigit;
     }
 
-    /// <summary>
+    /// <summary> Viv
     /// Converts a float version of the time into a string with added semicolons.
     /// </summary>
     /// <param name="_time">A float of a given time</param>
@@ -312,17 +349,25 @@ public class TimerUpdate : MonoBehaviour
         return newTimeString;
     }
 
+    /// <summary> Viv
+    /// Setter for whether results have been activated/checked yet or not
+    /// </summary>
+    /// <param name="_checked"></param>
     public void SetRecordChecked(bool _checked)
     {
         m_bResultsChecked = _checked;
     }
 
+    /// <summary> Viv
+    /// Gets whether results have been activated/checked yet
+    /// </summary>
+    /// <returns></returns>
     public bool GetRecordChecked()
     {
         return m_bResultsChecked;
     }
 
-    public void StartTimer(){
+    public void StartTimer() {
         m_EndTimer = true;
     }
     public void StopTimer()
@@ -330,6 +375,9 @@ public class TimerUpdate : MonoBehaviour
         m_EndTimer = false;
     }
 
+    /// <summary> Viv
+    /// Updates final time with cheat times //Not in build
+    /// </summary>
     public void SetCheatFinalTime(int _hours, int _mins, float _secs)
     {
         m_Seconds = _secs;
@@ -337,6 +385,9 @@ public class TimerUpdate : MonoBehaviour
         m_Hours = _hours;
     }
 
+    /// <summary> Viv
+    /// Converts the final time into integer and string format to be stored
+    /// </summary>
     public void DetermineFinalTime()
     {
         string totalTimeString = "";
@@ -344,8 +395,10 @@ public class TimerUpdate : MonoBehaviour
 
         int roundedSeconds = Mathf.RoundToInt(m_Seconds);
 
-        if(GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)
+        if (GameState.GetGameplayMode() != GameState.GameplayMode.MapHunt)
         {
+            //Determine time taken to complete level if not map hunt mode
+            //Manually converting niks way of storing time into string
             string secs = (roundedSeconds >= 10 ? roundedSeconds.ToString() : "0" + roundedSeconds.ToString());
             string minutes = (m_Minutes >= 10 ? m_Minutes.ToString() : "0" + m_Minutes.ToString());
             string hours = (m_Hours >= 10 ? m_Hours.ToString() : "0" + m_Hours.ToString());
@@ -364,12 +417,15 @@ public class TimerUpdate : MonoBehaviour
         PlayerPrefs.SetInt(m_strPlayerBestTimeInt, finalTimeInteger);
     }
 
+    /// <summary>
+    /// Niks original way of converting his seconds mins and hours to time format to be stored
+    /// </summary>
     int ConvertHMSToInteger(int _hours, int _mins, int _secs)
     {
         return (m_Hours * 10000) + (m_Minutes * 100) + _secs;
     }
 
-   static public void CystalCollection()
+    static public void CystalCollection()
     {
         m_AddedTime++;
     }

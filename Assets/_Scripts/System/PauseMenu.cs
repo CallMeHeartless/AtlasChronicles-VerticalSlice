@@ -16,6 +16,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject m_rMapPanel;        // Map panel containing map elements
     [SerializeField] GameObject m_rUIPanel;         // UI panel containing gameplay elements
     [SerializeField] AudioSource m_rButtonClick;    //Reference to click audio
+    [SerializeField] GameObject m_rModeDescription;         // UI panel containing gameplay elements
 
     DisplayStat m_rDisplayStat;
     ChildActivator m_rScriptActivator;
@@ -95,6 +96,7 @@ public class PauseMenu : MonoBehaviour
                 m_rCineCamera.enabled = true;
 
             m_rDisplayStat.HideUIGamePanel(true);
+            m_rModeDescription.SetActive(false);
 
             //Enable cinematic functionality when resumed
             //CinematicManager.ActivateCinematics(true);
@@ -107,6 +109,7 @@ public class PauseMenu : MonoBehaviour
     {
         m_rPausePanel.SetActive(true);  //Activate the pause menu
         m_rPauseSection.SetActive(true);//Activate the pause section
+        m_rModeDescription.SetActive(true);
 
         //Unlock cursor so player can use the mouse when the game is paused
         Cursor.lockState = CursorLockMode.None;

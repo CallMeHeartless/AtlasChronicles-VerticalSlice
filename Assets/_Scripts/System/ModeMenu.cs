@@ -22,6 +22,8 @@ public class ModeMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_rSilverTime;
     [SerializeField] private TextMeshProUGUI m_rBronzeTime;
 
+    [SerializeField] private Button m_rStartButton;
+
     private string m_strPlayerBestPlace = "PP_TimeAttackCurrentPlace";
     private string m_strPlayerBestTimeStr = "PP_TimeAttackTimeString";
     private string m_strPlayerBestTimeInt = "PP_TimeAttackTimeInt";
@@ -46,9 +48,12 @@ public class ModeMenu : MonoBehaviour
             resetButton.onClick.AddListener(delegate { ResetScores(); });
         }
     }
-
+    
     private void Update()
     {
+        m_rStartButton.Select();
+        m_rStartButton.OnSelect(null);
+
         if (Input.GetAxis("YButton") != 0)
         {
             ResetScores();

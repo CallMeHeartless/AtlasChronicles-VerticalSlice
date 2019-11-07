@@ -21,6 +21,12 @@ public class DisplayStat : MonoBehaviour
     private bool m_bShown = false;
     public int m_iHP = 4;
 
+    private float m_fInitialGoalDescTotalTime = 10.0f;
+    private float m_fInitialGoalDescCurrentTime = 0.0f;
+    private bool m_bFirstTimeDescriptionDisplayed = false;
+
+    [SerializeField] private TextMeshProUGUI m_rModeDescriptionUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,10 +60,22 @@ public class DisplayStat : MonoBehaviour
         //Enable text for counters
         m_rCollectableText.SetActive(true);
         m_rMapCountText.SetActive(true);
+        ActivateModeDescription(true);
     }
 
     // Update is called once per frame
     void Update() { // Viv
+        //Viv - Display goal of the current mode for 10 seconds until hiding again.
+        if (!m_bFirstTimeDescriptionDisplayed)
+        {
+            m_fInitialGoalDescCurrentTime += Time.deltaTime;
+            if (m_fInitialGoalDescCurrentTime >= m_fInitialGoalDescTotalTime)
+            {
+                ActivateModeDescription(false);
+                m_bFirstTimeDescriptionDisplayed = true;
+            }
+        }
+
         //Update text based on how many collectables have been collected
         m_rCollectableText.GetComponent<TextMeshProUGUI>().text = 
             GameStats.s_iCollectableBoard[GameStats.s_iLevelIndex].ToString() 
@@ -71,7 +89,24 @@ public class DisplayStat : MonoBehaviour
 
         m_rCurrentMapImage.GetComponent<Image>().sprite = m_rMapImages[numMaps];
     }
-  
+
+    public void SetModeDescTxt(string _text)
+    {
+        m_rModeDescriptionUI.text = _text;
+    }
+
+    public void ActivateModeDescription(bool _activate)
+    {
+        if (_activate)
+        {
+            m_rModeDescriptionUI.gameObject.SetActive(true);
+        }
+        else
+        {
+            m_bFirstTimeDescriptionDisplayed = true;
+            m_rModeDescriptionUI.gameObject.SetActive(false);
+        }
+    }
     ////NIK
     //public void NewHealth(int HP) {
     //    for (int i = 0; i < m_rHearts.Length; i++) {

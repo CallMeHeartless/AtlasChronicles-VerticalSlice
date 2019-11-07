@@ -97,42 +97,39 @@ public class GameEndController : MonoBehaviour
         //If in Results page
         if (m_bTimeResultsActivated)
         {
-            if (m_bTimeResultsActivated)
+            m_fCurrentSpeedPanelTime += Time.deltaTime;
+            if (m_fMinimumSpeedPanelTime <= m_fCurrentSpeedPanelTime)
             {
-                m_fCurrentSpeedPanelTime += Time.deltaTime;
-                if (m_fMinimumSpeedPanelTime <= m_fCurrentSpeedPanelTime)
+                if(!m_rTimerUpdate.GetIsPressToContinueActive())
                 {
-                    if(!m_rTimerUpdate.GetIsPressToContinueActive())
-                    {
-                        m_rTimerUpdate.AllowPressToContinue();
-                    }
-                    if (!m_bExitingLevel && Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
-                    {
-                        m_bExitingLevel = true;
-                        ExitLevel();
-                    }
+                    m_rTimerUpdate.AllowPressToContinue();
+                }
+                if (!m_bExitingLevel && Input.GetAxis("XBoxXButton") != 0 || Input.GetAxis("Jump") != 0)
+                {
+                    m_bExitingLevel = true;
+                    ExitLevel();
                 }
             }
         }
 
         //Viv Hacks
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            m_bIsActive = true;
-            m_iCrystalsNeeded = 0;
-            m_iMapsNeeded = 0;
-            m_rPlayer.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5.0f);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            m_rTimerUpdate.StopTimer();
-            m_rTimerUpdate.SetCheatFinalTime(0, 16, 30.0f);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            m_rTimerUpdate.StopTimer();
-            m_rTimerUpdate.SetCheatFinalTime(0, 19, 30.0f);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha9))
+        //{
+        //    m_bIsActive = true;
+        //    m_iCrystalsNeeded = 0;
+        //    m_iMapsNeeded = 0;
+        //    m_rPlayer.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5.0f);
+        //}
+        //if(Input.GetKeyDown(KeyCode.Alpha8))
+        //{
+        //    m_rTimerUpdate.StopTimer();
+        //    m_rTimerUpdate.SetCheatFinalTime(0, 16, 30.0f);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha7))
+        //{
+        //    m_rTimerUpdate.StopTimer();
+        //    m_rTimerUpdate.SetCheatFinalTime(0, 19, 30.0f);
+        //}
 
         if (!m_bGameComplete)
             return;
