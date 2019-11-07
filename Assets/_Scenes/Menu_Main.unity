@@ -1754,7 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1294758483}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &345455343
@@ -8034,18 +8034,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1461698659}
-        m_MethodName: StartModeSelect
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3494563373361360185}
-        m_MethodName: SetActive
+        m_MethodName: ActivateModeSelection
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9025,7 +9014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed53c468ab48774ebb01bcd8be90ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playButton: {fileID: 1294758485}
+  m_playButton: {fileID: 0}
   m_rMenuButtons: {fileID: 251029732}
   m_rModeSelection: {fileID: 3494563373361360185}
   m_rNLOnPillar: {fileID: 1335444783}
@@ -16422,6 +16411,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1126503657603681702}
     m_Modifications:
+    - target: {fileID: 4942147024505519447, guid: 6e86470d018a4c44f904180737f52f77,
+        type: 3}
+      propertyPath: m_Name
+      value: BackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8508564832898323128, guid: 6e86470d018a4c44f904180737f52f77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16527,10 +16521,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4942147024505519447, guid: 6e86470d018a4c44f904180737f52f77,
+    - target: {fileID: 7369111809065027288, guid: 6e86470d018a4c44f904180737f52f77,
         type: 3}
-      propertyPath: m_Name
-      value: BackButton
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7369111809065027288, guid: 6e86470d018a4c44f904180737f52f77,
         type: 3}
@@ -16550,6 +16544,26 @@ PrefabInstance:
     - target: {fileID: 7369111809065027288, guid: 6e86470d018a4c44f904180737f52f77,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369111809065027288, guid: 6e86470d018a4c44f904180737f52f77,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369111809065027288, guid: 6e86470d018a4c44f904180737f52f77,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369111809065027288, guid: 6e86470d018a4c44f904180737f52f77,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369111809065027288, guid: 6e86470d018a4c44f904180737f52f77,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2329780178462499339, guid: 6e86470d018a4c44f904180737f52f77,
